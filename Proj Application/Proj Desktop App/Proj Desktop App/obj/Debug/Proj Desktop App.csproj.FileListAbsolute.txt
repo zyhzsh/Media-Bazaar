@@ -1,0 +1,20 @@
+C:\Users\Bloobins\Desktop\Proj Application\Proj Desktop App\Proj Desktop App\bin\Debug\Proj Desktop App.exe.config
+C:\Users\Bloobins\Desktop\Proj Application\Proj Desktop App\Proj Desktop App\bin\Debug\Proj Desktop App.exe
+C:\Users\Bloobins\Desktop\Proj Application\Proj Desktop App\Proj Desktop App\bin\Debug\Proj Desktop App.pdb
+C:\Users\Bloobins\Desktop\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj Desktop App.csprojAssemblyReference.cache
+C:\Users\Bloobins\Desktop\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.Form1.resources
+C:\Users\Bloobins\Desktop\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.Properties.Resources.resources
+C:\Users\Bloobins\Desktop\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj Desktop App.csproj.GenerateResource.cache
+C:\Users\Bloobins\Desktop\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj Desktop App.csproj.CoreCompileInputs.cache
+C:\Users\Bloobins\Desktop\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj Desktop App.exe
+C:\Users\Bloobins\Desktop\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj Desktop App.pdb
+C:\Users\Bloobins\OneDrive - Office 365 Fontys\2020-2021\PRJ\Proj Application\Proj Desktop App\Proj Desktop App\bin\Debug\Proj Desktop App.exe.config
+C:\Users\Bloobins\OneDrive - Office 365 Fontys\2020-2021\PRJ\Proj Application\Proj Desktop App\Proj Desktop App\bin\Debug\Proj Desktop App.exe
+C:\Users\Bloobins\OneDrive - Office 365 Fontys\2020-2021\PRJ\Proj Application\Proj Desktop App\Proj Desktop App\bin\Debug\Proj Desktop App.pdb
+C:\Users\Bloobins\OneDrive - Office 365 Fontys\2020-2021\PRJ\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj Desktop App.csprojAssemblyReference.cache
+C:\Users\Bloobins\OneDrive - Office 365 Fontys\2020-2021\PRJ\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.Form1.resources
+C:\Users\Bloobins\OneDrive - Office 365 Fontys\2020-2021\PRJ\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.Properties.Resources.resources
+C:\Users\Bloobins\OneDrive - Office 365 Fontys\2020-2021\PRJ\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj Desktop App.csproj.GenerateResource.cache
+C:\Users\Bloobins\OneDrive - Office 365 Fontys\2020-2021\PRJ\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj Desktop App.csproj.CoreCompileInputs.cache
+C:\Users\Bloobins\OneDrive - Office 365 Fontys\2020-2021\PRJ\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj Desktop App.exe
+C:\Users\Bloobins\OneDrive - Office 365 Fontys\2020-2021\PRJ\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj Desktop App.pdb
