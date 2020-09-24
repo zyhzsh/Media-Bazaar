@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Departments.cs" />
     <Compile Include="DepotWorker.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="EmployeeStatistics.cs">
@@ -60,6 +61,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Manager.cs" />
     <Compile Include="ProductStatistics.cs">
       <SubType>Form</SubType>
     </Compile>
