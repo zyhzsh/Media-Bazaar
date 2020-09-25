@@ -28,34 +28,37 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tbLogInUsername = new System.Windows.Forms.TextBox();
+            this.tbLogInPassword = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btnLogIn = new System.Windows.Forms.Button();
+            this.btnOpenScheduling = new System.Windows.Forms.Button();
+            this.btnOpenEmpStatistics = new System.Windows.Forms.Button();
+            this.btnOpenDptmtManagement = new System.Windows.Forms.Button();
+            this.btnOpenPrdtStatistics = new System.Windows.Forms.Button();
+            this.btnOpenEmpManagement = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // textBox1
+            // tbLogInUsername
             // 
-            this.textBox1.Location = new System.Drawing.Point(103, 21);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(173, 22);
-            this.textBox1.TabIndex = 0;
+            this.tbLogInUsername.Location = new System.Drawing.Point(85, 21);
+            this.tbLogInUsername.Name = "tbLogInUsername";
+            this.tbLogInUsername.Size = new System.Drawing.Size(160, 22);
+            this.tbLogInUsername.TabIndex = 0;
             // 
-            // textBox2
+            // tbLogInPassword
             // 
-            this.textBox2.Location = new System.Drawing.Point(103, 47);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(173, 22);
-            this.textBox2.TabIndex = 1;
+            this.tbLogInPassword.Location = new System.Drawing.Point(85, 47);
+            this.tbLogInPassword.Name = "tbLogInPassword";
+            this.tbLogInPassword.PasswordChar = '*';
+            this.tbLogInPassword.Size = new System.Drawing.Size(160, 22);
+            this.tbLogInPassword.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(24, 24);
+            this.label1.Location = new System.Drawing.Point(9, 24);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(73, 17);
             this.label1.TabIndex = 2;
@@ -64,61 +67,81 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(28, 50);
+            this.label2.Location = new System.Drawing.Point(9, 50);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(69, 17);
             this.label2.TabIndex = 3;
             this.label2.Text = "Password";
             // 
-            // button1
+            // btnLogIn
             // 
-            this.button1.Location = new System.Drawing.Point(27, 75);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(249, 69);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Log In";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnLogIn.Location = new System.Drawing.Point(12, 75);
+            this.btnLogIn.Name = "btnLogIn";
+            this.btnLogIn.Size = new System.Drawing.Size(233, 69);
+            this.btnLogIn.TabIndex = 4;
+            this.btnLogIn.Text = "Log In";
+            this.btnLogIn.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnOpenScheduling
             // 
-            this.button2.Location = new System.Drawing.Point(27, 150);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(249, 69);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Schedule";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnOpenScheduling.Location = new System.Drawing.Point(12, 150);
+            this.btnOpenScheduling.Name = "btnOpenScheduling";
+            this.btnOpenScheduling.Size = new System.Drawing.Size(233, 69);
+            this.btnOpenScheduling.TabIndex = 5;
+            this.btnOpenScheduling.Text = "Schedule";
+            this.btnOpenScheduling.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnOpenEmpStatistics
             // 
-            this.button3.Location = new System.Drawing.Point(282, 150);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(249, 69);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "Employee Statistics";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnOpenEmpStatistics.Location = new System.Drawing.Point(251, 150);
+            this.btnOpenEmpStatistics.Name = "btnOpenEmpStatistics";
+            this.btnOpenEmpStatistics.Size = new System.Drawing.Size(233, 69);
+            this.btnOpenEmpStatistics.TabIndex = 6;
+            this.btnOpenEmpStatistics.Text = "Employee Statistics";
+            this.btnOpenEmpStatistics.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // btnOpenDptmtManagement
             // 
-            this.button4.Location = new System.Drawing.Point(971, 150);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(249, 69);
-            this.button4.TabIndex = 7;
-            this.button4.Text = "Department Management";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnOpenDptmtManagement.Location = new System.Drawing.Point(968, 150);
+            this.btnOpenDptmtManagement.Name = "btnOpenDptmtManagement";
+            this.btnOpenDptmtManagement.Size = new System.Drawing.Size(233, 69);
+            this.btnOpenDptmtManagement.TabIndex = 7;
+            this.btnOpenDptmtManagement.Text = "Department Management";
+            this.btnOpenDptmtManagement.UseVisualStyleBackColor = true;
+            // 
+            // btnOpenPrdtStatistics
+            // 
+            this.btnOpenPrdtStatistics.Location = new System.Drawing.Point(490, 150);
+            this.btnOpenPrdtStatistics.Name = "btnOpenPrdtStatistics";
+            this.btnOpenPrdtStatistics.Size = new System.Drawing.Size(233, 69);
+            this.btnOpenPrdtStatistics.TabIndex = 8;
+            this.btnOpenPrdtStatistics.Text = "Product Statistics";
+            this.btnOpenPrdtStatistics.UseVisualStyleBackColor = true;
+            // 
+            // btnOpenEmpManagement
+            // 
+            this.btnOpenEmpManagement.Location = new System.Drawing.Point(729, 150);
+            this.btnOpenEmpManagement.Name = "btnOpenEmpManagement";
+            this.btnOpenEmpManagement.Size = new System.Drawing.Size(233, 69);
+            this.btnOpenEmpManagement.TabIndex = 9;
+            this.btnOpenEmpManagement.Text = "Employee Management";
+            this.btnOpenEmpManagement.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1246, 704);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnOpenEmpManagement);
+            this.Controls.Add(this.btnOpenPrdtStatistics);
+            this.Controls.Add(this.btnOpenDptmtManagement);
+            this.Controls.Add(this.btnOpenEmpStatistics);
+            this.Controls.Add(this.btnOpenScheduling);
+            this.Controls.Add(this.btnLogIn);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tbLogInPassword);
+            this.Controls.Add(this.tbLogInUsername);
             this.Name = "Form1";
             this.Text = "Manager Application";
             this.ResumeLayout(false);
@@ -128,14 +151,16 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tbLogInUsername;
+        private System.Windows.Forms.TextBox tbLogInPassword;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnLogIn;
+        private System.Windows.Forms.Button btnOpenScheduling;
+        private System.Windows.Forms.Button btnOpenEmpStatistics;
+        private System.Windows.Forms.Button btnOpenDptmtManagement;
+        private System.Windows.Forms.Button btnOpenPrdtStatistics;
+        private System.Windows.Forms.Button btnOpenEmpManagement;
     }
 }
 

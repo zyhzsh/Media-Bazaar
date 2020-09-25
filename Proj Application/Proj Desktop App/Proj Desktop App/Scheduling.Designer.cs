@@ -31,9 +31,9 @@
             this.btnRmvEmployeeShift = new System.Windows.Forms.Button();
             this.btnAddEmpShift = new System.Windows.Forms.Button();
             this.listboxAssignedEmployees = new System.Windows.Forms.ListBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cbScheduleShiftType = new System.Windows.Forms.ComboBox();
             this.listboxAvailableEmployees = new System.Windows.Forms.ListBox();
-            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
+            this.monthCalendarScheduling = new System.Windows.Forms.MonthCalendar();
             this.SuspendLayout();
             // 
             // btnRmvEmployeeShift
@@ -63,17 +63,18 @@
             this.listboxAssignedEmployees.Size = new System.Drawing.Size(264, 372);
             this.listboxAssignedEmployees.TabIndex = 15;
             // 
-            // comboBox1
+            // cbScheduleShiftType
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.cbScheduleShiftType.FormattingEnabled = true;
+            this.cbScheduleShiftType.Items.AddRange(new object[] {
             "Morning",
             "Afternoon",
             "Evening"});
-            this.comboBox1.Location = new System.Drawing.Point(695, 227);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 24);
-            this.comboBox1.TabIndex = 14;
+            this.cbScheduleShiftType.Location = new System.Drawing.Point(695, 227);
+            this.cbScheduleShiftType.Name = "cbScheduleShiftType";
+            this.cbScheduleShiftType.Size = new System.Drawing.Size(121, 24);
+            this.cbScheduleShiftType.TabIndex = 14;
+            this.cbScheduleShiftType.Text = "Morning";
             // 
             // listboxAvailableEmployees
             // 
@@ -84,11 +85,11 @@
             this.listboxAvailableEmployees.Size = new System.Drawing.Size(264, 372);
             this.listboxAvailableEmployees.TabIndex = 13;
             // 
-            // monthCalendar1
+            // monthCalendarScheduling
             // 
-            this.monthCalendar1.Location = new System.Drawing.Point(554, 8);
-            this.monthCalendar1.Name = "monthCalendar1";
-            this.monthCalendar1.TabIndex = 12;
+            this.monthCalendarScheduling.Location = new System.Drawing.Point(554, 8);
+            this.monthCalendarScheduling.Name = "monthCalendarScheduling";
+            this.monthCalendarScheduling.TabIndex = 12;
             // 
             // Scheduling
             // 
@@ -98,9 +99,9 @@
             this.Controls.Add(this.btnRmvEmployeeShift);
             this.Controls.Add(this.btnAddEmpShift);
             this.Controls.Add(this.listboxAssignedEmployees);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cbScheduleShiftType);
             this.Controls.Add(this.listboxAvailableEmployees);
-            this.Controls.Add(this.monthCalendar1);
+            this.Controls.Add(this.monthCalendarScheduling);
             this.Name = "Scheduling";
             this.Text = "Scheduling";
             this.ResumeLayout(false);
@@ -112,8 +113,8 @@
         private System.Windows.Forms.Button btnRmvEmployeeShift;
         private System.Windows.Forms.Button btnAddEmpShift;
         private System.Windows.Forms.ListBox listboxAssignedEmployees;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbScheduleShiftType;
         private System.Windows.Forms.ListBox listboxAvailableEmployees;
-        private System.Windows.Forms.MonthCalendar monthCalendar1;
+        private System.Windows.Forms.MonthCalendar monthCalendarScheduling;
     }
 }
