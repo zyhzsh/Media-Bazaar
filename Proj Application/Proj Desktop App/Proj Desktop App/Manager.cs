@@ -11,8 +11,8 @@ namespace Proj_Desktop_App
         string managerSpecificInfo;
 
         public Manager(int BSN, string firstName, string LastName, string gender, int phoneNumber, DateTime birthDate,
-                  string adress, string certificates, string status, string department, string contactEmail, double fte, string managerSpecificInfo)
-      : base(BSN, firstName, LastName, gender, phoneNumber, birthDate, adress, certificates, status, department, contactEmail, fte)
+                  string adress, string certificates, string status, string department, string contactEmail, double fte, string managerSpecificInfo,PositionType positionType)
+      : base(BSN, firstName, LastName, gender, phoneNumber, birthDate, adress, certificates, status, department, contactEmail, fte, positionType)
         {
             this.managerSpecificInfo = managerSpecificInfo;
         }

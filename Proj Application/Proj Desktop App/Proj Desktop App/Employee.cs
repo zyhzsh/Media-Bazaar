@@ -19,10 +19,11 @@ namespace Proj_Desktop_App
         private string status;
         private string department;
         private string contactEmail;
+        private PositionType positionType;
         private double fte;
 
         public Employee(int BSN, string firstName, string LastName, string gender, int phoneNumber, DateTime birthDate,
-            string adress, string certificates,string status, string department, string contactEmail,double fte)
+            string adress, string certificates,string status, string department, string contactEmail,double fte, PositionType positionType)
         {
             this.BSN = BSN;
             this.LastName = LastName;
@@ -36,6 +37,7 @@ namespace Proj_Desktop_App
             this.department = department;
             this.contactEmail = contactEmail;
             this.fte = fte;
+            this.positionType = positionType;
         }
     }
 }

@@ -93,6 +93,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adminstration.cs" />
     <Compile Include="Departments.cs" />
     <Compile Include="DepotWorker.cs" />
     <Compile Include="Employee.cs" />
@@ -108,7 +109,9 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Login.cs" />
     <Compile Include="Manager.cs" />
+    <Compile Include="PostionType.cs" />
     <Compile Include="ProductStatistics.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,6 +127,7 @@
     <Compile Include="Scheduling.Designer.cs">
       <DependentUpon>Scheduling.cs</DependentUpon>
     </Compile>
+    <Compile Include="Store.cs" />
     <EmbeddedResource Include="EmployeeStatistics.resx">
       <DependentUpon>EmployeeStatistics.cs</DependentUpon>
     </EmbeddedResource>
