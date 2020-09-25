@@ -127,16 +127,7 @@
     <Compile Include="Scheduling.Designer.cs">
       <DependentUpon>Scheduling.cs</DependentUpon>
     </Compile>
-<<<<<<< HEAD
     <Compile Include="Store.cs" />
-=======
-    <Compile Include="WorkerStockRequests.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WorkerStockRequests.Designer.cs">
-      <DependentUpon>WorkerStockRequests.cs</DependentUpon>
-    </Compile>
->>>>>>> de34202fb89be277bd719d0bc80b49f16346cd52
     <EmbeddedResource Include="EmployeeStatistics.resx">
       <DependentUpon>EmployeeStatistics.cs</DependentUpon>
     </EmbeddedResource>
@@ -157,9 +148,6 @@
     </Compile>
     <EmbeddedResource Include="Scheduling.resx">
       <DependentUpon>Scheduling.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WorkerStockRequests.resx">
-      <DependentUpon>WorkerStockRequests.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
