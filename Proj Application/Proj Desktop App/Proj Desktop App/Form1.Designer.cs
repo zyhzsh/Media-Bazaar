@@ -36,104 +36,112 @@
             this.button2 = new System.Windows.Forms.Button();
             this.btEmployeeStatics = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-
+            this.btnProductStatisticsMenu = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            //LoginUsername 
-            this.tbLogInUsername.Location = new System.Drawing.Point(85, 21);
+            // 
+            // tbLogInUsername
+            // 
+            this.tbLogInUsername.Location = new System.Drawing.Point(113, 26);
+            this.tbLogInUsername.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbLogInUsername.Name = "tbLogInUsername";
-            this.tbLogInUsername.Size = new System.Drawing.Size(160, 22);
+            this.tbLogInUsername.Size = new System.Drawing.Size(212, 22);
             this.tbLogInUsername.TabIndex = 0;
-            //Password
-            this.tbLogInPassword.Location = new System.Drawing.Point(85, 47);
+            // 
+            // tbLogInPassword
+            // 
+            this.tbLogInPassword.Location = new System.Drawing.Point(113, 58);
+            this.tbLogInPassword.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbLogInPassword.Name = "tbLogInPassword";
             this.tbLogInPassword.PasswordChar = '*';
-            this.tbLogInPassword.Size = new System.Drawing.Size(160, 22);
+            this.tbLogInPassword.Size = new System.Drawing.Size(212, 22);
             this.tbLogInPassword.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(18, 20);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Location = new System.Drawing.Point(9, 24);
+            this.label1.Location = new System.Drawing.Point(12, 30);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 13);
+            this.label1.Size = new System.Drawing.Size(73, 17);
             this.label1.TabIndex = 2;
             this.label1.Text = "Username";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(21, 41);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Location = new System.Drawing.Point(9, 50);
+            this.label2.Location = new System.Drawing.Point(12, 62);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 13);
+            this.label2.Size = new System.Drawing.Size(69, 17);
             this.label2.TabIndex = 3;
             this.label2.Text = "Password";
             // 
             // btLogin
             // 
-            this.btLogin.Location = new System.Drawing.Point(21, 62);
-            this.btLogin.Margin = new System.Windows.Forms.Padding(2);
+            this.btLogin.Location = new System.Drawing.Point(10, 94);
+            this.btLogin.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btLogin.Name = "btLogin";
-            this.btLogin.Size = new System.Drawing.Size(187, 56);
+            this.btLogin.Size = new System.Drawing.Size(249, 69);
             this.btLogin.TabIndex = 4;
             this.btLogin.Text = "Log In";
             this.btLogin.UseVisualStyleBackColor = true;
             this.btLogin.Click += new System.EventHandler(this.btLogin_Click);
-                // 
-            // btnOpenScheduling
             // 
-            this.button2.Location = new System.Drawing.Point(20, 122);
-            this.button2.Margin = new System.Windows.Forms.Padding(2);
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(9, 168);
+            this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(187, 56);
+            this.button2.Size = new System.Drawing.Size(249, 69);
             this.button2.TabIndex = 5;
             this.button2.Text = "Schedule";
             this.button2.UseVisualStyleBackColor = true;
             // 
             // btEmployeeStatics
             // 
-            this.btEmployeeStatics.Location = new System.Drawing.Point(212, 122);
-            this.btEmployeeStatics.Margin = new System.Windows.Forms.Padding(2);
+            this.btEmployeeStatics.Location = new System.Drawing.Point(265, 168);
+            this.btEmployeeStatics.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btEmployeeStatics.Name = "btEmployeeStatics";
-            this.btEmployeeStatics.Size = new System.Drawing.Size(187, 56);
+            this.btEmployeeStatics.Size = new System.Drawing.Size(249, 69);
             this.btEmployeeStatics.TabIndex = 6;
             this.btEmployeeStatics.Text = "Employee Statistics";
             this.btEmployeeStatics.UseVisualStyleBackColor = true;
             this.btEmployeeStatics.Click += new System.EventHandler(this.btStatistics_Click);
             // 
-            // btnOpenEmpStatistics
+            // button4
             // 
-            // 
-            // btnOpenDptmtManagement
-            // 
-            this.button4.Location = new System.Drawing.Point(728, 122);
-            this.button4.Margin = new System.Windows.Forms.Padding(2);
+            this.button4.Location = new System.Drawing.Point(949, 168);
+            this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(187, 56);
+            this.button4.Size = new System.Drawing.Size(249, 69);
             this.button4.TabIndex = 7;
             this.button4.Text = "Department Management";
             this.button4.UseVisualStyleBackColor = true;
             // 
+            // btnProductStatisticsMenu
+            // 
+            this.btnProductStatisticsMenu.Location = new System.Drawing.Point(554, 168);
+            this.btnProductStatisticsMenu.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnProductStatisticsMenu.Name = "btnProductStatisticsMenu";
+            this.btnProductStatisticsMenu.Size = new System.Drawing.Size(249, 69);
+            this.btnProductStatisticsMenu.TabIndex = 8;
+            this.btnProductStatisticsMenu.Text = "Product Statistics";
+            this.btnProductStatisticsMenu.UseVisualStyleBackColor = true;
+            this.btnProductStatisticsMenu.Click += new System.EventHandler(this.btnProductStatisticsMenu_Click);
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(934, 572);
+            this.ClientSize = new System.Drawing.Size(1210, 481);
+            this.Controls.Add(this.btnProductStatisticsMenu);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.btEmployeeStatics);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btLogin);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(2);
-            this.ClientSize = new System.Drawing.Size(1246, 704);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.tbLogInPassword);
             this.Controls.Add(this.tbLogInUsername);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
             this.Text = "Manager Application";
             this.ResumeLayout(false);
@@ -157,6 +165,7 @@
         private System.Windows.Forms.Button btnOpenDptmtManagement;
         private System.Windows.Forms.Button btnOpenPrdtStatistics;
         private System.Windows.Forms.Button btnOpenEmpManagement;
+        private System.Windows.Forms.Button btnProductStatisticsMenu;
     }
 }
 

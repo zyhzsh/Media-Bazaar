@@ -112,6 +112,7 @@
     <Compile Include="Login.cs" />
     <Compile Include="Manager.cs" />
     <Compile Include="PostionType.cs" />
+    <Compile Include="Product.cs" />
     <Compile Include="ProductStatistics.cs">
       <SubType>Form</SubType>
     </Compile>
