@@ -35,28 +35,29 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.tbSelectedProductSales = new System.Windows.Forms.TextBox();
-            this.listBox4 = new System.Windows.Forms.ListBox();
+            this.lbProductListStatistics = new System.Windows.Forms.ListBox();
             this.cbSalesLastTime = new System.Windows.Forms.ComboBox();
             this.btnRequestRestock = new System.Windows.Forms.Button();
+            this.cbProductDepartmentSelector = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // btnProductSearch
             // 
-            this.btnProductSearch.Location = new System.Drawing.Point(243, 61);
+            this.btnProductSearch.Location = new System.Drawing.Point(247, 29);
             this.btnProductSearch.Name = "btnProductSearch";
             this.btnProductSearch.Size = new System.Drawing.Size(96, 24);
             this.btnProductSearch.TabIndex = 40;
             this.btnProductSearch.Text = "Search";
             this.btnProductSearch.UseVisualStyleBackColor = true;
+            this.btnProductSearch.Click += new System.EventHandler(this.btnProductSearch_Click);
             // 
             // cbProductSearchMethod
             // 
             this.cbProductSearchMethod.FormattingEnabled = true;
             this.cbProductSearchMethod.Items.AddRange(new object[] {
             "Product code",
-            "Product name",
-            "Most Sold"});
-            this.cbProductSearchMethod.Location = new System.Drawing.Point(10, 59);
+            "Product name"});
+            this.cbProductSearchMethod.Location = new System.Drawing.Point(14, 29);
             this.cbProductSearchMethod.Name = "cbProductSearchMethod";
             this.cbProductSearchMethod.Size = new System.Drawing.Size(121, 24);
             this.cbProductSearchMethod.TabIndex = 39;
@@ -64,11 +65,10 @@
             // 
             // tbProductSearchAttribute
             // 
-            this.tbProductSearchAttribute.Location = new System.Drawing.Point(137, 61);
+            this.tbProductSearchAttribute.Location = new System.Drawing.Point(141, 30);
             this.tbProductSearchAttribute.Name = "tbProductSearchAttribute";
             this.tbProductSearchAttribute.Size = new System.Drawing.Size(100, 22);
             this.tbProductSearchAttribute.TabIndex = 38;
-            this.tbProductSearchAttribute.Text = "122324";
             this.tbProductSearchAttribute.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // tbSelectedProductStock
@@ -77,7 +77,6 @@
             this.tbSelectedProductStock.Name = "tbSelectedProductStock";
             this.tbSelectedProductStock.Size = new System.Drawing.Size(55, 22);
             this.tbSelectedProductStock.TabIndex = 35;
-            this.tbSelectedProductStock.Text = "50";
             // 
             // label17
             // 
@@ -103,21 +102,15 @@
             this.tbSelectedProductSales.Name = "tbSelectedProductSales";
             this.tbSelectedProductSales.Size = new System.Drawing.Size(168, 22);
             this.tbSelectedProductSales.TabIndex = 30;
-            this.tbSelectedProductSales.Text = "129";
             // 
-            // listBox4
+            // lbProductListStatistics
             // 
-            this.listBox4.FormattingEnabled = true;
-            this.listBox4.ItemHeight = 16;
-            this.listBox4.Items.AddRange(new object[] {
-            "Product1",
-            "Product2",
-            "Product3",
-            "Product4"});
-            this.listBox4.Location = new System.Drawing.Point(10, 89);
-            this.listBox4.Name = "listBox4";
-            this.listBox4.Size = new System.Drawing.Size(539, 564);
-            this.listBox4.TabIndex = 29;
+            this.lbProductListStatistics.FormattingEnabled = true;
+            this.lbProductListStatistics.ItemHeight = 16;
+            this.lbProductListStatistics.Location = new System.Drawing.Point(10, 73);
+            this.lbProductListStatistics.Name = "lbProductListStatistics";
+            this.lbProductListStatistics.Size = new System.Drawing.Size(539, 132);
+            this.lbProductListStatistics.TabIndex = 29;
             // 
             // cbSalesLastTime
             // 
@@ -141,12 +134,29 @@
             this.btnRequestRestock.TabIndex = 44;
             this.btnRequestRestock.Text = "Request Restock";
             this.btnRequestRestock.UseVisualStyleBackColor = true;
+            this.btnRequestRestock.Click += new System.EventHandler(this.btnRequestRestock_Click);
+            // 
+            // cbProductDepartmentSelector
+            // 
+            this.cbProductDepartmentSelector.FormattingEnabled = true;
+            this.cbProductDepartmentSelector.Items.AddRange(new object[] {
+            "Floor 1",
+            "Floor 2",
+            "Floor 3",
+            "Floor 4",
+            "All Floors"});
+            this.cbProductDepartmentSelector.Location = new System.Drawing.Point(349, 30);
+            this.cbProductDepartmentSelector.Name = "cbProductDepartmentSelector";
+            this.cbProductDepartmentSelector.Size = new System.Drawing.Size(121, 24);
+            this.cbProductDepartmentSelector.TabIndex = 45;
+            this.cbProductDepartmentSelector.Text = "All Floors";
             // 
             // ProductStatistics
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1185, 748);
+            this.ClientSize = new System.Drawing.Size(1185, 548);
+            this.Controls.Add(this.cbProductDepartmentSelector);
             this.Controls.Add(this.btnRequestRestock);
             this.Controls.Add(this.cbSalesLastTime);
             this.Controls.Add(this.btnProductSearch);
@@ -156,7 +166,7 @@
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.tbSelectedProductSales);
-            this.Controls.Add(this.listBox4);
+            this.Controls.Add(this.lbProductListStatistics);
             this.Name = "ProductStatistics";
             this.Text = "ProductStatistics";
             this.ResumeLayout(false);
@@ -172,8 +182,9 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox tbSelectedProductSales;
-        private System.Windows.Forms.ListBox listBox4;
+        private System.Windows.Forms.ListBox lbProductListStatistics;
         private System.Windows.Forms.ComboBox cbSalesLastTime;
         private System.Windows.Forms.Button btnRequestRestock;
+        private System.Windows.Forms.ComboBox cbProductDepartmentSelector;
     }
 }

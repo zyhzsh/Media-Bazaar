@@ -24,7 +24,7 @@ namespace Proj_Desktop_App
 
         private void btLogin_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void btStatistics_Click(object sender, EventArgs e)
@@ -37,6 +37,12 @@ namespace Proj_Desktop_App
             
             Scheduling a = new Scheduling();
             a.Show();
+        }
+
+        private void btnProductStatisticsMenu_Click(object sender, EventArgs e)
+        {
+            ProductStatistics productStatistics = new ProductStatistics(mediaBazaar.Products);
+            productStatistics.Show(this);
         }
     }
 }
