@@ -94,24 +94,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdministratorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AdministratorForm.Designer.cs">
-      <DependentUpon>AdministratorForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Adminstration.cs" />
     <Compile Include="AssignedShift.cs" />
     <Compile Include="AvailableShifts.cs" />
     <Compile Include="Departments.cs" />
     <Compile Include="DepotWorker.cs" />
     <Compile Include="Employee.cs" />
-    <Compile Include="EmployeeManagmentForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EmployeeManagmentForm.Designer.cs">
-      <DependentUpon>EmployeeManagmentForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="EmployeeStatistics.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -152,12 +140,6 @@
     <Compile Include="WorkerStockRequests.Designer.cs">
       <DependentUpon>WorkerStockRequests.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="AdministratorForm.resx">
-      <DependentUpon>AdministratorForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EmployeeManagmentForm.resx">
-      <DependentUpon>EmployeeManagmentForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="EmployeeStatistics.resx">
       <DependentUpon>EmployeeStatistics.cs</DependentUpon>
     </EmbeddedResource>

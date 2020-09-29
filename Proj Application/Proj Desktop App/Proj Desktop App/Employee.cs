@@ -11,22 +11,21 @@ namespace Proj_Desktop_App
         public int BSN { get; set; }
         public string Address { get; set; }
         private string firstName;
-        private string lastName;
-        private char gender;
-        private string phoneNumber;
+        private string LastName;
+        private string gender;
+        private int phoneNumber;
         private DateTime birthDate;
         private string certificates;
         private string status;
-        private Departments department;
+        private string department;
         private string contactEmail;
         private PositionType positionType;
-        private string jobTitle;
         private double fte;
         public Employee(int BSN, string firstName, string LastName, string gender, int phoneNumber, DateTime birthDate,
             string address, string certificates, string status, string department, string contactEmail, double fte, PositionType positionType)
         {
             this.BSN = BSN;
-            this.lastName = lastName;
+            this.LastName = LastName;
             this.firstName = firstName;
             this.gender = gender;
             this.phoneNumber = phoneNumber;
