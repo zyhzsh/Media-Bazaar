@@ -31,5 +31,12 @@ namespace Proj_Desktop_App
         {
 
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            
+            Scheduling a = new Scheduling();
+            a.Show();
+        }
     }
 }
