@@ -12,9 +12,31 @@ namespace Proj_Desktop_App
 {
     public partial class Form1 : Form
     {
+        private Store mediaBazaar;
+        private Login login;
+
         public Form1()
         {
             InitializeComponent();
+            mediaBazaar = new Store();
+            login = new Login();
+        }
+
+        private void btLogin_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void btStatistics_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            
+            Scheduling a = new Scheduling();
+            a.Show();
         }
     }
 }

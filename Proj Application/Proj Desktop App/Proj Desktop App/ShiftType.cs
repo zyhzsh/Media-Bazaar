@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace Proj_Desktop_App
 {
-    public enum ShiftType
+    enum ShiftType
     {
-        prefferedShift,
-        availableShift,
-        nonAvailableShift
+        Morning,
+        Afternoon,
+        Evening,
+        Morning_Afternoon,
+        Morning_Evening,
+        Afternoon_Evening,
+        FullDay
     }
 }
