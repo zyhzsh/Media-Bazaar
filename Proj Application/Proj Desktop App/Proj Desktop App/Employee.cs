@@ -23,6 +23,8 @@ namespace Proj_Desktop_App
         private string jobTitle;
         private double fte;
 
+        private string test; // just to test merging
+
         public Employee(int BSN, string firstName, string lastName, char gender, string phoneNumber, DateTime birthDate,
             string address, string certificates, string status, Departments department, string contactEmail,
             double fte, PositionType positionType, string jobTitle)
