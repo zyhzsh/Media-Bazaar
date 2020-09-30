@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proj_Desktop_App
 {
-    class Store
+    public class Store
     {
         private List<Employee> employees;
         private List<Product> products;
@@ -18,21 +18,49 @@ namespace Proj_Desktop_App
             ProductMockData();
         }
 
-        public bool AddEmployee(int BSN, string firstName, string LastName, string gender, int phoneNumber, DateTime birthDate,
-            string adress, string certificates, string status, string department, string contactEmail, double fte, PositionType positionType)
+        public bool AddEmployee(int BSN, string firstName, string lastName, char gender, string phoneNumber, DateTime birthDate,
+            string address, string certificates, string status, Departments department, string contactEmail,
+            double fte, PositionType positionType, string jobTitle)
         {
-            employees.Add(new Employee(BSN, firstName, LastName, gender, phoneNumber, birthDate, adress, certificates, status, department, contactEmail, fte, positionType));
-            return true;
+            if (GetEmployee(BSN) == null)
+            {
+                employees.Add(new Employee(BSN, firstName, lastName, gender, phoneNumber, birthDate, address, certificates, status, department, contactEmail, fte, positionType, jobTitle));
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
+        public Employee GetEmployee(int bsn)
+        {
+            foreach (Employee employee in employees)
+            {
+                if (bsn == employee.GetBSN())
+                {
+                    return employee;
+                }
+            }
+            return null;
+        }
 
-
-
+        public string[] GetEmployees()
+        {
+            List<string> employeeInfos = new List<string>();
+            foreach (Employee employee in employees)
+            {
+                employeeInfos.Add(employee.GetInfo());
+            }
+            return employeeInfos.ToArray();
+        }
 
 
         private void AddMockData()
         {
-           // AddEmployee(5467,"");
+            AddEmployee(5467, "George", "Wood", 'M', "0031677777", DateTime.Parse("18/09/1997"), "Eindhoven", "Administration ", "Employed", Departments.office, "g.wood@gmail.com", 1, PositionType.Administrator, "Administrator");
+            AddEmployee(3456, "Nicole", "Green", 'F', "0031655378", DateTime.Parse("27/11/1990"), "Geldrop", "IELTS", "Employed", Departments.warehouse, "n.green@gmail.com", 1, PositionType.Depot_Worker, "Depot_Worker");
+            AddEmployee(7890, "john", "doe", 'M', "0031674628", DateTime.Parse("05/07/1995"), "Helmond", "Mangment ", "Employed", Departments.floorTwo, "john.d@gmail.com", 0.4, PositionType.Sales_Manager, "Sales Manager");
         }
 
         private void ProductMockData()

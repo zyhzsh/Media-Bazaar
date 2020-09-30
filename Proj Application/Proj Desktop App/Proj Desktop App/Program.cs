@@ -16,7 +16,7 @@ namespace Proj_Desktop_App
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Scheduling());
+            Application.Run(new Form1());
         }
     }
 }
