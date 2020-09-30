@@ -21,17 +21,9 @@ namespace Proj_Desktop_App
         private string contactEmail;
         private PositionType positionType;
         private double fte;
-<<<<<<< HEAD
+
         public Employee(int BSN, string firstName, string LastName, string gender, int phoneNumber, DateTime birthDate,
             string address, string certificates, string status, string department, string contactEmail, double fte, PositionType positionType)
-=======
-
-        private string test; // just to test merging
-
-        public Employee(int BSN, string firstName, string lastName, char gender, string phoneNumber, DateTime birthDate,
-            string address, string certificates, string status, Departments department, string contactEmail,
-            double fte, PositionType positionType, string jobTitle)
->>>>>>> Employee
         {
             this.BSN = BSN;
             this.LastName = LastName;
