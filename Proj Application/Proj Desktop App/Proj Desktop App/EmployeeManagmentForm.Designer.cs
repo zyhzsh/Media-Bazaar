@@ -61,6 +61,7 @@
             this.nudFTE = new System.Windows.Forms.NumericUpDown();
             this.btnConfirm = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.lblOptional = new System.Windows.Forms.Label();
             this.gbPersonalDetails.SuspendLayout();
             this.gbContactDetails.SuspendLayout();
             this.gbPosition.SuspendLayout();
@@ -224,7 +225,7 @@
             // lblDepartment
             // 
             this.lblDepartment.AutoSize = true;
-            this.lblDepartment.Location = new System.Drawing.Point(8, 29);
+            this.lblDepartment.Location = new System.Drawing.Point(8, 62);
             this.lblDepartment.Name = "lblDepartment";
             this.lblDepartment.Size = new System.Drawing.Size(139, 29);
             this.lblDepartment.TabIndex = 19;
@@ -241,7 +242,7 @@
             // lblPosition
             // 
             this.lblPosition.AutoSize = true;
-            this.lblPosition.Location = new System.Drawing.Point(8, 62);
+            this.lblPosition.Location = new System.Drawing.Point(8, 29);
             this.lblPosition.Name = "lblPosition";
             this.lblPosition.Size = new System.Drawing.Size(98, 29);
             this.lblPosition.TabIndex = 21;
@@ -268,8 +269,10 @@
             // tbCertificates
             // 
             this.tbCertificates.Location = new System.Drawing.Point(109, 157);
+            this.tbCertificates.Multiline = true;
             this.tbCertificates.Name = "tbCertificates";
-            this.tbCertificates.Size = new System.Drawing.Size(204, 37);
+            this.tbCertificates.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbCertificates.Size = new System.Drawing.Size(204, 56);
             this.tbCertificates.TabIndex = 16;
             // 
             // gbPersonalDetails
@@ -310,6 +313,7 @@
             // 
             // gbPosition
             // 
+            this.gbPosition.Controls.Add(this.lblOptional);
             this.gbPosition.Controls.Add(this.lblJobTitle);
             this.gbPosition.Controls.Add(this.cbPosition);
             this.gbPosition.Controls.Add(this.cbDepartment);
@@ -340,7 +344,7 @@
             // 
             this.cbPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbPosition.FormattingEnabled = true;
-            this.cbPosition.Location = new System.Drawing.Point(109, 59);
+            this.cbPosition.Location = new System.Drawing.Point(109, 26);
             this.cbPosition.Name = "cbPosition";
             this.cbPosition.Size = new System.Drawing.Size(204, 37);
             this.cbPosition.TabIndex = 12;
@@ -350,10 +354,11 @@
             // 
             this.cbDepartment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDepartment.FormattingEnabled = true;
-            this.cbDepartment.Location = new System.Drawing.Point(109, 26);
+            this.cbDepartment.Location = new System.Drawing.Point(109, 59);
             this.cbDepartment.Name = "cbDepartment";
             this.cbDepartment.Size = new System.Drawing.Size(204, 37);
             this.cbDepartment.TabIndex = 11;
+            this.cbDepartment.SelectedIndexChanged += new System.EventHandler(this.cbDepartment_SelectedIndexChanged);
             // 
             // nudFTE
             // 
@@ -402,6 +407,16 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // lblOptional
+            // 
+            this.lblOptional.AutoSize = true;
+            this.lblOptional.Font = new System.Drawing.Font("Calibri Light", 10F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOptional.Location = new System.Drawing.Point(9, 189);
+            this.lblOptional.Name = "lblOptional";
+            this.lblOptional.Size = new System.Drawing.Size(87, 24);
+            this.lblOptional.TabIndex = 35;
+            this.lblOptional.Text = "(optional)";
             // 
             // EmployeeManagmentForm
             // 
@@ -464,5 +479,6 @@
         private System.Windows.Forms.ComboBox cbDepartment;
         private System.Windows.Forms.Label lblJobTitle;
         private System.Windows.Forms.ComboBox cbPosition;
+        private System.Windows.Forms.Label lblOptional;
     }
 }
