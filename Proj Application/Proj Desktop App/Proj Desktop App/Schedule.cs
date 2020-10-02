@@ -13,7 +13,8 @@ namespace Proj_Desktop_App
         //or this class gets filled for the date and there is another entity (class/db) that has everything in it and sorts it per date
         //currently this is the collection class with all the info
 
-        List<AssignedShift> assignedShifts;
+        public List<AssignedShift> assignedShifts;
+        public List<AvailableShifts> availableShifts; //not in use as of yet
 
         public Schedule( List<AssignedShift> assignedShifts)
         {
@@ -27,8 +28,11 @@ namespace Proj_Desktop_App
 
         public Schedule(string test)
         {
-            assignedShifts = new AssignedShift[1]; //mock data still needs to be done
+             //mock data still needs to be done
         }
+
+        /* this part is taken over by schedule manager
+        
 
         public List<AssignedShift> GetDateShifts(DateTime date)
         {
@@ -68,28 +72,36 @@ namespace Proj_Desktop_App
 
             return shifts;
         }
+        */
+
 
         //no check on preffered shifts yet
-        public void AddShift(Employee employee, DateTime shiftDateTimeStart, DateTime shiftDateTimeEnd, ShiftType shiftType)
+        //would take  this from available shifts to assigned shifts later. if we implement that way of functioning with the schedule
+        public AssignedShift AddShift(Employee employee, DateTime shiftDateTimeStart, ShiftType shiftType)
         {
-            AssignedShift assignedShift = new AssignedShift(employee, shiftDateTimeStart, shiftDateTimeEnd, shiftType);
+            AssignedShift assignedShift = new AssignedShift(employee, shiftDateTimeStart, shiftType);
             assignedShifts.Add(assignedShift);
+            return assignedShift;
         }
 
-        public void RemoveShift(AssignedShift removeShift)
+        public AssignedShift RemoveShift(AssignedShift removeShift)
         {
             assignedShifts.Remove(removeShift);
+            return removeShift;
+
         }
 
-        public void RemoveShift(Employee employee, DateTime shiftDateTimeStart, DateTime shiftDateTimeEnd, ShiftType shiftType)
+        public AssignedShift RemoveShift(Employee employee, DateTime shiftDateTimeStart, ShiftType shiftType)
         {
-            AssignedShift removeShift = new AssignedShift(employee, shiftDateTimeStart, shiftDateTimeEnd, shiftType);
+            AssignedShift removeShift = new AssignedShift(employee, shiftDateTimeStart, shiftType);
             assignedShifts.Remove(removeShift);
+            return removeShift;
         }
 
+        //not adapted to schedule manager yet
         public void UpdateShift(AssignedShift changeShift, Employee employee, DateTime shiftDateTimeStart, DateTime shiftDateTimeEnd, ShiftType shiftType)
         {
-            AssignedShift changedShift = new AssignedShift(employee, shiftDateTimeStart, shiftDateTimeEnd, shiftType);
+            AssignedShift changedShift = new AssignedShift(employee, shiftDateTimeStart, shiftType);
 
             foreach(AssignedShift shift in assignedShifts)
             {
@@ -101,12 +113,12 @@ namespace Proj_Desktop_App
             }
         }
 
-        //it is currently not possible to make a empty shift. not a bad thing perse but we need a way to indicate get didnt work
-        //we just need to make a decision on this and be consistent in it during the project
-        public AssignedShift GetShift(Employee employee, DateTime shiftDateTimeStart, DateTime shiftDateTimeEnd, ShiftType shiftType)
+        //obsolete with the schedule manager? everything under this
+        public AssignedShift GetShift(Employee employee, DateTime shiftDateTimeStart, ShiftType shiftType)
         {
-            AssignedShift getShift = new AssignedShift(employee, shiftDateTimeStart, shiftDateTimeEnd, shiftType);
-            AssignedShift nullShift = new AssignedShift();
+            string emptyShift = "null";
+            AssignedShift getShift = new AssignedShift(employee, shiftDateTimeStart, shiftType);
+            AssignedShift nullShift = new AssignedShift(emptyShift);
 
             foreach (AssignedShift shift in assignedShifts)
             {
@@ -121,7 +133,8 @@ namespace Proj_Desktop_App
 
         public AssignedShift GetShift(AssignedShift getShift)
         {
-            AssignedShift nullShift = new AssignedShift();
+            string emptyShift = "null";
+            AssignedShift nullShift = new AssignedShift(emptyShift);
 
             foreach (AssignedShift shift in assignedShifts)
             {

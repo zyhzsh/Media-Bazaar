@@ -8,14 +8,28 @@ namespace Proj_Desktop_App
 {
     class AssignedShift : EmployeeShift
     {
+        public Employee employee;
+        public DateTime shiftDateTimeStart;
+        public ShiftType shiftType;
 
-        public AssignedShift(Employee employee, DateTime shiftDateTimeStart, DateTime shiftDateTimeEnd, ShiftType shiftType) : base(employee, shiftDateTimeStart, shiftDateTimeEnd, shiftType)
+
+        public AssignedShift(Employee employee, DateTime shiftDateTimeStart, ShiftType shiftType) : base(employee, shiftDateTimeStart, shiftType)
+        {
+            this.employee = employee;
+            this.shiftDateTimeStart = shiftDateTimeStart;
+            this.shiftType = shiftType;
+        }
+
+        //null shift
+        public AssignedShift(string nullShift)
         {
 
         }
 
     }
 }
+
+/*
 ﻿using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -119,3 +133,4 @@ namespace Proj_Desktop_App
 
     }
 }
+*/
