@@ -9,19 +9,19 @@ namespace Proj_Desktop_App
     public class Employee
     {
         private int BSN;
-        private string firstName;
-        private string lastName;
-        private char gender;
-        private string phoneNumber;
-        private DateTime birthDate;
-        private string address;
-        private string certificates;
-        private string status;
-        private Departments department;
-        private string contactEmail;
-        private PositionType positionType;
-        private string jobTitle;
-        private double fte;
+        public string firstName { get; private set; }
+        public string lastName { get; private set; }
+        public char gender { get; private set; }
+        public string phoneNumber { get; private set; }
+        public DateTime birthDate { get; private set; }
+        public string address { get; private set; }
+        public string certificates { get; private set; }
+        public string status { get; private set; }
+        public Departments department { get; private set; }
+        public string contactEmail { get; private set; }
+        public PositionType positionType { get; private set; }
+        public string jobTitle { get; private set; }
+        public double fte { get; private set; }
 
         public Employee(int BSN, string firstName, string lastName, char gender, string phoneNumber, DateTime birthDate,
             string address, string certificates, string status, Departments department, string contactEmail,
@@ -41,6 +41,23 @@ namespace Proj_Desktop_App
             this.fte = fte;
             this.positionType = positionType;
             this.jobTitle = jobTitle;
+        }
+
+        public void UpdateInfo(string firstName, string lastName, char gender, string phoneNumber,
+            string address, string certificates, Departments department, string contactEmail,
+            double fte, PositionType positionType, string jobTitle)
+        {
+            if (this.firstName != firstName) { this.firstName = firstName; }
+            if (this.lastName != lastName) { this.lastName = lastName; }
+            if (this.gender != gender) { this.gender = gender; }
+            if (this.phoneNumber != phoneNumber) { this.phoneNumber = phoneNumber; }
+            if (this.address != address) { this.address = address; }
+            if (this.certificates != certificates) { this.certificates = certificates; }
+            if (this.department != department) { this.department = department; }
+            if (this.contactEmail != contactEmail) { this.contactEmail = contactEmail; }
+            if (this.fte != fte) { this.fte = fte; }
+            if (this.positionType != positionType) { this.positionType = positionType; }
+            if (this.jobTitle != jobTitle) { this.jobTitle = jobTitle; }
         }
 
         public string GetBsnAndName()
@@ -63,11 +80,6 @@ namespace Proj_Desktop_App
         public string GetInfo()
         {
             return $"{BSN} - {lastName}, {department}, {contactEmail}";
-        }
-
-        public void UpdateInfo()
-        {
-            // to be added
         }
 
         public void UpdateStatus(string newStatus)

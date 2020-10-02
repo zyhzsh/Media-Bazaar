@@ -37,8 +37,7 @@ namespace Proj_Desktop_App
             if (store.AddEmployee( BSN,  firstName,  lastName,  gender,  phoneNumber,  birthDate,
                 address,  certificates,  status,  department,  contactEmail,  fte, positionType, jobTitle))
             {
-                lbEmployees.Items.Clear();
-                lbEmployees.Items.AddRange(store.GetEmployees());
+                UpdateEmployees();
                 return true;
             }
             else
@@ -61,19 +60,26 @@ namespace Proj_Desktop_App
         private void btnUpdateEmployee_Click(object sender, EventArgs e)
         {
             int bsn = Convert.ToInt32(tbBSN.Text);
-            new EmployeeManagmentForm(this, bsn);
+            Employee employee = store.GetEmployee(bsn);
+            EmployeeManagmentForm emf = new EmployeeManagmentForm(this, employee);
         }
 
         private void btnFireEmployee_Click(object sender, EventArgs e)
         {
-            //get employee based on bsn
-            int bsn = Convert.ToInt32(tbBSN.Text);
-            Employee employee = store.GetEmployee(bsn);
-            if (employee != null)
+            string confirmQuestion = "Are you sure you want to fire this employee?";
+            DialogResult confirmResult = MessageBox.Show(confirmQuestion, "Confirm cancel", MessageBoxButtons.YesNo);
+            if (confirmResult == DialogResult.Yes)
             {
-                employee.UpdateStatus("Fired");
+                //get employee based on bsn
+                int bsn = Convert.ToInt32(tbBSN.Text);
+                Employee employee = store.GetEmployee(bsn);
+                if (employee != null)
+                {
+                    employee.UpdateStatus("Fired");
+                }
+                //change employee status
             }
-            //change employee status
+
         }
 
         private void lbEmployees_SelectedIndexChanged(object sender, EventArgs e)
@@ -85,6 +91,12 @@ namespace Proj_Desktop_App
                 string bsn = employeeInfo.Substring(0, indexOfDash - 1);
                 tbBSN.Text = bsn;
             }
+        }
+
+        public void UpdateEmployees()
+        {
+            lbEmployees.Items.Clear();
+            lbEmployees.Items.AddRange(store.GetEmployees());
         }
     }
 }

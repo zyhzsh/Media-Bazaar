@@ -14,6 +14,7 @@ namespace Proj_Desktop_App
     {
         private AdministratorForm adminForm;
         private bool updateEmployee;
+        private Employee employeeToUpdate;
 
         private void InitializeElements()
         {
@@ -24,6 +25,7 @@ namespace Proj_Desktop_App
 
         public EmployeeManagmentForm(AdministratorForm adminForm)
         {
+            // Adding new employee
             InitializeComponent();
             InitializeElements();
             this.adminForm = adminForm;
@@ -33,17 +35,32 @@ namespace Proj_Desktop_App
             rbMale.Checked = true;
         }
 
-        public EmployeeManagmentForm(AdministratorForm adminForm, int bsn)
+        public EmployeeManagmentForm(AdministratorForm adminForm, Employee employee)
         {
+            // Updateing employee data
             InitializeComponent();
             InitializeElements();
             this.adminForm = adminForm;
             updateEmployee = true;
 
-            // get employee object with this bsn
-            // fill in elements with current info
-
-            tbBSN.Text = bsn.ToString();
+            // Fill in with current employee data
+            employeeToUpdate = employee;
+            tbBSN.Text = employeeToUpdate.GetBSN().ToString();
+            tbFirstName.Text = employeeToUpdate.firstName;
+            tbLastName.Text = employeeToUpdate.lastName;
+            if (employeeToUpdate.gender == 'M') { rbMale.Checked = true; }
+            else if (employeeToUpdate.gender == 'F') { rbFemale.Checked = true; }
+            else { rbOther.Checked = true; }
+            dtpBirthdate.Value = employeeToUpdate.birthDate;
+            tbPhone.Text = employeeToUpdate.phoneNumber;
+            tbAddress.Text = employeeToUpdate.address;
+            tbEmail.Text = employeeToUpdate.contactEmail;
+            cbPosition.SelectedItem = employeeToUpdate.positionType;
+            cbDepartment.SelectedItem = employeeToUpdate.department;
+            tbJobTitle.Text = employeeToUpdate.jobTitle;
+            nudFTE.Value = Convert.ToDecimal(employeeToUpdate.fte);
+            tbCertificates.Text = employeeToUpdate.certificates;
+            //can not be changed
             tbBSN.Enabled = false;
             dtpBirthdate.Enabled = false;
             btnConfirm.Text = "Save changes";
@@ -52,51 +69,42 @@ namespace Proj_Desktop_App
         private void btnConfirm_Click(object sender, EventArgs e)
         {
             int bsn;
-            string firstName;
-            string lastName;
+            string firstName = tbFirstName.Text;
+            string lastName = tbLastName.Text;
             char gender;
             DateTime birthdate;
-            string phone;
-            string address;
-            string email;
+            string phone = tbPhone.Text;
+            string address = tbAddress.Text;
+            string email = tbEmail.Text;
             Departments department;
             PositionType position;
-            string jobTitle;
+            string jobTitle = tbJobTitle.Text;
             double fte;
-            string certificates;
+            string certificates = tbCertificates.Text;
 
-            if (!updateEmployee)
-            {
-                // create new employee object
-
-                firstName = tbFirstName.Text;
-                lastName = tbLastName.Text;
-                phone = tbPhone.Text;
-                address = tbAddress.Text;
-                email = tbEmail.Text;
-                jobTitle = tbJobTitle.Text;
-                certificates = tbCertificates.Text;
-                // check string inputs
-                if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName) ||
+            // check string inputs
+            if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName) ||
                     string.IsNullOrWhiteSpace(phone) || string.IsNullOrWhiteSpace(address) ||
-                    string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(jobTitle) ||
-                    string.IsNullOrWhiteSpace(certificates))
+                    string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(jobTitle))
+            {
+                MessageBox.Show("Please fill in all employee data.");
+            }
+            else
+            {
+                try
                 {
-                    MessageBox.Show("Please fill in all employee data.");
-                }
-                else
-                {
-                    try
-                    {
-                        bsn = Convert.ToInt32(tbBSN.Text);
-                        birthdate = dtpBirthdate.Value;
-                        department = (Departments)cbDepartment.SelectedItem;
-                        position = (PositionType)cbPosition.SelectedItem;
-                        fte = Convert.ToDouble(nudFTE.Value);
-                        if (rbMale.Checked) { gender = 'M'; }
-                        else if (rbFemale.Checked) { gender = 'F'; }
-                        else { gender = 'O'; }
+                    bsn = Convert.ToInt32(tbBSN.Text);
+                    birthdate = dtpBirthdate.Value;
+                    department = (Departments)cbDepartment.SelectedItem;
+                    position = (PositionType)cbPosition.SelectedItem;
+                    fte = Convert.ToDouble(nudFTE.Value);
+                    if (rbMale.Checked) { gender = 'M'; }
+                    else if (rbFemale.Checked) { gender = 'F'; }
+                    else { gender = 'O'; }
 
+                    if (!updateEmployee)
+                    {
+                        // Add new employee
                         if (adminForm.AddNewEmployee(bsn, firstName, lastName, gender, phone, birthdate, address, certificates, "Employed",
                             department, email, fte, position, jobTitle))
                         {
@@ -108,15 +116,20 @@ namespace Proj_Desktop_App
                         }
 
                     }
-                    catch (Exception)
+                    else
                     {
-                        MessageBox.Show("Please input a valid BSN.");
+                        // Update employee
+                        employeeToUpdate.UpdateInfo(firstName, lastName, gender, phone, address, certificates,
+                            department, email, fte, position, jobTitle);
+                        adminForm.UpdateEmployees();
+                        this.Close();
                     }
+
                 }
-            }
-            else
-            {
-                // Update employee data
+                catch (Exception)
+                {
+                    MessageBox.Show("Please input a valid BSN.");
+                }
             }
         }
 

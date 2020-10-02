@@ -24,7 +24,28 @@ namespace Proj_Desktop_App
 
         private void btLogin_Click(object sender, EventArgs e)
         {
-
+            PositionType position = login.CheckLogin(tbLogInUsername.Text, tbLogInPassword.Text);
+            if (position == PositionType.Administrator)
+            {
+                // open admin form
+                new AdministratorForm(this, mediaBazaar);
+            }
+            else if (position == PositionType.Depot_Worker)
+            {
+                // open depot worker form
+            }
+            else if (position == PositionType.Sales_Manager)
+            {
+                // open sales manager form
+            }
+            else if (position == PositionType.Depot_Manager)
+            {
+                // open depot manager form
+            }
+            else
+            {
+                MessageBox.Show("Incorrect username or password.");
+            }
         }
 
         private void btStatistics_Click(object sender, EventArgs e)
