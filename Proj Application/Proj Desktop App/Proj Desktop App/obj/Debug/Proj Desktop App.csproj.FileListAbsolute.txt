@@ -561,3 +561,5 @@ C:\Users\m_018\Documents\GitHub\projectmedia-bazaar\Proj Application\Proj Deskto
 C:\Users\m_018\Documents\GitHub\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj Desktop App.csproj.CopyComplete
 C:\Users\Bloobins\Desktop\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.AdministratorForm.resources
 C:\Users\Bloobins\Desktop\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.EmployeeManagmentForm.resources
+C:\Users\Bloobins\Desktop\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.DepotManager.resources
+C:\Users\Bloobins\Desktop\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.ProductManagementForm.resources
