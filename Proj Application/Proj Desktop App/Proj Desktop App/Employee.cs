@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,18 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proj_Desktop_App
 {
-   public  class Employee
-=======
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Proj_Desktop_App
-{
-    class Employee
->>>>>>> parent of 83ec41c... ScheduleManager implemented
+   public class Employee
     {
         public int BSN { get; set; }
         public string Address { get; set; }
@@ -51,23 +39,16 @@ namespace Proj_Desktop_App
             this.positionType = positionType;
         }
 
-
-   
-
         public string GetBsnAndName()
         {
-<<<<<<< HEAD
             return $"BSN: {this.BSN} Name:{this.firstName} {this.LastName}";
-=======
-            return $"BSN:{this.BSN} ----- Name:{this.firstName} {this.LastName}";
->>>>>>> parent of 83ec41c... ScheduleManager implemented
         }
 
         public string Biscinfo()
         {
-<<<<<<< HEAD
             return $"Name:{this.firstName} {this.LastName} Department:{this.department} ContactEmail:{this.contactEmail} Certificates:{this.certificates}"
-                +$" FTE:{this.fte}";   
+                +$" FTE:{this.fte}";
+        
         }
         public string[] GetDetial()
         {
@@ -81,21 +62,9 @@ namespace Proj_Desktop_App
             temp.Add($"FTE:  {this.fte}");
             temp.Add($"----------------------------------");
             return temp.ToArray();
-        
+
         }
 
-    
-    
+
     }
 }
-=======
-            return $"Name:{this.firstName} {this.LastName} Department:{this.department} ContactEmail:{this.contactEmail} Certificates:{this.certificates}"
-                +$" FTE:{this.fte}";
-        
-        }
-    
-    
-    
-    }
-}
->>>>>>> parent of 83ec41c... ScheduleManager implemented
