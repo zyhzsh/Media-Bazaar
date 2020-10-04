@@ -100,6 +100,8 @@
     <Compile Include="Departments.cs" />
     <Compile Include="DepotWorker.cs" />
     <Compile Include="Employee.cs" />
+    <Compile Include="EmployeeManager.cs" />
+    <Compile Include="EmployeeShift.cs" />
     <Compile Include="EmployeeStatistics.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,8 +126,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaleWorker.cs" />
-    <Compile Include="Schedule.cs" />
-    <Compile Include="ScheduleManager.cs" />
+    <Compile Include="Schdule.cs" />
+    <Compile Include="SchduleManager.cs" />
     <Compile Include="Scheduling.cs">
       <SubType>Form</SubType>
     </Compile>

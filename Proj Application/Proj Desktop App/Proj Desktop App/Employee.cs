@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proj_Desktop_App
 {
-    class Employee
+   public  class Employee
     {
         public int BSN { get; set; }
         public string Address { get; set; }
@@ -39,18 +39,34 @@ namespace Proj_Desktop_App
             this.positionType = positionType;
         }
 
+
+   
+
         public string GetBsnAndName()
         {
-            return $"BSN:{this.BSN} ----- Name:{this.firstName} {this.LastName}";
+            return $"BSN: {this.BSN} Name:{this.firstName} {this.LastName}";
         }
 
         public string Biscinfo()
         {
             return $"Name:{this.firstName} {this.LastName} Department:{this.department} ContactEmail:{this.contactEmail} Certificates:{this.certificates}"
-                +$" FTE:{this.fte}";
+                +$" FTE:{this.fte}";   
+        }
+        public string[] GetDetial()
+        {
+            List<string> temp = new List<string>();
+            temp.Add($"Employee BSN:{this.BSN}");
+            temp.Add($"Name: {this.firstName} {this.LastName}");
+            temp.Add($"Gender: {this.gender}");
+            temp.Add($"Department: {this.department}");
+            temp.Add($"ContactEmail:  {this.contactEmail}");
+            temp.Add($"Certificates:  {this.certificates}");
+            temp.Add($"FTE:  {this.fte}");
+            temp.Add($"----------------------------------");
+            return temp.ToArray();
         
         }
-    
+
     
     
     }

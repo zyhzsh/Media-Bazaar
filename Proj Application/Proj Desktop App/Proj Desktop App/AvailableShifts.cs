@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace Proj_Desktop_App
 {
     class AvailableShifts
-    {
-
+    { 
     }
+
+    
 }
