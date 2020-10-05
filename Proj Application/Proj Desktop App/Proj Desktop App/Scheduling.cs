@@ -150,7 +150,6 @@ namespace Proj_Desktop_App
                         tempoemployees.Add(Em);
                     }
                 }
-            }
             foreach (Employee e in tempoemployees)
             {
 
@@ -158,15 +157,6 @@ namespace Proj_Desktop_App
             }
 
         }
-
-
-
-
-
-
-
-
-
         private void btnRmvEmployeeShift_Click(object sender, EventArgs e)
         {
             List<int> seletedbsn = new List<int>();
@@ -211,7 +201,7 @@ namespace Proj_Desktop_App
             {
                 foreach (Employee Em in employeeManager.GetEmployees())
                 {
-                    if (Em.BSN == bsn)
+                    if (Em.GetBSN() == bsn)
                     {
                         tempoemployees.Add(Em);
                     }

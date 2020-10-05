@@ -33,7 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btLogin = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnOpenSchedule = new System.Windows.Forms.Button();
             this.btEmployeeStatics = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.btnProductStatisticsMenu = new System.Windows.Forms.Button();
@@ -87,15 +87,16 @@
             this.btLogin.UseVisualStyleBackColor = true;
             this.btLogin.Click += new System.EventHandler(this.btLogin_Click);
             // 
-            // button2
+            // btnOpenSchedule
             // 
-            this.button2.Location = new System.Drawing.Point(9, 168);
-            this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(249, 69);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Schedule";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnOpenSchedule.Location = new System.Drawing.Point(9, 168);
+            this.btnOpenSchedule.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnOpenSchedule.Name = "btnOpenSchedule";
+            this.btnOpenSchedule.Size = new System.Drawing.Size(249, 69);
+            this.btnOpenSchedule.TabIndex = 5;
+            this.btnOpenSchedule.Text = "Schedule";
+            this.btnOpenSchedule.UseVisualStyleBackColor = true;
+            this.btnOpenSchedule.Click += new System.EventHandler(this.btnOpenSchedule_Click);
             // 
             // btEmployeeStatics
             // 
@@ -161,7 +162,7 @@
             this.Controls.Add(this.btnProductStatisticsMenu);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.btEmployeeStatics);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnOpenSchedule);
             this.Controls.Add(this.btLogin);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -182,7 +183,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btLogin;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnOpenSchedule;
         private System.Windows.Forms.Button btEmployeeStatics;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button btnLogIn;

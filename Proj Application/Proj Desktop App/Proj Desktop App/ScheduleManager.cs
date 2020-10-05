@@ -167,7 +167,7 @@ namespace Proj_Desktop_App
                     {
                         foreach (AssignedShift e in temp)
                         {
-                            if (e.GetEmployee().BSN == i)
+                            if (e.GetEmployee().GetBSN() == i)
                             {
                                 e.UpDateShift(shiftType);
                                 haverecords = true;

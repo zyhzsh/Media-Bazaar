@@ -94,14 +94,32 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdministratorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdministratorForm.Designer.cs">
+      <DependentUpon>AdministratorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Adminstration.cs" />
     <Compile Include="AssignedShift.cs" />
     <Compile Include="AvailableShift.cs" />
     <Compile Include="AvailableShifts.cs" />
     <Compile Include="Departments.cs" />
+    <Compile Include="DepotManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DepotManager.Designer.cs">
+      <DependentUpon>DepotManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="DepotWorker.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="EmployeeManager.cs" />
+    <Compile Include="EmployeeManagmentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmployeeManagmentForm.Designer.cs">
+      <DependentUpon>EmployeeManagmentForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="EmployeeShift.cs" />
     <Compile Include="EmployeeStatistics.cs">
       <SubType>Form</SubType>
@@ -117,7 +135,17 @@
     </Compile>
     <Compile Include="Login.cs" />
     <Compile Include="Manager.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="PostionType.cs" />
+    <Compile Include="Product.cs" />
+    <Compile Include="ProductManagementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProductManagementFOrm.Designer.cs">
+      <DependentUpon>ProductManagementForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProductStatistics.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,6 +154,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RestockRequest.cs" />
     <Compile Include="SaleWorker.cs" />
     <Compile Include="Schedule.cs" />
     <Compile Include="ScheduleManager.cs" />
@@ -143,11 +172,23 @@
     <Compile Include="WorkerStockRequests.Designer.cs">
       <DependentUpon>WorkerStockRequests.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AdministratorForm.resx">
+      <DependentUpon>AdministratorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DepotManager.resx">
+      <DependentUpon>DepotManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmployeeManagmentForm.resx">
+      <DependentUpon>EmployeeManagmentForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EmployeeStatistics.resx">
       <DependentUpon>EmployeeStatistics.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProductManagementFOrm.resx">
+      <DependentUpon>ProductManagementForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProductStatistics.resx">
       <DependentUpon>ProductStatistics.cs</DependentUpon>
@@ -180,6 +221,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\Proj Desktop App.exe" />
+    <Content Include="bin\Debug\Proj Desktop App.pdb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

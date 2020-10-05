@@ -93,8 +93,30 @@ namespace Proj_Desktop_App
                 $"phone: {phoneNumber}, address: {address}, email: {contactEmail}\n" +
                 $"department: {department}, position: {positionType}, jobTitle: {jobTitle}, fte: {fte}, status: {status}, certificates: {certificates}";
         }
-    
-    
-    
+
+        public string[] GetDetial()
+
+        {
+
+            List<string> temp = new List<string>();
+
+            temp.Add($"Employee BSN:{this.BSN}");
+
+            temp.Add($"Name: {this.firstName} {this.lastName}");
+
+            temp.Add($"Gender: {this.gender}");
+
+            temp.Add($"Department: {this.department}");
+
+            temp.Add($"ContactEmail: {this.contactEmail}");
+
+            temp.Add($"Certificates: {this.certificates}");
+
+            temp.Add($"FTE: {this.fte}");
+
+            temp.Add($"----------------------------------");
+
+            return temp.ToArray();
+        }
     }
 }

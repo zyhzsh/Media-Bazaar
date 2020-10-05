@@ -77,5 +77,11 @@ namespace Proj_Desktop_App
             WorkerStockRequests RestockForm = new WorkerStockRequests(mediaBazaar);
             RestockForm.Show(this);
         }
+
+        private void btnOpenSchedule_Click(object sender, EventArgs e)
+        {
+            Scheduling scheduleForm = new Scheduling();
+            scheduleForm.Show(this);
+        }
     }
 }
