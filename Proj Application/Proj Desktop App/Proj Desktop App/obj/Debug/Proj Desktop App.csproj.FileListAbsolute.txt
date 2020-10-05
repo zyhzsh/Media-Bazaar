@@ -700,3 +700,5 @@ C:\Users\Bloobins\Desktop\projectmedia-bazaar\Proj Application\Proj Desktop App\
 C:\Users\Bloobins\Desktop\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.EmployeeManagmentForm.resources
 C:\Users\Bloobins\Desktop\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.DepotManager.resources
 C:\Users\Bloobins\Desktop\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.ProductManagementForm.resources
+C:\Users\m_018\Documents\GitHub\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.DepotManager.resources
+C:\Users\m_018\Documents\GitHub\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.ProductManagementForm.resources
