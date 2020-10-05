@@ -62,8 +62,20 @@ namespace Proj_Desktop_App
 
         private void btnProductStatisticsMenu_Click(object sender, EventArgs e)
         {
-            ProductStatistics productStatistics = new ProductStatistics(mediaBazaar.Products);
+            ProductStatistics productStatistics = new ProductStatistics(mediaBazaar);
             productStatistics.Show(this);
+        }
+
+        private void btnDepotManager_Click(object sender, EventArgs e)
+        {
+            DepotManager depotManager = new DepotManager(mediaBazaar);
+            depotManager.Show(this);
+        }
+
+        private void btnDepotWorkerForm_Click(object sender, EventArgs e)
+        {
+            WorkerStockRequests RestockForm = new WorkerStockRequests(mediaBazaar);
+            RestockForm.Show(this);
         }
     }
 }

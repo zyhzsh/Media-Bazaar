@@ -696,3 +696,7 @@ C:\Users\Mohammed\Documents\GitHub\projectmedia-bazaar\Proj Application\Proj Des
 C:\Users\Mohammed\Documents\GitHub\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj Desktop App.csproj.CopyComplete
 C:\Users\Mohammed\Documents\GitHub\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj Desktop App.exe
 C:\Users\Mohammed\Documents\GitHub\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj Desktop App.pdb
+C:\Users\Bloobins\Desktop\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.AdministratorForm.resources
+C:\Users\Bloobins\Desktop\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.EmployeeManagmentForm.resources
+C:\Users\Bloobins\Desktop\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.DepotManager.resources
+C:\Users\Bloobins\Desktop\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.ProductManagementForm.resources
