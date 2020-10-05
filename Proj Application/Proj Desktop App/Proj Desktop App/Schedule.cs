@@ -13,23 +13,70 @@ namespace Proj_Desktop_App
         //or this class gets filled for the date and there is another entity (class/db) that has everything in it and sorts it per date
         //currently this is the collection class with all the info
 
-        public List<AssignedShift> assignedShifts;
-        public List<AvailableShifts> availableShifts; //not in use as of yet
+        private static List<AssignedShift> assignedShifts;
+        private static List<AvailableShifts> availableShifts; //not in use as of yet
 
-        public Schedule( List<AssignedShift> assignedShifts)
+        public Schedule(List<AssignedShift> AssignedShifts)
         {
-            this.assignedShifts = assignedShifts;
+            assignedShifts = AssignedShifts;
         }
+        public Schedule(string test)
+        {
+            //mock data still needs to be done
+        }
+
 
         public Schedule()
         {
+        }
+
+        public List<AssignedShift> GetAssignedShifts()
+        {
+            return assignedShifts;
+        }
+        public List<AvailableShifts> GetAvailableShifts()
+        {
+            return availableShifts;
+        }
+
+
+
+        /// <summary>
+        ///Specify the day
+        ///This function will set some special rules then 
+        ///Load period of data from databas
+        /// </summary>
+        public void LoadSchduleFormDateBase(DateTime dateTime)
+        {
+            //Specify the day
+            //This function will set some special rules then 
+            //Load period of data Form databas
+            
+
+
+
+            //But For now ...
             assignedShifts = new List<AssignedShift>();
         }
 
-        public Schedule(string test)
+
+
+        public void UpDateSchdule(List<AssignedShift> UpdatedShifts)
         {
-             //mock data still needs to be done
+            assignedShifts = UpdatedShifts;
+            //1.Compare different
+            //2.Send to database
+            SaveSchduleToDateBase();
         }
+
+
+        private void SaveSchduleToDateBase()
+        {
+            //Write Shift info to database
+
+            //for now ...
+        }
+
 
         /* this part is taken over by schedule manager
         
@@ -103,9 +150,9 @@ namespace Proj_Desktop_App
         {
             AssignedShift changedShift = new AssignedShift(employee, shiftDateTimeStart, shiftType);
 
-            foreach(AssignedShift shift in assignedShifts)
+            foreach (AssignedShift shift in assignedShifts)
             {
-                if(shift == changeShift)
+                if (shift == changeShift)
                 {
                     assignedShifts.Remove(shift);
                     assignedShifts.Add(changedShift);

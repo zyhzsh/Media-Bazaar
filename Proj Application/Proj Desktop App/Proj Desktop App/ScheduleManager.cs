@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Renci.SshNet.Messages;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Schema;
+using System.Windows.Forms;
 
 namespace Proj_Desktop_App
 {
@@ -13,24 +11,32 @@ namespace Proj_Desktop_App
         List<AssignedShift> allAssignedShifts;
 
         //This contains all available shifts to be filled. Might be used for a standard roster later
-        List<AvailableShifts> allAvailableShifts;
+        List<AvailableShift> allAvailableShifts;
 
-        public ScheduleManager(List <AssignedShift> allAssignedShifts)
+        public ScheduleManager(List<AssignedShift> allAssignedShifts)
         {
             this.allAssignedShifts = allAssignedShifts;
         }
 
-        public ScheduleManager(List<AssignedShift> allAssignedShifts, List<AvailableShifts> allAvailableShifts)
+        public ScheduleManager(List<AssignedShift> allAssignedShifts, List<AvailableShift> allAvailableShifts)
         {
             this.allAssignedShifts = allAssignedShifts;
-            this.allAvailableShifts = allAvailableShifts;                
+            this.allAvailableShifts = allAvailableShifts;
         }
 
         public ScheduleManager()
         {
             this.allAssignedShifts = new List<AssignedShift>();
-            this.allAvailableShifts = new List<AvailableShifts>();
+            this.allAvailableShifts = new List<AvailableShift>();
         }
+
+        //Test Date
+        public void AddTestDate()
+        {
+            this.allAssignedShifts = new List<AssignedShift>();
+
+        }
+
 
         //fill schedule for 1 date
         public Schedule GetDateShifts(DateTime date)
@@ -39,9 +45,9 @@ namespace Proj_Desktop_App
 
             foreach (AssignedShift shift in allAssignedShifts)
             {
-                if (shift.shiftDateTime.Date == date.Date)
+                if (shift.GetDate().Date == date.Date)
                 {
-                    schedule.assignedShifts.Add(shift);
+                    schedule.GetAssignedShifts().Add(shift);
                 }
             }
 
@@ -63,9 +69,9 @@ namespace Proj_Desktop_App
             {
                 foreach (DateTime date in dates)
                 {
-                    if (shift.shiftDateTime.Date == date.Date)
+                    if (shift.GetDate().Date == date.Date)
                     {
-                        schedule.assignedShifts.Add(shift);
+                        schedule.GetAssignedShifts().Add(shift);
                     }
                 }
             }
@@ -116,6 +122,140 @@ namespace Proj_Desktop_App
 
             return nullShift;
         }
+
+        /// <summary>
+        /// Specify the day then return list of employee's information
+        /// </summary>
+        /// <param name="time"> DateTime</param>
+        /// <returns></returns>
+        public string[] GetEmployeesInfoByDate(DateTime time)
+        {
+            List<string> temp = new List<string>();
+            foreach (AssignedShift e in allAssignedShifts)
+            {
+                if (e.GetDate().ToString("dd/MM/yyyy") == time.ToString("dd/MM/yyyy"))
+                {
+                    temp.Add($"{e.GetEmployee().GetBsnAndName()} Shift:{e.GetShiftTypeToString()} {e.GetDate().ToString("dddd, dd MMMM")}");
+                }
+            }
+            return temp.ToArray();
+        }
+        /// <summary>
+        /// Get list of BSN , Date, Shiftype Then Assigned the shift
+        /// </summary>
+        /// <param name="shiftType"></param>
+        /// <param name="date"></param>
+        /// <param name="bsn"></param>
+        /// <returns></returns>
+        public bool AssignShift(ShiftType shiftType, DateTime date, List<int> bsns)
+        {
+            try
+            {
+                //ReLoadSchdule(date); 
+                List<AssignedShift> temp = new List<AssignedShift>();
+                foreach (AssignedShift e in allAssignedShifts)
+                {
+                    if (e.GetDate().ToString("dd/MM/yyyy") == date.ToString("dd/MM/yyyy"))
+                    {
+                        temp.Add(e);
+                    }
+                }
+                foreach (int i in bsns)
+                {
+                    bool haverecords = false;
+                    while (haverecords == false)
+                    {
+                        foreach (AssignedShift e in temp)
+                        {
+                            if (e.GetEmployee().BSN == i)
+                            {
+                                e.UpDateShift(shiftType);
+                                haverecords = true;
+                                break;
+                            }
+                        }
+                        if (haverecords == false)
+                        {
+                            EmployeeManager x = new EmployeeManager();
+                            AssignedShift newShift = new AssignedShift(x.GetEmployeeBybsn(i), date, shiftType);
+                            allAssignedShifts.Add(newShift);
+                            haverecords = true;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+            //UpDateAssignedShiftToSchdule();
+            return true;
+        }
+
+        public bool RemoveShift(DateTime date, List<int> bsns)
+        {
+            try
+            {
+                EmployeeManager x = new EmployeeManager();     
+                List<Employee> emp = new List<Employee>();
+                foreach (int i in bsns)
+                {
+                    emp.Add(x.GetEmployeeBybsn(i));
+                }
+                List<AssignedShift> temp = new List<AssignedShift>();
+                foreach (AssignedShift e in allAssignedShifts)
+                {
+                    if (e.GetDate().ToString("dd/MM/yyyy") == date.ToString("dd/MM/yyyy"))
+                    {
+                        temp.Add(e);
+                    }
+                }
+                foreach (Employee e in emp)
+                {
+                    foreach (AssignedShift b in temp)
+                    {
+                        if (b.GetEmployee() == e)
+                        {
+                            allAssignedShifts.Remove(b);
+                            break;
+                        }
+                    }
+                }
+                //UpDateAssignedShiftToSchdule();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+            return true;
+        }
+
+
+        /// <summary>
+        /// Update Current list of Shift information form Schdule Class
+        /// </summary>
+        /// <param name="date"></param>
+        private void ReLoadSchdule(DateTime date)
+        {
+            Schedule a = new Schedule();
+            a.LoadSchduleFormDateBase(date);
+            allAssignedShifts = a.GetAssignedShifts();
+            //allAvailableShifts=a.GetAvailableShifts();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        private void UpDateAssignedShiftToSchdule()
+        {
+            Schedule a = new Schedule();
+            a.UpDateSchdule(allAssignedShifts);
+        }
+
+
+
+
 
     }
 }
