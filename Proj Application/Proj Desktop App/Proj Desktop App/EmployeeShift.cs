@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace Proj_Desktop_App
 {
-    class EmployeeShift
+    public abstract class EmployeeShift
     {
         Employee employee;
-        public DateTime shiftDateTimeStart;
-        public DateTime shiftDateTimeEnd;
+        public DateTime shiftDateTime;
         ShiftType shiftType;
 
         public EmployeeShift(Employee employee, DateTime shiftDateTimeStart, DateTime shiftDateTimeEnd, ShiftType shiftType)
