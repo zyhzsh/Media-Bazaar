@@ -37,12 +37,14 @@
             this.btEmployeeStatics = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.btnProductStatisticsMenu = new System.Windows.Forms.Button();
+            this.btnDepotManager = new System.Windows.Forms.Button();
+            this.btnDepotWorkerForm = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbLogInUsername
             // 
             this.tbLogInUsername.Location = new System.Drawing.Point(113, 26);
-            this.tbLogInUsername.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbLogInUsername.Margin = new System.Windows.Forms.Padding(4);
             this.tbLogInUsername.Name = "tbLogInUsername";
             this.tbLogInUsername.Size = new System.Drawing.Size(212, 22);
             this.tbLogInUsername.TabIndex = 0;
@@ -50,7 +52,7 @@
             // tbLogInPassword
             // 
             this.tbLogInPassword.Location = new System.Drawing.Point(113, 58);
-            this.tbLogInPassword.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbLogInPassword.Margin = new System.Windows.Forms.Padding(4);
             this.tbLogInPassword.Name = "tbLogInPassword";
             this.tbLogInPassword.PasswordChar = '*';
             this.tbLogInPassword.Size = new System.Drawing.Size(212, 22);
@@ -118,7 +120,7 @@
             // 
             // btnProductStatisticsMenu
             // 
-            this.btnProductStatisticsMenu.Location = new System.Drawing.Point(554, 168);
+            this.btnProductStatisticsMenu.Location = new System.Drawing.Point(520, 168);
             this.btnProductStatisticsMenu.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnProductStatisticsMenu.Name = "btnProductStatisticsMenu";
             this.btnProductStatisticsMenu.Size = new System.Drawing.Size(249, 69);
@@ -127,11 +129,35 @@
             this.btnProductStatisticsMenu.UseVisualStyleBackColor = true;
             this.btnProductStatisticsMenu.Click += new System.EventHandler(this.btnProductStatisticsMenu_Click);
             // 
+            // btnDepotManager
+            // 
+            this.btnDepotManager.Location = new System.Drawing.Point(520, 241);
+            this.btnDepotManager.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnDepotManager.Name = "btnDepotManager";
+            this.btnDepotManager.Size = new System.Drawing.Size(249, 69);
+            this.btnDepotManager.TabIndex = 9;
+            this.btnDepotManager.Text = "Depot Manager";
+            this.btnDepotManager.UseVisualStyleBackColor = true;
+            this.btnDepotManager.Click += new System.EventHandler(this.btnDepotManager_Click);
+            // 
+            // btnDepotWorkerForm
+            // 
+            this.btnDepotWorkerForm.Location = new System.Drawing.Point(520, 314);
+            this.btnDepotWorkerForm.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnDepotWorkerForm.Name = "btnDepotWorkerForm";
+            this.btnDepotWorkerForm.Size = new System.Drawing.Size(249, 69);
+            this.btnDepotWorkerForm.TabIndex = 10;
+            this.btnDepotWorkerForm.Text = "Depot Worker";
+            this.btnDepotWorkerForm.UseVisualStyleBackColor = true;
+            this.btnDepotWorkerForm.Click += new System.EventHandler(this.btnDepotWorkerForm_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1210, 481);
+            this.Controls.Add(this.btnDepotWorkerForm);
+            this.Controls.Add(this.btnDepotManager);
             this.Controls.Add(this.btnProductStatisticsMenu);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.btEmployeeStatics);
@@ -166,6 +192,8 @@
         private System.Windows.Forms.Button btnOpenPrdtStatistics;
         private System.Windows.Forms.Button btnOpenEmpManagement;
         private System.Windows.Forms.Button btnProductStatisticsMenu;
+        private System.Windows.Forms.Button btnDepotManager;
+        private System.Windows.Forms.Button btnDepotWorkerForm;
     }
 }
 

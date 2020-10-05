@@ -8,36 +8,30 @@ namespace Proj_Desktop_App
 {
     class Login
     {
-        public PositionType CheckPossition { get; private set; }
-
         public Login()
         {
 
         }
 
-        public bool CheckLogin(string username, string password)
+        public PositionType CheckLogin(string username, string password)
         {
             if (username == "admin" && password == "admin")
             {
-                CheckPossition = PositionType.Administrator;
-                return true;
+                return PositionType.Administrator;
             }
             else if (username == "depot_manager" && password == "depot_manager")
             {
-                CheckPossition = PositionType.Depot_Manager;
-                return true;
+                return PositionType.Depot_Manager;
             }
             else if (username == "sales_manager" && password == "sales_manager")
             {
-                CheckPossition = PositionType.Sales_Manager;
-                return true;
+                return PositionType.Sales_Manager;
             }
             else if (username == "depot_worker" && password == "depot_worker")
             {
-                CheckPossition = PositionType.Depot_Worker;
-                return true;
+                return PositionType.Depot_Worker;
             }
-            else { return false; }
+            else { return PositionType.Other; }
         }
     }
 }
