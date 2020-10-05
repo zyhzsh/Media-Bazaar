@@ -34,8 +34,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btLogin = new System.Windows.Forms.Button();
             this.btnOpenSchedule = new System.Windows.Forms.Button();
-            this.btEmployeeStatics = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btnEmpStatistics = new System.Windows.Forms.Button();
             this.btnProductStatisticsMenu = new System.Windows.Forms.Button();
             this.btnDepotManager = new System.Windows.Forms.Button();
             this.btnDepotWorkerForm = new System.Windows.Forms.Button();
@@ -98,26 +97,16 @@
             this.btnOpenSchedule.UseVisualStyleBackColor = true;
             this.btnOpenSchedule.Click += new System.EventHandler(this.btnOpenSchedule_Click);
             // 
-            // btEmployeeStatics
+            // btnEmpStatistics
             // 
-            this.btEmployeeStatics.Location = new System.Drawing.Point(265, 168);
-            this.btEmployeeStatics.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btEmployeeStatics.Name = "btEmployeeStatics";
-            this.btEmployeeStatics.Size = new System.Drawing.Size(249, 69);
-            this.btEmployeeStatics.TabIndex = 6;
-            this.btEmployeeStatics.Text = "Employee Statistics";
-            this.btEmployeeStatics.UseVisualStyleBackColor = true;
-            this.btEmployeeStatics.Click += new System.EventHandler(this.btStatistics_Click);
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(949, 168);
-            this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(249, 69);
-            this.button4.TabIndex = 7;
-            this.button4.Text = "Department Management";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnEmpStatistics.Location = new System.Drawing.Point(265, 168);
+            this.btnEmpStatistics.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnEmpStatistics.Name = "btnEmpStatistics";
+            this.btnEmpStatistics.Size = new System.Drawing.Size(249, 69);
+            this.btnEmpStatistics.TabIndex = 6;
+            this.btnEmpStatistics.Text = "Employee Statistics";
+            this.btnEmpStatistics.UseVisualStyleBackColor = true;
+            this.btnEmpStatistics.Click += new System.EventHandler(this.btStatistics_Click);
             // 
             // btnProductStatisticsMenu
             // 
@@ -160,8 +149,7 @@
             this.Controls.Add(this.btnDepotWorkerForm);
             this.Controls.Add(this.btnDepotManager);
             this.Controls.Add(this.btnProductStatisticsMenu);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.btEmployeeStatics);
+            this.Controls.Add(this.btnEmpStatistics);
             this.Controls.Add(this.btnOpenSchedule);
             this.Controls.Add(this.btLogin);
             this.Controls.Add(this.label2);
@@ -184,8 +172,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btLogin;
         private System.Windows.Forms.Button btnOpenSchedule;
-        private System.Windows.Forms.Button btEmployeeStatics;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnEmpStatistics;
         private System.Windows.Forms.Button btnLogIn;
         private System.Windows.Forms.Button btnOpenScheduling;
         private System.Windows.Forms.Button btnOpenEmpStatistics;
