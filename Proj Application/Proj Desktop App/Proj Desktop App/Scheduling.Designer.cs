@@ -110,7 +110,7 @@
             this.label1.Size = new System.Drawing.Size(64, 13);
             this.label1.TabIndex = 18;
             this.label1.Text = "Employee(s)";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            //this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 

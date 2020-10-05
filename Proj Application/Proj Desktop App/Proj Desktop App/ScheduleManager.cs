@@ -9,10 +9,11 @@ namespace Proj_Desktop_App
     {
         //all the shifts ever assigned will be recorded here. This will change when a database is connected
         List<AssignedShift> allAssignedShifts;
-
         //This contains all available shifts to be filled. Might be used for a standard roster later
         List<AvailableShift> allAvailableShifts;
-
+        List<Employee> employees;
+        Store store;
+        
         public ScheduleManager(List<AssignedShift> allAssignedShifts)
         {
             this.allAssignedShifts = allAssignedShifts;
@@ -24,8 +25,9 @@ namespace Proj_Desktop_App
             this.allAvailableShifts = allAvailableShifts;
         }
 
-        public ScheduleManager()
+        public ScheduleManager(Store store)
         {
+            this.store = store;
             this.allAssignedShifts = new List<AssignedShift>();
             this.allAvailableShifts = new List<AvailableShift>();
         }
@@ -176,8 +178,7 @@ namespace Proj_Desktop_App
                         }
                         if (haverecords == false)
                         {
-                            EmployeeManager x = new EmployeeManager();
-                            AssignedShift newShift = new AssignedShift(x.GetEmployeeBybsn(i), date, shiftType);
+                            AssignedShift newShift = new AssignedShift(store.GetEmployee(i), date, shiftType);
                             allAssignedShifts.Add(newShift);
                             haverecords = true;
                         }
@@ -197,11 +198,10 @@ namespace Proj_Desktop_App
         {
             try
             {
-                EmployeeManager x = new EmployeeManager();     
                 List<Employee> emp = new List<Employee>();
                 foreach (int i in bsns)
                 {
-                    emp.Add(x.GetEmployeeBybsn(i));
+                    emp.Add(store.GetEmployee(i));
                 }
                 List<AssignedShift> temp = new List<AssignedShift>();
                 foreach (AssignedShift e in allAssignedShifts)

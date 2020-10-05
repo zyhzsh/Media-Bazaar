@@ -68,8 +68,7 @@ namespace Proj_Desktop_App
         public string Biscinfo()
         {
             return $"Name:{this.firstName} {this.lastName} Department:{this.department} ContactEmail:{this.contactEmail} Certificates:{this.certificates}"
-                +$" FTE:{this.fte}";
-        
+                +$" FTE:{this.fte}";   
         }
 
         public int GetBSN()
@@ -94,7 +93,7 @@ namespace Proj_Desktop_App
                 $"department: {department}, position: {positionType}, jobTitle: {jobTitle}, fte: {fte}, status: {status}, certificates: {certificates}";
         }
 
-        public string[] GetDetial()
+        public string[] GetDetail()
 
         {
 

@@ -113,7 +113,6 @@
     </Compile>
     <Compile Include="DepotWorker.cs" />
     <Compile Include="Employee.cs" />
-    <Compile Include="EmployeeManager.cs" />
     <Compile Include="EmployeeManagmentForm.cs">
       <SubType>Form</SubType>
     </Compile>
