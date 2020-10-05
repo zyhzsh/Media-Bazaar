@@ -30,5 +30,5 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
-$ git rm -r --cached node_modules    # clean git cache
-$ rm -rf node_modules   
+ git rm -r --cached node_modules    # clean git cache
+ rm -rf node_modules   
