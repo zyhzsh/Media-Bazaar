@@ -6,14 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proj_Desktop_App
 {
-    public enum PositionType
+    class AvailableShift
     {
-        Administrator,
-        Depot_Manager,
-        Sales_Manager,
-        Depot_Worker,
-        Sales_Worker,
-        Other
     }
 }
-

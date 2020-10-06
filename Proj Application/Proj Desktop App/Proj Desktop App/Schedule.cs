@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,119 +8,190 @@ namespace Proj_Desktop_App
 {
     class Schedule
     {
-        List<AssignedShift> assignedShifts;
+        //draft class right now
+        //we either safe everything in this class and display any date that is asked for
+        //or this class gets filled for the date and there is another entity (class/db) that has everything in it and sorts it per date
+        //currently this is the collection class with all the info
+
+        private static List<AssignedShift> assignedShifts;
+        private static List<AvailableShifts> availableShifts; //not in use as of yet
+
+        public Schedule(List<AssignedShift> AssignedShifts)
+        {
+            assignedShifts = AssignedShifts;
+        }
+        public Schedule(string test)
+        {
+            //mock data still needs to be done
+        }
+
+
         public Schedule()
         {
-            //Read for somewhere or database
+        }
+
+        public List<AssignedShift> GetAssignedShifts()
+        {
+            return assignedShifts;
+        }
+        public List<AvailableShifts> GetAvailableShifts()
+        {
+            return availableShifts;
+        }
+
+
+
+        /// <summary>
+        ///Specify the day
+        ///This function will set some special rules then 
+        ///Load period of data from databas
+        /// </summary>
+        public void LoadSchduleFormDateBase(DateTime dateTime)
+        {
+            //Specify the day
+            //This function will set some special rules then 
+            //Load period of data Form databas
+            
+
+
+
+            //But For now ...
             assignedShifts = new List<AssignedShift>();
-       
-        }
-        public  bool AssignEmployeeToShift(ShiftType shiftType,string selecteddate,List<Employee>employees)
-        {  
-            foreach (AssignedShift e in assignedShifts)
-            {
-                assignedShifts.Add(new AssignedShift(selecteddate,shiftType,employees));
-            }   
-            return true;        
         }
 
-        public bool AssignEmployeeToShift(ShiftType shiftType, string selecteddate, Employee employee)
+
+
+        public void UpDateSchdule(List<AssignedShift> UpdatedShifts)
         {
-
-            ////情况一：所选的日期没有返回值
-            //if (GetAssignedEmployees(selecteddate).Count() == 0)
-            //{
-            //    assignedShifts.Add(new AssignedShift(selecteddate, shiftType, employee));
-            //}
-            ////情况二：所选日期有返回值
-            //else {
-            //    List<Employee>emp = GetAssignedEmployees(selecteddate);
-
-            //    //1.若是返回的值内部有这个员工
-            //    if (emp.Contains(employee))
-            //    { 
-            //    //检测员工的shiftype是否一致
-                
-
-
-            //    //1.如果一致             
-                
-            //    }
-            //}
-
-
-            ////1.输入时间、和SHIFT类型、和员工
-            ////2.通过输入的时间来获得当天的列表员工列表
-            ////3.在此基础上更新
-            //foreach (AssignedShift e in assignedShifts)
-            //{
-            //    if (e.SelectedDate == selecteddate)
-            //    { 
-                   
-            //    }
-            //}
-            
-            
-            return true;
-
+            assignedShifts = UpdatedShifts;
+            //1.Compare different
+            //2.Send to database
+            SaveSchduleToDateBase();
         }
 
 
-
-
-
-
-
-        public bool RemoveFromShift(ShiftType shiftType, DateTime selecteddate, List<string> employee_bsn)
-        { 
-            return false;
-        }
-
-        public List<Employee> GetAssignedEmployees(string seleteddate)
+        private void SaveSchduleToDateBase()
         {
-            List<Employee> tempo_empolyees = new List<Employee>();  
-            foreach (AssignedShift e in assignedShifts)
+            //Write Shift info to database
+
+            //for now ...
+        }
+
+
+        /* this part is taken over by schedule manager
+        
+
+        public List<AssignedShift> GetDateShifts(DateTime date)
+        {
+            List<AssignedShift> shifts = new List<AssignedShift>();
+
+            foreach(AssignedShift shift in assignedShifts)
             {
-                if (e.SelectedDate == seleteddate)
+                if(shift.shiftDateTimeStart.Date == date.Date)
                 {
-                    tempo_empolyees = e.GetShiftsList();
-                }          
+                    shifts.Add(shift);
+                }
             }
-            return tempo_empolyees;
+
+            return shifts;
         }
 
-
-
-
-        public List<Shift> GetAvailableEmployees(DateTime seleteddate)
+        public List<AssignedShift> GetDateShifts(DateTime startDate, DateTime endDate)
         {
-            return null;
+            List<AssignedShift> shifts = new List<AssignedShift>();
+            List<DateTime> dates = new List<DateTime>();
+
+            for (DateTime sd = startDate.Date; sd.Date <= endDate.Date; sd = sd.AddDays(1))
+            {
+                dates.Add(sd);
+            }
+
+            foreach (AssignedShift shift in assignedShifts)
+            {
+                foreach(DateTime date in dates)
+                {
+                    if (shift.shiftDateTimeStart.Date == date.Date)
+                    {
+                        shifts.Add(shift);
+                    }
+                }
+            }
+
+            return shifts;
+        }
+        */
+
+
+        //no check on preffered shifts yet
+        //would take  this from available shifts to assigned shifts later. if we implement that way of functioning with the schedule
+        public AssignedShift AddShift(Employee employee, DateTime shiftDateTimeStart, ShiftType shiftType)
+        {
+            AssignedShift assignedShift = new AssignedShift(employee, shiftDateTimeStart, shiftType);
+            assignedShifts.Add(assignedShift);
+            return assignedShift;
         }
 
-     
+        public AssignedShift RemoveShift(AssignedShift removeShift)
+        {
+            assignedShifts.Remove(removeShift);
+            return removeShift;
 
+        }
 
+        public AssignedShift RemoveShift(Employee employee, DateTime shiftDateTimeStart, ShiftType shiftType)
+        {
+            AssignedShift removeShift = new AssignedShift(employee, shiftDateTimeStart, shiftType);
+            assignedShifts.Remove(removeShift);
+            return removeShift;
+        }
 
+        //not adapted to schedule manager yet
+        public void UpdateShift(AssignedShift changeShift, Employee employee, DateTime shiftDateTimeStart, DateTime shiftDateTimeEnd, ShiftType shiftType)
+        {
+            AssignedShift changedShift = new AssignedShift(employee, shiftDateTimeStart, shiftType);
 
+            foreach (AssignedShift shift in assignedShifts)
+            {
+                if (shift == changeShift)
+                {
+                    assignedShifts.Remove(shift);
+                    assignedShifts.Add(changedShift);
+                }
+            }
+        }
 
+        //obsolete with the schedule manager? everything under this
+        public AssignedShift GetShift(Employee employee, DateTime shiftDateTimeStart, ShiftType shiftType)
+        {
+            string emptyShift = "null";
+            AssignedShift getShift = new AssignedShift(employee, shiftDateTimeStart, shiftType);
+            AssignedShift nullShift = new AssignedShift(emptyShift);
 
+            foreach (AssignedShift shift in assignedShifts)
+            {
+                if (shift == getShift)
+                {
+                    return shift;
+                }
+            }
 
+            return nullShift;
+        }
 
+        public AssignedShift GetShift(AssignedShift getShift)
+        {
+            string emptyShift = "null";
+            AssignedShift nullShift = new AssignedShift(emptyShift);
 
+            foreach (AssignedShift shift in assignedShifts)
+            {
+                if (shift == getShift)
+                {
+                    return shift;
+                }
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            return nullShift;
+        }
     }
 }
