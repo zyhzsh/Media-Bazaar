@@ -128,9 +128,24 @@
             0,
             131072});
             this.numBuyingPrice.Location = new System.Drawing.Point(109, 106);
+            this.numBuyingPrice.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            131072});
+            this.numBuyingPrice.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.numBuyingPrice.Name = "numBuyingPrice";
             this.numBuyingPrice.Size = new System.Drawing.Size(204, 22);
             this.numBuyingPrice.TabIndex = 9;
+            this.numBuyingPrice.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             // 
             // lblBuyingPrice
             // 
@@ -150,9 +165,24 @@
             0,
             65536});
             this.numSellingPrice.Location = new System.Drawing.Point(109, 78);
+            this.numSellingPrice.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            131072});
+            this.numSellingPrice.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.numSellingPrice.Name = "numSellingPrice";
             this.numSellingPrice.Size = new System.Drawing.Size(204, 22);
             this.numSellingPrice.TabIndex = 7;
+            this.numSellingPrice.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             // 
             // lblSellingPrice
             // 
