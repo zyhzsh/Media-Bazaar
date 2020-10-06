@@ -80,17 +80,15 @@ namespace Proj_Desktop_App
 
         private void btnAddEmpShift_Click(object sender, EventArgs e)
         {
-            //1.check and get shifttype
-            if (CheckAssignedShiftType())
-            {
-                //2.get selected Object;
+            
+                
                 if (listboxAvailableEmployees.SelectedItems.Count != 0)
                 {
                     if (seleteddate.Date < DateTime.Now.Date) { MessageBox.Show($"You can't Assign Shift at {DateTime.Now.ToString("dd/MM/yyyy")}"); return; }
                     listboxAssignedEmployees.Items.Clear();
-                    //1.check and get shifttype
-                    if (CheckAssignedShiftType())  //2.get selected Object;
-                    {                            //a. Get list of bsn
+             
+                    if (CheckAssignedShiftType())  
+                    {                            
                         List<int> seletedbsn = new List<int>();
                         foreach (object m in listboxAvailableEmployees.SelectedItems)
                         {
@@ -112,7 +110,7 @@ namespace Proj_Desktop_App
                     MessageBox.Show("Please select Employee then assign shift");
                 }
 
-            }
+            
 
 
 
