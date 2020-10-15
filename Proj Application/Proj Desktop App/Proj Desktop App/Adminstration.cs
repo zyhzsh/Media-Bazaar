@@ -8,6 +8,5 @@ namespace Proj_Desktop_App
 {
     class Adminstration
     {
-
     }
 }
