@@ -115,7 +115,7 @@ namespace Proj_Desktop_App
         private void button2_Click(object sender, EventArgs e)
         {
             
-            Scheduling a = new Scheduling();
+            Scheduling a = new Scheduling(Departments.floorOne);
             a.Show();
         }
 
@@ -139,7 +139,7 @@ namespace Proj_Desktop_App
 
         private void btnOpenSchedule_Click(object sender, EventArgs e)
         {
-            Scheduling scheduleForm = new Scheduling();
+            Scheduling scheduleForm = new Scheduling(Departments.floorOne);
             scheduleForm.Show(this);
         }
     }
