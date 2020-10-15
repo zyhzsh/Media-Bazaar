@@ -30,7 +30,6 @@ namespace Proj_Desktop_App
                 case ShiftType.Morning_Afternoon: return "Monrning,Afternoon";
                 case ShiftType.Morning_Evening: return "Monring,Evening";
                 case ShiftType.Afternoon_Evening: return "Afternoon,Evening";
-                case ShiftType.FullDay: return "FullDay";
             }
             return "";
         }

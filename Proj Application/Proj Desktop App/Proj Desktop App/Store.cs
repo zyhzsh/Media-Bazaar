@@ -23,6 +23,7 @@ namespace Proj_Desktop_App
             orders = new List<RestockRequest>();
             ProductMockData();
             AddEmployeeMockData();
+
         }
 
         
@@ -59,7 +60,20 @@ namespace Proj_Desktop_App
             return this.employees.ToArray();
         }
 
+        public Employee[] GetEmployeeList(Departments department)
+        {
+            List<Employee> temp = new List<Employee>();
+            foreach(Employee e in employees)
+            {
+                if (e.department == department)
+                {
+                    temp.Add(e);
+                }
+            }
+            return temp.ToArray();
+        }
 
+        
         public string[] GetEmployees()
         {
             List<string> employeeInfos = new List<string>();

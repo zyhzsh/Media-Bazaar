@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using MySql;
+using MySql.Data.MySqlClient;
 namespace Proj_Desktop_App
 {
     class Schedule
@@ -44,7 +45,7 @@ namespace Proj_Desktop_App
         /// <summary>
         ///Specify the day
         ///This function will set some special rules then 
-        ///Load period of data from databas
+        ///Load period of schdule data from databas
         /// </summary>
         public void LoadSchduleFormDateBase(DateTime dateTime)
         {
@@ -60,11 +61,19 @@ namespace Proj_Desktop_App
         }
 
 
-
+        /// <summary>
+        /// Update the shift data to the database
+        /// </summary>
+        /// <param name="UpdatedShifts"></param>
         public void UpDateSchdule(List<AssignedShift> UpdatedShifts)
         {
+
+
             assignedShifts = UpdatedShifts;
             //1.Compare different
+
+
+
             //2.Send to database
             SaveSchduleToDateBase();
         }
@@ -73,53 +82,9 @@ namespace Proj_Desktop_App
         private void SaveSchduleToDateBase()
         {
             //Write Shift info to database
-
+             
             //for now ...
         }
-
-
-        /* this part is taken over by schedule manager
-        
-
-        public List<AssignedShift> GetDateShifts(DateTime date)
-        {
-            List<AssignedShift> shifts = new List<AssignedShift>();
-
-            foreach(AssignedShift shift in assignedShifts)
-            {
-                if(shift.shiftDateTimeStart.Date == date.Date)
-                {
-                    shifts.Add(shift);
-                }
-            }
-
-            return shifts;
-        }
-
-        public List<AssignedShift> GetDateShifts(DateTime startDate, DateTime endDate)
-        {
-            List<AssignedShift> shifts = new List<AssignedShift>();
-            List<DateTime> dates = new List<DateTime>();
-
-            for (DateTime sd = startDate.Date; sd.Date <= endDate.Date; sd = sd.AddDays(1))
-            {
-                dates.Add(sd);
-            }
-
-            foreach (AssignedShift shift in assignedShifts)
-            {
-                foreach(DateTime date in dates)
-                {
-                    if (shift.shiftDateTimeStart.Date == date.Date)
-                    {
-                        shifts.Add(shift);
-                    }
-                }
-            }
-
-            return shifts;
-        }
-        */
 
 
         //no check on preffered shifts yet
