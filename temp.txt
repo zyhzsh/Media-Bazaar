@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 TEMP
 Test it
+=======
+TEMP
+Test it
+>>>>>>> bf75af167b2d9a6328c98378dfb58dee02a9fdcf
