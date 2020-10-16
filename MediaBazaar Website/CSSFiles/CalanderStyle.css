@@ -1,0 +1,27 @@
+
+
+  input{
+    width: 160px;
+    height: 100pt;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: relative;
+    z-index: 1;
+    left: 50%;
+    margin-left: -80px;
+  }
+  
+  
+
+  .logoutbt{
+    width: auto;
+    height: auto;
+    background-color: #555;
+    text-align: right;
+    color: #fff;
+    position: relative;
+   
+  }
