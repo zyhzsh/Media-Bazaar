@@ -67,7 +67,7 @@ namespace Proj_Desktop_App
         {           
                 if (listboxAvailableEmployees.SelectedItems.Count != 0)
                 {
-                    if (seleteddate.Date < DateTime.Now.Date) { MessageBox.Show($"You can't Assign Shift at {DateTime.Now.ToString("dd/MM/yyyy")}"); return; }
+                    if (seleteddate.Date < DateTime.Now.Date) { MessageBox.Show($"You can't Assign Shift at {seleteddate.ToString("dd/MM/yyyy")}"); return; }
                     listboxAssignedEmployees.Items.Clear();
                     if (CheckAssignedShiftType())  
                     {                            

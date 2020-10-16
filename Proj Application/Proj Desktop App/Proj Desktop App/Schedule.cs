@@ -51,8 +51,9 @@ namespace Proj_Desktop_App
         /// </summary>
         public void LoadSchduleFormDateBase(DateTime date)
         {   //to get the employee object, couble be change in the future;
-            Store a = new Store();          
-            assignedShifts = new List<AssignedShift>();
+            Store a = new Store();
+            if (assignedShifts is null) { assignedShifts = new List<AssignedShift>(); }
+            else { assignedShifts.Clear(); }
             string sql = $"SELECT * FROM `assignedschdule` WHERE year(date)='{date.ToString("yyyy")}' AND month(date)='{date.ToString("MM")}';";
             try
             {
@@ -63,7 +64,7 @@ namespace Proj_Desktop_App
                 ShiftType shifttype = ShiftType.Morning;
                 while (dr.Read())
                 {
-                    if (dr[2].ToString() == "Morning") { shifttype = ShiftType.Morning; }
+                    if (dr[2].ToString() == "Morning") { shifttype = ShiftType.Morning; }   
                     else if (dr[2].ToString() == "Afternoon") { shifttype = ShiftType.Afternoon; }
                     else if (dr[2].ToString() == "Evening") { shifttype = ShiftType.Evening; }
                     else if (dr[2].ToString() == "Morning_Afternoon") { shifttype = ShiftType.Morning_Afternoon; }
@@ -90,6 +91,7 @@ namespace Proj_Desktop_App
             {
                 sqlstatement += x;
             }
+            if (sqlstatement == "") { return; }
             MySqlConnection conn = new MySqlConnection("Server=studmysql01.fhict.local;Uid=dbi443880;Database=dbi443880;Pwd=123456");
             try {
                 MySqlCommand cmd = new MySqlCommand(sqlstatement, conn);
