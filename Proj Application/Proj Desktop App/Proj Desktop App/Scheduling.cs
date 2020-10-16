@@ -17,6 +17,7 @@ namespace Proj_Desktop_App
         private ScheduleManager schedulemanager;
         private ShiftType seletedshifttype;
         private DateTime seleteddate;
+        private DateTime previousdate;
         private Store store;
         public Scheduling(Departments department)
         {
@@ -38,6 +39,7 @@ namespace Proj_Desktop_App
             //4.automatic set the calendar date
             monthCalendarScheduling.SelectionStart = DateTime.Today;
             seleteddate = DateTime.Today;
+            previousdate = DateTime.Today;
             //5.Update Employee list by department
             listboxAvailableEmployees.Items.Clear();
             foreach (Employee x in store.GetEmployeeList((Departments)cbDepartment.SelectedItem))
@@ -151,6 +153,12 @@ namespace Proj_Desktop_App
         {
             listboxAssignedEmployees.Items.Clear();
             seleteddate = monthCalendarScheduling.SelectionStart;
+            if (previousdate.Month != seleteddate.Month)
+            {
+                previousdate = seleteddate;
+                Schedule a = new Schedule();
+                a.LoadSchduleFormDateBase(seleteddate);
+            }
             listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate, (Departments)cbDepartment.SelectedItem));
         }
         private void btnSeachAvailableEmpByBsn_Click(object sender, EventArgs e)
