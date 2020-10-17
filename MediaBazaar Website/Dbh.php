@@ -5,8 +5,8 @@ private $host ="studmysql01.fhict.local";
 private $db ="dbi443880";
 private $DbUsername ="dbi443880";
 private $DbPassword ="123456";
-public $assignedShitsDate =[];
-public $assignedShitsTime=[];
+public $assignedShitsDate=array(1 =>'18-10-2020');
+public $assignedShitsType=[];
 
 
 protected function connection(){
@@ -25,11 +25,14 @@ public function CheckUsers($email,$password){
     $conn= $this->connection();
     $stmt=$conn->prepare($sql);
     $stmt->execute([':uEmail'=> $email,'pwd'=>$password]);
-    $result=$stmt->fetch();
-    $BSN=$result['BSN'];
+    $BSN;
     
-    if($BSN!=0){
+    if(empty( $result=$stmt->fetch())){
+        return false;
+    }else{
+     
         session_start();
+        $BSN=$result['BSN'];
         $_SESSION["BSN"]=$BSN;
         header("Location:seeCalender.php");
         return true;
@@ -37,26 +40,63 @@ public function CheckUsers($email,$password){
 // $conn->close();
 }
 
-public function GetAllShiftsForEmployee($BSN){
-    $sql="SELECT * FROM `assignedschdule` Where BSN=(:uBSN)";
+public function AddShiftsDate(){
+    if(isset($_POST['BSN'])){
+        $BSN=$_POST['BSN'];
+        $sql="SELECT * FROM `preferedschdule` WHERE BSN=(:uBSN)";
+        $conn= $this->connection();
+        $stmt=$conn->prepare($sql);
+        $stmt->execute([':uBSN'=> $BSN]);
+        $result=$stmt->fetch_array();
+       
+    //add all values to assignedShitsDate array
+        // for($i = 0 ; $i <$result=$stmt->fetch_array() ; $i++) {
+        //     $assignedShitsDate[$i] =array(  $i =>$result['date'] );
+        // }
+    }
+ }
+
+ public function AddShiftsTypes(){
+    if(isset($_POST['BSN'])){
+        $BSN=$_POST['BSN'];
+    $sql="SELECT * FROM `preferedschdule` WHERE BSN=(:uBSN)";
     $conn= $this->connection();
     $stmt=$conn->prepare($sql);
     $stmt->execute([':uBSN'=> $BSN]);
-    $result=$stmt->fetch();
-//add all values to assignedShitsDate array
-    for($i = 0 ; $i <$result=$stmt->fetch() ; $i++) {
-        $assignedShitsDate[$i] = $result['date'] ;
-        }
-        for($i = 0 ; $i <$result=$stmt->fetch() ; $i++) {
-            $assignedShitsTime[$i] = $result['assigned_shift_type'] ;
-            }
-    return $assignedShitsDate;
-
+    $result=$stmt->fetch_array();
+ 
+    //add all values to assignedShitsType array
+   // while ($row = $result=$stmt->fetch_array() ) {
+     //  for($i = 0 ; $i <$result=$stmt->fetch_array() ; $i++) {
+        //    $assignedShitsType=array( 1 =>  $result['preference_shift_type'] );
+     //   }
+    //}
+   }
  }
- public function __destruct()
-{
- unset($this->Dbh);
-}
+ 
+ public function GetAllShiftsDate(){
+    $this->AddShiftsDate();
+    //****untill i fix the array tha takes values from fetched database i added a mock data  */
+    //if(isset($assignedShitsDate)){
+  $assignedShitsDate=array(1 =>'2020-10-20',2 =>'2020-10-18',3 =>'2020-10-17');
+    return  $assignedShitsDate;
+  //  }
+ }
+
+ public function GetAllShiftsTypes(){
+     $this->AddShiftsTypes();
+    //if(isset($assignedShitsType)){
+        $assignedShitsType=array(1 =>'Evening',2 =>'Morning',3 =>'Afternoon');
+        return $assignedShitsType;
+//}
+ }
+
+
+
+//  public function __destruct()
+// {
+//  unset($this->Dbh);
+// }
 
 }  
 ?>

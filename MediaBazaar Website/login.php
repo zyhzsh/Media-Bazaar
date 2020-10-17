@@ -23,7 +23,8 @@
             action = "<?php //echo strval( $_SESSION["BSN"]); 
             ?>" method = "post">
             <h4 class = "form-signin-heading">
-               <?php $user= new User(); echo $user->checkUser(); 
+               <?php $user= new User(); echo  $user->checkUser(); 
+              // echo  $user->AddShiftsToCalander()
                ?>
              </h4>
             <input type = "text" class = "form-control" 

@@ -2,7 +2,7 @@
 body {
   
    padding-bottom: 40px;
-   background-color: #ffffff;
+   background-color: #a900f7;
 }
 
 .form-signin {
@@ -29,6 +29,7 @@ body {
    box-sizing: border-box;
    padding: 10px;
    font-size: 16px;
+   background-color: #a900f7;
 }
 
 .form-signin .form-control:focus {
@@ -47,7 +48,7 @@ body {
    margin-bottom: 10px;
    border-top-left-radius: 0;
    border-top-right-radius: 0;
-   border-color:#050505;
+   border-color:#a900f7;
 }
 
 h2{
