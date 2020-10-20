@@ -2,8 +2,8 @@
    require_once('Dbh.php'); 
  class User extends Dbh{
 
-public $assignedShitsDate=array();
-public $assignedShitsTime=[];
+//public $assignedShitsDate=array();
+//public $assignedShitsTime=[];
 //private $BSN=$_SESSION["BSN"];
 
 
@@ -24,13 +24,15 @@ if(isset($_POST['loginPassword'])&&isset($_POST['loginEmail'])){
 }
  
 
-function AddShiftsToCalander($date){
+function ShowSellectedShift($date){
 
   $selected_date = date('yy-m-d', strtotime($date));   
-  $allShiftsDate = $this->GetAllShiftsDate() ;
+  $allShiftsDate = $this->GetAllShiftsDate();
   $allShiftsType=$this->GetAllShiftsTypes();
 
+if(empty($date)){
 
+}else{
      if(is_array($allShiftsDate)&&is_array($allShiftsType)){
   // foreach( $allShiftsDate as $date ){
      // foreach( $allShiftsType as $type ){
@@ -44,9 +46,10 @@ function AddShiftsToCalander($date){
                .'<div class="item1">' .$date. "           ".$allShiftsType[$index].'🙂</div></div>';
             }
       }
-
    }
 
+   }
+//not in used fo now**
    function logout(){
    if(isset($_POST['logoutBtn']) && preg_match("/\b(logout)\b/", $_POST['logoutBtn'])){
       session_destroy();
@@ -55,9 +58,24 @@ function AddShiftsToCalander($date){
       return true;
   }
 }
+function ShowAllShifts(){
+   $allShiftsDate = $this->GetAllShiftsDate();
+   $allShiftsTypes=$this->GetAllShiftsTypes();
+   foreach( $allShiftsDate as $date ){
+     foreach( $allShiftsTypes as $type ){
+        if(empty($date)&&empty($type)){
 
+        }else{
+         $index=array_search($date, $allShiftsDate);
+            echo  '<div class="grid-container">'
+            .'<div class="item1">' .$date. "  &nbsp;&nbsp;&nbsp; ".$allShiftsType[$index].'🙂</div></div>';
+           break;
+         }
+      }
+   }
 
  }
+}
 
 
 //if it's inside the class can not accsse the $_post 
@@ -66,4 +84,5 @@ function AddShiftsToCalander($date){
    header("Location:login.php");
    echo 'session stoped';
  }
+
 ?>
