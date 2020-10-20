@@ -10,14 +10,14 @@ namespace Proj_Desktop_App
     public class Product
     {
         private static int incrementCode = 1;
-        private int id;
-        private string name;
-        private string brand;
-        private double sellingPrice;
-        private double buyingPrice;
-        private string description;
-        private int stock;
-        private Departments belongingDepartment;
+        public int id { get; }
+        public string name { get; private set; }
+        public string brand { get; private set; }
+        public double sellingPrice { get; private set; }
+        public double buyingPrice { get; private set; }
+        public string description { get; private set; }
+        public int stock { get; private set; }
+        public Departments belongingDepartment { get; private set; }
 
         public Product(string name, string brand, double sell, double buy, Departments department)
         {
@@ -42,49 +42,6 @@ namespace Proj_Desktop_App
             stock = 0;
         }
 
-        public int Id
-        {
-            get { return id; }
-        }
-
-        public string Name
-        {
-            get { return name; }
-            private set { name = value; }
-        }
-
-        public string Brand
-        {
-            get { return brand; }
-            private set { brand = value; }
-        }
-
-        public double SellingPrice
-        {
-            get { return sellingPrice; }
-            private set { sellingPrice = value; }
-        }
-
-        public double BuyingPrice
-        {
-            get { return buyingPrice; }
-            private set { buyingPrice = value; }
-        }
-
-        public Departments Department
-        {
-            get { return belongingDepartment; }
-            private set { belongingDepartment = value; }
-        }
-
-        public string Description
-        {
-            get { return description; }
-        }
-        public void Restock(int restock)
-        {
-            stock += restock;
-        }
 
         public void Update(string productName, string brandName, double sell, double buy, Departments department, string Description)
         {

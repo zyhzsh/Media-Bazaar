@@ -16,6 +16,7 @@ namespace Proj_Desktop_App
         public DateTime birthDate { get; private set; }
         public string address { get; private set; }
         public string certificates { get; private set; }
+        public string languages { get; private set; }
         public string status { get; private set; }
         public Departments department { get; private set; }
         public string contactEmail { get; private set; }
@@ -24,17 +25,39 @@ namespace Proj_Desktop_App
         public double fte { get; private set; }
 
         public Employee(int BSN, string firstName, string lastName, char gender, string phoneNumber, DateTime birthDate,
-            string address, string certificates, string status, Departments department, string contactEmail,
+            string address, string certificates,string status, Departments department, string contactEmail,
             double fte, PositionType positionType, string jobTitle)
         {
             this.BSN = BSN;
-            this.lastName = lastName;
             this.firstName = firstName;
+            this.lastName = lastName;
+            this.gender = gender;
+            this.phoneNumber = phoneNumber;
+            this.birthDate = birthDate;
+            this.address = address;
+            this.languages = "";
+            this.certificates = certificates;
+            this.status = status;
+            this.department = department;
+            this.contactEmail = contactEmail;
+            this.fte = fte;
+            this.positionType = positionType;
+            this.jobTitle = jobTitle;
+        }
+
+        public Employee(int BSN, string firstName, string lastName, char gender, string phoneNumber, DateTime birthDate,
+            string address, string certificates, string languages,string status, Departments department, string contactEmail,
+            double fte, PositionType positionType, string jobTitle)
+        {
+            this.BSN = BSN;
+            this.firstName = firstName;
+            this.lastName = lastName;
             this.gender = gender;
             this.phoneNumber = phoneNumber;
             this.birthDate = birthDate;
             this.address = address;
             this.certificates = certificates;
+            this.languages = languages;
             this.status = status;
             this.department = department;
             this.contactEmail = contactEmail;

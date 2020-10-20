@@ -104,6 +104,7 @@
     <Compile Include="AssignedShift.cs" />
     <Compile Include="AvailableShift.cs" />
     <Compile Include="AvailableShifts.cs" />
+    <Compile Include="DatabaseManagement.cs" />
     <Compile Include="Departments.cs" />
     <Compile Include="DepotManager.cs">
       <SubType>Form</SubType>

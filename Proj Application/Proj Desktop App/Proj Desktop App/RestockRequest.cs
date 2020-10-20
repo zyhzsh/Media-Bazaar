@@ -9,30 +9,26 @@ namespace Proj_Desktop_App
 {
     public class RestockRequest
     {
-        private int productId;
-        private string productName;
-        private int restockAmount;
+        public int restockID { get; private set; }
+        public int productCode { get; private set; }
+        public string productName { get; private set; }
 
-        public RestockRequest(int Id, string name, int RestockAmount)
+        public string requesterName { get; private set; }
+        public int restockAmount { get; private set; }
+        public string description { get; private set; }
+
+        public RestockRequest(int restockID ,int productCode, string name, int RestockAmount, string description)
         {
-            productId = Id;
+            this.restockID = restockID;
+            this.productCode = productCode;
             productName = name;
             restockAmount = RestockAmount;
-        }
-
-        public int GetProductId
-        {
-            get { return productId; }
-        }
-
-        public int GetRestockAmount
-        {
-            get { return restockAmount; }
+            this.description = description;
         }
 
         public override string ToString()
         {
-            return $"{productName} needs {restockAmount} additional units";
+            return $"{productName} needs {restockAmount} additional units, {description}";
         }
     }
 }

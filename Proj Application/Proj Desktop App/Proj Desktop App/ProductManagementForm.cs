@@ -27,11 +27,11 @@ namespace Proj_Desktop_App
             InitializeComponent();
             mediabazaar = DepoMngrMediaBazaar;
             updateProduct = editProduct;
-            tbProductName.Text = updateProduct.Name;
-            tbBrand.Text = updateProduct.Brand;
-            numBuyingPrice.Value = (decimal)updateProduct.BuyingPrice;
-            numSellingPrice.Value = (decimal) updateProduct.SellingPrice;
-            switch (updateProduct.Department)
+            tbProductName.Text = updateProduct.name;
+            tbBrand.Text = updateProduct.brand;
+            numBuyingPrice.Value = (decimal)updateProduct.buyingPrice;
+            numSellingPrice.Value = (decimal) updateProduct.sellingPrice;
+            switch (updateProduct.belongingDepartment)
             {
                 case Departments.floorOne:
                     cbDepartment.SelectedIndex = 0;
@@ -92,7 +92,7 @@ namespace Proj_Desktop_App
                 }
                 else if (btnConfirm.Text == "Update")
                 {
-                    mediabazaar.UpdateProduct(updateProduct.Id, tbProductName.Text,  tbBrand.Text, (double)numSellingPrice.Value, (double)numBuyingPrice.Value, department, rtbDescription.Text);
+                    mediabazaar.UpdateProduct(updateProduct.id, tbProductName.Text,  tbBrand.Text, (double)numSellingPrice.Value, (double)numBuyingPrice.Value, department, rtbDescription.Text);
                     MessageBox.Show("Product updated");
                     Close();
                 }

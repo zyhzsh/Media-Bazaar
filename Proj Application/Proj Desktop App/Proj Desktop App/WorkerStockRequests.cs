@@ -36,7 +36,7 @@ namespace Proj_Desktop_App
                 for (int i = lbRestockRequests.SelectedItems.Count - 1; i >= 0; i--)
                 {
                     RestockRequest request = ((RestockRequest) lbRestockRequests.SelectedItems[i]);
-                    mediabazaar.RestockProduct(request.GetProductId, request.GetRestockAmount);
+                    mediabazaar.RestockProduct(request.productCode, request.restockAmount);
                 }
                 MessageBox.Show("Requests completed");
                 ReloadRequests();

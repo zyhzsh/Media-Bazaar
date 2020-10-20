@@ -14,7 +14,7 @@ namespace Proj_Desktop_App
         private List<Product> products;
         private List<RestockRequest> requests;
         private List<RestockRequest> orders;
-        
+
         public Store()
         {
             employees = new List<Employee>();
@@ -23,7 +23,8 @@ namespace Proj_Desktop_App
             orders = new List<RestockRequest>();
             ProductMockData();
             AddEmployeeMockData();
-
+            DatabaseManagement dtbManagement = new DatabaseManagement();
+            dtbManagement.GetAllEmployees();
         }
 
         
@@ -59,6 +60,7 @@ namespace Proj_Desktop_App
         {
             return this.employees.ToArray();
         }
+
 
         public Employee[] GetEmployeeList(Departments department)
         {
@@ -115,7 +117,7 @@ namespace Proj_Desktop_App
         {
             foreach (Product p in products)
             {
-                if (p.Id == productId)
+                if (p.id == productId)
                 {
                     return p;
                 }
@@ -135,14 +137,16 @@ namespace Proj_Desktop_App
 
         public void RestockProduct(int productId, int amount)
         {
+            /*
             Product(productId).Restock(amount);
             for (int i = orders.Count - 1; i >= 0; i--)
             {
-                if (orders[i].GetProductId == productId)
+                if (orders[i].productCode == productId)
                 {
                     orders.RemoveAt(i);
                 }
             }
+            */
         }
 
         public void AcceptRestock(RestockRequest order)
@@ -151,16 +155,16 @@ namespace Proj_Desktop_App
             requests.Remove(order);
         }
 
-        public void AddRestock(int productId, string productName,int restockAmount)
+        public void AddRestock(int productId, string productName,int restockAmount, string description)
         {
-            requests.Add(new RestockRequest(productId, productName, restockAmount));
+            //requests.Add(new RestockRequest(productId, productName, restockAmount, description));
         }
 
         public void RemoveRestock(int productId)
         {
             for (int i = requests.Count - 1; i >= 0; i--)
             {
-                if (requests[i].GetProductId == productId)
+                if (requests[i].productCode == productId)
                 {
                     requests.RemoveAt(i);
                 }
@@ -180,7 +184,7 @@ namespace Proj_Desktop_App
         {
             for (int i = products.Count - 1; i >= 0; i--)
             {
-                if (products[i].Id == productId)
+                if (products[i].id == productId)
                 {
                     products.RemoveAt(i);
                 }
