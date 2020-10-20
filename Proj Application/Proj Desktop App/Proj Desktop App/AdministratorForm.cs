@@ -13,14 +13,20 @@ namespace Proj_Desktop_App
     public partial class AdministratorForm : Form
     {
         private Form1 loginForm;
+        private List<Employee> employees;
+        private List<Departments> departments;
+        private Employee currentUser;
         private Store store;
 
-        public AdministratorForm(Form1 form1, Store store)
+        public AdministratorForm(Form1 loginForm, Store store)
         {
             InitializeComponent();
-            this.loginForm = form1;
+            this.loginForm = loginForm;
+            employees = new List<Employee>();
+            departments = new List<Departments>();
             this.store = store;
             this.Visible = true;
+            miEmployees.PerformClick();
             lbEmployees.Items.Clear();
             lbEmployees.Items.AddRange(store.GetEmployees());
         }
@@ -61,7 +67,7 @@ namespace Proj_Desktop_App
         {
             int bsn = Convert.ToInt32(tbBSN.Text);
             Employee employee = store.GetEmployee(bsn);
-            EmployeeManagmentForm emf = new EmployeeManagmentForm(this, employee);
+            new EmployeeManagmentForm(this, employee);
         }
 
         private void btnFireEmployee_Click(object sender, EventArgs e)
@@ -73,11 +79,11 @@ namespace Proj_Desktop_App
                 //get employee based on bsn
                 int bsn = Convert.ToInt32(tbBSN.Text);
                 Employee employee = store.GetEmployee(bsn);
+                //change employee status
                 if (employee != null)
                 {
                     employee.UpdateStatus("Fired");
                 }
-                //change employee status
             }
 
         }
@@ -97,6 +103,30 @@ namespace Proj_Desktop_App
         {
             lbEmployees.Items.Clear();
             lbEmployees.Items.AddRange(store.GetEmployees());
+        }
+
+        private void AdministratorForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            loginForm.Visible = true;
+        }
+
+        private void EmployeesTab_Click(object sender, EventArgs e)
+        {
+            miEmployees.BackColor = Color.LightSteelBlue;
+            miDepartments.BackColor = Color.Transparent;
+            pnlEmployees.Visible = true;
+        }
+
+        private void DepartmentsTab_Click(object sender, EventArgs e)
+        {
+            miEmployees.BackColor = Color.Transparent;
+            miDepartments.BackColor = Color.LightSteelBlue;
+            pnlEmployees.Visible = false;
+        }
+
+        private void LogoutTab_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

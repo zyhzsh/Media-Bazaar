@@ -112,8 +112,21 @@
     <Compile Include="DepotManager.Designer.cs">
       <DependentUpon>DepotManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="DepotManagerFrom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DepotManagerFrom.Designer.cs">
+      <DependentUpon>DepotManagerFrom.cs</DependentUpon>
+    </Compile>
     <Compile Include="DepotWorker.cs" />
+    <Compile Include="DepotWorkerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DepotWorkerForm.Designer.cs">
+      <DependentUpon>DepotWorkerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Employee.cs" />
+    <Compile Include="EmployeeManagment.cs" />
     <Compile Include="EmployeeManagmentForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,7 +146,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Login.cs" />
+    <Compile Include="LoginHandler.cs" />
     <Compile Include="Manager.cs" />
     <Compile Include="PostionType.cs" />
     <Compile Include="Product.cs" />
@@ -174,6 +187,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DepotManager.resx">
       <DependentUpon>DepotManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DepotManagerFrom.resx">
+      <DependentUpon>DepotManagerFrom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DepotWorkerForm.resx">
+      <DependentUpon>DepotWorkerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EmployeeManagmentForm.resx">
       <DependentUpon>EmployeeManagmentForm.cs</DependentUpon>
