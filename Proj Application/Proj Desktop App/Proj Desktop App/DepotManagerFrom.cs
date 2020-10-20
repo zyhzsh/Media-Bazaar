@@ -27,7 +27,7 @@ namespace Proj_Desktop_App
             this.loginForm = loginForm;
             this.Visible = true;
 
-            scheduling = new Scheduling() { TopLevel = false, TopMost = true };
+            scheduling = new Scheduling(Departments.warehouse) { TopLevel = false, TopMost = true };
             scheduling.FormBorderStyle = FormBorderStyle.None;
             productStatistics = new ProductStatistics(store) { TopLevel = false, TopMost = true };
             productStatistics.FormBorderStyle = FormBorderStyle.None;

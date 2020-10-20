@@ -704,3 +704,5 @@ C:\Users\m_018\Documents\GitHub\projectmedia-bazaar\Proj Application\Proj Deskto
 C:\Users\m_018\Documents\GitHub\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.ProductManagementForm.resources
 C:\Users\m_018\Documents\GitHub\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.DepotManagerFrom.resources
 C:\Users\m_018\Documents\GitHub\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.DepotWorkerForm.resources
+C:\Users\Bloobins\Desktop\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.DepotManagerFrom.resources
+C:\Users\Bloobins\Desktop\projectmedia-bazaar\Proj Application\Proj Desktop App\Proj Desktop App\obj\Debug\Proj_Desktop_App.DepotWorkerForm.resources
