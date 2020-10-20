@@ -50,7 +50,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(68, 360);
+            this.btnCancel.Location = new System.Drawing.Point(68, 334);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(204, 43);
             this.btnCancel.TabIndex = 32;
@@ -128,9 +128,24 @@
             0,
             131072});
             this.numBuyingPrice.Location = new System.Drawing.Point(109, 106);
+            this.numBuyingPrice.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            131072});
+            this.numBuyingPrice.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.numBuyingPrice.Name = "numBuyingPrice";
             this.numBuyingPrice.Size = new System.Drawing.Size(204, 22);
             this.numBuyingPrice.TabIndex = 9;
+            this.numBuyingPrice.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             // 
             // lblBuyingPrice
             // 
@@ -150,9 +165,24 @@
             0,
             65536});
             this.numSellingPrice.Location = new System.Drawing.Point(109, 78);
+            this.numSellingPrice.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            131072});
+            this.numSellingPrice.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.numSellingPrice.Name = "numSellingPrice";
             this.numSellingPrice.Size = new System.Drawing.Size(204, 22);
             this.numSellingPrice.TabIndex = 7;
+            this.numSellingPrice.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             // 
             // lblSellingPrice
             // 
@@ -197,7 +227,7 @@
             // 
             // btnConfirm
             // 
-            this.btnConfirm.Location = new System.Drawing.Point(68, 310);
+            this.btnConfirm.Location = new System.Drawing.Point(68, 284);
             this.btnConfirm.Name = "btnConfirm";
             this.btnConfirm.Size = new System.Drawing.Size(204, 43);
             this.btnConfirm.TabIndex = 31;
@@ -209,7 +239,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(345, 407);
+            this.ClientSize = new System.Drawing.Size(345, 383);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.gbProductDetails);
             this.Controls.Add(this.btnConfirm);

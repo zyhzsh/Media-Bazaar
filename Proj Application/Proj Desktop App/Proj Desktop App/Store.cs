@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace Proj_Desktop_App
         private List<Product> products;
         private List<RestockRequest> requests;
         private List<RestockRequest> orders;
-        
+
         public Store()
         {
             employees = new List<Employee>();
@@ -21,7 +22,12 @@ namespace Proj_Desktop_App
             requests = new List<RestockRequest>();
             orders = new List<RestockRequest>();
             ProductMockData();
+            DatabaseManagement dtbManagement = new DatabaseManagement();
+            dtbManagement.GetAllEmployees();
         }
+
+        
+
 
         public bool AddEmployee(int BSN, string firstName, string lastName, char gender, string phoneNumber, DateTime birthDate,
             string address, string certificates, string status, Departments department, string contactEmail,
@@ -49,6 +55,11 @@ namespace Proj_Desktop_App
             }
             return null;
         }
+        public Employee[] GetEmployeeList()
+        {
+            return this.employees.ToArray();
+        }
+
 
         public string[] GetEmployees()
         {
@@ -60,12 +71,18 @@ namespace Proj_Desktop_App
             return employeeInfos.ToArray();
         }
 
-
-        private void AddMockData()
+        private void AddEmployeeMockData()
         {
-            AddEmployee(5467, "George", "Wood", 'M', "0031677777", DateTime.Parse("18/09/1997"), "Eindhoven", "Administration ", "Employed", Departments.office, "g.wood@gmail.com", 1, PositionType.Administrator, "Administrator");
-            AddEmployee(3456, "Nicole", "Green", 'F', "0031655378", DateTime.Parse("27/11/1990"), "Geldrop", "IELTS", "Employed", Departments.warehouse, "n.green@gmail.com", 1, PositionType.Depot_Worker, "Depot_Worker");
-            AddEmployee(7890, "john", "doe", 'M', "0031674628", DateTime.Parse("05/07/1995"), "Helmond", "Mangment ", "Employed", Departments.floorTwo, "john.d@gmail.com", 0.4, PositionType.Sales_Manager, "Sales Manager");
+            string format = "dd/MM/yyyy";
+            var cultureInf = CultureInfo.InvariantCulture;
+            AddEmployee(5467, "George", "Wood", 'M', "0031677777", DateTime.ParseExact("18/09/1997", format, cultureInf), "Eindhoven", "Administration ", "Employed", Departments.office, "g.wood@gmail.com", 1, PositionType.Administrator, "Administrator");
+            AddEmployee(3456, "Nicole", "Green", 'F', "0031655378", DateTime.ParseExact("27/11/1998", format, cultureInf), "Geldrop", "IELTS", "Employed", Departments.warehouse, "n.green@gmail.com", 1, PositionType.Depot_Worker, "Depot_Worker");
+            AddEmployee(7890, "John", "Doe", 'M', "0031674628", DateTime.ParseExact("05/12/1991", format, cultureInf), "Helmond", "Mangment ", "Employed", Departments.floorTwo, "john.d@gmail.com", 0.4, PositionType.Sales_Manager, "Sales Manager");
+            AddEmployee(3992616, "Shenghang", "Zhu", 'M', "134556", DateTime.ParseExact("01/01/2020", format, cultureInf), "Tilburg", "ICT", "employed", Departments.warehouse, "xxxx@gmail.com", 1, PositionType.Depot_Worker, "");
+            AddEmployee(3376540, "David", "van Rijthoven ", 'M', "134556", DateTime.ParseExact("01/01/2020", format, cultureInf), "Eindhoven", "ICT", "employed", Departments.floorOne, "xxxx@gmail.com", 1, PositionType.Sales_Worker, "");
+            AddEmployee(4090918, "Dzhurov", "M", 'M', "134556", DateTime.ParseExact("01/01/2020", format, cultureInf), "Amersfoort", "ICT", "employed", Departments.floorOne, "xxxx@gmail.com", 1, PositionType.Depot_Worker, "");
+            AddEmployee(443892, "Mohammed", "Al-Eryani", 'M', "134556", DateTime.ParseExact("01/01/2020", format, cultureInf), "Den Haag", "ICT", "employed", Departments.floorFour, "xxxx@gmail.com", 1, PositionType.Sales_Worker, "");
+            AddEmployee(3088685, "Joost", "Burggraaff", 'M', "134556", DateTime.ParseExact("01/01/2020", format, cultureInf), "Eindhoven", "ICT", "employed", Departments.floorThree, "xxxx@gmail.com", 1, PositionType.Depot_Worker, "");
         }
 
         private void ProductMockData()
@@ -85,7 +102,7 @@ namespace Proj_Desktop_App
         {
             foreach (Product p in products)
             {
-                if (p.Id == productId)
+                if (p.id == productId)
                 {
                     return p;
                 }
@@ -105,14 +122,16 @@ namespace Proj_Desktop_App
 
         public void RestockProduct(int productId, int amount)
         {
+            /*
             Product(productId).Restock(amount);
             for (int i = orders.Count - 1; i >= 0; i--)
             {
-                if (orders[i].GetProductId == productId)
+                if (orders[i].productCode == productId)
                 {
                     orders.RemoveAt(i);
                 }
             }
+            */
         }
 
         public void AcceptRestock(RestockRequest order)
@@ -121,16 +140,16 @@ namespace Proj_Desktop_App
             requests.Remove(order);
         }
 
-        public void AddRestock(int productId, string productName,int restockAmount)
+        public void AddRestock(int productId, string productName,int restockAmount, string description)
         {
-            requests.Add(new RestockRequest(productId, productName, restockAmount));
+            //requests.Add(new RestockRequest(productId, productName, restockAmount, description));
         }
 
         public void RemoveRestock(int productId)
         {
             for (int i = requests.Count - 1; i >= 0; i--)
             {
-                if (requests[i].GetProductId == productId)
+                if (requests[i].productCode == productId)
                 {
                     requests.RemoveAt(i);
                 }
@@ -150,7 +169,7 @@ namespace Proj_Desktop_App
         {
             for (int i = products.Count - 1; i >= 0; i--)
             {
-                if (products[i].Id == productId)
+                if (products[i].id == productId)
                 {
                     products.RemoveAt(i);
                 }
@@ -158,3 +177,4 @@ namespace Proj_Desktop_App
         }
     }
 }
+

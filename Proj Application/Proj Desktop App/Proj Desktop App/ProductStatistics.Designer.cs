@@ -37,6 +37,7 @@
             this.numStockRequest = new System.Windows.Forms.NumericUpDown();
             this.lbPendingRestocks = new System.Windows.Forms.ListBox();
             this.btnProductRefresh = new System.Windows.Forms.Button();
+            this.tbRestockDescription = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numStockRequest)).BeginInit();
             this.SuspendLayout();
             // 
@@ -83,9 +84,9 @@
             // 
             // btnRequestRestock
             // 
-            this.btnRequestRestock.Location = new System.Drawing.Point(583, 97);
+            this.btnRequestRestock.Location = new System.Drawing.Point(709, 59);
             this.btnRequestRestock.Name = "btnRequestRestock";
-            this.btnRequestRestock.Size = new System.Drawing.Size(92, 24);
+            this.btnRequestRestock.Size = new System.Drawing.Size(92, 60);
             this.btnRequestRestock.TabIndex = 44;
             this.btnRequestRestock.Text = "Request Restock";
             this.btnRequestRestock.UseVisualStyleBackColor = true;
@@ -109,7 +110,7 @@
             // 
             // numStockRequest
             // 
-            this.numStockRequest.Location = new System.Drawing.Point(477, 97);
+            this.numStockRequest.Location = new System.Drawing.Point(603, 67);
             this.numStockRequest.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -138,11 +139,19 @@
             this.btnProductRefresh.UseVisualStyleBackColor = true;
             this.btnProductRefresh.Click += new System.EventHandler(this.btnProductRefresh_Click);
             // 
+            // tbRestockDescription
+            // 
+            this.tbRestockDescription.Location = new System.Drawing.Point(476, 95);
+            this.tbRestockDescription.Name = "tbRestockDescription";
+            this.tbRestockDescription.Size = new System.Drawing.Size(227, 22);
+            this.tbRestockDescription.TabIndex = 49;
+            // 
             // ProductStatistics
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(813, 548);
+            this.Controls.Add(this.tbRestockDescription);
             this.Controls.Add(this.btnProductRefresh);
             this.Controls.Add(this.lbPendingRestocks);
             this.Controls.Add(this.numStockRequest);
@@ -170,5 +179,6 @@
         private System.Windows.Forms.NumericUpDown numStockRequest;
         private System.Windows.Forms.ListBox lbPendingRestocks;
         private System.Windows.Forms.Button btnProductRefresh;
+        private System.Windows.Forms.TextBox tbRestockDescription;
     }
 }

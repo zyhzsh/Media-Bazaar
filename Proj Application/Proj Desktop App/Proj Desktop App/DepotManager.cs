@@ -67,7 +67,7 @@ namespace Proj_Desktop_App
             {
                 foreach (Product p in lbProducts.SelectedItems)
                 {
-                    mediabazaar.RemoveProduct(p.Id);
+                    mediabazaar.RemoveProduct(p.id);
                 }
                 ReloadProducts();
             }
@@ -100,7 +100,7 @@ namespace Proj_Desktop_App
         {
             for (int i = lbIncomingRestocks.SelectedItems.Count - 1; i >= 0; i--)
             {
-                int requestID = ((RestockRequest) lbIncomingRestocks.SelectedItems[i]).GetProductId;
+                int requestID = ((RestockRequest) lbIncomingRestocks.SelectedItems[i]).productCode;
                 mediabazaar.RemoveRestock(requestID);
             }
             ReloadRequests();

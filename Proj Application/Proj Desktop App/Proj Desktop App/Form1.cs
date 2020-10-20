@@ -20,16 +20,96 @@ namespace Proj_Desktop_App
             InitializeComponent();
             mediaBazaar = new Store();
             login = new Login();
+            btnEmpStatistics.Visible = false;
+            btnEmpStatistics.Enabled = false;
+            btnDepotWorkerForm.Visible = false;
+            btnDepotWorkerForm.Enabled = false;
+            btnOpenSchedule.Visible = false;
+            btnOpenSchedule.Enabled = false;
+            btnDepotManager.Visible = false;
+            btnDepotManager.Enabled = false;
+            btnProductStatisticsMenu.Visible = false;
+            btnProductStatisticsMenu.Enabled = false;
+            btnDepotWorkerForm.Visible = false;
+            btnDepotWorkerForm.Enabled = false;
         }
 
         private void btLogin_Click(object sender, EventArgs e)
         {
-
+            PositionType position = login.CheckLogin(tbLogInUsername.Text, tbLogInPassword.Text);
+            if (position == PositionType.Administrator)
+            {
+                // open admin form
+                btnEmpStatistics.Visible = true;
+                btnEmpStatistics.Enabled = true;
+                btnDepotWorkerForm.Visible = false;
+                btnDepotWorkerForm.Enabled = false;
+                btnOpenSchedule.Visible = false;
+                btnOpenSchedule.Enabled = false;
+                btnDepotManager.Visible = false;
+                btnDepotManager.Enabled = false;
+                btnProductStatisticsMenu.Visible = false;
+                btnProductStatisticsMenu.Enabled = false;
+                btnDepotWorkerForm.Visible = false;
+                btnDepotWorkerForm.Enabled = false;
+            }
+            else if (position == PositionType.Depot_Worker)
+            {
+                // open depot worker form
+                btnEmpStatistics.Visible = false;
+                btnEmpStatistics.Enabled = false;
+                btnDepotWorkerForm.Visible = false;
+                btnDepotWorkerForm.Enabled = false;
+                btnOpenSchedule.Visible = false;
+                btnOpenSchedule.Enabled = false;
+                btnDepotManager.Visible = false;
+                btnDepotManager.Enabled = false;
+                btnProductStatisticsMenu.Visible = false;
+                btnProductStatisticsMenu.Enabled = false;
+                btnDepotWorkerForm.Visible = true;
+                btnDepotWorkerForm.Enabled = true;
+            }
+            else if (position == PositionType.Sales_Manager)
+            {
+                // open sales manager form
+                btnEmpStatistics.Visible = false;
+                btnEmpStatistics.Enabled = false;
+                btnDepotWorkerForm.Visible = false;
+                btnDepotWorkerForm.Enabled = false;
+                btnOpenSchedule.Visible = true;
+                btnOpenSchedule.Enabled = true;
+                btnDepotManager.Visible = false;
+                btnDepotManager.Enabled = false;
+                btnProductStatisticsMenu.Visible = true;
+                btnProductStatisticsMenu.Enabled = true;
+                btnDepotWorkerForm.Visible = false;
+                btnDepotWorkerForm.Enabled = false;
+            }
+            else if (position == PositionType.Depot_Manager)
+            {
+                // open depot manager form
+                btnEmpStatistics.Visible = false;
+                btnEmpStatistics.Enabled = false;
+                btnDepotWorkerForm.Visible = false;
+                btnDepotWorkerForm.Enabled = false;
+                btnOpenSchedule.Visible = true;
+                btnOpenSchedule.Enabled = true;
+                btnDepotManager.Visible = true;
+                btnDepotManager.Enabled = true;
+                btnProductStatisticsMenu.Visible = true;
+                btnProductStatisticsMenu.Enabled = true;
+                btnDepotWorkerForm.Visible = false;
+                btnDepotWorkerForm.Enabled = false;
+            }
+            else
+            {
+                MessageBox.Show("Incorrect username or password.");
+            }
         }
 
         private void btStatistics_Click(object sender, EventArgs e)
         {
-
+            new AdministratorForm(this, mediaBazaar);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -55,6 +135,12 @@ namespace Proj_Desktop_App
         {
             WorkerStockRequests RestockForm = new WorkerStockRequests(mediaBazaar);
             RestockForm.Show(this);
+        }
+
+        private void btnOpenSchedule_Click(object sender, EventArgs e)
+        {
+            Scheduling scheduleForm = new Scheduling();
+            scheduleForm.Show(this);
         }
     }
 }
