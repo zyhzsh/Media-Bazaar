@@ -46,7 +46,7 @@ namespace Proj_Desktop_App
                 case "Floor One":
                     for (int i = lbProductListStatistics.Items.Count - 1; i >= 0; i--)
                     {
-                        if (((Product)lbProductListStatistics.Items[i]).belongingDepartment != Departments.floorOne)
+                        if (((Product)lbProductListStatistics.Items[i]).Department != Departments.floorOne)
                         {
                             lbProductListStatistics.Items.RemoveAt(i);
                         }
@@ -55,7 +55,7 @@ namespace Proj_Desktop_App
                 case "Floor Two":
                     for (int i = lbProductListStatistics.Items.Count - 1; i >= 0; i--)
                     {
-                        if (((Product)lbProductListStatistics.Items[i]).belongingDepartment != Departments.floorTwo)
+                        if (((Product)lbProductListStatistics.Items[i]).Department != Departments.floorTwo)
                         {
                             lbProductListStatistics.Items.RemoveAt(i);
                         }
@@ -64,7 +64,7 @@ namespace Proj_Desktop_App
                 case "Floor Three":
                     for (int i = lbProductListStatistics.Items.Count - 1; i >= 0; i--)
                     {
-                        if (((Product)lbProductListStatistics.Items[i]).belongingDepartment != Departments.floorThree)
+                        if (((Product)lbProductListStatistics.Items[i]).Department != Departments.floorThree)
                         {
                             lbProductListStatistics.Items.RemoveAt(i);
                         }
@@ -73,7 +73,7 @@ namespace Proj_Desktop_App
                 case "Floor Four":
                     for (int i = lbProductListStatistics.Items.Count - 1; i >= 0; i--)
                     {
-                        if (((Product)lbProductListStatistics.Items[i]).belongingDepartment != Departments.floorFour)
+                        if (((Product)lbProductListStatistics.Items[i]).Department != Departments.floorFour)
                         {
                             lbProductListStatistics.Items.RemoveAt(i);
                         }
@@ -99,7 +99,7 @@ namespace Proj_Desktop_App
             {
                 foreach (Product p in lbProductListStatistics.SelectedItems)
                 {
-                    mediaBazaar.AddRestock(p.id, p.name, (int)numStockRequest.Value, tbRestockDescription.Text);
+                    mediaBazaar.AddRestock(p.id, p.Name, (int)numStockRequest.Value, tbRestockDescription.Text);
                 }
                 ReloadRestockRequests();
             }
@@ -137,7 +137,7 @@ namespace Proj_Desktop_App
                     {
                         for(int i = lbProductListStatistics.Items.Count - 1; i >= 0; i--)
                         {
-                            if (!((Product)lbProductListStatistics.Items[i]).name.Contains(tbProductSearchAttribute.Text))
+                            if (!((Product)lbProductListStatistics.Items[i]).Name.Contains(tbProductSearchAttribute.Text))
                             {
                                 lbProductListStatistics.Items.RemoveAt(i);
                             }

@@ -27,11 +27,11 @@ namespace Proj_Desktop_App
             InitializeComponent();
             mediabazaar = DepoMngrMediaBazaar;
             updateProduct = editProduct;
-            tbProductName.Text = updateProduct.name;
-            tbBrand.Text = updateProduct.brand;
-            numBuyingPrice.Value = (decimal)updateProduct.buyingPrice;
-            numSellingPrice.Value = (decimal) updateProduct.sellingPrice;
-            switch (updateProduct.belongingDepartment)
+            tbProductName.Text = updateProduct.Name;
+            tbBrand.Text = updateProduct.Brand;
+            numBuyingPrice.Value = (decimal)updateProduct.BuyingPrice;
+            numSellingPrice.Value = (decimal) updateProduct.SellingPrice;
+            switch (updateProduct.Department)
             {
                 case Departments.floorOne:
                     cbDepartment.SelectedIndex = 0;
