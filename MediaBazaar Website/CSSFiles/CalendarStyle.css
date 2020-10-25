@@ -6,7 +6,7 @@
   display: block;
   padding: 0.5rem 1rem;
   text-align: center;
-  background-color:  #a900f7;
+  background-color:  #f2eff3;
   
   }
   
@@ -14,7 +14,6 @@
     width: auto;
     height: auto;
     left: 1600px;
-    background-color:  #a900f7;
     text-align: right;
     color: #fff;
     position: relative;
@@ -23,7 +22,7 @@
 
   .grid-container {
     display: grid;
-    background-color: #a900f7;
+    background-color: #767de7;
     grid-template-columns: repeat(1, 100px);
     grid-template-rows: repeat(1, 50px);
     grid-gap: 2px;

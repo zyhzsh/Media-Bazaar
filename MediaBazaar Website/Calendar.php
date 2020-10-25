@@ -1,7 +1,7 @@
 <html>
 <head>   
-<link href="CSSFiles/calanderStyle.css" type="text/css" rel="stylesheet" />
-<?php include('User.php');?> 
+<link href="CSSFiles/calendarStyle.css" type="text/css" rel="stylesheet" />
+<?php  require_once('classes/classes.php'); ?> 
 </head>
 <header>
     <form  method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
@@ -17,23 +17,21 @@
 </form>
 
 <?php
-$user= new User();
-$user= new User();
-if(isset($_POST['selctedDate'])){
-echo"";
-}
- if (isset($_POST['selctedDate'])) {
-  if(empty($user->ShowSellectedShift($_POST['selctedDate']))){
-  }else{
+$shift= new shifts();
+ 
+if(empty($_POST['selctedDate'])){
+
+}else{
     $selected_date = date('d-m-yy', strtotime($_POST['selctedDate']));
-    echo'<h3>Date:   &nbsp;&nbsp;&nbsp;   Shift:</h3>';
-     echo  $user->ShowSellectedShift($_POST['selctedDate']);
+    echo' <h3>Date:   &nbsp;&nbsp;&nbsp;   Shift:</h3';
+     echo  $shift->ShowSellectedShift($_POST['selctedDate']);
   }
-  }
+  
 
   if (isset($_POST['ShowAllShifts'])) {
     echo'<h3>Date:    &nbsp;&nbsp;&nbsp;   Shift:</h3>';
-     echo  $user->ShowAllShifts();
+     echo  $shift->ShowAllShifts();
+     echo  'thats it';
     
   }
 ?>

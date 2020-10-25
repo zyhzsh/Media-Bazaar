@@ -6,7 +6,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link href="CSSFiles/loginStyle.css" type="text/css" rel="stylesheet" />
    <title>Home</title>
-   <?php include('User.php'); ?>
+   <?php  require_once('classes/classes.php'); ?>
    <style>
       
    </style>
@@ -20,11 +20,9 @@
       <div class = "container">
       
          <form class = "form-signin" role = "form" 
-            action = "<?php //echo strval( $_SESSION["BSN"]); 
-            ?>" method = "post">
+            action ="" method = "post">
             <h4 class = "form-signin-heading">
-               <?php $user= new User(); echo  $user->checkUser(); 
-              // echo  $user->AddShiftsToCalander()
+               <?php $user= new User();  echo  $user->checkUser();
                ?>
              </h4>
             <input type = "text" class = "form-control" 
