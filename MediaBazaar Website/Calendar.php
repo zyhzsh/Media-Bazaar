@@ -31,7 +31,6 @@ if(empty($_POST['selctedDate'])){
   if (isset($_POST['ShowAllShifts'])) {
     echo'<h3>Date:    &nbsp;&nbsp;&nbsp;   Shift:</h3>';
      echo  $shift->ShowAllShifts();
-     echo  'thats it';
     
   }
 ?>
