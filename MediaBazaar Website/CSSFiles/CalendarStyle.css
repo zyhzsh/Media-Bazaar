@@ -6,16 +6,18 @@
   display: block;
   padding: 0.5rem 1rem;
   text-align: center;
-  background-color:  #f2eff3;
+  background-color:   #767de7;
+  height: 30pt;
   
   }
   
   .logoutbt{
-    width: auto;
-    height: auto;
-    left: 1600px;
-    text-align: right;
-    color: #fff;
+    width: 50pt;
+    height: 30pt;
+    float: right;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    background-color: #767de7;
     position: relative;
    
   }
@@ -37,8 +39,22 @@
     
   }
   
+
   .item1 {
     grid-area: a;
     width: auto;
+    height: 40pt;
+  }
+  .item1:hover {
+   
+    background-color: aquamarine;
+  }
+  .logoutbt:hover {
+   
+    background-color: aquamarine;
+  }
+  .input:hover {
+   
+    background-color: aquamarine;
   }
  

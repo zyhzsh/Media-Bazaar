@@ -6,7 +6,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link href="CSSFiles/loginStyle.css" type="text/css" rel="stylesheet" />
    <title>Home</title>
-   <?php  require_once('classes/classes.php'); ?>
+   <?php   require_once('Controller/classes.php');?>
    <style>
       
    </style>
@@ -22,7 +22,7 @@
          <form class = "form-signin" role = "form" 
             action ="" method = "post">
             <h4 class = "form-signin-heading">
-               <?php $user= new User();  echo  $user->checkUser();
+               <?php $user= new User();   print_r($user->checkUser());
                ?>
              </h4>
             <input type = "text" class = "form-control" 

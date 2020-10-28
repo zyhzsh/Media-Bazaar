@@ -2,7 +2,7 @@
 body {
   
    padding-bottom: 40px;
-   background-color: #fefbff;
+   background-color: #f8dc5e;
 }
 
 .form-signin {
@@ -40,7 +40,7 @@ body {
    margin-bottom: -1px;
    border-bottom-right-radius: 0;
    border-bottom-left-radius: 0;
-   border-color:#070707;
+   border-color:rgb(0, 0, 0);
 }
 
 .form-signin input[type="password"] {
@@ -60,6 +60,11 @@ button{
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    background-color: #767de7;;
     padding: 10px;
     font-size: 16px;
 }
+button:hover {
+   
+   background-color: aquamarine;
+ }
