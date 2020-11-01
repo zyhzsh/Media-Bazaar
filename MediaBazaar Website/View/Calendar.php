@@ -1,7 +1,7 @@
 <html>
 <head>   
-<link href="CSSFiles/calendarStyle.css" type="text/css" rel="stylesheet" />
-<link href="CSSFiles/loginStyle.css" type="text/css" rel="stylesheet" />
+<link href="../CSSFiles/calendarStyle.css" type="text/css" rel="stylesheet" />
+<link href="../CSSFiles/loginStyle.css" type="text/css" rel="stylesheet" />
 <?php    require_once('classes.php'); ?> 
 </head>
 <header>

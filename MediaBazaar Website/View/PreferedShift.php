@@ -1,18 +1,20 @@
 <html>
 <head>   
-<link href="CSSFiles/calendarStyle.css" type="text/css" rel="stylesheet" />
-<link href="CSSFiles/loginStyle.css" type="text/css" rel="stylesheet" />
+<link href="../CSSFiles/calendarStyle.css" type="text/css" rel="stylesheet" />
+<link href="../CSSFiles/loginStyle.css" type="text/css" rel="stylesheet" />
+
 <?php   require_once('classes.php');?> 
 </head>
 <header>
     <form  method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
     <input class='logoutbt' type="submit" name="logoutBtn" value='logout' />
     </form>
-    <a href="Calendar.php"><input  class='input' type="submit" name="GoToAssignedShifts" value='Go to assigned shifts'></a><br> 
+
 
 </header>
 
 <body>
+
 <form  method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
 <h3> Select a day to choose a prefered shift : </h3>
 <input  class='input' type="date" data-date="" data-date-format="YYYY MM DD"  name="selctedPreferedDate"><br> 

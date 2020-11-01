@@ -4,7 +4,7 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link href="CSSFiles/loginStyle.css" type="text/css" rel="stylesheet" />
+   <link href="../CSSFiles/loginStyle.css" type="text/css" rel="stylesheet" />
    <title>Home</title>
    <?php   require_once('classes.php');?>
    <style>
@@ -17,7 +17,7 @@
 
 
 <h2>Sign in</h2> 
-      <div class = "container">
+  
       
          <form class = "form-signin" role = "form" 
             action ="" method = "post">
@@ -33,7 +33,7 @@
             <button class = "btn btn-lg btn-primary btn-block" type = "submit" 
                name = "login">Login</button>
          </form>
-      </div> 
+  
 
 
 

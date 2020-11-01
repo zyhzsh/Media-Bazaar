@@ -12,7 +12,7 @@ if(isset($_POST['loginPassword'])&&isset($_POST['loginEmail'])){
    $password=$_POST['loginPassword']; 
    $_dbh =new UserModel();
    if( $_dbh->CheckUsers($username,$password) == true ){
-    header("Location:calendar.php");
+   // header("Location:calendar.php");
     $session=session:: getInstance();
     return 'true'; 
    }
