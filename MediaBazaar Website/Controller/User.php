@@ -1,5 +1,5 @@
 <?php
- require_once('Controller/classes.php');
+ require_once('classes.php');
  class User {
 
 
@@ -10,9 +10,8 @@ if(isset($_POST['loginPassword'])&&isset($_POST['loginEmail'])){
 
    $username=$_POST['loginEmail'];
    $password=$_POST['loginPassword']; 
-   $_dbh =new Dbh;
-   $_dbh->CheckUsers($username,$password);
-   if($_dbh == true ){
+   $_dbh =new UserModel();
+   if( $_dbh->CheckUsers($username,$password) == true ){
     header("Location:calendar.php");
     $session=session:: getInstance();
     return 'true'; 

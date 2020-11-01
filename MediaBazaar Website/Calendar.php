@@ -2,7 +2,7 @@
 <head>   
 <link href="CSSFiles/calendarStyle.css" type="text/css" rel="stylesheet" />
 <link href="CSSFiles/loginStyle.css" type="text/css" rel="stylesheet" />
-<?php   require_once('Controller/classes.php'); ?> 
+<?php    require_once('classes.php'); ?> 
 </head>
 <header>
     <form  method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
@@ -25,13 +25,13 @@ if(empty($_POST['selctedDate'])){
 
 }else{
     $selected_date = date('d-m-yy', strtotime($_POST['selctedDate']));
-    echo' <h3>Date:   &nbsp;&nbsp;&nbsp;   Shift:</h3';
+    echo' <h3>Date:   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Shift:</h3';
      echo  $shift->ShowSellectedShift($_POST['selctedDate']);
   }
   
 
   if (isset($_POST['ShowAllShifts'])) {
-    echo'<h3>Date:    &nbsp;&nbsp;&nbsp;   Shift:</h3>';
+    echo'<h3>Date:    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Shift:</h3>';
      echo  $shift->ShowAllShifts();
     
   }

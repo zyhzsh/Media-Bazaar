@@ -1,5 +1,5 @@
 <?php
- require_once('Controller/classes.php');
+ require_once('classes.php');
 class shifts{
  
 
@@ -7,14 +7,14 @@ class shifts{
  public function GetAllShifts(){
     $session=session:: getInstance();
     $bsn=$session-> __get('BSN'); 
-    $dbh=new Dbh;
+    $dbh=new ShiftsModel();
   return $dbh-> GetAllUserShifts($bsn); 
  }
 
  public function GetAllPreferedShifts(){
   $session=session:: getInstance();
   $bsn=$session-> __get('BSN'); 
-  $dbh=new Dbh;
+  $dbh=new ShiftsModel();
 return $dbh-> GetAllPreferedUserShifts($bsn); 
 }
 
@@ -48,7 +48,7 @@ public function ShowAllPreferedShifts(){
   if(is_array($this->GetAllPreferedShifts())){
   foreach( $this->GetAllPreferedShifts() as $preferdedShifts ){
    echo  '<div class="grid-container">'
-   .'<div class="item1">' .$preferdedShifts['date']. " &nbsp;&nbsp;&nbsp;".$preferdedShifts['preference_shift_type'].'</div></div>';
+   .'<div class="item1">' .$preferdedShifts['dateShift']. " &nbsp;&nbsp;&nbsp;".$preferdedShifts['preference_shift_type'].'</div></div>';
   }       
  }else{
    echo 'not available yet';
@@ -59,8 +59,8 @@ public function AddPreferedShift($date,$shiftType){
   $session=session:: getInstance();
   $BSN=$session-> __get('BSN'); 
   $selected_date = date('yy-m-d', strtotime($date)); 
-  $db=new Dbh();
-  return $db->AddPreferedShift($BSN,$selected_date,$shiftType);
+  $shifts=new ShiftsModel();
+  return $shifts->AddPreferedShift($BSN,$selected_date,$shiftType);
 
   }
     

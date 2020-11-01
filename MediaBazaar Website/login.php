@@ -6,7 +6,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link href="CSSFiles/loginStyle.css" type="text/css" rel="stylesheet" />
    <title>Home</title>
-   <?php   require_once('Controller/classes.php');?>
+   <?php   require_once('classes.php');?>
    <style>
       
    </style>
