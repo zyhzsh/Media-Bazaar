@@ -27,7 +27,7 @@ if(isset($_POST['loginPassword'])&&isset($_POST['loginEmail'])){
    if(isset($_POST['logoutBtn']) && preg_match("/\b(logout)\b/", $_POST['logoutBtn'])){
       $session=session::getInstance();
       $session->__unset('BSN');
-      header("Location:login.php");
+      header("Location:?page=default");
       echo 'session stoped';
       return true;
   }

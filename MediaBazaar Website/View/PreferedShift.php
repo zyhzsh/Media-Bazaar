@@ -1,5 +1,9 @@
 <html>
 <head>   
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale= ">
+    <link href="../CSSFiles/navigationbar.css" type="text/css" rel="stylesheet" />
+    <title>Prefered shifts</title>
 <link href="../CSSFiles/calendarStyle.css" type="text/css" rel="stylesheet" />
 <link href="../CSSFiles/loginStyle.css" type="text/css" rel="stylesheet" />
 

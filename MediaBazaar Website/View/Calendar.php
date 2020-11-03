@@ -1,5 +1,9 @@
 <html>
 <head>   
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale= ">
+    <link href="../CSSFiles/navigationbar.css" type="text/css" rel="stylesheet" />
+    <title>Calendar</title>
 <link href="../CSSFiles/calendarStyle.css" type="text/css" rel="stylesheet" />
 <link href="../CSSFiles/loginStyle.css" type="text/css" rel="stylesheet" />
 <?php    require_once('classes.php'); ?> 
@@ -33,7 +37,6 @@ if(empty($_POST['selctedDate'])){
   if (isset($_POST['ShowAllShifts'])) {
     echo'<h3>Date:    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Shift:</h3>';
      echo  $shift->ShowAllShifts();
-    
   }
 ?>
  
