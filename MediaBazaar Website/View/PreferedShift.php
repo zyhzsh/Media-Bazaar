@@ -24,10 +24,10 @@
 <input type="checkbox" id="Afternone"  name="Afternoon"><br>
 <label for="myCheck">Evening:</label> 
 <input type="checkbox" id="Evening"  name="Evening"><br>
-<input class='input' type="submit" name="savePreferedSchudle" value='save my prefered schudle' />
+<input class='input' type="submit" name="savePreferedSchudle" value='save my prefered schudle ' /><br>
 </form>
 <form  method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
-<input class='input' type="submit" name="ShowAllPreferedShifts" value='show all prefered shifts &nbsp  ' />
+<input class='input' type="submit" name="ShowAllPreferedShifts" value='show all my prefered shifts'/>
 </form>
 <?php
 $shift= new shifts();
