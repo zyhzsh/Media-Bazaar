@@ -10,7 +10,7 @@
 <?php   require_once('classes.php');?> 
 </head>
 <header>
-    <form  method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
+    <form  method="post" action="">
     <input class='logoutbt' type="submit" name="logoutBtn" value='logout' />
     </form>
 
@@ -19,7 +19,7 @@
 
 <body>
 
-<form  method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
+<form  method="post" action="">
 <h3> Select a day to choose a prefered shift : </h3>
 <input  class='input' type="date" data-date="" data-date-format="YYYY MM DD"  name="selctedPreferedDate"><br> 
 <label for="myCheck">Morning:</label> 
@@ -30,7 +30,7 @@
 <input type="checkbox" id="Evening"  name="Evening"><br>
 <input class='input' type="submit" name="savePreferedSchudle" value='save my prefered schudle ' /><br>
 </form>
-<form  method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
+<form  method="post" action="">
 <input class='input' type="submit" name="ShowAllPreferedShifts" value='show all my prefered shifts'/>
 </form>
 <?php

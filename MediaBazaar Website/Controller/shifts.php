@@ -22,8 +22,8 @@ return $dbh-> GetAllPreferedUserShifts($bsn);
 function ShowSellectedShift($date){
 $selected_date = date('yy-m-d', strtotime($date)); 
 $allshifts=$this->GetAllShifts(); 
-  foreach( $allshifts as $shifts ){
 
+  foreach( $allshifts as $shifts ){
     if($selected_date==$shifts['date']){
       echo  '<div class="grid-container">'
       .'<div class="item1">' .$shifts['date']. " &nbsp;&nbsp;&nbsp;".$shifts['assigned_shift_type'].'</div></div>';
