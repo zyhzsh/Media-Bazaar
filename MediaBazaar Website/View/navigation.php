@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale= ">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="../CSSFiles/navigationbar.css" type="text/css" rel="stylesheet" />
+    <?php   require_once('classes.php');?>
     <title>Document</title>
 </head>
 <body>
@@ -17,6 +18,7 @@
 </div>
 
 <?php
+if(isset($_GET['page'])){
 switch($_GET['page']) 
 {
     case 'pagePreferedShift':
@@ -27,7 +29,7 @@ switch($_GET['page'])
         break;
     default:
     echo '<div class="main">';    include 'login.php';echo '</div>';
-
+}
 }
 ?>
 </body>

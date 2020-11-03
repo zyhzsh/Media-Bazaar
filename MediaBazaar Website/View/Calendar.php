@@ -8,7 +8,7 @@
     <form  method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
     <input class='logoutbt' type="submit" name="logoutBtn" value='logout' />
 </form>
-<a href="PreferedShift.php">  <input  class='input' type="submit" name="GoTopreferShifts" value='Go to prefer shifts'></a><br> 
+<!-- <a href="PreferedShift.php">  <input  class='input' type="submit" name="GoTopreferShifts" value='Go to prefer shifts'></a><br>  -->
 </header>
 
 <body>

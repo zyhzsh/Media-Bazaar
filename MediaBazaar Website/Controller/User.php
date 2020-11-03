@@ -12,9 +12,9 @@ if(isset($_POST['loginPassword'])&&isset($_POST['loginEmail'])){
    $password=$_POST['loginPassword']; 
    $_dbh =new UserModel();
    if( $_dbh->CheckUsers($username,$password) == true ){
-   // header("Location:calendar.php");
+    header("Location:?page=pageAssignedShift");
     $session=session:: getInstance();
-    return 'true'; 
+    return 'welocme'; 
    }
    else{
       return'Check your Email and passowrd please';
@@ -39,7 +39,7 @@ if(isset($_POST['loginPassword'])&&isset($_POST['loginEmail'])){
 if(isset($_POST['logoutBtn']) && preg_match("/\b(logout)\b/", $_POST['logoutBtn'])){
    $session=session::getInstance();
    $session->__unset('BSN');
-   header("Location:login.php");
+   header("Location:?page=default");
    echo 'session stoped';
    return true;
 }

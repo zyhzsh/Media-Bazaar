@@ -7,7 +7,9 @@
     <title>Document</title>
 </head>
 <body>
- <?php include('navigation.php')
+ <?php  require_once('classes.php');
+ include('navigation.php');
+
  ?>  
 </body>
 </html>
