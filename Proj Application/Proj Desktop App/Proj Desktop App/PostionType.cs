@@ -12,7 +12,8 @@ namespace Proj_Desktop_App
         Depot_Manager,
         Sales_Manager,
         Depot_Worker,
-        Sales_Worker
-       }
+        Sales_Worker,
+        Other
+    }
 }
 

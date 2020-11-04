@@ -22,7 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -94,12 +94,46 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdministratorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdministratorForm.Designer.cs">
+      <DependentUpon>AdministratorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Adminstration.cs" />
     <Compile Include="AssignedShift.cs" />
+    <Compile Include="AvailableShift.cs" />
     <Compile Include="AvailableShifts.cs" />
+    <Compile Include="DatabaseManagement.cs" />
     <Compile Include="Departments.cs" />
+    <Compile Include="DepotManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DepotManager.Designer.cs">
+      <DependentUpon>DepotManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DepotManagerFrom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DepotManagerFrom.Designer.cs">
+      <DependentUpon>DepotManagerFrom.cs</DependentUpon>
+    </Compile>
     <Compile Include="DepotWorker.cs" />
+    <Compile Include="DepotWorkerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DepotWorkerForm.Designer.cs">
+      <DependentUpon>DepotWorkerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Employee.cs" />
+    <Compile Include="EmployeeManagment.cs" />
+    <Compile Include="EmployeeManagmentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmployeeManagmentForm.Designer.cs">
+      <DependentUpon>EmployeeManagmentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeShift.cs" />
     <Compile Include="EmployeeStatistics.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,9 +146,16 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Login.cs" />
+    <Compile Include="LoginHandler.cs" />
     <Compile Include="Manager.cs" />
     <Compile Include="PostionType.cs" />
+    <Compile Include="Product.cs" />
+    <Compile Include="ProductManagementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProductManagementFOrm.Designer.cs">
+      <DependentUpon>ProductManagementForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProductStatistics.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,15 +164,16 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RestockRequest.cs" />
     <Compile Include="SaleWorker.cs" />
     <Compile Include="Schedule.cs" />
+    <Compile Include="ScheduleManager.cs" />
     <Compile Include="Scheduling.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Scheduling.Designer.cs">
       <DependentUpon>Scheduling.cs</DependentUpon>
     </Compile>
-    <Compile Include="Shift.cs" />
     <Compile Include="ShiftType.cs" />
     <Compile Include="Store.cs" />
     <Compile Include="WorkerStockRequests.cs">
@@ -140,11 +182,29 @@
     <Compile Include="WorkerStockRequests.Designer.cs">
       <DependentUpon>WorkerStockRequests.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AdministratorForm.resx">
+      <DependentUpon>AdministratorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DepotManager.resx">
+      <DependentUpon>DepotManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DepotManagerFrom.resx">
+      <DependentUpon>DepotManagerFrom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DepotWorkerForm.resx">
+      <DependentUpon>DepotWorkerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmployeeManagmentForm.resx">
+      <DependentUpon>EmployeeManagmentForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EmployeeStatistics.resx">
       <DependentUpon>EmployeeStatistics.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProductManagementFOrm.resx">
+      <DependentUpon>ProductManagementForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProductStatistics.resx">
       <DependentUpon>ProductStatistics.cs</DependentUpon>
@@ -177,6 +237,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\Proj Desktop App.exe" />
+    <Content Include="bin\Debug\Proj Desktop App.pdb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -5,195 +5,196 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace Proj_Desktop_App
 {
     public partial class Scheduling : Form
     {
-        List<Employee> employees;
-        //List<AssignedShift> assignedshifts;
-        Schedule schedule;
-        ShiftType seletedshifttype;
-        DateTime seleteddate;
-        public Scheduling()
+        private ScheduleManager schedulemanager;
+        private ShiftType seletedshifttype;
+        private DateTime seleteddate;
+        private DateTime previousdate;
+        private Store store;
+        public Scheduling(Departments department)
         {
             InitializeComponent();
-            employees = new List<Employee>();
-            employees.Add(new Employee(3992616, "Shenghang", "Zhu", "male", 134556, DateTime.Parse("01/01/2020"), "Tilburg", "ICT", "employed", "Depot", "xxxx@gmail.com", 1, PositionType.Depot_Worker));
-            employees.Add(new Employee(3376540, "David", "van Rijthoven ", "male", 134556, DateTime.Parse("01/01/2020"), "Eindhoven", "ICT", "employed", "Sale", "xxxx@gmail.com", 1, PositionType.Sales_Worker));
-            employees.Add(new Employee(4090918, "Dzhurov", "Shenghang", "male", 134556, DateTime.Parse("01/01/2020"), "Amersfoort", "ICT", "employed", "Depot", "xxxx@gmail.com", 1, PositionType.Depot_Worker));
-            employees.Add(new Employee(443892, "Mohammed", "Al-Eryani", "male", 134556, DateTime.Parse("01/01/2020"), "Den Haag", "ICT", "employed", "Sale", "xxxx@gmail.com", 1, PositionType.Sales_Worker));
-            employees.Add(new Employee(3088685, "Joost", "Burggraaff", "male", 134556, DateTime.Parse("01/01/2020"), "Eindhoven", "ICT", "employed", "Depot", "xxxx@gmail.com", 1, PositionType.Depot_Worker));
-            schedule=new Schedule();
-            // assignedshifts = new List<AssignedShift>();
- 
-            schedule.AssignEmployeeToShift(ShiftType.Morning_Afternoon, DateTime.Today.ToString("29/09/2020"),employees);
-            
-
-
-
-
+            store = new Store();
+            schedulemanager = new ScheduleManager(store);
+            //1.update combo box
+            cbDepartment.Items.Add(Departments.floorOne);
+            cbDepartment.Items.Add(Departments.floorTwo);
+            cbDepartment.Items.Add(Departments.floorThree);
+            cbDepartment.Items.Add(Departments.floorFour);
+            cbDepartment.Items.Add(Departments.office);
+            cbDepartment.Items.Add(Departments.warehouse);
+            //2.set default vale for combo box by department
+            cbDepartment.SelectedItem = department;
+            //3.automatic set the default shifttype
             seletedshifttype = ShiftType.Morning;
             ckbMorning.Checked = true;
+            //4.automatic set the calendar date
             monthCalendarScheduling.SelectionStart = DateTime.Today;
-            seleteddate= DateTime.Today;
-            UpDateAssignedToListBox();
-            UpDateEmployeeToListBox();
-        }
-
-        void UpDateAssignedToListBox()
-        {
-            List<Employee> tempo = new List<Employee>();
-            tempo=schedule.GetAssignedEmployees(seleteddate.ToString("dd/MM/yyyy"));
-            foreach (Employee e in tempo)
-            {
-                listboxAssignedEmployees.Items.Add(e.BSN);
-            }
-            
-          
-        }
-
-        void UpDateEmployeeToListBox()
-        {
+            seleteddate = DateTime.Today;
+            previousdate = DateTime.Today;
+            //5.Update Employee list by department
             listboxAvailableEmployees.Items.Clear();
-            foreach (Employee e in employees)
+            foreach (Employee x in store.GetEmployeeList((Departments)cbDepartment.SelectedItem))
             {
-                listboxAvailableEmployees.Items.Add(e.GetBsnAndName());
+                listboxAvailableEmployees.Items.Add(x.GetBsnAndName());
             }
+            //6.Update AssigngedShift list by department
+            listboxAssignedEmployees.Items.Clear();
+            listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate, (Departments)cbDepartment.SelectedItem));
         }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
 
         private bool CheckAssignedShiftType()
-        {        
+        {
             if (ckbMorning.Checked) { seletedshifttype = ShiftType.Morning; }
             if (ckbAfternoon.Checked) { seletedshifttype = ShiftType.Afternoon; }
             if (CkbEvening.Checked) { seletedshifttype = ShiftType.Evening; }
             if (ckbMorning.Checked && ckbAfternoon.Checked) { seletedshifttype = ShiftType.Morning_Afternoon; }
             if (ckbMorning.Checked && CkbEvening.Checked) { seletedshifttype = ShiftType.Morning_Evening; }
             if (ckbAfternoon.Checked && CkbEvening.Checked) { seletedshifttype = ShiftType.Afternoon_Evening; }
-            if (ckbMorning.Checked && ckbAfternoon.Checked && CkbEvening.Checked) { seletedshifttype = ShiftType.FullDay; }
+            if (ckbMorning.Checked && ckbAfternoon.Checked && CkbEvening.Checked) { MessageBox.Show("it's illegal to assign empoyee working full day~!"); return false; }
             if (ckbMorning.Checked == false && ckbAfternoon.Checked == false && CkbEvening.Checked == false) { return false; }
             return true;
         }
-
-
-
-
         private void btnAddEmpShift_Click(object sender, EventArgs e)
-        {
-            //1.check and get shifttype
-            if (CheckAssignedShiftType())
-            {
-                //2.get selected Object;
-                //a. Get list of bsn
-                List<int> seletedbsn = new List<int>();
-                List<Employee> tempoemployees = new List<Employee>();
-                foreach (object m in listboxAvailableEmployees.SelectedItems)
+        {           
+                if (listboxAvailableEmployees.SelectedItems.Count != 0)
                 {
-                    string extractbsn = Regex.Match(m.ToString(), @"[0-9]+").ToString();
-                    seletedbsn.Add(Convert.ToInt32(extractbsn.ToString()));
-                }
-                //b.Get list of employees 
-                foreach (int bsn in seletedbsn)
-                {
-                    foreach (Employee Em in employees)
-                    {
-                        if (Em.BSN == bsn)
+                    if (seleteddate.Date < DateTime.Now.Date) { MessageBox.Show($"You can't Assign Shift at {seleteddate.ToString("dd/MM/yyyy")}"); return; }
+                    listboxAssignedEmployees.Items.Clear();
+                    if (CheckAssignedShiftType())  
+                    {                            
+                        List<int> seletedbsn = new List<int>();
+                        foreach (object m in listboxAvailableEmployees.SelectedItems)
                         {
-                            tempoemployees.Add(Em);
+                            string extractbsn = Regex.Match(m.ToString(), @"[0-9]+").ToString();
+                            seletedbsn.Add(Convert.ToInt32(extractbsn.ToString()));
                         }
+                        //3. Assign sift                      
+                        if (schedulemanager.AssignShift(seletedshifttype, seleteddate, seletedbsn))
+                        {
+                            listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate,(Departments)cbDepartment.SelectedItem));
+                        }
+                        else { MessageBox.Show("Assign failed, Please try again~!"); }
                     }
+                    else
+                    { MessageBox.Show("please selete the vaild shift type"); }
                 }
-                //3. Assign sift            
-                if (schedule.AssignEmployeeToShift(seletedshifttype, seleteddate.Date.ToString("dd/MM/yyyy"), tempoemployees))
+                else
                 {
-                    MessageBox.Show($"Assign succeed ~ ! ");
+                    MessageBox.Show("Please select Employee then assign shift");
                 }
-            }
-            else
-            { MessageBox.Show("please selete the shift type"); }
-
-
-
-
-
-
-
         }
-
-        private void monthCalendarScheduling_DateChanged(object sender, DateRangeEventArgs e)
-        {
-            seleteddate = monthCalendarScheduling.SelectionStart;
-            schedule.GetAssignedEmployees(seleteddate.ToString("dd/MM/yyyy"));
-        }
-
         private void listboxAvailableEmployees_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateEmployeesInfo();
         }
-        void UpdateEmployeesInfo()
+        private void UpdateEmployeesInfo()
         {
-            listBox1.Items.Clear();
+            listBoxEmployeesDetails.Items.Clear();
             List<int> seletedbsn = new List<int>();
             List<Employee> tempoemployees = new List<Employee>();
             foreach (object m in listboxAvailableEmployees.SelectedItems)
-               {
-                    string extractbsn= Regex.Match(m.ToString(), @"[0-9]+").ToString();
-                    seletedbsn.Add(Convert.ToInt32(extractbsn.ToString()));
-               }
+            {
+                string extractbsn = Regex.Match(m.ToString(), @"[0-9]+").ToString();
+                seletedbsn.Add(Convert.ToInt32(extractbsn.ToString()));
+            }
             foreach (int bsn in seletedbsn)
-              {
-                    foreach (Employee Em in employees)
-                    {
-                        if (Em.BSN == bsn)
-                        {
-                            tempoemployees.Add(Em);
-                        }                 
-                    }
-                }
+            {
+                tempoemployees.Add(store.GetEmployee(bsn));
+            }
             foreach (Employee e in tempoemployees)
             {
-
-                listBox1.Items.Add(e.Biscinfo());
+                listBoxEmployeesDetails.Items.Add(e.Biscinfo());
             }
-               
         }
-
-
-
-
-
-
-
-
-
         private void btnRmvEmployeeShift_Click(object sender, EventArgs e)
         {
-            schedule.GetAssignedEmployees(seleteddate.ToString("dd/MM/yyyy"));
+            List<int> seletedbsn = new List<int>();
+
+            foreach (object m in listboxAssignedEmployees.SelectedItems)
+            {
+                string extractbsn = Regex.Match(m.ToString(), @"[0-9]+").ToString();
+                seletedbsn.Add(Convert.ToInt32(extractbsn.ToString()));
+            }
+            listboxAssignedEmployees.Items.Clear();
+            schedulemanager.RemoveShift(seleteddate, seletedbsn);
+            seleteddate = monthCalendarScheduling.SelectionStart;
+            listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate,(Departments)cbDepartment.SelectedItem));
         }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void listboxAssignedEmployees_SelectedIndexChanged(object sender, EventArgs e)
         {
+            listBoxEmployeesDetails.Items.Clear();
+            List<int> seletedbsn = new List<int>();
+            List<Employee> tempoemployees = new List<Employee>();
+            foreach (object m in listboxAssignedEmployees.SelectedItems)
+            {
+                string extractbsn = Regex.Match(m.ToString(), @"[0-9]+").ToString();
+                seletedbsn.Add(Convert.ToInt32(extractbsn.ToString()));
+            }
+            foreach (int bsn in seletedbsn)
+            {
+               tempoemployees.Add(store.GetEmployee(bsn));
+            }
+            foreach (Employee tempo in tempoemployees)
+            {
 
+                listBoxEmployeesDetails.Items.AddRange(tempo.GetDetail());
+            }
+        }
+        private void monthCalendarScheduling_DateSelected(object sender, DateRangeEventArgs e)
+        {
+            listboxAssignedEmployees.Items.Clear();
+            seleteddate = monthCalendarScheduling.SelectionStart;
+            if (previousdate.Month != seleteddate.Month)
+            {
+                previousdate = seleteddate;
+                Schedule a = new Schedule();
+                a.LoadSchduleFormDateBase(seleteddate);
+            }
+            listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate, (Departments)cbDepartment.SelectedItem));
+        }
+        private void btnSeachAvailableEmpByBsn_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < listboxAvailableEmployees.Items.Count; i++)
+            {
+                if (listboxAvailableEmployees.Items[i].ToString().Contains(textBoxSearchAvailableList.Text))
+                {
+                    listboxAvailableEmployees.SelectedItems.Add(listboxAvailableEmployees.Items[i]);
+
+                }
+
+            }
+        }
+        private void btnSearchAssignedEmpByBsn_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < listboxAssignedEmployees.Items.Count; i++)
+            {
+                if (listboxAssignedEmployees.Items[i].ToString().Contains(textBoxSearchAssignedEmployees.Text))
+                {
+                    listboxAssignedEmployees.SelectedItems.Add(listboxAssignedEmployees.Items[i]);
+                }
+
+            }
+        }
+        private void cbDepartment_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //1.Update the employeelist by department
+            listboxAvailableEmployees.Items.Clear();
+            foreach (Employee x in store.GetEmployeeList((Departments)cbDepartment.SelectedItem))
+            {
+                listboxAvailableEmployees.Items.Add(x.GetBsnAndName());
+            }
+            //2.Update the assignedemployeelist by department
+            listboxAssignedEmployees.Items.Clear();
+            listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate, (Departments)cbDepartment.SelectedItem));
         }
     }
 }

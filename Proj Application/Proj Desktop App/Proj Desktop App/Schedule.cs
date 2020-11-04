@@ -1,127 +1,180 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Forms;
+using MySql;
+using MySql.Data.MySqlClient;
 namespace Proj_Desktop_App
 {
     class Schedule
     {
-        List<AssignedShift> assignedShifts;
+        //draft class right now
+        //we either safe everything in this class and display any date that is asked for
+        //or this class gets filled for the date and there is another entity (class/db) that has everything in it and sorts it per date
+        //currently this is the collection class with all the info
+
+        private static List<AssignedShift> assignedShifts;
+        private static List<AvailableShifts> availableShifts; //not in use as of yet
+
+        public Schedule(List<AssignedShift> AssignedShifts)
+        {
+            assignedShifts = AssignedShifts;
+        }
+        public Schedule(string test)
+        {
+            //mock data still needs to be done
+        }
+
+
         public Schedule()
         {
-            //Read for somewhere or database
-            assignedShifts = new List<AssignedShift>();
-       
-        }
-        public  bool AssignEmployeeToShift(ShiftType shiftType,string selecteddate,List<Employee>employees)
-        {  
-            foreach (AssignedShift e in assignedShifts)
-            {
-                assignedShifts.Add(new AssignedShift(selecteddate,shiftType,employees));
-            }   
-            return true;        
         }
 
-        public bool AssignEmployeeToShift(ShiftType shiftType, string selecteddate, Employee employee)
+        public List<AssignedShift> GetAssignedShifts()
         {
-
-            ////情况一：所选的日期没有返回值
-            //if (GetAssignedEmployees(selecteddate).Count() == 0)
-            //{
-            //    assignedShifts.Add(new AssignedShift(selecteddate, shiftType, employee));
-            //}
-            ////情况二：所选日期有返回值
-            //else {
-            //    List<Employee>emp = GetAssignedEmployees(selecteddate);
-
-            //    //1.若是返回的值内部有这个员工
-            //    if (emp.Contains(employee))
-            //    { 
-            //    //检测员工的shiftype是否一致
-                
-
-
-            //    //1.如果一致             
-                
-            //    }
-            //}
-
-
-            ////1.输入时间、和SHIFT类型、和员工
-            ////2.通过输入的时间来获得当天的列表员工列表
-            ////3.在此基础上更新
-            //foreach (AssignedShift e in assignedShifts)
-            //{
-            //    if (e.SelectedDate == selecteddate)
-            //    { 
-                   
-            //    }
-            //}
-            
-            
-            return true;
-
+            return assignedShifts;
         }
-
-
-
-
-
-
-
-        public bool RemoveFromShift(ShiftType shiftType, DateTime selecteddate, List<string> employee_bsn)
-        { 
-            return false;
-        }
-
-        public List<Employee> GetAssignedEmployees(string seleteddate)
+        public List<AvailableShifts> GetAvailableShifts()
         {
-            List<Employee> tempo_empolyees = new List<Employee>();  
-            foreach (AssignedShift e in assignedShifts)
+            return availableShifts;
+        }
+
+
+
+        /// <summary>
+        ///Specify the day
+        ///This function will  
+        ///Load this month of schdule data from database
+        /// </summary>
+        public void LoadSchduleFormDateBase(DateTime date)
+        {   //to get the employee object, couble be change in the future;
+            Store a = new Store();
+            if (assignedShifts is null) { assignedShifts = new List<AssignedShift>(); }
+            else { assignedShifts.Clear(); }
+            string sql = $"SELECT * FROM `assignedschdule` WHERE year(date)='{date.ToString("yyyy")}' AND month(date)='{date.ToString("MM")}';";
+            try
             {
-                if (e.SelectedDate == seleteddate)
+                MySqlConnection conn = new MySqlConnection("Server=studmysql01.fhict.local;Uid=dbi443880;Database=dbi443880;Pwd=123456");
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                conn.Open();
+                MySqlDataReader dr = cmd.ExecuteReader();
+                ShiftType shifttype = ShiftType.Morning;
+                while (dr.Read())
                 {
-                    tempo_empolyees = e.GetShiftsList();
-                }          
+                    if (dr[2].ToString() == "Morning") { shifttype = ShiftType.Morning; }   
+                    else if (dr[2].ToString() == "Afternoon") { shifttype = ShiftType.Afternoon; }
+                    else if (dr[2].ToString() == "Evening") { shifttype = ShiftType.Evening; }
+                    else if (dr[2].ToString() == "Morning_Afternoon") { shifttype = ShiftType.Morning_Afternoon; }
+                    else if (dr[2].ToString() == "Afternoon_Evening") { shifttype = ShiftType.Afternoon_Evening; }
+                    else if (dr[2].ToString() == "Morning_Evening") { shifttype = ShiftType.Morning_Evening; }
+                    assignedShifts.Add(new AssignedShift(a.GetEmployee(Convert.ToInt32(dr[0])), (DateTime)dr[1], shifttype));
+                }
+                conn.Close();
             }
-            return tempo_empolyees;
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }            
         }
-
-
-
-
-        public List<Shift> GetAvailableEmployees(DateTime seleteddate)
+        /// <summary>
+        /// Update the shift data to the database
+        /// </summary>
+        /// <param name="UpdatedShifts"></param>
+        public void UpDateSchdule(List<AssignedShift> shifts,List<string> sql)
         {
-            return null;
+
+            string sqlstatement = "";
+            foreach (string x in sql)
+            {
+                sqlstatement += x;
+            }
+            if (sqlstatement == "") { return; }
+            MySqlConnection conn = new MySqlConnection("Server=studmysql01.fhict.local;Uid=dbi443880;Database=dbi443880;Pwd=123456");
+            try {
+                MySqlCommand cmd = new MySqlCommand(sqlstatement, conn);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                assignedShifts = shifts;
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.Message); }
+            finally { conn.Close(); }        
         }
 
-     
 
+        //no check on preffered shifts yet
+        //would take  this from available shifts to assigned shifts later. if we implement that way of functioning with the schedule
+        public AssignedShift AddShift(Employee employee, DateTime shiftDateTimeStart, ShiftType shiftType)
+        {
+            AssignedShift assignedShift = new AssignedShift(employee, shiftDateTimeStart, shiftType);
+            assignedShifts.Add(assignedShift);
+            return assignedShift;
+        }
 
+        public AssignedShift RemoveShift(AssignedShift removeShift)
+        {
+            assignedShifts.Remove(removeShift);
+            return removeShift;
 
+        }
 
+        public AssignedShift RemoveShift(Employee employee, DateTime shiftDateTimeStart, ShiftType shiftType)
+        {
+            AssignedShift removeShift = new AssignedShift(employee, shiftDateTimeStart, shiftType);
+            assignedShifts.Remove(removeShift);
+            return removeShift;
+        }
 
+        //not adapted to schedule manager yet
+        public void UpdateShift(AssignedShift changeShift, Employee employee, DateTime shiftDateTimeStart, DateTime shiftDateTimeEnd, ShiftType shiftType)
+        {
+            AssignedShift changedShift = new AssignedShift(employee, shiftDateTimeStart, shiftType);
 
+            foreach (AssignedShift shift in assignedShifts)
+            {
+                if (shift == changeShift)
+                {
+                    assignedShifts.Remove(shift);
+                    assignedShifts.Add(changedShift);
+                }
+            }
+        }
 
+        //obsolete with the schedule manager? everything under this
+        public AssignedShift GetShift(Employee employee, DateTime shiftDateTimeStart, ShiftType shiftType)
+        {
+            string emptyShift = "null";
+            AssignedShift getShift = new AssignedShift(employee, shiftDateTimeStart, shiftType);
+            AssignedShift nullShift = new AssignedShift(emptyShift);
 
+            foreach (AssignedShift shift in assignedShifts)
+            {
+                if (shift == getShift)
+                {
+                    return shift;
+                }
+            }
 
+            return nullShift;
+        }
 
+        public AssignedShift GetShift(AssignedShift getShift)
+        {
+            string emptyShift = "null";
+            AssignedShift nullShift = new AssignedShift(emptyShift);
 
+            foreach (AssignedShift shift in assignedShifts)
+            {
+                if (shift == getShift)
+                {
+                    return shift;
+                }
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
+            return nullShift;
+        }
     }
 }
