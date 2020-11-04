@@ -39,31 +39,12 @@ namespace Proj_Desktop_App
         private void btLogin_Click(object sender, EventArgs e)
         {
             PositionType position = loginHandler.CheckLogin(tbLogInUsername.Text, tbLogInPassword.Text);
-            if (position == PositionType.Administrator)
+
+            // Credentials are correct
+            if (position != PositionType.Other)
             {
-                // open administrotor form
-                new AdministratorForm(this, mediaBazaar);
-                this.Visible = false;
-                tbLogInUsername.Clear();
-                tbLogInPassword.Clear();
-            }
-            else if (position == PositionType.Depot_Worker)
-            {
-                // open depot worker form
-                new DepotWorkerForm(this, mediaBazaar);
-                this.Visible = false;
-                tbLogInUsername.Clear();
-                tbLogInPassword.Clear();
-            }
-            else if (position == PositionType.Sales_Manager)
-            {
-                // open sales manager form
-                
-            }
-            else if (position == PositionType.Depot_Manager)
-            {
-                // open depot manager form
-                new DepotManagerFrom(this, mediaBazaar);
+                // Open app for particualr position
+                new MainForm(this, mediaBazaar, position);
                 this.Visible = false;
                 tbLogInUsername.Clear();
                 tbLogInPassword.Clear();
@@ -74,28 +55,20 @@ namespace Proj_Desktop_App
             }
         }
 
-        private void btnProductStatisticsMenu_Click(object sender, EventArgs e)
+        private void tbLogInUsername_KeyDown(object sender, KeyEventArgs e)
         {
-            ProductStatistics productStatistics = new ProductStatistics(mediaBazaar);
-            productStatistics.Show(this);
+            if (e.KeyCode == Keys.Enter)
+            {
+                btLogin_Click(this, new EventArgs());
+            }
         }
 
-        private void btnDepotManager_Click(object sender, EventArgs e)
+        private void tbLogInPassword_KeyDown(object sender, KeyEventArgs e)
         {
-            DepotManager depotManager = new DepotManager(mediaBazaar);
-            depotManager.Show(this);
-        }
-
-        private void btnDepotWorkerForm_Click(object sender, EventArgs e)
-        {
-            WorkerStockRequests RestockForm = new WorkerStockRequests(mediaBazaar);
-            RestockForm.Show(this);
-        }
-
-        private void btnOpenSchedule_Click(object sender, EventArgs e)
-        {
-            Scheduling scheduleForm = new Scheduling(Departments.floorOne);
-            scheduleForm.Show(this);
+            if (e.KeyCode == Keys.Enter)
+            {
+                btLogin_Click(this, new EventArgs());
+            }
         }
     }
 }

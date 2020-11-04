@@ -32,3 +32,7 @@ msbuild.err
 msbuild.wrn
  git rm -r --cached node_modules    # clean git cache
  rm -rf node_modules   
+*.cache
+*.exe
+Proj Application/Proj Desktop App/.vs/Proj Desktop App/v16/.suo
+Proj Application/Proj Desktop App/Proj Desktop App/bin/Debug/Proj Desktop App.pdb

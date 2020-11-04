@@ -12,7 +12,7 @@ namespace Proj_Desktop_App
 {
     public partial class EmployeeManagmentForm : Form
     {
-        private AdministratorForm adminForm;
+        private EmployeesForm adminForm;
         private bool updateEmployee;
         private Employee employeeToUpdate;
 
@@ -23,7 +23,7 @@ namespace Proj_Desktop_App
             cbDepartment.DataSource = Enum.GetValues(typeof(Departments));
         }
 
-        public EmployeeManagmentForm(AdministratorForm adminForm)
+        public EmployeeManagmentForm(EmployeesForm adminForm)
         {
             // Adding new employee
             InitializeComponent();
@@ -35,7 +35,7 @@ namespace Proj_Desktop_App
             rbMale.Checked = true;
         }
 
-        public EmployeeManagmentForm(AdministratorForm adminForm, Employee employee)
+        public EmployeeManagmentForm(EmployeesForm adminForm, Employee employee)
         {
             // Updateing employee data
             InitializeComponent();

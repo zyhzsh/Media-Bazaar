@@ -22,9 +22,9 @@ namespace Proj_Desktop_App
             requests = new List<RestockRequest>();
             orders = new List<RestockRequest>();
             ProductMockData();
-            AddEmployeeMockData();
+            //AddEmployeeMockData();
             DatabaseManagement dtbManagement = new DatabaseManagement();
-            dtbManagement.GetAllEmployees();
+            employees.AddRange(dtbManagement.GetAllEmployees());
         }
 
         
