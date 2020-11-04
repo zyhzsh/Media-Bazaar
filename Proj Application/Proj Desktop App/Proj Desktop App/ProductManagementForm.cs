@@ -92,7 +92,11 @@ namespace Proj_Desktop_App
                 }
                 else if (btnConfirm.Text == "Update")
                 {
+<<<<<<< HEAD
                     mediabazaar.UpdateProduct(updateProduct.id, tbProductName.Text,  tbBrand.Text, (double)numSellingPrice.Value, (double)numBuyingPrice.Value, department, rtbDescription.Text);
+=======
+                    mediabazaar.UpdateProduct(updateProduct.Id, tbProductName.Text,  tbBrand.Text, (double)numSellingPrice.Value, (double)numBuyingPrice.Value, department, rtbDescription.Text);
+>>>>>>> website
                     MessageBox.Show("Product updated");
                     Close();
                 }

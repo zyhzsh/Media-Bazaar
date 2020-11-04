@@ -8,11 +8,20 @@ namespace Proj_Desktop_App
     class ScheduleManager
     {
         //all the shifts ever assigned will be recorded here. This will change when a database is connected
+<<<<<<< HEAD
         private List<AssignedShift> allAssignedShifts;
         //This contains all available shifts to be filled. Might be used for a standard roster later
         private List<AvailableShift> allAvailableShifts;
         private Store store;
         private List<string> sqlstatements;
+=======
+        List<AssignedShift> allAssignedShifts;
+        //This contains all available shifts to be filled. Might be used for a standard roster later
+        List<AvailableShift> allAvailableShifts;
+        List<Employee> employees;
+        Store store;
+        
+>>>>>>> website
         public ScheduleManager(List<AssignedShift> allAssignedShifts)
         {
             this.allAssignedShifts = allAssignedShifts;
@@ -27,12 +36,27 @@ namespace Proj_Desktop_App
         public ScheduleManager(Store store)
         {
             this.store = store;
+<<<<<<< HEAD
             Schedule x = new Schedule();
             x.LoadSchduleFormDateBase(DateTime.Now);
             this.allAssignedShifts = x.GetAssignedShifts();
             sqlstatements = new List<string>();
             //this.allAvailableShifts = new List<AvailableShift>();
         }
+=======
+            this.allAssignedShifts = new List<AssignedShift>();
+            this.allAvailableShifts = new List<AvailableShift>();
+        }
+
+        //Test Date
+        public void AddTestDate()
+        {
+            this.allAssignedShifts = new List<AssignedShift>();
+
+        }
+
+
+>>>>>>> website
         //fill schedule for 1 date
         public Schedule GetDateShifts(DateTime date)
         {
@@ -114,8 +138,15 @@ namespace Proj_Desktop_App
                     return shift;
                 }
             }
+<<<<<<< HEAD
             return nullShift;
         }
+=======
+
+            return nullShift;
+        }
+
+>>>>>>> website
         /// <summary>
         /// Specify the day then return list of employee's information
         /// </summary>
@@ -125,6 +156,7 @@ namespace Proj_Desktop_App
         {
             List<string> temp = new List<string>();
             foreach (AssignedShift e in allAssignedShifts)
+<<<<<<< HEAD
             {   //if (e.GetDate().ToString("dd/MM/yyyy") == time.ToString("dd/MM/yyyy"))
                 if (e.GetDate().ToString("yyyy-MM-dd") == time.ToString("yyyy-MM-dd"))
                 {
@@ -145,6 +177,10 @@ namespace Proj_Desktop_App
             {
                 //if (e.GetDate().ToString("dd/MM/yyyy") == time.ToString("dd/MM/yyyy")&&e.GetEmployee().department== departments)
                 if (e.GetDate().ToString("yyyy-MM-dd") == time.ToString("yyyy-MM-dd") &&e.GetEmployee().department== departments)
+=======
+            {
+                if (e.GetDate().ToString("dd/MM/yyyy") == time.ToString("dd/MM/yyyy"))
+>>>>>>> website
                 {
                     temp.Add($"{e.GetEmployee().GetBsnAndName()} Shift:{e.GetShiftTypeToString()} {e.GetDate().ToString("dddd, dd MMMM")}");
                 }
@@ -160,6 +196,7 @@ namespace Proj_Desktop_App
         /// <returns></returns>
         public bool AssignShift(ShiftType shiftType, DateTime date, List<int> bsns)
         {
+<<<<<<< HEAD
             sqlstatements.Clear();
            try
             {
@@ -265,6 +302,53 @@ namespace Proj_Desktop_App
         public bool RemoveShift(DateTime date, List<int> bsns)
         {
             sqlstatements.Clear();
+=======
+            try
+            {
+                //ReLoadSchdule(date); 
+                List<AssignedShift> temp = new List<AssignedShift>();
+                foreach (AssignedShift e in allAssignedShifts)
+                {
+                    if (e.GetDate().ToString("dd/MM/yyyy") == date.ToString("dd/MM/yyyy"))
+                    {
+                        temp.Add(e);
+                    }
+                }
+                foreach (int i in bsns)
+                {
+                    bool haverecords = false;
+                    while (haverecords == false)
+                    {
+                        foreach (AssignedShift e in temp)
+                        {
+                            if (e.GetEmployee().GetBSN() == i)
+                            {
+                                e.UpDateShift(shiftType);
+                                haverecords = true;
+                                break;
+                            }
+                        }
+                        if (haverecords == false)
+                        {
+                            AssignedShift newShift = new AssignedShift(store.GetEmployee(i), date, shiftType);
+                            allAssignedShifts.Add(newShift);
+                            haverecords = true;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+            //UpDateAssignedShiftToSchdule();
+            return true;
+        }
+
+        public bool RemoveShift(DateTime date, List<int> bsns)
+        {
+>>>>>>> website
             try
             {
                 List<Employee> emp = new List<Employee>();
@@ -275,8 +359,12 @@ namespace Proj_Desktop_App
                 List<AssignedShift> temp = new List<AssignedShift>();
                 foreach (AssignedShift e in allAssignedShifts)
                 {
+<<<<<<< HEAD
                     //if (e.GetDate().ToString("dd/MM/yyyy") == date.ToString("dd/MM/yyyy"))
                     if (e.GetDate().ToString("yyyy-MM-dd") == date.ToString("yyyy-MM-dd"))
+=======
+                    if (e.GetDate().ToString("dd/MM/yyyy") == date.ToString("dd/MM/yyyy"))
+>>>>>>> website
                     {
                         temp.Add(e);
                     }
@@ -285,24 +373,41 @@ namespace Proj_Desktop_App
                 {
                     foreach (AssignedShift b in temp)
                     {
+<<<<<<< HEAD
                         if (b.GetEmployee().GetBSN() == e.GetBSN())
                         {
                             allAssignedShifts.Remove(b);
                             //sqlstatements.Add($"DELETE FROM `assignedschdule` WHERE date='{date.ToString("yyyy-MM-dd")}' AND BSN='{e.GetBSN()}';");                           
                             sqlstatements.Add($"DELETE FROM `assignedschdule` WHERE date='{date.ToString("yyyy-MM-dd")}' AND BSN='{e.GetBSN()}';");
+=======
+                        if (b.GetEmployee() == e)
+                        {
+                            allAssignedShifts.Remove(b);
+>>>>>>> website
                             break;
                         }
                     }
                 }
+<<<<<<< HEAD
+=======
+                //UpDateAssignedShiftToSchdule();
+>>>>>>> website
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 return false;
             }
+<<<<<<< HEAD
             UpDateAssignedShiftToSchdule(sqlstatements);
             return true;
         }
+=======
+            return true;
+        }
+
+
+>>>>>>> website
         /// <summary>
         /// Update Current list of Shift information form Schdule Class
         /// </summary>
@@ -315,6 +420,7 @@ namespace Proj_Desktop_App
             //allAvailableShifts=a.GetAvailableShifts();
         }
         /// <summary>
+<<<<<<< HEAD
         /// Update the shift changes to the Schdule Class 
         /// </summary>
         private void UpDateAssignedShiftToSchdule(List<string> sqls)
@@ -371,5 +477,19 @@ namespace Proj_Desktop_App
             }
             return temp;
         }
+=======
+        /// 
+        /// </summary>
+        private void UpDateAssignedShiftToSchdule()
+        {
+            Schedule a = new Schedule();
+            a.UpDateSchdule(allAssignedShifts);
+        }
+
+
+
+
+
+>>>>>>> website
     }
 }

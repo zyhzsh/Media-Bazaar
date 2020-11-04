@@ -50,7 +50,11 @@
             // 
             // btnCancel
             // 
+<<<<<<< HEAD
             this.btnCancel.Location = new System.Drawing.Point(68, 334);
+=======
+            this.btnCancel.Location = new System.Drawing.Point(68, 360);
+>>>>>>> website
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(204, 43);
             this.btnCancel.TabIndex = 32;
@@ -227,7 +231,11 @@
             // 
             // btnConfirm
             // 
+<<<<<<< HEAD
             this.btnConfirm.Location = new System.Drawing.Point(68, 284);
+=======
+            this.btnConfirm.Location = new System.Drawing.Point(68, 310);
+>>>>>>> website
             this.btnConfirm.Name = "btnConfirm";
             this.btnConfirm.Size = new System.Drawing.Size(204, 43);
             this.btnConfirm.TabIndex = 31;
@@ -239,7 +247,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+<<<<<<< HEAD
             this.ClientSize = new System.Drawing.Size(345, 383);
+=======
+            this.ClientSize = new System.Drawing.Size(345, 407);
+>>>>>>> website
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.gbProductDetails);
             this.Controls.Add(this.btnConfirm);

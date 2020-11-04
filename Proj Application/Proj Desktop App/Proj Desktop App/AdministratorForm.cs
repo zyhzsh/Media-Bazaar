@@ -13,6 +13,7 @@ namespace Proj_Desktop_App
     public partial class AdministratorForm : Form
     {
         private Form1 loginForm;
+<<<<<<< HEAD
         private List<Employee> employees;
         private List<Departments> departments;
         private Employee currentUser;
@@ -27,6 +28,16 @@ namespace Proj_Desktop_App
             this.store = store;
             this.Visible = true;
             miEmployees.PerformClick();
+=======
+        private Store store;
+
+        public AdministratorForm(Form1 form1, Store store)
+        {
+            InitializeComponent();
+            this.loginForm = form1;
+            this.store = store;
+            this.Visible = true;
+>>>>>>> website
             lbEmployees.Items.Clear();
             lbEmployees.Items.AddRange(store.GetEmployees());
         }
@@ -67,7 +78,11 @@ namespace Proj_Desktop_App
         {
             int bsn = Convert.ToInt32(tbBSN.Text);
             Employee employee = store.GetEmployee(bsn);
+<<<<<<< HEAD
             new EmployeeManagmentForm(this, employee);
+=======
+            EmployeeManagmentForm emf = new EmployeeManagmentForm(this, employee);
+>>>>>>> website
         }
 
         private void btnFireEmployee_Click(object sender, EventArgs e)
@@ -79,11 +94,18 @@ namespace Proj_Desktop_App
                 //get employee based on bsn
                 int bsn = Convert.ToInt32(tbBSN.Text);
                 Employee employee = store.GetEmployee(bsn);
+<<<<<<< HEAD
                 //change employee status
+=======
+>>>>>>> website
                 if (employee != null)
                 {
                     employee.UpdateStatus("Fired");
                 }
+<<<<<<< HEAD
+=======
+                //change employee status
+>>>>>>> website
             }
 
         }
@@ -104,6 +126,7 @@ namespace Proj_Desktop_App
             lbEmployees.Items.Clear();
             lbEmployees.Items.AddRange(store.GetEmployees());
         }
+<<<<<<< HEAD
 
         private void AdministratorForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -128,5 +151,7 @@ namespace Proj_Desktop_App
         {
             this.Close();
         }
+=======
+>>>>>>> website
     }
 }
