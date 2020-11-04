@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace Proj_Desktop_App
 {
-    class AvailableShift
+    class AvailableShift:EmployeeShift
     {
+        public AvailableShift(Employee employee, DateTime date, ShiftType shiftType)
+        {
+            this.employee = employee;
+            this.date = date;
+            this.shiftType = shiftType;
+        }
     }
 }

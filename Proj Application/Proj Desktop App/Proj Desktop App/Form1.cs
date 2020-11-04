@@ -34,6 +34,8 @@ namespace Proj_Desktop_App
             InitializeComponent();
             mediaBazaar = new Store();
             loginHandler = new LoginHandler();
+            tbLogInUsername.Text = "gdambrogi6";
+            tbLogInPassword.Text = "LbZAsgys63h";
         }
 
         private void btLogin_Click(object sender, EventArgs e)
