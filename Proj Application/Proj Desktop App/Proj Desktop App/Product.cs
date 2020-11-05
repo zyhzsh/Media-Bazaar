@@ -9,19 +9,17 @@ namespace Proj_Desktop_App
 {
     public class Product
     {
-        private static int incrementCode = 1;
         public int id { get; }
         public string Name { get; private set; }
         public string Brand { get; private set; }
         public double SellingPrice { get; private set; }
         public double BuyingPrice { get; private set; }
-        public string Description { get; private set; }
         public int Stock { get; private set; }
         public Departments Department { get; private set; }
 
-        public Product(string name, string brand, double sell, double buy, Departments department)
+        public Product(int productCode, string name, string brand, double sell, double buy, Departments department)
         {
-            id = incrementCode++;
+            this.id = productCode;
             Name = name;
             Brand = brand;
             SellingPrice = sell;
@@ -30,14 +28,13 @@ namespace Proj_Desktop_App
             Stock = 0;
         }
 
-        public Product(string name, string brand, double sell, double buy, string Description,Departments department)
+        public Product(int productCode, string name, string brand, double sell, double buy, string Description,Departments department)
         {
-            id = incrementCode++;
+            this.id = productCode;
             Name = name;
             Brand = brand;
             SellingPrice = sell;
             BuyingPrice = buy;
-            this.Description = Description;
             Department = department;
             Stock = 0;
         }
@@ -50,7 +47,6 @@ namespace Proj_Desktop_App
             SellingPrice = sell;
             BuyingPrice = buy;
             Department = department;
-            this.Description = Description;
         }
 
         public override string ToString()

@@ -21,8 +21,8 @@ namespace Proj_Desktop_App
             products = new List<Product>();
             requests = new List<RestockRequest>();
             orders = new List<RestockRequest>();
-            ProductMockData();
             //AddEmployeeMockData();
+            InitializeProducts();
             DatabaseManagement dtbManagement = new DatabaseManagement();
             employees.AddRange(dtbManagement.GetAllEmployees());
         }
@@ -100,13 +100,15 @@ namespace Proj_Desktop_App
             AddEmployee(3088685, "Joost", "Burggraaff", 'M', "134556", DateTime.ParseExact("01/01/2020", format, cultureInf), "Eindhoven", "ICT", "employed", Departments.floorThree, "xxxx@gmail.com", 1, PositionType.Depot_Worker, "");
         }
 
-        private void ProductMockData()
+        private void InitializeProducts()
         {
-            products.Add(new Product( "toaster", "Tristar",9.99, 3.50, Departments.floorOne));
-            products.Add(new Product( "fridge", "Tristar",999, 150, Departments.floorOne));
-            products.Add(new Product( "oukitel 35 pingus", "Oukitel",99, 13.50, Departments.floorTwo));
-            products.Add(new Product( "Super Mario 3000", "Nontaido",49, 5.30, Departments.floorFour));
-            products.Add(new Product( "Ring bluetooth doorbell", "Ring",68.99, 9.99, Departments.floorThree));
+            DatabaseManagement dtbMan = new DatabaseManagement();
+            Product[] dtbproducts;
+            dtbproducts = dtbMan.GetAllProducts();
+            foreach(Product p in dtbproducts)
+            {
+                products.Add(p);
+            }
         }
 
         public Product[] Products
@@ -138,6 +140,8 @@ namespace Proj_Desktop_App
         public void RestockProduct(int productId, int amount)
         {
             /*
+            DatabaseManagement dtbMan = new DatabaseManagement();
+            dtbMan.RestockProduct()
             Product(productId).Restock(amount);
             for (int i = orders.Count - 1; i >= 0; i--)
             {
@@ -173,7 +177,8 @@ namespace Proj_Desktop_App
 
         public void AddProduct(string productName, string brandName, double sellingPrice, double buyingPrice, Departments department)
         {
-            products.Add(new Product(productName, brandName, sellingPrice, buyingPrice, department));
+            DatabaseManagement dtbMan = new DatabaseManagement();
+            dtbMan.AddProduct(department, productName, brandName, buyingPrice, sellingPrice);
         }
 
         public void UpdateProduct(int productId, string productName, string brandName, double sellingPrice, double buyingPrice, Departments department, string description)

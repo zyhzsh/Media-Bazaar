@@ -155,6 +155,13 @@
     <Compile Include="ProductStatistics.Designer.cs">
       <DependentUpon>ProductStatistics.cs</DependentUpon>
     </Compile>
+    <Compile Include="Sale.cs" />
+    <Compile Include="SalesProductForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SalesProductForm.Designer.cs">
+      <DependentUpon>SalesProductForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestockRequest.cs" />
@@ -198,6 +205,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ProductStatistics.resx">
       <DependentUpon>ProductStatistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SalesProductForm.resx">
+      <DependentUpon>SalesProductForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
