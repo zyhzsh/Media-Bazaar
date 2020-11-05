@@ -47,6 +47,8 @@
             this.textBoxSearchAssignedEmployees = new System.Windows.Forms.TextBox();
             this.cbDepartment = new System.Windows.Forms.ComboBox();
             this.lbdepartment = new System.Windows.Forms.Label();
+            this.listboxEmployeePreferenceShifts = new System.Windows.Forms.ListBox();
+            this.labelEmployeePereferenceShifts = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,7 +82,7 @@
             this.listboxAssignedEmployees.Margin = new System.Windows.Forms.Padding(2);
             this.listboxAssignedEmployees.Name = "listboxAssignedEmployees";
             this.listboxAssignedEmployees.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listboxAssignedEmployees.Size = new System.Drawing.Size(468, 381);
+            this.listboxAssignedEmployees.Size = new System.Drawing.Size(523, 381);
             this.listboxAssignedEmployees.TabIndex = 15;
             this.listboxAssignedEmployees.SelectedIndexChanged += new System.EventHandler(this.listboxAssignedEmployees_SelectedIndexChanged);
             // 
@@ -93,6 +95,7 @@
             this.listboxAvailableEmployees.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.listboxAvailableEmployees.Size = new System.Drawing.Size(249, 381);
             this.listboxAvailableEmployees.TabIndex = 13;
+            this.listboxAvailableEmployees.Click += new System.EventHandler(this.listboxAvailableEmployees_Click);
             this.listboxAvailableEmployees.SelectedIndexChanged += new System.EventHandler(this.listboxAvailableEmployees_SelectedIndexChanged);
             // 
             // monthCalendarScheduling
@@ -126,7 +129,7 @@
             this.listBoxEmployeesDetails.FormattingEnabled = true;
             this.listBoxEmployeesDetails.Location = new System.Drawing.Point(18, 446);
             this.listBoxEmployeesDetails.Name = "listBoxEmployeesDetails";
-            this.listBoxEmployeesDetails.Size = new System.Drawing.Size(955, 134);
+            this.listBoxEmployeesDetails.Size = new System.Drawing.Size(590, 134);
             this.listBoxEmployeesDetails.TabIndex = 21;
             // 
             // label4
@@ -193,7 +196,7 @@
             // 
             // btnSearchAssignedEmpByBsn
             // 
-            this.btnSearchAssignedEmpByBsn.Location = new System.Drawing.Point(897, 17);
+            this.btnSearchAssignedEmpByBsn.Location = new System.Drawing.Point(953, 17);
             this.btnSearchAssignedEmpByBsn.Name = "btnSearchAssignedEmpByBsn";
             this.btnSearchAssignedEmpByBsn.Size = new System.Drawing.Size(75, 23);
             this.btnSearchAssignedEmpByBsn.TabIndex = 34;
@@ -210,7 +213,7 @@
             // 
             // textBoxSearchAssignedEmployees
             // 
-            this.textBoxSearchAssignedEmployees.Location = new System.Drawing.Point(790, 19);
+            this.textBoxSearchAssignedEmployees.Location = new System.Drawing.Point(846, 19);
             this.textBoxSearchAssignedEmployees.Name = "textBoxSearchAssignedEmployees";
             this.textBoxSearchAssignedEmployees.Size = new System.Drawing.Size(100, 20);
             this.textBoxSearchAssignedEmployees.TabIndex = 36;
@@ -233,11 +236,30 @@
             this.lbdepartment.TabIndex = 38;
             this.lbdepartment.Text = "Department";
             // 
+            // listboxEmployeePreferenceShifts
+            // 
+            this.listboxEmployeePreferenceShifts.FormattingEnabled = true;
+            this.listboxEmployeePreferenceShifts.Location = new System.Drawing.Point(614, 446);
+            this.listboxEmployeePreferenceShifts.Name = "listboxEmployeePreferenceShifts";
+            this.listboxEmployeePreferenceShifts.Size = new System.Drawing.Size(414, 134);
+            this.listboxEmployeePreferenceShifts.TabIndex = 39;
+            // 
+            // labelEmployeePereferenceShifts
+            // 
+            this.labelEmployeePereferenceShifts.AutoSize = true;
+            this.labelEmployeePereferenceShifts.Location = new System.Drawing.Point(611, 430);
+            this.labelEmployeePereferenceShifts.Name = "labelEmployeePereferenceShifts";
+            this.labelEmployeePereferenceShifts.Size = new System.Drawing.Size(85, 13);
+            this.labelEmployeePereferenceShifts.TabIndex = 40;
+            this.labelEmployeePereferenceShifts.Text = "PerferenceShifts";
+            // 
             // Scheduling
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 589);
+            this.ClientSize = new System.Drawing.Size(1040, 589);
+            this.Controls.Add(this.labelEmployeePereferenceShifts);
+            this.Controls.Add(this.listboxEmployeePreferenceShifts);
             this.Controls.Add(this.lbdepartment);
             this.Controls.Add(this.cbDepartment);
             this.Controls.Add(this.textBoxSearchAssignedEmployees);
@@ -284,5 +306,7 @@
         private System.Windows.Forms.TextBox textBoxSearchAssignedEmployees;
         private System.Windows.Forms.ComboBox cbDepartment;
         private System.Windows.Forms.Label lbdepartment;
+        private System.Windows.Forms.ListBox listboxEmployeePreferenceShifts;
+        private System.Windows.Forms.Label labelEmployeePereferenceShifts;
     }
 }
