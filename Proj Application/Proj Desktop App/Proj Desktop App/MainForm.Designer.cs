@@ -64,7 +64,7 @@
             this.navbar.Location = new System.Drawing.Point(0, 44);
             this.navbar.Name = "navbar";
             this.navbar.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.navbar.Size = new System.Drawing.Size(128, 517);
+            this.navbar.Size = new System.Drawing.Size(128, 767);
             this.navbar.TabIndex = 45;
             this.navbar.Text = "menuStrip1";
             // 
@@ -177,7 +177,7 @@
             this.lblUser});
             this.topbar.Location = new System.Drawing.Point(0, 0);
             this.topbar.Name = "topbar";
-            this.topbar.Size = new System.Drawing.Size(984, 44);
+            this.topbar.Size = new System.Drawing.Size(1534, 44);
             this.topbar.TabIndex = 0;
             this.topbar.Text = "menuStrip2";
             // 
@@ -212,17 +212,17 @@
             // pnlContent
             // 
             this.pnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlContent.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pnlContent.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pnlContent.Location = new System.Drawing.Point(128, 44);
             this.pnlContent.Name = "pnlContent";
-            this.pnlContent.Size = new System.Drawing.Size(856, 517);
+            this.pnlContent.Size = new System.Drawing.Size(1406, 767);
             this.pnlContent.TabIndex = 48;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 561);
+            this.ClientSize = new System.Drawing.Size(1534, 811);
             this.Controls.Add(this.pnlContent);
             this.Controls.Add(this.navbar);
             this.Controls.Add(this.topbar);

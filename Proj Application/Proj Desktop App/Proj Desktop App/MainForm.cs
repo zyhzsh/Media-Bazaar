@@ -55,8 +55,8 @@ namespace Proj_Desktop_App
                 InitializeForm(restocks);
 
                 tabSchedule.Visible = true;
-                //scheduling = new Scheduling(Departments.warehouse);
-                //InitializeForm(scheduling);
+                scheduling = new Scheduling(Departments.warehouse);
+                InitializeForm(scheduling);
 
                 tabProducts.PerformClick();
             }
@@ -71,8 +71,8 @@ namespace Proj_Desktop_App
             else if (position == PositionType.Sales_Manager)
             {
                 tabSchedule.Visible = true;
-                //scheduling = new Scheduling(Departments.floor1);
-                //InitializeForm(scheduling);
+                scheduling = new Scheduling(Departments.floorOne);
+                InitializeForm(scheduling);
             }
             else { this.Close(); }
            
@@ -120,7 +120,7 @@ namespace Proj_Desktop_App
         {
             if (selectedTab != tabDepartments)
             {
-                //ShowForm(, tabDepartments);
+                //ShowForm(scheduling, tabDepartments);
             }
         }
 
@@ -152,7 +152,7 @@ namespace Proj_Desktop_App
         {
             if (selectedTab != tabSchedule)
             {
-                //ShowForm(scheduling, tabSchedule);
+                ShowForm(scheduling, tabSchedule);
             }
         }
 
@@ -167,5 +167,6 @@ namespace Proj_Desktop_App
             // Show login form
             loginForm.Visible = true;
         }
+
     }
 }
