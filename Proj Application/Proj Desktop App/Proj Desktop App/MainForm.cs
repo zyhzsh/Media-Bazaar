@@ -13,7 +13,6 @@ namespace Proj_Desktop_App
     public partial class MainForm : Form
     {
         private Form1 loginForm;
-        //private Store store;
 
         private EmployeesForm employeesForm;
         private EmployeeContractsForm contractsForm;
@@ -47,7 +46,7 @@ namespace Proj_Desktop_App
             {
                 tabProducts.Visible = true;
                 tabStatistics.Visible = true;
-                productStatistics = new ProductStatistics(store);
+                productStatistics = new ProductStatistics();
                 InitializeForm(productStatistics);
 
                 tabRestocks.Visible = true;
@@ -70,15 +69,20 @@ namespace Proj_Desktop_App
             }
             else if (position == PositionType.Sales_Manager)
             {
+                tabRestocks.Visible = true;
+                restocks = new SalesManagerForm(store);
+                InitializeForm(restocks);
+
                 tabSchedule.Visible = true;
                 scheduling = new Scheduling(Departments.floorOne);
                 InitializeForm(scheduling);
+
+                tabRestocks.PerformClick();
             }
             else { this.Close(); }
            
 
             this.loginForm = loginForm;
-            //this.store = store;
 
             lblUser.Text = $"{position} | <user>";
         }
@@ -128,7 +132,7 @@ namespace Proj_Desktop_App
         {
             if (selectedTab != tabProducts)
             {
-                ShowForm(productStatistics, tabProducts);
+                ShowForm(restocks, tabProducts);
             }
         }
 

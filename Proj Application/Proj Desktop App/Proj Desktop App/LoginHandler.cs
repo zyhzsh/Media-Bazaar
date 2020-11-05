@@ -43,7 +43,7 @@ namespace Proj_Desktop_App
                     {
                         return PositionType.Depot_Manager;
                     }
-                    else if (positionStr == "SaleManager")
+                    else if (positionStr == "SalesManager")
                     {
                         return PositionType.Sales_Manager;
                     }

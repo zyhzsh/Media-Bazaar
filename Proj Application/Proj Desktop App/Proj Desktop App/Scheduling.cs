@@ -207,25 +207,28 @@ namespace Proj_Desktop_App
 
         private void UpdateEmployeePreferenceShiftslists()
         {
-            listboxEmployeePreferenceShifts.Items.Clear();
-            //Get the employee's BSN
-            object m = listboxAvailableEmployees.SelectedItem;
-            string extractbsn = Regex.Match(m.ToString(), @"[0-9]+").ToString();
-            //Get the employee's Object
-            Employee employee = store.GetEmployee(Convert.ToInt32(extractbsn));
-            //Let Schdule Manager to Processing Someting To Get the List of Preferences Shifts
-            List<AvailableShift> personalpreferemceshift = schedulemanager.GetEmployee_Preference_Shift_For_The_Week(employee, seleteddate);
-            //Display the listboxEmployeePreferenceShifts by weekly view
-            listboxEmployeePreferenceShifts.Items.Add("Monday-------");
-            listboxEmployeePreferenceShifts.Items.Add("Tuesday------");
-            listboxEmployeePreferenceShifts.Items.Add("Wednesday----");
-            listboxEmployeePreferenceShifts.Items.Add("Thursday-----");
-            listboxEmployeePreferenceShifts.Items.Add("Friday-------");
-            listboxEmployeePreferenceShifts.Items.Add("Saturday-----");
-            listboxEmployeePreferenceShifts.Items.Add("Sunday-------");
-            for (int i = 0; i < 7; i++)
+            if (listboxAvailableEmployees.SelectedItem != null)
             {
-                listboxEmployeePreferenceShifts.Items[i] += GetWeeklyShfitByDayIndex(i, personalpreferemceshift);
+                listboxEmployeePreferenceShifts.Items.Clear();
+                //Get the employee's BSN
+                object m = listboxAvailableEmployees.SelectedItem;
+                string extractbsn = Regex.Match(m.ToString(), @"[0-9]+").ToString();
+                //Get the employee's Object
+                Employee employee = store.GetEmployee(Convert.ToInt32(extractbsn));
+                //Let Schdule Manager to Processing Someting To Get the List of Preferences Shifts
+                List<AvailableShift> personalpreferemceshift = schedulemanager.GetEmployee_Preference_Shift_For_The_Week(employee, seleteddate);
+                //Display the listboxEmployeePreferenceShifts by weekly view
+                listboxEmployeePreferenceShifts.Items.Add("Monday-------");
+                listboxEmployeePreferenceShifts.Items.Add("Tuesday------");
+                listboxEmployeePreferenceShifts.Items.Add("Wednesday----");
+                listboxEmployeePreferenceShifts.Items.Add("Thursday-----");
+                listboxEmployeePreferenceShifts.Items.Add("Friday-------");
+                listboxEmployeePreferenceShifts.Items.Add("Saturday-----");
+                listboxEmployeePreferenceShifts.Items.Add("Sunday-------");
+                for (int i = 0; i < 7; i++)
+                {
+                    listboxEmployeePreferenceShifts.Items[i] += GetWeeklyShfitByDayIndex(i, personalpreferemceshift);
+                }
             }
 
         }

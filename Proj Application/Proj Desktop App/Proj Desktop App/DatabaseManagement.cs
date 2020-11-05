@@ -404,9 +404,9 @@ namespace Proj_Desktop_App
 
         public Sale[] GetBestSellingProducts()
         {
-            string sql = "SELECT p.productcode, p.productname, COUNT(*) AS sales" +
-                         "FROM product p INNER JOIN productsales s ON p.productcode = s.product_code" +
-                         "GROUP BY p.productcode" +
+            string sql = "SELECT p.productcode, p.productname, COUNT(*) AS sales " +
+                         "FROM product p INNER JOIN productsales s ON p.productcode = s.product_code " +
+                         "GROUP BY p.productcode " +
                          "ORDER BY sales DESC;";
             try
             {
@@ -435,10 +435,10 @@ namespace Proj_Desktop_App
 
         public Sale[] GetBestSellingProducts(DateTime period)
         {
-            string sql = "SELECT p.productcode, p.productname, COUNT(*) AS sales" +
-                         "FROM product p INNER JOIN productsales s ON p.productcode = s.product_code" +
-                         "WHERE s.sales_date > @salesPeriod" +
-                         "GROUP BY p.productcode" +
+            string sql = "SELECT p.productcode, p.productname, COUNT(*) AS sales " +
+                         "FROM product p INNER JOIN productsales s ON p.productcode = s.product_code " +
+                         "WHERE s.sales_date > @salesPeriod " +
+                         "GROUP BY p.productcode " +
                          "ORDER BY sales DESC;";
             try
             {
@@ -467,10 +467,10 @@ namespace Proj_Desktop_App
 
         public Sale[] GetBestSellingProducts(DateTime startPeriod, DateTime endPeriod)
         {
-            string sql = "SELECT p.productcode, p.productname, p.brand, p.bought_price, p.sold_price, p.department_id, COUNT(*) AS sales" +
-                         "FROM product p INNER JOIN productsales s ON p.productcode = s.product_code" +
-                         "WHERE s.sales_date > @startPeriod and s.sales_date < @endPeriod" +
-                         "GROUP BY p.productcode" +
+            string sql = "SELECT p.productcode, p.productname, p.brand, p.bought_price, p.sold_price, p.department_id, COUNT(*) AS sales " +
+                         "FROM product p INNER JOIN productsales s ON p.productcode = s.product_code " +
+                         "WHERE s.sales_date > @startPeriod and s.sales_date < @endPeriod " +
+                         "GROUP BY p.productcode " +
                          "ORDER BY sales DESC;";
             try
             {

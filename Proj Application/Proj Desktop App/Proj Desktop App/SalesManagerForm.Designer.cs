@@ -1,6 +1,6 @@
 ﻿namespace Proj_Desktop_App
 {
-    partial class SalesProductForm
+    partial class SalesManagerForm
     {
         /// <summary>
         /// Required designer variable.

@@ -11,10 +11,10 @@ using System.Windows.Forms;
 
 namespace Proj_Desktop_App
 {
-    public partial class SalesProductForm : Form
+    public partial class SalesManagerForm : Form
     {
         private Store mediaBazaar;
-        public SalesProductForm(Store form1MediaBazaar)
+        public SalesManagerForm(Store form1MediaBazaar)
         {
             InitializeComponent();
             mediaBazaar = form1MediaBazaar;

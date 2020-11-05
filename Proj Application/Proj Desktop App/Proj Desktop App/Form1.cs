@@ -25,6 +25,10 @@ namespace Proj_Desktop_App
         // DEPOT WORKER:
         // Username: rgrisleyf
         // Password: RaX3pQ1P
+        //
+        // SALES MANAGER:
+        // Username: chammon7
+        // Password: XJlA0h
 
         private Store mediaBazaar;
         private LoginHandler loginHandler;

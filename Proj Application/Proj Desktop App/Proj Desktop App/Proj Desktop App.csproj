@@ -156,11 +156,11 @@
       <DependentUpon>ProductStatistics.cs</DependentUpon>
     </Compile>
     <Compile Include="Sale.cs" />
-    <Compile Include="SalesProductForm.cs">
+    <Compile Include="SalesManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SalesProductForm.Designer.cs">
-      <DependentUpon>SalesProductForm.cs</DependentUpon>
+    <Compile Include="SalesManagerForm.Designer.cs">
+      <DependentUpon>SalesManagerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -206,8 +206,8 @@
     <EmbeddedResource Include="ProductStatistics.resx">
       <DependentUpon>ProductStatistics.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SalesProductForm.resx">
-      <DependentUpon>SalesProductForm.cs</DependentUpon>
+    <EmbeddedResource Include="SalesManagerForm.resx">
+      <DependentUpon>SalesManagerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
