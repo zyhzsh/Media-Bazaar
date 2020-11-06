@@ -94,16 +94,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdministratorForm.cs">
+    <Compile Include="EmployeeContractsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AdministratorForm.Designer.cs">
-      <DependentUpon>AdministratorForm.cs</DependentUpon>
+    <Compile Include="EmployeeContractsForm.Designer.cs">
+      <DependentUpon>EmployeeContractsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmployeesForm.Designer.cs">
+      <DependentUpon>EmployeesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Adminstration.cs" />
     <Compile Include="AssignedShift.cs" />
     <Compile Include="AvailableShift.cs" />
-    <Compile Include="AvailableShifts.cs" />
     <Compile Include="DatabaseManagement.cs" />
     <Compile Include="Departments.cs" />
     <Compile Include="DepotManager.cs">
@@ -112,19 +117,7 @@
     <Compile Include="DepotManager.Designer.cs">
       <DependentUpon>DepotManager.cs</DependentUpon>
     </Compile>
-    <Compile Include="DepotManagerFrom.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DepotManagerFrom.Designer.cs">
-      <DependentUpon>DepotManagerFrom.cs</DependentUpon>
-    </Compile>
     <Compile Include="DepotWorker.cs" />
-    <Compile Include="DepotWorkerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DepotWorkerForm.Designer.cs">
-      <DependentUpon>DepotWorkerForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Employee.cs" />
     <Compile Include="EmployeeManagment.cs" />
     <Compile Include="EmployeeManagmentForm.cs">
@@ -134,12 +127,6 @@
       <DependentUpon>EmployeeManagmentForm.cs</DependentUpon>
     </Compile>
     <Compile Include="EmployeeShift.cs" />
-    <Compile Include="EmployeeStatistics.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EmployeeStatistics.Designer.cs">
-      <DependentUpon>EmployeeStatistics.cs</DependentUpon>
-    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,6 +134,12 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="LoginHandler.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Manager.cs" />
     <Compile Include="PostionType.cs" />
     <Compile Include="Product.cs" />
@@ -161,6 +154,13 @@
     </Compile>
     <Compile Include="ProductStatistics.Designer.cs">
       <DependentUpon>ProductStatistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sale.cs" />
+    <Compile Include="SalesManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SalesManagerForm.Designer.cs">
+      <DependentUpon>SalesManagerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -182,32 +182,32 @@
     <Compile Include="WorkerStockRequests.Designer.cs">
       <DependentUpon>WorkerStockRequests.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="AdministratorForm.resx">
-      <DependentUpon>AdministratorForm.cs</DependentUpon>
+    <EmbeddedResource Include="EmployeeContractsForm.resx">
+      <DependentUpon>EmployeeContractsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmployeesForm.resx">
+      <DependentUpon>EmployeesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DepotManager.resx">
       <DependentUpon>DepotManager.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DepotManagerFrom.resx">
-      <DependentUpon>DepotManagerFrom.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DepotWorkerForm.resx">
-      <DependentUpon>DepotWorkerForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="EmployeeManagmentForm.resx">
       <DependentUpon>EmployeeManagmentForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EmployeeStatistics.resx">
-      <DependentUpon>EmployeeStatistics.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProductManagementFOrm.resx">
       <DependentUpon>ProductManagementForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProductStatistics.resx">
       <DependentUpon>ProductStatistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SalesManagerForm.resx">
+      <DependentUpon>SalesManagerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

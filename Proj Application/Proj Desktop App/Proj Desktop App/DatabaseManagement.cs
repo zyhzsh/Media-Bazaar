@@ -17,8 +17,7 @@ namespace Proj_Desktop_App
         {
             try
             {
-                conn = new MySqlConnection(
-                    "Server=studmysql01.fhict.local;Uid=dbi443880;Database=dbi443880;Pwd=123456");
+                conn = new MySqlConnection("Server=studmysql01.fhict.local;Uid=dbi443880;Database=dbi443880;Pwd=123456");
             }
             catch (Exception e)
             {
@@ -116,11 +115,102 @@ namespace Proj_Desktop_App
                 conn.Close();
             }
         }
-
+        public void AddProduct(Departments belongingDepartment, string productName, string brand, double boughtPrice, double soldPrice)
+        {
+            string sql = "INSERT INTO product(department_id, productname, brand, bought_price, sold_price, current_stock)" +
+                         "VALUES (@department_id, @productname, @brand, @bought_price, @sold_price, @current_stock)";
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@department_id", Convert.ToInt32(belongingDepartment));
+                cmd.Parameters.AddWithValue("@productname", productName);
+                cmd.Parameters.AddWithValue("@brand", brand);
+                cmd.Parameters.AddWithValue("@boughtPrice", boughtPrice);
+                cmd.Parameters.AddWithValue("@soldPrice", soldPrice);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+        public void AddProduct(Departments belongingDepartment, string productName, string brand, double boughtPrice, double soldPrice, string description)
+        {
+            string sql = "INSERT INTO product(department_id, productname, brand, bought_price, sold_price, current_stock, description)" +
+                         "VALUES (@department_id, @productname, @brand, @bought_price, @sold_price, @current_stock, @description)";
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@department_id", Convert.ToInt32(belongingDepartment));
+                cmd.Parameters.AddWithValue("@productname", productName);
+                cmd.Parameters.AddWithValue("@brand", brand);
+                cmd.Parameters.AddWithValue("@boughtPrice", boughtPrice);
+                cmd.Parameters.AddWithValue("@soldPrice", soldPrice);
+                cmd.Parameters.AddWithValue("@description", description);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
         public Product[] GetAllProducts()
         {
+            string sql = "SELECT p.productcode, p.productname, p.brand, p.bought_price, p.sold_price, p.department_id " +
+                         "FROM product p;";
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(sql, this.conn);
+                conn.Open();
+                MySqlDataReader dr = cmd.ExecuteReader();
+                List<Product> products = new List<Product>();
+                while (dr.Read())
+                {
+                    Departments belongingDepartment = Departments.office;
+                    switch (dr[5])
+                    {
+                        case 1:
+                            belongingDepartment = Departments.floorOne;
+                            break;
+                        case 2:
+                            belongingDepartment = Departments.floorTwo;
+                            break;
+                        case 3:
+                            belongingDepartment = Departments.floorThree;
+                            break;
+                        case 4:
+                            belongingDepartment = Departments.floorFour;
+                            break;
+                        default:
+                            belongingDepartment = Departments.office;
+                            break;
 
-            return null;
+
+                    }
+                    Product newProduct = new Product(Convert.ToInt32(dr[0]), Convert.ToString(dr[1]), Convert.ToString(dr[2]), Convert.ToDouble(dr[4]), Convert.ToDouble(dr[3]), belongingDepartment);
+                    products.Add(newProduct);
+                }
+                return products.ToArray();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message+"AAAAA");
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
         private int GetProductStock(int productcode)
         {
@@ -169,7 +259,8 @@ namespace Proj_Desktop_App
             List<RestockRequest> requests = new List<RestockRequest>();
             while (dr.Read())
             {
-                //requests.Add(new RestockRequest(dr[0], dr[1], dr[2], dr[3], dr[4], dr[5]));
+                RestockRequest restocky = new RestockRequest(Convert.ToInt32(dr[0]), Convert.ToInt32(dr[1]), Convert.ToString(dr[2]), Convert.ToInt32(dr[3]), Convert.ToInt32(dr[4]), Convert.ToString(dr[5]));
+                requests.Add(restocky);
             }
 
             return null;
@@ -255,7 +346,7 @@ namespace Proj_Desktop_App
             }
         }
 
-        public void RestockProduct(int restock_id, int product_id,int restocker_BSN, int restockedAmount, string report)
+        public void RestockProduct(int restock_id, int product_id, int restocker_BSN, int restockedAmount, string report)
         {
 
             // REQUEST UPDATE
@@ -309,6 +400,102 @@ namespace Proj_Desktop_App
                 conn.Close();
             }
             ///PRODUCT RESTOCK
+        }
+
+        public Sale[] GetBestSellingProducts()
+        {
+            string sql = "SELECT p.productcode, p.productname, COUNT(*) AS sales " +
+                         "FROM product p INNER JOIN productsales s ON p.productcode = s.product_code " +
+                         "GROUP BY p.productcode " +
+                         "ORDER BY sales DESC;";
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                conn.Open();
+                MySqlDataReader dr = cmd.ExecuteReader();
+                List<Sale> sales = new List<Sale>();
+                while (dr.Read())
+                {
+                    
+                    Sale soldProduct = new Sale(Convert.ToInt32(dr[0]), Convert.ToString(dr[1]), Convert.ToInt32(dr[2]));
+                    sales.Add(soldProduct);
+                }
+                return sales.ToArray();
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public Sale[] GetBestSellingProducts(DateTime period)
+        {
+            string sql = "SELECT p.productcode, p.productname, COUNT(*) AS sales " +
+                         "FROM product p INNER JOIN productsales s ON p.productcode = s.product_code " +
+                         "WHERE s.sales_date > @salesPeriod " +
+                         "GROUP BY p.productcode " +
+                         "ORDER BY sales DESC;";
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@salesPeriod", period);
+                conn.Open();
+                MySqlDataReader dr = cmd.ExecuteReader();
+                List<Sale> sales = new List<Sale>();
+                while (dr.Read())
+                {
+                    Sale soldProduct = new Sale(Convert.ToInt32(dr[0]), Convert.ToString(dr[1]), Convert.ToInt32(dr[2]));
+                    sales.Add(soldProduct);
+                }
+                return sales.ToArray();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public Sale[] GetBestSellingProducts(DateTime startPeriod, DateTime endPeriod)
+        {
+            string sql = "SELECT p.productcode, p.productname, p.brand, p.bought_price, p.sold_price, p.department_id, COUNT(*) AS sales " +
+                         "FROM product p INNER JOIN productsales s ON p.productcode = s.product_code " +
+                         "WHERE s.sales_date > @startPeriod and s.sales_date < @endPeriod " +
+                         "GROUP BY p.productcode " +
+                         "ORDER BY sales DESC;";
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@startPeriod", startPeriod);
+                cmd.Parameters.AddWithValue("@endPeriod", endPeriod);
+                conn.Open();
+                MySqlDataReader dr = cmd.ExecuteReader();
+                List<Sale> sales = new List<Sale>();
+                while (dr.Read())
+                {
+                    Sale soldProduct = new Sale(Convert.ToInt32(dr[0]), Convert.ToString(dr[1]), Convert.ToInt32(dr[2]));
+                    sales.Add(soldProduct);
+                }
+                return sales.ToArray();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
     }
 }
