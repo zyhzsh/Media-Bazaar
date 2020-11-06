@@ -17,7 +17,7 @@
     if($bsn!=0){echo 'Assigned shifts';} ?></a>
 <a href="?page=pagePreferedShift"><?php $session=session:: getInstance();
     $bsn=$session-> __get('BSN'); 
-    if($bsn!=0){echo 'Assigned shifts';} ?></a>
+    if($bsn!=0){echo 'Prefered shifts';} ?></a>
 
 </div>
 
