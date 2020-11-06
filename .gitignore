@@ -1,0 +1,38 @@
+*.swp
+*.*~
+project.lock.json
+.DS_Store
+*.pyc
+nupkg/
+
+# Visual Studio Code
+.vscode
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+ScaffoldingReadMe.txt
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+msbuild.log
+msbuild.err
+msbuild.wrn
+ git rm -r --cached node_modules    # clean git cache
+ rm -rf node_modules   
+*.cache
+*.exe
+Proj Application/Proj Desktop App/.vs/Proj Desktop App/v16/.suo
+Proj Application/Proj Desktop App/Proj Desktop App/bin/Debug/Proj Desktop App.pdb
