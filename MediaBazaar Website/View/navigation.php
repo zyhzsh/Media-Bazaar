@@ -12,8 +12,12 @@
     
 <div class="sidenav">
 <a href="?page=pageLogin">Login</a>
-<a href="?page=pageAssignedShift">Assigned shifts</a>
-<a href="?page=pagePreferedShift">Prefered shifts</a>
+<a href="?page=pageAssignedShift"><?php $session=session:: getInstance();
+    $bsn=$session-> __get('BSN'); 
+    if($bsn!=0){echo 'Assigned shifts';} ?></a>
+<a href="?page=pagePreferedShift"><?php $session=session:: getInstance();
+    $bsn=$session-> __get('BSN'); 
+    if($bsn!=0){echo 'Assigned shifts';} ?></a>
 
 </div>
 
