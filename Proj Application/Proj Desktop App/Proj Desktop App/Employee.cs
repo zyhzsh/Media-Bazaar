@@ -8,46 +8,53 @@ namespace Proj_Desktop_App
 {
     public class Employee
     {
+        // Personal details:
         private int BSN;
         public string firstName { get; private set; }
         public string lastName { get; private set; }
         public char gender { get; private set; }
-        public string phoneNumber { get; private set; }
         public DateTime birthDate { get; private set; }
-        public string address { get; private set; }
-        public string certificates { get; private set; }
         public string languages { get; private set; }
-        public string status { get; private set; }
-        public Departments department { get; private set; }
-        public string contactEmail { get; private set; }
-        public PositionType positionType { get; private set; }
-        public string jobTitle { get; private set; }
-        public double fte { get; private set; }
+        public string certificates { get; private set; }
 
-        public Employee(int BSN, string firstName, string lastName, char gender, string phoneNumber, DateTime birthDate,
-            string address, string certificates,string status, Departments department, string contactEmail,
-            double fte, PositionType positionType, string jobTitle)
+        // Contact details:
+        public string phoneNumber { get; private set; }
+        public string address { get; private set; }
+        public string contactEmail { get; private set; }
+
+        // Contracts:
+        private List<Contract> contracts;
+
+        /// <summary>
+        /// For new employees. Requires employee info and one contact
+        /// </summary>
+        public Employee(int BSN, string firstName, string lastName, char gender, DateTime birthDate,
+            string languages, string certificates, string phoneNumber, string address, string contactEmail,
+            DateTime startDate, DateTime endDate, PositionType position, Departments department, decimal fte)
         {
             this.BSN = BSN;
             this.firstName = firstName;
             this.lastName = lastName;
             this.gender = gender;
-            this.phoneNumber = phoneNumber;
             this.birthDate = birthDate;
-            this.address = address;
-            this.languages = "";
+            this.languages = languages;
             this.certificates = certificates;
-            this.status = status;
-            this.department = department;
+
+            this.phoneNumber = phoneNumber;
+            this.address = address;
             this.contactEmail = contactEmail;
-            this.fte = fte;
-            this.positionType = positionType;
-            this.jobTitle = jobTitle;
+
+            // Initialize first contract
+            this.contracts = new List<Contract>();
+            this.contracts.Add(new Contract(startDate, endDate, 1, department, position, 1000 /* get starting salary */, fte, true));
         }
 
-        public Employee(int BSN, string firstName, string lastName, char gender, string phoneNumber, DateTime birthDate,
-            string address, string certificates, string languages,string status, Departments department, string contactEmail,
-            double fte, PositionType positionType, string jobTitle)
+        /// <summary>
+        /// For existing employees. Requires employee info and all contacts
+        /// </summary>
+        public Employee(int BSN, string firstName, string lastName, char gender, DateTime birthDate,
+            string languages, string certificates, string phoneNumber, string address, string contactEmail,
+            Contract[] contracts)
         {
             this.BSN = BSN;
             this.firstName = firstName;
@@ -58,29 +65,45 @@ namespace Proj_Desktop_App
             this.address = address;
             this.certificates = certificates;
             this.languages = languages;
-            this.status = status;
-            this.department = department;
             this.contactEmail = contactEmail;
-            this.fte = fte;
-            this.positionType = positionType;
-            this.jobTitle = jobTitle;
+            this.contracts = new List<Contract>();
+            this.contracts.AddRange(contracts);
         }
 
-        public void UpdateInfo(string firstName, string lastName, char gender, string phoneNumber,
-            string address, string certificates, Departments department, string contactEmail,
-            double fte, PositionType positionType, string jobTitle)
+        /// <summary>
+        /// Update an employee's personal and contact details
+        /// </summary>
+        public void UpdateInfo(string firstName, string lastName, char gender, string languages,
+            string certificates, string phoneNumber, string address, string contactEmail)
         {
             if (this.firstName != firstName) { this.firstName = firstName; }
             if (this.lastName != lastName) { this.lastName = lastName; }
             if (this.gender != gender) { this.gender = gender; }
+            if (this.certificates != certificates) { this.certificates = certificates; }
+            if (this.languages != languages) { this.languages = languages; }
             if (this.phoneNumber != phoneNumber) { this.phoneNumber = phoneNumber; }
             if (this.address != address) { this.address = address; }
-            if (this.certificates != certificates) { this.certificates = certificates; }
-            if (this.department != department) { this.department = department; }
             if (this.contactEmail != contactEmail) { this.contactEmail = contactEmail; }
-            if (this.fte != fte) { this.fte = fte; }
-            if (this.positionType != positionType) { this.positionType = positionType; }
-            if (this.jobTitle != jobTitle) { this.jobTitle = jobTitle; }
+        }
+
+        public PositionType GetPosition()
+        {
+            return GetLatestContract().Position;
+        }
+
+        public Departments GetDepartment()
+        {
+            return GetLatestContract().Department;
+        }
+
+        public decimal GetFTE()
+        {
+            return GetLatestContract().Fte;
+        }
+
+        private Contract GetLatestContract()
+        {
+            return contracts[contracts.Count - 1];
         }
 
         public string GetBsnAndName()
@@ -90,8 +113,8 @@ namespace Proj_Desktop_App
 
         public string Biscinfo()
         {
-            return $"Name:{this.firstName} {this.lastName} Department:{this.department} ContactEmail:{this.contactEmail} Certificates:{this.certificates}"
-                +$" FTE:{this.fte}";   
+            return $"Name:{this.firstName} {this.lastName} Department:{GetDepartment()} ContactEmail:{this.contactEmail} Certificates:{this.certificates}"
+                +$" FTE:{GetFTE()}";   
         }
 
         public int GetBSN()
@@ -101,19 +124,22 @@ namespace Proj_Desktop_App
 
         public string GetInfo()
         {
-            return $"{BSN} - {lastName}, {department}, {contactEmail}";
-        }
-
-        public void UpdateStatus(string newStatus)
-        {
-            status = newStatus;
+            return $"{BSN} - {lastName}, {GetDepartment()}, {contactEmail}";
         }
 
         public override string ToString()
         {
-            return $"{BSN} - {firstName} {lastName}, gender: {gender}, birthdate: {birthDate.ToShortDateString()}\n" +
-                $"phone: {phoneNumber}, address: {address}, email: {contactEmail}\n" +
-                $"department: {department}, position: {positionType}, jobTitle: {jobTitle}, fte: {fte}, status: {status}, certificates: {certificates}";
+            return $"{BSN} - {firstName} {lastName}\n" +
+                $"Gender: {gender}\n" +
+                $"Birthdate: {birthDate.ToShortDateString()}\n" +
+                $"Certificates: {certificates}\n" +
+                $"Languages: {languages}\n\n" +
+                $"Phone: {phoneNumber}\n" +
+                $"Address: {address}\n" +
+                $"Email: {contactEmail}\n\n" +
+                $"Department: {GetDepartment()}\n" +
+                $"Position: {GetPosition()}\n" +
+                $"FTE: {GetFTE()}\n";
         }
 
         public string[] GetDetail()
@@ -128,13 +154,13 @@ namespace Proj_Desktop_App
 
             temp.Add($"Gender: {this.gender}");
 
-            temp.Add($"Department: {this.department}");
+            temp.Add($"Department: {GetDepartment()}");
 
             temp.Add($"ContactEmail: {this.contactEmail}");
 
             temp.Add($"Certificates: {this.certificates}");
 
-            temp.Add($"FTE: {this.fte}");
+            temp.Add($"FTE: {GetFTE()}");
 
             temp.Add($"----------------------------------");
 

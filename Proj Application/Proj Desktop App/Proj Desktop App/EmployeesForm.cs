@@ -25,35 +25,10 @@ namespace Proj_Desktop_App
 
         public void UpdateEmployees()
         {
+            // EVENT LISTENER
             lbEmployees.Items.Clear();
             lbEmployees.Items.AddRange(store.GetEmployees());
             lblTotalEmployees.Text = "Total employees: " + store.GetEmployees().Length;
-        }
-
-        private void btnSearch_Click(object sender, EventArgs e)
-        {
-            // Search
-        }
-
-        private void btnAddEmployee_Click(object sender, EventArgs e)
-        {
-            new EmployeeManagmentForm(this);
-        }
-
-        public bool AddNewEmployee(int BSN, string firstName, string lastName, char gender, string phoneNumber, DateTime birthDate,
-            string address, string certificates, string status, Departments department, string contactEmail, double fte, PositionType positionType, string jobTitle)
-        {
-            // create new Employee
-            if (store.AddEmployee(BSN, firstName, lastName, gender, phoneNumber, birthDate,
-                address, certificates, status, department, contactEmail, fte, positionType, jobTitle))
-            {
-                UpdateEmployees();
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         private int GetSelectedBSN()
@@ -80,6 +55,18 @@ namespace Proj_Desktop_App
             }
         }
 
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            // Search
+        }
+
+        private void btnAddEmployee_Click(object sender, EventArgs e)
+        {
+            new EmployeeManagmentForm(store);
+            // But after form is cloed:
+            UpdateEmployees();
+        }
+
         private void btnShowDetails_Click(object sender, EventArgs e)
         {
             // get employee based on bsn
@@ -95,14 +82,13 @@ namespace Proj_Desktop_App
             }
         }
 
-
         private void btnUpdateDetails_Click(object sender, EventArgs e)
         {
             int bsn = GetSelectedBSN();
             if (bsn != -1)
             {
                 Employee employee = store.GetEmployee(bsn);
-                EmployeeManagmentForm updateForm = new EmployeeManagmentForm(this, employee);
+                EmployeeManagmentForm updateForm = new EmployeeManagmentForm(store, employee);
                 if (updateForm.IsDisposed)
                 {
                     UpdateEmployees();

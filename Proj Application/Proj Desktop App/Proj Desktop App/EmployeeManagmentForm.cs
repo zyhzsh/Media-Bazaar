@@ -12,7 +12,10 @@ namespace Proj_Desktop_App
 {
     public partial class EmployeeManagmentForm : Form
     {
-        private EmployeesForm adminForm;
+        // Store
+        private Store store;
+
+        // For updating employee details
         private bool updateEmployee;
         private Employee employeeToUpdate;
 
@@ -23,28 +26,33 @@ namespace Proj_Desktop_App
             cbDepartment.DataSource = Enum.GetValues(typeof(Departments));
         }
 
-        public EmployeeManagmentForm(EmployeesForm adminForm)
+        /// <summary>
+        /// Adding a new employee
+        /// </summary>
+        public EmployeeManagmentForm(Store store)
         {
-            // Adding new employee
             InitializeComponent();
             InitializeElements();
-            this.adminForm = adminForm;
+            this.store = store;
             updateEmployee = false;
             Text = "New Employee Form";
-            btnConfirm.Text = "Add new employee";
+            btnConfirm.Text = "Add employee";
             rbMale.Checked = true;
         }
 
-        public EmployeeManagmentForm(EmployeesForm adminForm, Employee employee)
+        /// <summary>
+        /// Updating employee details
+        /// </summary>
+        public EmployeeManagmentForm(Store store, Employee employee)
         {
-            // Updateing employee data
             InitializeComponent();
             InitializeElements();
-            this.adminForm = adminForm;
+            this.store = store;
             updateEmployee = true;
 
             // Fill in with current employee data
             employeeToUpdate = employee;
+
             tbBSN.Text = employeeToUpdate.GetBSN().ToString();
             tbFirstName.Text = employeeToUpdate.firstName;
             tbLastName.Text = employeeToUpdate.lastName;
@@ -52,83 +60,100 @@ namespace Proj_Desktop_App
             else if (employeeToUpdate.gender == 'F') { rbFemale.Checked = true; }
             else { rbOther.Checked = true; }
             dtpBirthdate.Value = employeeToUpdate.birthDate;
+            tbLanguages.Text = employeeToUpdate.languages;
+            tbCertificates.Text = employeeToUpdate.certificates;
+
             tbPhone.Text = employeeToUpdate.phoneNumber;
             tbAddress.Text = employeeToUpdate.address;
             tbEmail.Text = employeeToUpdate.contactEmail;
-            cbPosition.SelectedItem = employeeToUpdate.positionType;
-            cbDepartment.SelectedItem = employeeToUpdate.department;
-            tbJobTitle.Text = employeeToUpdate.jobTitle;
-            nudFTE.Value = Convert.ToDecimal(employeeToUpdate.fte);
-            tbCertificates.Text = employeeToUpdate.certificates;
-            //can not be changed
+
+            cbPosition.SelectedItem = employeeToUpdate.GetPosition();
+            cbDepartment.SelectedItem = employeeToUpdate.GetDepartment();
+            nudFTE.Value = Convert.ToDecimal(employeeToUpdate.GetFTE());
+
+            // Can"t be changed
             tbBSN.Enabled = false;
             dtpBirthdate.Enabled = false;
+            dtpStartDate.Enabled = false;
+            nudDuration.Enabled = false;
+            cbPosition.Enabled = false;
+            cbDepartment.Enabled = false;
+            nudFTE.Enabled = false;
             btnConfirm.Text = "Save changes";
         }
 
         private void btnConfirm_Click(object sender, EventArgs e)
         {
-            int bsn;
             string firstName = tbFirstName.Text;
             string lastName = tbLastName.Text;
-            char gender;
-            DateTime birthdate;
+
+            string languages = tbLanguages.Text;
+            string certificates = tbCertificates.Text;
+
             string phone = tbPhone.Text;
             string address = tbAddress.Text;
             string email = tbEmail.Text;
-            Departments department;
-            PositionType position;
-            string jobTitle = tbJobTitle.Text;
-            double fte;
-            string certificates = tbCertificates.Text;
 
-            // check string inputs
+            // Check string inputs
             if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName) ||
                     string.IsNullOrWhiteSpace(phone) || string.IsNullOrWhiteSpace(address) ||
-                    string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(jobTitle))
+                    string.IsNullOrWhiteSpace(email))
             {
                 MessageBox.Show("Please fill in all employee data.");
             }
             else
             {
-                try
+                char gender;
+                if (rbMale.Checked) { gender = 'M'; }
+                else if (rbFemale.Checked) { gender = 'F'; }
+                else { gender = 'O'; }
+
+                if (!updateEmployee)
                 {
-                    bsn = Convert.ToInt32(tbBSN.Text);
-                    birthdate = dtpBirthdate.Value;
-                    department = (Departments)cbDepartment.SelectedItem;
-                    position = (PositionType)cbPosition.SelectedItem;
-                    fte = Convert.ToDouble(nudFTE.Value);
-                    if (rbMale.Checked) { gender = 'M'; }
-                    else if (rbFemale.Checked) { gender = 'F'; }
-                    else { gender = 'O'; }
-
-                    if (!updateEmployee)
+                    try
                     {
+                        int bsn = Convert.ToInt32(tbBSN.Text);
+                        DateTime birthdate = dtpBirthdate.Value;
+
+                        DateTime startDate = dtpStartDate.Value;
+                        int duration = Convert.ToInt32(nudDuration.Value);
+                        DateTime endDate = startDate.AddMonths(duration);
+                        PositionType position = (PositionType)cbPosition.SelectedItem;
+                        Departments department = (Departments)cbDepartment.SelectedItem;
+                        decimal fte = nudFTE.Value;
+
                         // Add new employee
-                        if (adminForm.AddNewEmployee(bsn, firstName, lastName, gender, phone, birthdate, address, certificates, "Employed",
-                            department, email, fte, position, jobTitle))
+                        try
                         {
-                            this.Close();
+                            if (store.AddEmployee(bsn, firstName, lastName, gender, birthdate, languages, certificates,
+                                                  phone, address, email, startDate, endDate, position, department, fte))
+                            {
+                                this.Close();
+                            }
+                            else
+                            {
+                                MessageBox.Show("An employee with this BSN already exists!");
+                            }
                         }
-                        else
+                        catch (Exception ex)
                         {
-                            MessageBox.Show("An employee with this BSN already exists!");
+                            // Database error
+                            MessageBox.Show(ex.Message);
                         }
-
                     }
-                    else
+                    catch (Exception)
                     {
-                        // Update employee
-                        employeeToUpdate.UpdateInfo(firstName, lastName, gender, phone, address, certificates,
-                            department, email, fte, position, jobTitle);
-                        adminForm.UpdateEmployees();
-                        this.Close();
+                        MessageBox.Show("Please input a valid BSN.");
                     }
 
                 }
-                catch (Exception)
+                else
                 {
-                    MessageBox.Show("Please input a valid BSN.");
+                    // Update employee
+                    // TO DO
+                    employeeToUpdate.UpdateInfo(firstName, lastName, gender, languages, certificates,
+                         phone, address, email);
+                    this.Close();
                 }
             }
         }
@@ -143,49 +168,66 @@ namespace Proj_Desktop_App
             }
         }
 
+        // - - - - - - - - - - - - - - - - - - - - - - //
+        // Managing the position and department inputs //
+        // - - - - - - - - - - - - - - - - - - - - - - //
+
         private void cbPosition_SelectedIndexChanged(object sender, EventArgs e)
         {
-            PositionType selectedPosition = (PositionType)cbPosition.SelectedItem;
-            //cbDepartment.Items.Add(Departments.office);
-            //cbDepartment.Items.Add(Departments.warehouse);
-            if (selectedPosition == PositionType.Administrator)
+            try
             {
-                cbDepartment.SelectedItem = Departments.office;
-                cbDepartment.Enabled = false;
-                tbJobTitle.Text = cbPosition.SelectedItem.ToString();
+                PositionType selectedPosition = (PositionType)cbPosition.SelectedItem;
+                switch (selectedPosition)
+                {
+                    case PositionType.Administrator:
+                        cbDepartment.SelectedItem = Departments.office;
+                        cbDepartment.Enabled = false;
+                        break;
+
+                    case PositionType.Depot_Manager:
+                    case PositionType.Depot_Worker:
+                        cbDepartment.SelectedItem = Departments.warehouse;
+                        cbDepartment.Enabled = false;
+                        break;
+
+                    case PositionType.Sales_Manager:
+                    case PositionType.Sales_Worker:
+                        cbDepartment.SelectedItem = Departments.floorOne;
+                        cbDepartment.Enabled = true;
+                        break;
+
+                    default:
+                        cbDepartment.Enabled = true;
+                        break;
+                }
             }
-            else if (selectedPosition == PositionType.Depot_Manager ||
-                selectedPosition == PositionType.Depot_Worker)
+            catch (Exception)
             {
-                cbDepartment.SelectedItem = Departments.warehouse;
-                cbDepartment.Enabled = false;
-                tbJobTitle.Text = cbPosition.SelectedItem.ToString();
-            }
-            else if (selectedPosition == PositionType.Sales_Manager ||
-                selectedPosition == PositionType.Sales_Worker)
-            {
-                cbDepartment.SelectedItem = Departments.floorOne;
                 cbDepartment.Enabled = true;
-                tbJobTitle.Text = cbPosition.SelectedItem.ToString();
-            }
-            else
-            {
-                cbDepartment.Enabled = true;
-                tbJobTitle.Enabled = true;
-                tbJobTitle.Clear();
             }
         }
 
         private void cbDepartment_SelectedIndexChanged(object sender, EventArgs e)
         {
-            PositionType selectedPosition = (PositionType)cbPosition.SelectedItem;
-            Departments selectedDepartment = (Departments)cbDepartment.SelectedItem;
-            if ((selectedPosition == PositionType.Sales_Manager ||
-               selectedPosition == PositionType.Sales_Worker) &&
-               (selectedDepartment == Departments.office ||
-               selectedDepartment == Departments.warehouse))
+            try
             {
-                cbDepartment.SelectedItem = Departments.floorOne;
+                object position = cbPosition.SelectedItem;
+                if (position != null)
+                {
+                    PositionType selectedPosition = (PositionType)position;
+                    Departments selectedDepartment = (Departments)cbDepartment.SelectedItem;
+                    if ((selectedPosition == PositionType.Sales_Manager ||
+                       selectedPosition == PositionType.Sales_Worker) &&
+                       (selectedDepartment == Departments.office ||
+                       selectedDepartment == Departments.warehouse))
+                    {
+                        cbDepartment.SelectedItem = Departments.floorOne;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                cbDepartment.Enabled = true;
             }
         }
     }

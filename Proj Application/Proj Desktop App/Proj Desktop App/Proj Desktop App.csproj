@@ -94,6 +94,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contract.cs" />
+    <Compile Include="dataAccess\DatabaseConnection.cs" />
+    <Compile Include="dataAccess\EmployeeManagement.cs" />
     <Compile Include="EmployeeContractsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,7 +133,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="LoginHandler.cs" />
+    <Compile Include="dataAccess\LoginHandler.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

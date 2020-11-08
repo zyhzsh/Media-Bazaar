@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proj_Desktop_App.dataAccess;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace Proj_Desktop_App
         private List<RestockRequest> requests;
         private List<RestockRequest> orders;
 
+        EmployeeManagement emplMan;
+
         public Store()
         {
             employees = new List<Employee>();
@@ -24,20 +27,31 @@ namespace Proj_Desktop_App
             //AddEmployeeMockData();
             InitializeProducts();
             DatabaseManagement dtbManagement = new DatabaseManagement();
-            employees.AddRange(dtbManagement.GetAllEmployees());
+            emplMan = new EmployeeManagement();
+            employees.AddRange(emplMan.GetAllEmployees());
         }
 
         
 
 
-        public bool AddEmployee(int BSN, string firstName, string lastName, char gender, string phoneNumber, DateTime birthDate,
-            string address, string certificates, string status, Departments department, string contactEmail,
-            double fte, PositionType positionType, string jobTitle)
+        public bool AddEmployee(int BSN, string firstName, string lastName, char gender, DateTime birthDate,
+            string languages, string certificates, string phoneNumber, string address, string contactEmail,
+            DateTime startDate, DateTime endDate, PositionType position, Departments department, decimal fte)
         {
             if (GetEmployee(BSN) == null)
             {
-                employees.Add(new Employee(BSN, firstName, lastName, gender, phoneNumber, birthDate, address, certificates, status, department, contactEmail, fte, positionType, jobTitle));
-                return true;
+                Employee employee = new Employee(BSN, firstName, lastName, gender, birthDate, languages, certificates, phoneNumber, address, contactEmail, startDate, endDate, position, department, fte);
+                // Add employee to database
+                if (emplMan.AddEmployee(employee))
+                {
+                    // Add employee locally
+                    employees.Add(employee);
+                    return true;
+                }
+                else
+                {
+                    throw new Exception("Failed to add employee");
+                }
             }
             else
             {
@@ -67,7 +81,7 @@ namespace Proj_Desktop_App
             List<Employee> temp = new List<Employee>();
             foreach(Employee e in employees)
             {
-                if (e.department == department)
+                if (e.GetDepartment() == department)
                 {
                     temp.Add(e);
                 }
@@ -90,14 +104,13 @@ namespace Proj_Desktop_App
         {
             string format = "dd/MM/yyyy";
             var cultureInf = CultureInfo.InvariantCulture;
-            AddEmployee(5467, "George", "Wood", 'M', "0031677777", DateTime.ParseExact("18/09/1997", format, cultureInf), "Eindhoven", "Administration ", "Employed", Departments.office, "g.wood@gmail.com", 1, PositionType.Administrator, "Administrator");
-            AddEmployee(3456, "Nicole", "Green", 'F', "0031655378", DateTime.ParseExact("27/11/1998", format, cultureInf), "Geldrop", "IELTS", "Employed", Departments.warehouse, "n.green@gmail.com", 1, PositionType.Depot_Worker, "Depot_Worker");
-            AddEmployee(7890, "John", "Doe", 'M', "0031674628", DateTime.ParseExact("05/12/1991", format, cultureInf), "Helmond", "Mangment ", "Employed", Departments.floorTwo, "john.d@gmail.com", 0.4, PositionType.Sales_Manager, "Sales Manager");
-            AddEmployee(3992616, "Shenghang", "Zhu", 'M', "134556", DateTime.ParseExact("01/01/2020", format, cultureInf), "Tilburg", "ICT", "employed", Departments.warehouse, "xxxx@gmail.com", 1, PositionType.Depot_Worker, "");
-            AddEmployee(3376540, "David", "van Rijthoven ", 'M', "134556", DateTime.ParseExact("01/01/2020", format, cultureInf), "Eindhoven", "ICT", "employed", Departments.floorOne, "xxxx@gmail.com", 1, PositionType.Sales_Worker, "");
-            AddEmployee(4090918, "Dzhurov", "M", 'M', "134556", DateTime.ParseExact("01/01/2020", format, cultureInf), "Amersfoort", "ICT", "employed", Departments.floorOne, "xxxx@gmail.com", 1, PositionType.Depot_Worker, "");
-            AddEmployee(443892, "Mohammed", "Al-Eryani", 'M', "134556", DateTime.ParseExact("01/01/2020", format, cultureInf), "Den Haag", "ICT", "employed", Departments.floorFour, "xxxx@gmail.com", 1, PositionType.Sales_Worker, "");
-            AddEmployee(3088685, "Joost", "Burggraaff", 'M', "134556", DateTime.ParseExact("01/01/2020", format, cultureInf), "Eindhoven", "ICT", "employed", Departments.floorThree, "xxxx@gmail.com", 1, PositionType.Depot_Worker, "");
+            AddEmployee(5467, "George", "Wood", 'M', DateTime.ParseExact("18/09/1997", format, cultureInf),"", "", "0031677777", "Eindhoven", "g.wood@gmail.com", DateTime.ParseExact("11/11/2020", format, cultureInf), DateTime.ParseExact("11/05/2021", format, cultureInf), PositionType.Administrator, Departments.office, 1);
+            AddEmployee(7890, "Nicole", "Green", 'F', DateTime.ParseExact("18/09/1997", format, cultureInf), "", "", "0031674628", "Eindhoven", "g.wood@gmail.com", DateTime.ParseExact("11/11/2020", format, cultureInf), DateTime.ParseExact("11/05/2021", format, cultureInf), PositionType.Sales_Worker, Departments.floorTwo, 0.5m);
+            AddEmployee(3992616, "Shenghang", "Zhu", 'M', DateTime.ParseExact("18/09/1997", format, cultureInf), "", "", "3992616", "Eindhoven", "g.wood@gmail.com", DateTime.ParseExact("11/11/2020", format, cultureInf), DateTime.ParseExact("11/05/2021", format, cultureInf), PositionType.Sales_Manager, Departments.floorFour, 1);
+            AddEmployee(3376540, "David", "van Rijthoven", 'M', DateTime.ParseExact("18/09/1997", format, cultureInf), "", "", "3376540", "Eindhoven", "g.wood@gmail.com", DateTime.ParseExact("11/11/2020", format, cultureInf), DateTime.ParseExact("11/05/2021", format, cultureInf), PositionType.Depot_Manager, Departments.warehouse, 1);
+            AddEmployee(4090918, "Martin", "Dzhurov", 'M', DateTime.ParseExact("18/09/1997", format, cultureInf), "", "", "4090918", "Eindhoven", "g.wood@gmail.com", DateTime.ParseExact("11/11/2020", format, cultureInf), DateTime.ParseExact("11/05/2021", format, cultureInf), PositionType.Administrator, Departments.office, 1);
+            AddEmployee(443892, "Mohammed", "Al-Eryani", 'M', DateTime.ParseExact("18/09/1997", format, cultureInf), "", "", "443892", "Eindhoven", "g.wood@gmail.com", DateTime.ParseExact("11/11/2020", format, cultureInf), DateTime.ParseExact("11/05/2021", format, cultureInf), PositionType.Sales_Manager, Departments.floorOne, 1);
+            AddEmployee(3088685, "Joost", "Burggraaff", 'M', DateTime.ParseExact("18/09/1997", format, cultureInf), "", "", "3088685", "Eindhoven", "g.wood@gmail.com", DateTime.ParseExact("11/11/2020", format, cultureInf), DateTime.ParseExact("11/05/2021", format, cultureInf), PositionType.Depot_Worker, Departments.warehouse, 1);
         }
 
         private void InitializeProducts()
