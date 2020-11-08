@@ -106,7 +106,6 @@
     <Compile Include="EmployeesForm.Designer.cs">
       <DependentUpon>EmployeesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Adminstration.cs" />
     <Compile Include="AssignedShift.cs" />
     <Compile Include="AvailableShift.cs" />
     <Compile Include="DatabaseManagement.cs" />
@@ -117,9 +116,7 @@
     <Compile Include="DepotManager.Designer.cs">
       <DependentUpon>DepotManager.cs</DependentUpon>
     </Compile>
-    <Compile Include="DepotWorker.cs" />
     <Compile Include="Employee.cs" />
-    <Compile Include="EmployeeManagment.cs" />
     <Compile Include="EmployeeManagmentForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,7 +137,6 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Manager.cs" />
     <Compile Include="PostionType.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="ProductManagementForm.cs">
@@ -165,7 +161,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestockRequest.cs" />
-    <Compile Include="SaleWorker.cs" />
     <Compile Include="Schedule.cs" />
     <Compile Include="ScheduleManager.cs" />
     <Compile Include="Scheduling.cs">
