@@ -9,6 +9,8 @@ using System.Windows.Forms;
 
 namespace Proj_Desktop_App
 {
+    public delegate void EmployeeHandler(Employee employee);
+
     public class Store
     {
         private List<Employee> employees;
@@ -17,10 +19,11 @@ namespace Proj_Desktop_App
         private List<RestockRequest> orders;
 
         EmployeeManagement emplMan;
+        public event EmployeeHandler EmployeeChanged;
 
         public Store()
         {
-            employees = new List<Employee>();
+            this.employees = new List<Employee>();
             products = new List<Product>();
             requests = new List<RestockRequest>();
             orders = new List<RestockRequest>();
@@ -28,12 +31,16 @@ namespace Proj_Desktop_App
             InitializeProducts();
             DatabaseManagement dtbManagement = new DatabaseManagement();
             emplMan = new EmployeeManagement();
-            employees.AddRange(emplMan.GetAllEmployees());
+            Employee[] employees = emplMan.GetAllEmployees();
+            if (employees != null)
+            {
+                this.employees.AddRange(employees);
+            }
         }
 
-        
-
-
+        /// <summary>
+        /// Add a new employee
+        /// </summary>
         public bool AddEmployee(int BSN, string firstName, string lastName, char gender, DateTime birthDate,
             string languages, string certificates, string phoneNumber, string address, string contactEmail,
             DateTime startDate, DateTime endDate, PositionType position, Departments department, decimal fte)
@@ -46,6 +53,7 @@ namespace Proj_Desktop_App
                 {
                     // Add employee locally
                     employees.Add(employee);
+                    EmployeeChanged(employee);
                     return true;
                 }
                 else
@@ -59,6 +67,38 @@ namespace Proj_Desktop_App
             }
         }
 
+        /// <summary>
+        /// Update employee details
+        /// </summary>
+        public bool UpdateEmployee(int BSN, string firstName, string lastName, char gender, string languages,
+            string certificates, string phoneNumber, string address, string contactEmail)
+        {
+            Employee employee = GetEmployee(BSN);
+            if (employee != null)
+            {
+                // Update employee locally
+                employee.UpdateInfo(firstName, lastName, gender, languages, certificates,
+                         phoneNumber, address, contactEmail);
+                // Update employee in database
+                if (emplMan.UpdateEmployee(employee))
+                {
+                    EmployeeChanged(employee);
+                    return true;
+                }
+                else
+                {
+                    throw new Exception("Failed to update employee");
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Get an employee based on their BSN
+        /// </summary>
         public Employee GetEmployee(int bsn)
         {
             foreach (Employee employee in employees)
@@ -70,34 +110,81 @@ namespace Proj_Desktop_App
             }
             return null;
         }
-        public Employee[] GetEmployeeList()
+
+        /// <summary>
+        /// Get all employees
+        /// </summary>
+        public Employee[] GetEmployees()
         {
-            return this.employees.ToArray();
+            return employees.ToArray();
         }
 
+        /// <summary>
+        /// Get all employees by partial bsn
+        /// </summary>
+        public Employee[] GetEmployees(int bsn)
+        {
+            // TO BE IMPLEMENTED
+            return employees.ToArray();
+        }
 
-        public Employee[] GetEmployeeList(Departments department)
+        /// <summary>
+        /// Get all employees by partial bsn
+        /// </summary>
+        public Employee[] GetEmployees(bool employed, int bsn)
+        {
+            // TO BE IMPLEMENTED
+            return employees.ToArray();
+        }
+
+        /// <summary>
+        /// Get all employees by partial last name
+        /// </summary>
+        public Employee[] GetEmployees(string lastName)
+        {
+            // TO BE IMPLEMENTED
+            return employees.ToArray();
+        }
+
+        /// <summary>
+        /// Get employed employees by partial last name
+        /// </summary>
+        public Employee[] GetEmployees(bool employed, string lastName)
+        {
+            // TO BE IMPLEMENTED
+            return employees.ToArray();
+        }
+
+        /// <summary>
+        /// Get employees by their status
+        /// </summary>
+        public Employee[] GetEmployees(bool employed)
+        {
+            List<Employee> employees = new List<Employee>();
+            foreach (Employee empl in this.employees)
+            {
+                if(empl.IsEmployed() == employed)
+                {
+                    employees.Add(empl);
+                }
+            }
+            return employees.ToArray();
+        }
+
+        /// <summary>
+        /// Get employees by department
+        /// </summary>
+        public Employee[] GetEmployees(Departments department)
         {
             List<Employee> temp = new List<Employee>();
             foreach(Employee e in employees)
             {
-                if (e.GetDepartment() == department)
+                if (e.IsEmployed() == true && e.GetDepartment() == department)
                 {
                     temp.Add(e);
                 }
             }
             return temp.ToArray();
-        }
-
-        
-        public string[] GetEmployees()
-        {
-            List<string> employeeInfos = new List<string>();
-            foreach (Employee employee in employees)
-            {
-                employeeInfos.Add(employee.GetInfo());
-            }
-            return employeeInfos.ToArray();
         }
 
         private void AddEmployeeMockData()

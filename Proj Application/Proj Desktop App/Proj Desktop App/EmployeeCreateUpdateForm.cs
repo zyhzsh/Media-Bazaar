@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Proj_Desktop_App
 {
-    public partial class EmployeeManagmentForm : Form
+    public partial class EmployeeCreateUpdateForm : Form
     {
         // Store
         private Store store;
@@ -29,7 +29,7 @@ namespace Proj_Desktop_App
         /// <summary>
         /// Adding a new employee
         /// </summary>
-        public EmployeeManagmentForm(Store store)
+        public EmployeeCreateUpdateForm(Store store)
         {
             InitializeComponent();
             InitializeElements();
@@ -43,7 +43,7 @@ namespace Proj_Desktop_App
         /// <summary>
         /// Updating employee details
         /// </summary>
-        public EmployeeManagmentForm(Store store, Employee employee)
+        public EmployeeCreateUpdateForm(Store store, Employee employee)
         {
             InitializeComponent();
             InitializeElements();
@@ -67,9 +67,17 @@ namespace Proj_Desktop_App
             tbAddress.Text = employeeToUpdate.address;
             tbEmail.Text = employeeToUpdate.contactEmail;
 
+            try
+            {
             cbPosition.SelectedItem = employeeToUpdate.GetPosition();
             cbDepartment.SelectedItem = employeeToUpdate.GetDepartment();
             nudFTE.Value = Convert.ToDecimal(employeeToUpdate.GetFTE());
+            }
+            catch(Exception)
+            {
+                this.Close();
+                MessageBox.Show("Something went wrong!");
+            }
 
             // Can"t be changed
             tbBSN.Enabled = false;
@@ -150,9 +158,24 @@ namespace Proj_Desktop_App
                 else
                 {
                     // Update employee
-                    // TO DO
-                    employeeToUpdate.UpdateInfo(firstName, lastName, gender, languages, certificates,
-                         phone, address, email);
+                    try
+                    {
+                        if (store.UpdateEmployee(employeeToUpdate.GetBSN(),
+                            firstName, lastName, gender, languages, certificates,
+                            phone, address, email))
+                        {
+                            this.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("An employee with this BSN doesn't exists!");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Database error
+                        MessageBox.Show(ex.Message);
+                    }
                     this.Close();
                 }
             }

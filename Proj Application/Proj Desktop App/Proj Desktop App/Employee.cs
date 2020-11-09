@@ -46,7 +46,7 @@ namespace Proj_Desktop_App
 
             // Initialize first contract
             this.contracts = new List<Contract>();
-            this.contracts.Add(new Contract(startDate, endDate, 1, department, position, 1000 /* get starting salary */, fte, true));
+            this.contracts.Add(new Contract(startDate, endDate, 1, department, position, 1000 /* get starting salary */, fte));
         }
 
         /// <summary>
@@ -88,22 +88,70 @@ namespace Proj_Desktop_App
 
         public PositionType GetPosition()
         {
-            return GetLatestContract().Position;
+            Contract activeContract = GetActiveContract();
+            if (activeContract != null)
+            {
+                return GetActiveContract().Position;
+            }
+            else
+            {
+                throw new Exception("This employee doesnt have a position");
+            }
         }
 
         public Departments GetDepartment()
         {
-            return GetLatestContract().Department;
+            Contract activeContract = GetActiveContract();
+            if (activeContract != null)
+            {
+                return GetActiveContract().Department;
+            }
+            else
+            {
+                throw new Exception("This employee doesnt have a deparment");
+            }
         }
 
         public decimal GetFTE()
         {
-            return GetLatestContract().Fte;
+            Contract activeContract = GetActiveContract();
+            if (activeContract != null)
+            {
+                return GetActiveContract().Fte;
+            }
+            else
+            {
+                throw new Exception("This employee doesnt have fte");
+            }
         }
 
-        private Contract GetLatestContract()
+        private Contract GetActiveContract()
         {
-            return contracts[contracts.Count - 1];
+            foreach (Contract contract in contracts)
+            {
+                if (contract.IsActive())
+                {
+                    return contract;
+                }
+            }
+            return null;
+        }
+
+        public Contract[] GetContracts()
+        {
+            return contracts.ToArray();
+        }
+
+        public bool IsEmployed()
+        {
+            if (GetActiveContract() != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public string GetBsnAndName()
@@ -122,30 +170,13 @@ namespace Proj_Desktop_App
             return BSN;
         }
 
-        public string GetInfo()
-        {
-            return $"{BSN} - {lastName}, {GetDepartment()}, {contactEmail}";
-        }
-
         public override string ToString()
         {
-            return $"{BSN} - {firstName} {lastName}\n" +
-                $"Gender: {gender}\n" +
-                $"Birthdate: {birthDate.ToShortDateString()}\n" +
-                $"Certificates: {certificates}\n" +
-                $"Languages: {languages}\n\n" +
-                $"Phone: {phoneNumber}\n" +
-                $"Address: {address}\n" +
-                $"Email: {contactEmail}\n\n" +
-                $"Department: {GetDepartment()}\n" +
-                $"Position: {GetPosition()}\n" +
-                $"FTE: {GetFTE()}\n";
+            return $"{BSN}   {firstName} {lastName}";
         }
 
         public string[] GetDetail()
-
         {
-
             List<string> temp = new List<string>();
 
             temp.Add($"Employee BSN:{this.BSN}");

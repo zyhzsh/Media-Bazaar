@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Proj_Desktop_App
 {
-    public partial class Form1 : Form
+    public partial class LoginForm : Form
     {
         // Login credentials:
         //
@@ -33,7 +33,7 @@ namespace Proj_Desktop_App
         private Store mediaBazaar;
         private LoginHandler loginHandler;
 
-        public Form1()
+        public LoginForm()
         {
             InitializeComponent();
             mediaBazaar = new Store();

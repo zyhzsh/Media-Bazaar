@@ -44,7 +44,7 @@ namespace Proj_Desktop_App
             //5.Update Employee list by department
             listboxAvailableEmployees.Items.Clear();
             
-            foreach (Employee x in store.GetEmployeeList((Departments)cbDepartment.SelectedItem))
+            foreach (Employee x in store.GetEmployees((Departments)cbDepartment.SelectedItem))
             {
                 listboxAvailableEmployees.Items.Add(x.GetBsnAndName());
             }
@@ -191,7 +191,7 @@ namespace Proj_Desktop_App
         {
             //1.Update the employeelist by department
             listboxAvailableEmployees.Items.Clear();
-            foreach (Employee x in store.GetEmployeeList((Departments)cbDepartment.SelectedItem))
+            foreach (Employee x in store.GetEmployees((Departments)cbDepartment.SelectedItem))
             {
                 listboxAvailableEmployees.Items.Add(x.GetBsnAndName());
             }

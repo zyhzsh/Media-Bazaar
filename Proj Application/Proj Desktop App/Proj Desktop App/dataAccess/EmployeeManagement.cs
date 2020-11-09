@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,8 +26,8 @@ namespace Proj_Desktop_App.dataAccess
                         "INNER JOIN contract c " +
                         "ON e.BSN = c.BSN " +
                         "WHERE e.BSN = @bsn " +
-                        "AND c.status = TRUE" +
-                        "ORDER BY start_date DECS" +
+                        "AND c.is_active = TRUE " +
+                        "ORDER BY start_date DESCs" +
                         "LIMIT 1;";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@bsn", bsn);
@@ -48,7 +49,7 @@ namespace Proj_Desktop_App.dataAccess
             }
 
         }
-        
+
         public Employee[] GetAllEmployees()
         {
             try
@@ -56,12 +57,11 @@ namespace Proj_Desktop_App.dataAccess
                 using (MySqlConnection conn = base.GetConnection())
                 {
                     string sql =
-                        "SELECT * " +
-                        "FROM employee e " +
+                        "SELECT * FROM employee e " +
                         "INNER JOIN contract c " +
                         "ON e.BSN = c.BSN " +
-                        "WHERE c.status = TRUE" +
-                        "ORDER BY start_date DECS;";
+                        "WHERE c.is_active = 1 " +
+                        "GROUP BY e.BSN; ";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     conn.Open();
                     MySqlDataReader dr = cmd.ExecuteReader();
@@ -86,21 +86,44 @@ namespace Proj_Desktop_App.dataAccess
 
         public bool AddEmployee(Employee employee)
         {
-            try
+            if (employee != null)
             {
-                using (MySqlConnection conn = base.GetConnection())
+                try
                 {
-                    string sql =
-                        // TO DO:
-                        "INSERT INTO user (BSN, first_name, last_name, ... ) " +
-                        "VALUES(@bsn, @first_name, @last_name, ... )";
-                    MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    conn.Open();
-                    int result = cmd.ExecuteNonQuery();
-                    return true;
+                    using (MySqlConnection conn = base.GetConnection())
+                    {
+                        string sql =
+                            "INSERT INTO employee (BSN, first_name, last_name, " +
+                            "gender, phone, date_birth, address, languages, certificates, " +
+                            "contact_email, username, password) " +
+                            "VALUES(@bsn, @first_name, @last_name, " +
+                            "@gender, @phone, @date_birth, @address, @languages, @certificates, " +
+                            "@email, @username, @password);";
+                        MySqlCommand cmd = new MySqlCommand(sql, conn);
+                        cmd.Parameters.AddWithValue("@bsn", employee.GetBSN());
+                        cmd.Parameters.AddWithValue("@first_name", employee.firstName);
+                        cmd.Parameters.AddWithValue("@last_name", employee.lastName);
+                        cmd.Parameters.AddWithValue("@gender", employee.gender);
+                        cmd.Parameters.AddWithValue("@phone", employee.phoneNumber);
+                        cmd.Parameters.AddWithValue("@date_birth", employee.birthDate.ToString("yyyy-MM-dd"));
+                        cmd.Parameters.AddWithValue("@address", employee.address);
+                        cmd.Parameters.AddWithValue("@languages", employee.languages);
+                        cmd.Parameters.AddWithValue("@certificates", employee.certificates);
+                        cmd.Parameters.AddWithValue("@email", employee.contactEmail);
+                        cmd.Parameters.AddWithValue("@username", GenerateUsername(employee));
+                        cmd.Parameters.AddWithValue("@password", GeneratePassword(8));
+                        conn.Open();
+                        int result = cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), ex.Message);
+                    return false;
                 }
             }
-            catch
+            else
             {
                 return false;
             }
@@ -112,15 +135,15 @@ namespace Proj_Desktop_App.dataAccess
             {
                 using (MySqlConnection conn = base.GetConnection())
                 {
-                    string sql = 
+                    string sql =
                         "UPDATE employee " +
                         "SET first_name = @first_name, " +
                         "last_name = @last_name, " +
                         "gender = @gender, " +
                         "languages = @languages, " +
-                        "certificates = @certificates " +
-                        "phone = @phone " +
-                        "address = @address " +
+                        "certificates = @certificates, " +
+                        "phone = @phone, " +
+                        "address = @address, " +
                         "contact_email = @contact_email " +
                         "WHERE BSN = @bsn;";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
@@ -145,10 +168,44 @@ namespace Proj_Desktop_App.dataAccess
                     }
                 }
             }
-            catch
+            catch (Exception)
             {
                 return false;
             }
+        }
+
+        private string GenerateUsername(Employee employee)
+        {
+            if (employee != null)
+            {
+                // First letter of first name
+                string username = employee.firstName.Substring(0, 1).ToLower();
+                // Last name
+                username += "." + employee.lastName.ToLower();
+                return username;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private string GeneratePassword(int characters)
+        {
+            Random random = new Random();
+            string password = "";
+            for (int i = 0; i < characters; i++)
+            {
+                int charInt;
+                do
+                {
+                    charInt = random.Next(48, 123);
+                }
+                // Numbers, capital and lower case letters
+                while ((charInt > 57 && charInt < 65) || (charInt > 90 && charInt < 97));
+                password += Convert.ToChar(charInt);
+            }
+            return password;
         }
 
         private Employee InitializeEmployee(MySqlDataReader dr)
@@ -168,20 +225,21 @@ namespace Proj_Desktop_App.dataAccess
                     dr["phone"].ToString(),
                     dr["address"].ToString(),
                     dr["contact_email"].ToString(),
-                    Convert.ToDateTime(dr["start_date"]),
-                    Convert.ToDateTime(dr["end_date"]),
+                    dr.GetDateTime("start_date"),
+                    dr.GetDateTime("end_date"),
                     position,
                     department,
                     Convert.ToDecimal(dr["fte"])
                     );
                 return employee;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                MessageBox.Show(ex.ToString());
                 return null;
             }
         }
-        
+
         private PositionType GetPosition(int positionId)
         {
             switch (positionId)

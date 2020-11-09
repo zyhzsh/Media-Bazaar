@@ -94,21 +94,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminForm.Designer.cs">
+      <DependentUpon>AdminForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Contract.cs" />
     <Compile Include="dataAccess\DatabaseConnection.cs" />
     <Compile Include="dataAccess\EmployeeManagement.cs" />
-    <Compile Include="EmployeeContractsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EmployeeContractsForm.Designer.cs">
-      <DependentUpon>EmployeeContractsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="EmployeesForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EmployeesForm.Designer.cs">
-      <DependentUpon>EmployeesForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="AssignedShift.cs" />
     <Compile Include="AvailableShift.cs" />
     <Compile Include="DatabaseManagement.cs" />
@@ -120,18 +114,18 @@
       <DependentUpon>DepotManager.cs</DependentUpon>
     </Compile>
     <Compile Include="Employee.cs" />
-    <Compile Include="EmployeeManagmentForm.cs">
+    <Compile Include="EmployeeCreateUpdateForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EmployeeManagmentForm.Designer.cs">
-      <DependentUpon>EmployeeManagmentForm.cs</DependentUpon>
+    <Compile Include="EmployeeCreateUpdateForm.Designer.cs">
+      <DependentUpon>EmployeeCreateUpdateForm.cs</DependentUpon>
     </Compile>
     <Compile Include="EmployeeShift.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
     <Compile Include="dataAccess\LoginHandler.cs" />
     <Compile Include="MainForm.cs">
@@ -180,20 +174,17 @@
     <Compile Include="WorkerStockRequests.Designer.cs">
       <DependentUpon>WorkerStockRequests.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="EmployeeContractsForm.resx">
-      <DependentUpon>EmployeeContractsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EmployeesForm.resx">
-      <DependentUpon>EmployeesForm.cs</DependentUpon>
+    <EmbeddedResource Include="AdminForm.resx">
+      <DependentUpon>AdminForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DepotManager.resx">
       <DependentUpon>DepotManager.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EmployeeManagmentForm.resx">
-      <DependentUpon>EmployeeManagmentForm.cs</DependentUpon>
+    <EmbeddedResource Include="EmployeeCreateUpdateForm.resx">
+      <DependentUpon>EmployeeCreateUpdateForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
