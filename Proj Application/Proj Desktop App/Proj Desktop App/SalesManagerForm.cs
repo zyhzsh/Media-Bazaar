@@ -15,7 +15,7 @@ namespace Proj_Desktop_App
     public partial class SalesManagerForm : Form
     {
         private ProcuctManagement dtbMan;
-        public SalesManagerForm()
+        public SalesManagerForm(int BSN)
         {
             InitializeComponent();
             dtbMan = new ProcuctManagement();

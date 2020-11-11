@@ -14,10 +14,14 @@ namespace Proj_Desktop_App
     public partial class WorkerStockRequests : Form
     {
         private ProcuctManagement dtbMan;
-        public WorkerStockRequests()
+
+        private int currentUserBSN;
+
+        public WorkerStockRequests(int BSN)
         {
             InitializeComponent();
             dtbMan = new ProcuctManagement();
+            currentUserBSN = BSN;
             ReloadRequests();
         }
 
@@ -37,7 +41,7 @@ namespace Proj_Desktop_App
                 for (int i = lbRestockRequests.SelectedItems.Count - 1; i >= 0; i--)
                 {
                     RestockRequest request = ((RestockRequest) lbRestockRequests.SelectedItems[i]);
-                    dtbMan.RestockProduct(request, 100000000, (int)numRestockedAmount.Value, rtbRestockRequestComment.Text);
+                    dtbMan.RestockProduct(request, currentUserBSN, (int)numRestockedAmount.Value, rtbRestockRequestComment.Text);
                 }
                 MessageBox.Show("Requests completed");
                 ReloadRequests();

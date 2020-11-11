@@ -14,7 +14,7 @@ namespace Proj_Desktop_App
     public partial class PendingRestocksForm : Form
     {
         private ProcuctManagement dtbMan;
-        public PendingRestocksForm()
+        public PendingRestocksForm(int BSN)
         {
             InitializeComponent();
             dtbMan = new ProcuctManagement();
