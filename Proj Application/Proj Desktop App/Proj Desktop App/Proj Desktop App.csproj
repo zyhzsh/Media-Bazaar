@@ -206,6 +206,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Scheduling.resx">
       <DependentUpon>Scheduling.cs</DependentUpon>
@@ -230,6 +231,15 @@
   <ItemGroup>
     <Content Include="bin\Debug\Proj Desktop App.exe" />
     <Content Include="bin\Debug\Proj Desktop App.pdb" />
+    <None Include="Resources\statistics.png" />
+    <None Include="Resources\search.png" />
+    <None Include="Resources\schedule.png" />
+    <None Include="Resources\restocks.png" />
+    <None Include="Resources\products.png" />
+    <None Include="Resources\logout.png" />
+    <None Include="Resources\employees.png" />
+    <None Include="Resources\employee-add.png" />
+    <None Include="Resources\department.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Release\" />
