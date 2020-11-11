@@ -36,7 +36,7 @@ namespace Proj_Desktop_App
             foreach (AssignedShift e in allAssignedShifts)
             {
                 //if (e.GetDate().ToString("dd/MM/yyyy") == time.ToString("dd/MM/yyyy")&&e.GetEmployee().department== departments)
-                if (e.GetDate().ToString("yyyy-MM-dd") == time.ToString("yyyy-MM-dd") &&e.GetEmployee().department== departments)
+                if (e.GetDate().ToString("yyyy-MM-dd") == time.ToString("yyyy-MM-dd") &&e.GetEmployee().GetDepartment()== departments)
                 {
                     temp.Add($"{e.GetEmployee().GetBsnAndName()} Shift:{e.GetShiftTypeToString()} {e.GetDate().ToString("dddd, dd MMMM")}");
                 }
@@ -121,7 +121,7 @@ namespace Proj_Desktop_App
                 }
             }
            
-            if (after_assigned_shift_workhours <= employee.fte * 40)
+            if (after_assigned_shift_workhours <= employee.GetFTE() * 40)
             {
                 bool haverecords = false;
                 foreach (AssignedShift e in allAssignedShifts)

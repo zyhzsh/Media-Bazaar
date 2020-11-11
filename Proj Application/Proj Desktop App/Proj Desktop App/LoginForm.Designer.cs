@@ -1,6 +1,6 @@
 ﻿namespace Proj_Desktop_App
 {
-    partial class Form1
+    partial class LoginForm
     {
         /// <summary>
         /// Required designer variable.
@@ -42,6 +42,7 @@
             this.tbLogInUsername.Name = "tbLogInUsername";
             this.tbLogInUsername.Size = new System.Drawing.Size(238, 24);
             this.tbLogInUsername.TabIndex = 0;
+            this.tbLogInUsername.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbLogInUsername_KeyDown);
             // 
             // tbLogInPassword
             // 
@@ -51,6 +52,7 @@
             this.tbLogInPassword.PasswordChar = '*';
             this.tbLogInPassword.Size = new System.Drawing.Size(238, 24);
             this.tbLogInPassword.TabIndex = 1;
+            this.tbLogInPassword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbLogInPassword_KeyDown);
             // 
             // label1
             // 

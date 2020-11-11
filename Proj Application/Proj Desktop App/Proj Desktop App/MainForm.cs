@@ -12,10 +12,9 @@ namespace Proj_Desktop_App
 {
     public partial class MainForm : Form
     {
-        private Form1 loginForm;
+        private LoginForm loginForm;
 
-        private EmployeesForm employeesForm;
-        private EmployeeContractsForm contractsForm;
+        private AdminForm employeesForm;
 
         private ProductStatistics productStatistics;
         private Form restocks;
@@ -23,19 +22,15 @@ namespace Proj_Desktop_App
 
         private ToolStripMenuItem selectedTab;
 
-        public MainForm(Form1 loginForm, Store store, PositionType position)
+        public MainForm(LoginForm loginForm, Store store, PositionType position)
         {
             InitializeComponent();
             this.Visible = true;
             if (position == PositionType.Administrator)
             {
                 tabEmployees.Visible = true;
-                employeesForm = new EmployeesForm(store);
+                employeesForm = new AdminForm(store);
                 InitializeForm(employeesForm);
-
-                tabContracts.Visible = true;
-                contractsForm = new EmployeeContractsForm();
-                InitializeForm(contractsForm);
 
                 tabDepartments.Visible = true;
 
@@ -109,14 +104,6 @@ namespace Proj_Desktop_App
             if (selectedTab != tabEmployees)
             {
                 ShowForm(employeesForm, tabEmployees);
-            }
-        }
-
-        private void tabContracts_Click(object sender, EventArgs e)
-        {
-            if (selectedTab != tabContracts)
-            {
-                ShowForm(contractsForm, tabContracts);
             }
         }
 
