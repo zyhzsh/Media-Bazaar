@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proj_Desktop_App.dataAccess;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,7 +17,7 @@ namespace Proj_Desktop_App
         public ProductStatistics()
         {
             InitializeComponent();
-            DatabaseManagement dtbMan = new DatabaseManagement();
+            ProcuctManagement dtbMan = new ProcuctManagement();
             dateTimeSalesTo.Value = DateTime.Today;
             Sale[] sales = dtbMan.GetBestSellingProducts();
             lbBestSoldProducts.Items.Clear();
@@ -28,7 +29,7 @@ namespace Proj_Desktop_App
 
         private void btnProductStatFilter_Click(object sender, EventArgs e)
         {
-            DatabaseManagement dtbMan = new DatabaseManagement();
+            ProcuctManagement dtbMan = new ProcuctManagement();
             Sale[] sales = dtbMan.GetBestSellingProducts(dateTimeSalesFrom.Value, dateTimeSalesTo.Value);
             lbBestSoldProducts.Items.Clear();
             foreach(Sale s in sales)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proj_Desktop_App.dataAccess;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,11 +13,11 @@ namespace Proj_Desktop_App
 {
     public partial class PendingRestocksForm : Form
     {
-        private DatabaseManagement dtbMan;
+        private ProcuctManagement dtbMan;
         public PendingRestocksForm()
         {
             InitializeComponent();
-            dtbMan = new DatabaseManagement();
+            dtbMan = new ProcuctManagement();
             ReloadRequests();
         }
 

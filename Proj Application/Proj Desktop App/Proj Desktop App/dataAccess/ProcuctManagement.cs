@@ -7,25 +7,14 @@ using System.Windows.Forms;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 
-namespace Proj_Desktop_App
+namespace Proj_Desktop_App.dataAccess
 {
-    class DatabaseManagement
+    class ProcuctManagement : DatabaseConnection
     {
         private MySqlConnection conn;
-        public DatabaseManagement()
+        public ProcuctManagement() : base()
         {
-            try
-            {
-                conn = new MySqlConnection("Server=studmysql01.fhict.local;Uid=dbi443880;Database=dbi443880;Pwd=123456");
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("host"+e.ToString());
-            }
-            finally
-            {
-
-            }
+            conn = base.GetConnection();
         }
 
         public void AddProduct(Departments belongingDepartment, string productName, string brand, double boughtPrice, double soldPrice)

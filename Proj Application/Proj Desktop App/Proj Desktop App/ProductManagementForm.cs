@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proj_Desktop_App.dataAccess;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,18 +13,18 @@ namespace Proj_Desktop_App
 {
     public partial class ProductManagementForm : Form
     {
-        private DatabaseManagement dtbMan;
+        private ProcuctManagement dtbMan;
         private int updateProduct;
         public ProductManagementForm()
         {
             InitializeComponent();
-            dtbMan = new DatabaseManagement();
+            dtbMan = new ProcuctManagement();
         }
 
         public ProductManagementForm(Product editProduct)
         {
             InitializeComponent();
-            DatabaseManagement dtbMan = new DatabaseManagement();
+            ProcuctManagement dtbMan = new ProcuctManagement();
             updateProduct = editProduct.id;
             tbProductName.Text = editProduct.Name;
             tbBrand.Text = editProduct.Brand;

@@ -105,7 +105,7 @@
     <Compile Include="dataAccess\EmployeeManagement.cs" />
     <Compile Include="AssignedShift.cs" />
     <Compile Include="AvailableShift.cs" />
-    <Compile Include="DatabaseManagement.cs" />
+    <Compile Include="dataAccess\ProcuctManagement.cs" />
     <Compile Include="Departments.cs" />
     <Compile Include="PendingRestocksForm.cs">
       <SubType>Form</SubType>

@@ -23,13 +23,18 @@ namespace Proj_Desktop_App
 
         private ToolStripMenuItem selectedTab;
 
+        //private EmployeeStorage empStorage;
+
         public MainForm(LoginForm loginForm, Store store, PositionType position)
         {
             InitializeComponent();
             this.Visible = true;
             if (position == PositionType.Administrator)
             {
+                //empStorage = new EmployeeStorage();
+
                 tabEmployees.Visible = true;
+
                 employeesForm = new AdminForm(store);
                 InitializeForm(employeesForm);
 
@@ -40,6 +45,9 @@ namespace Proj_Desktop_App
             }
             else if (position == PositionType.Depot_Manager)
             {
+                // Product storage
+                // Schedule
+
                 tabProducts.Visible = true;
                 productCRUD = new ProductCRUDForm();
                 InitializeForm(productCRUD);
