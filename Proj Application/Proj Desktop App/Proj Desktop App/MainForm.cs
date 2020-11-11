@@ -50,7 +50,7 @@ namespace Proj_Desktop_App
                 InitializeForm(productStatistics);
 
                 tabRestocks.Visible = true;
-                restocks = new DepotManager(store);
+                restocks = new PendingRestocksForm();
                 InitializeForm(restocks);
 
                 tabSchedule.Visible = true;
@@ -62,7 +62,7 @@ namespace Proj_Desktop_App
             else if (position == PositionType.Depot_Worker)
             {
                 tabRestocks.Visible = true;
-                restocks = new WorkerStockRequests(store);
+                restocks = new WorkerStockRequests();
                 InitializeForm(restocks);
 
                 tabRestocks.PerformClick();
@@ -70,7 +70,7 @@ namespace Proj_Desktop_App
             else if (position == PositionType.Sales_Manager)
             {
                 tabRestocks.Visible = true;
-                restocks = new SalesManagerForm(store);
+                restocks = new SalesManagerForm();
                 InitializeForm(restocks);
 
                 tabSchedule.Visible = true;

@@ -47,6 +47,7 @@
             // 
             // dateTimeSalesFrom
             // 
+            this.dateTimeSalesFrom.AllowDrop = true;
             this.dateTimeSalesFrom.Location = new System.Drawing.Point(59, 12);
             this.dateTimeSalesFrom.Name = "dateTimeSalesFrom";
             this.dateTimeSalesFrom.Size = new System.Drawing.Size(200, 22);

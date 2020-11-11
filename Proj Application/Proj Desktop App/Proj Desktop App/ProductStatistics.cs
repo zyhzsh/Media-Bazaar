@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ namespace Proj_Desktop_App
         private void btnProductStatFilter_Click(object sender, EventArgs e)
         {
             DatabaseManagement dtbMan = new DatabaseManagement();
-            Sale[] sales = dtbMan.GetBestSellingProducts(dateTimeSalesFrom.Value,dateTimeSalesTo.Value);
+            Sale[] sales = dtbMan.GetBestSellingProducts(dateTimeSalesFrom.Value, dateTimeSalesTo.Value);
             lbBestSoldProducts.Items.Clear();
             foreach(Sale s in sales)
             {

@@ -12,18 +12,18 @@ namespace Proj_Desktop_App
 {
     public partial class WorkerStockRequests : Form
     {
-        private Store mediabazaar;
-        public WorkerStockRequests(Store Form1mediabazaar)
+        private DatabaseManagement dtbMan;
+        public WorkerStockRequests()
         {
             InitializeComponent();
-            mediabazaar = Form1mediabazaar;
+            dtbMan = new DatabaseManagement();
             ReloadRequests();
         }
 
         private void ReloadRequests()
         {
             lbRestockRequests.Items.Clear();
-            foreach (RestockRequest request in mediabazaar.GetRestockOrders)
+            foreach (RestockRequest request in dtbMan.GetAcceptedRestockRequests())
             {
                 lbRestockRequests.Items.Add(request);
             }
@@ -36,7 +36,7 @@ namespace Proj_Desktop_App
                 for (int i = lbRestockRequests.SelectedItems.Count - 1; i >= 0; i--)
                 {
                     RestockRequest request = ((RestockRequest) lbRestockRequests.SelectedItems[i]);
-                    mediabazaar.RestockProduct(request.productCode, request.restockAmount);
+                    dtbMan.RestockProduct(request, 100000000, (int)numRestockedAmount.Value, rtbRestockRequestComment.Text);
                 }
                 MessageBox.Show("Requests completed");
                 ReloadRequests();

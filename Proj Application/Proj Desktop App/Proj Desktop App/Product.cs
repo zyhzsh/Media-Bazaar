@@ -17,7 +17,7 @@ namespace Proj_Desktop_App
         public int Stock { get; private set; }
         public Departments Department { get; private set; }
 
-        public Product(int productCode, string name, string brand, double sell, double buy, Departments department)
+        public Product(int productCode, string name, string brand, double sell, double buy, Departments department, int current_stock)
         {
             this.id = productCode;
             Name = name;
@@ -25,7 +25,7 @@ namespace Proj_Desktop_App
             SellingPrice = sell;
             BuyingPrice = buy;
             Department = department;
-            Stock = 0;
+            Stock = current_stock;
         }
 
         public Product(int productCode, string name, string brand, double sell, double buy, string Description,Departments department)
@@ -51,7 +51,7 @@ namespace Proj_Desktop_App
 
         public override string ToString()
         {
-            return $"id: {id} - {Name} - sold for {SellingPrice} from {Department} | {Stock} in stock";
+            return $"id: {id} - {Name} - sold for {SellingPrice}€ from {Department} | {Stock} in stock";
         }
     }
 }

@@ -47,14 +47,14 @@
             this.lbRestockRequests.Location = new System.Drawing.Point(12, 25);
             this.lbRestockRequests.Name = "lbRestockRequests";
             this.lbRestockRequests.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbRestockRequests.Size = new System.Drawing.Size(519, 276);
+            this.lbRestockRequests.Size = new System.Drawing.Size(525, 516);
             this.lbRestockRequests.TabIndex = 30;
             // 
             // btnCompleteRestock
             // 
-            this.btnCompleteRestock.Location = new System.Drawing.Point(396, 61);
+            this.btnCompleteRestock.Location = new System.Drawing.Point(6, 237);
             this.btnCompleteRestock.Name = "btnCompleteRestock";
-            this.btnCompleteRestock.Size = new System.Drawing.Size(117, 123);
+            this.btnCompleteRestock.Size = new System.Drawing.Size(384, 69);
             this.btnCompleteRestock.TabIndex = 32;
             this.btnCompleteRestock.Text = "Completed";
             this.btnCompleteRestock.UseVisualStyleBackColor = true;
@@ -62,7 +62,7 @@
             // 
             // rtbRestockRequestComment
             // 
-            this.rtbRestockRequestComment.Location = new System.Drawing.Point(6, 35);
+            this.rtbRestockRequestComment.Location = new System.Drawing.Point(6, 82);
             this.rtbRestockRequestComment.Name = "rtbRestockRequestComment";
             this.rtbRestockRequestComment.Size = new System.Drawing.Size(384, 149);
             this.rtbRestockRequestComment.TabIndex = 33;
@@ -70,7 +70,7 @@
             // 
             // numRestockedAmount
             // 
-            this.numRestockedAmount.Location = new System.Drawing.Point(396, 36);
+            this.numRestockedAmount.Location = new System.Drawing.Point(140, 18);
             this.numRestockedAmount.Name = "numRestockedAmount";
             this.numRestockedAmount.Size = new System.Drawing.Size(120, 22);
             this.numRestockedAmount.TabIndex = 34;
@@ -78,7 +78,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(157, 15);
+            this.label1.Location = new System.Drawing.Point(157, 62);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(67, 17);
             this.label1.TabIndex = 35;
@@ -87,7 +87,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(393, 15);
+            this.label2.Location = new System.Drawing.Point(8, 20);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(126, 17);
             this.label2.TabIndex = 36;
@@ -100,9 +100,9 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.numRestockedAmount);
-            this.groupBox1.Location = new System.Drawing.Point(12, 307);
+            this.groupBox1.Location = new System.Drawing.Point(543, 25);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(519, 190);
+            this.groupBox1.Size = new System.Drawing.Size(399, 317);
             this.groupBox1.TabIndex = 37;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Report";
@@ -120,7 +120,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(543, 509);
+            this.ClientSize = new System.Drawing.Size(1365, 568);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lbRestockRequests);

@@ -12,26 +12,24 @@ namespace Proj_Desktop_App
 {
     public partial class ProductManagementForm : Form
     {
-        private Store mediabazaar;
-        private Product updateProduct;
-        public ProductManagementForm(Store DepoMngrMediaBazaar)
+        private DatabaseManagement dtbMan;
+        private int updateProduct;
+        public ProductManagementForm()
         {
             InitializeComponent();
-            mediabazaar = DepoMngrMediaBazaar;
-            this.Text = "Add new product";
-            btnConfirm.Text = "Add";
+            dtbMan = new DatabaseManagement();
         }
 
-        public ProductManagementForm(Store DepoMngrMediaBazaar, Product editProduct)
+        public ProductManagementForm(Product editProduct)
         {
             InitializeComponent();
-            mediabazaar = DepoMngrMediaBazaar;
-            updateProduct = editProduct;
-            tbProductName.Text = updateProduct.Name;
-            tbBrand.Text = updateProduct.Brand;
-            numBuyingPrice.Value = (decimal)updateProduct.BuyingPrice;
-            numSellingPrice.Value = (decimal) updateProduct.SellingPrice;
-            switch (updateProduct.Department)
+            DatabaseManagement dtbMan = new DatabaseManagement();
+            updateProduct = editProduct.id;
+            tbProductName.Text = editProduct.Name;
+            tbBrand.Text = editProduct.Brand;
+            numBuyingPrice.Value = (decimal)editProduct.BuyingPrice;
+            numSellingPrice.Value = (decimal)editProduct.SellingPrice;
+            switch (editProduct.Department)
             {
                 case Departments.floorOne:
                     cbDepartment.SelectedIndex = 0;
@@ -87,12 +85,27 @@ namespace Proj_Desktop_App
                 {
                     double sell = (double)Math.Round(numSellingPrice.Value, 2);
                     double buy = (double)Math.Round(numBuyingPrice.Value, 2);
-                    mediabazaar.AddProduct(tbProductName.Text, tbBrand.Text, sell, buy, department);
+                    if (string.IsNullOrEmpty(rtbDescription.Text))
+                    {
+                        dtbMan.AddProduct(department, tbProductName.Text, tbBrand.Text, sell, buy);
+                    }
+                    else
+                    {
+                        dtbMan.AddProduct(department, tbProductName.Text, tbBrand.Text, sell, buy, rtbDescription.Text);
+                    }
+                    
                     Close();
                 }
                 else if (btnConfirm.Text == "Update")
                 {
-                    mediabazaar.UpdateProduct(updateProduct.id, tbProductName.Text,  tbBrand.Text, (double)numSellingPrice.Value, (double)numBuyingPrice.Value, department, rtbDescription.Text);
+                    if (string.IsNullOrEmpty(rtbDescription.Text))
+                    {
+                        dtbMan.UpdateProduct(updateProduct, department, tbProductName.Text, tbBrand.Text, (double)numSellingPrice.Value, (double)numBuyingPrice.Value);
+                    }
+                    else
+                    {
+                        dtbMan.UpdateProduct(updateProduct, department, tbProductName.Text, tbBrand.Text, (double)numSellingPrice.Value, (double)numBuyingPrice.Value, rtbDescription.Text);
+                    }
                     MessageBox.Show("Product updated");
                     Close();
                 }
