@@ -13,23 +13,37 @@ namespace Proj_Desktop_App
         public int productCode { get; private set; }
         public string productName { get; private set; }
         public int requesterBsn { get; private set; }
+        public int judgeBsn { get; private set; }
         public string requesterName { get; private set; }
         public int restockAmount { get; private set; }
-        public string description { get; private set; }
-
-        public RestockRequest(int restockID ,int productCode, string name, int requesterBsn, int RestockAmount, string description)
+        public string requester_desc { get; private set; }
+        public string judge_desc { get; private set; }
+        public RestockRequest(int productCode, string name, int requesterBsn, int RestockAmount, string description)
         {
-            this.restockID = restockID;
+            //Used when adding new requests to database
             this.productCode = productCode;
-            productName = name;
-            restockAmount = RestockAmount;
-            this.description = description;
+            this.productName = name;
             this.requesterBsn = requesterBsn;
+            this.restockAmount = RestockAmount;
+            this.requester_desc = description;
+        }
+
+        public RestockRequest(int restockId, int productCode, string name, int requesterBsn, int judgeBsn, int restockAmount, string requester_desc, string judge_desc)
+        {
+            //Used when getting accepted requests
+            this.restockID = restockId;
+            this.productCode = productCode;
+            this.productName = name;
+            this.requesterBsn = requesterBsn;
+            this.judgeBsn = judgeBsn;
+            this.restockAmount = restockAmount;
+            this.requester_desc = requester_desc;
+            this.judge_desc = judge_desc;
         }
 
         public override string ToString()
         {
-            return $"{productName} needs {restockAmount} additional units, {description}";
+            return $"{productName} needs {restockAmount} additional units, {requester_desc}";
         }
     }
 }

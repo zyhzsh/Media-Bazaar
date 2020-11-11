@@ -13,26 +13,21 @@ namespace Proj_Desktop_App
 {
     public partial class SalesManagerForm : Form
     {
-        private Store mediaBazaar;
-        public SalesManagerForm(Store form1MediaBazaar)
+        private DatabaseManagement dtbMan;
+        public SalesManagerForm()
         {
             InitializeComponent();
-            mediaBazaar = form1MediaBazaar;
-            foreach (Product p in mediaBazaar.Products)
-            {
-                lbProductListStatistics.Items.Add(p);
-            }
+            dtbMan = new DatabaseManagement();
 
-            foreach (RestockRequest request in mediaBazaar.GetRestockRequests)
-            {
-                lbPendingRestocks.Items.Add(request);
-            }
+            ReloadProducts();
+
+            ReloadRestockRequests();
         }
 
         private void ReloadProducts()
         {
             lbProductListStatistics.Items.Clear();
-            foreach (Product p in mediaBazaar.Products)
+            foreach (Product p in dtbMan.GetAllProducts())
             {
                 lbProductListStatistics.Items.Add(p);
             }
@@ -87,7 +82,7 @@ namespace Proj_Desktop_App
         private void ReloadRestockRequests()
         {
             lbPendingRestocks.Items.Clear();
-            foreach (RestockRequest request in mediaBazaar.GetRestockRequests)
+            foreach (RestockRequest request in dtbMan.GetPendingRestockRequests())
             {
                 lbPendingRestocks.Items.Add(request);
             }
@@ -97,11 +92,13 @@ namespace Proj_Desktop_App
         {
             if (numStockRequest.Value > 0)
             {
+                ReloadRestockRequests();
                 foreach (Product p in lbProductListStatistics.SelectedItems)
                 {
-                    mediaBazaar.AddRestock(p.id, p.Name, (int)numStockRequest.Value, tbRestockDescription.Text);
+                    RestockRequest req = new RestockRequest(p.id, p.Name, 100000000, (int)numStockRequest.Value, tbRestockDescription.Text);
+                    dtbMan.CreateRestockRequest(req);
+                    lbPendingRestocks.Items.Add(req);
                 }
-                ReloadRestockRequests();
             }
             else
             {
@@ -156,6 +153,7 @@ namespace Proj_Desktop_App
         private void cbProductDepartmentSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
             ReloadProductsByFloors();
+            MessageBox.Show(cbProductDepartmentSelector.SelectedItem.ToString());
         }
 
         private void btnProductRefresh_Click(object sender, EventArgs e)

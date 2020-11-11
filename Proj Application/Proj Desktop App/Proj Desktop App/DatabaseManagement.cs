@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data;
 using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Cms;
 
 namespace Proj_Desktop_App
 {
@@ -115,6 +114,7 @@ namespace Proj_Desktop_App
                 conn.Close();
             }
         }
+
         public void AddProduct(Departments belongingDepartment, string productName, string brand, double boughtPrice, double soldPrice)
         {
             string sql = "INSERT INTO product(department_id, productname, brand, bought_price, sold_price, current_stock)" +
@@ -139,6 +139,7 @@ namespace Proj_Desktop_App
                 conn.Close();
             }
         }
+
         public void AddProduct(Departments belongingDepartment, string productName, string brand, double boughtPrice, double soldPrice, string description)
         {
             string sql = "INSERT INTO product(department_id, productname, brand, bought_price, sold_price, current_stock, description)" +
@@ -164,9 +165,87 @@ namespace Proj_Desktop_App
                 conn.Close();
             }
         }
+
+        public void UpdateProduct(int productcode, Departments belongingDepartment, string productName, string brand, double soldPrice, double boughtPrice, string description)
+        {
+            string sql = "UPDATE product SET (department_id = @department_id, productname = @productname, brand = @brand, " +
+                         "bought_price = @bought_price, sold_price = @sold_price, current_stock = @current_stock, description = @description) " +
+                         "WHERE productcode = @productcode";
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@department_id", Convert.ToInt32(belongingDepartment));
+                cmd.Parameters.AddWithValue("@productname", productName);
+                cmd.Parameters.AddWithValue("@brand", brand);
+                cmd.Parameters.AddWithValue("@boughtPrice", boughtPrice);
+                cmd.Parameters.AddWithValue("@soldPrice", soldPrice);
+                cmd.Parameters.AddWithValue("@description", description);
+                cmd.Parameters.AddWithValue("@productcode", productcode);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public void UpdateProduct(int productcode, Departments belongingDepartment, string productName, string brand, double soldPrice, double boughtPrice)
+
+        {
+            string sql = "UPDATE product SET (department_id = @department_id, productname = @productname, brand = @brand, " +
+                         "bought_price = @bought_price, sold_price = @sold_price, current_stock = @current_stock, description = @description) " +
+                         "WHERE productcode = @productcode";
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@department_id", Convert.ToInt32(belongingDepartment));
+                cmd.Parameters.AddWithValue("@productname", productName);
+                cmd.Parameters.AddWithValue("@brand", brand);
+                cmd.Parameters.AddWithValue("@boughtPrice", boughtPrice);
+                cmd.Parameters.AddWithValue("@soldPrice", soldPrice);
+                cmd.Parameters.AddWithValue("@productcode", productcode);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+        
+        public void RemoveProduct(int productcode)
+        {
+            string sql = "DELETE FROM product p" +
+                         "WHERE p.productcode = @productcode";
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@productcode", productcode);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
         public Product[] GetAllProducts()
         {
-            string sql = "SELECT p.productcode, p.productname, p.brand, p.bought_price, p.sold_price, p.department_id " +
+            string sql = "SELECT p.productcode, p.productname, p.brand, p.bought_price, p.sold_price, p.department_id, p.current_stock " +
                          "FROM product p;";
             try
             {
@@ -197,7 +276,7 @@ namespace Proj_Desktop_App
 
 
                     }
-                    Product newProduct = new Product(Convert.ToInt32(dr[0]), Convert.ToString(dr[1]), Convert.ToString(dr[2]), Convert.ToDouble(dr[4]), Convert.ToDouble(dr[3]), belongingDepartment);
+                    Product newProduct = new Product(Convert.ToInt32(dr[0]), Convert.ToString(dr[1]), Convert.ToString(dr[2]), Convert.ToDouble(dr[4]), Convert.ToDouble(dr[3]), belongingDepartment, Convert.ToInt32(dr[6]));
                     products.Add(newProduct);
                 }
                 return products.ToArray();
@@ -212,6 +291,7 @@ namespace Proj_Desktop_App
                 conn.Close();
             }
         }
+
         private int GetProductStock(int productcode)
         {
             try
@@ -241,7 +321,34 @@ namespace Proj_Desktop_App
         public RestockRequest[] GetAllRestockRequests()
         {
             //leave this for now
-            return null;
+            string sql = "SELECT ID, req.productcode, p.productname, requester_bsn, restock_amount, requester_desc " +
+                         "FROM restockrequest req INNER JOIN product p ON req.productcode = p.productcode;";
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+                conn.Open();
+
+                MySqlDataReader dr = cmd.ExecuteReader();
+
+                List<RestockRequest> requests = new List<RestockRequest>();
+                while (dr.Read())
+                {
+                    RestockRequest restocky = new RestockRequest(Convert.ToInt32(dr[0]), Convert.ToInt32(dr[1]), Convert.ToString(dr[2]), Convert.ToInt32(dr[3]), 0, Convert.ToInt32(dr[4]), Convert.ToString(dr[5]), null);
+                    requests.Add(restocky);
+                }
+
+                return requests.ToArray();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
 
         public RestockRequest[] GetPendingRestockRequests()
@@ -249,24 +356,70 @@ namespace Proj_Desktop_App
             string sql = "SELECT ID, req.productcode, p.productname, requester_bsn, restock_amount, requester_desc " +
                          "FROM restockrequest req, product p " +
                          "WHERE req.status = 'PENDING' AND p.productcode = req.productcode;";
-
-            MySqlCommand cmd = new MySqlCommand(sql, conn);
-
-            conn.Open();
-
-            MySqlDataReader dr = cmd.ExecuteReader();
-
-            List<RestockRequest> requests = new List<RestockRequest>();
-            while (dr.Read())
+            try
             {
-                RestockRequest restocky = new RestockRequest(Convert.ToInt32(dr[0]), Convert.ToInt32(dr[1]), Convert.ToString(dr[2]), Convert.ToInt32(dr[3]), Convert.ToInt32(dr[4]), Convert.ToString(dr[5]));
-                requests.Add(restocky);
-            }
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
 
-            return null;
+                conn.Open();
+
+                MySqlDataReader dr = cmd.ExecuteReader();
+
+                List<RestockRequest> requests = new List<RestockRequest>();
+                while (dr.Read())
+                {
+                    RestockRequest restocky = new RestockRequest(Convert.ToInt32(dr[0]), Convert.ToInt32(dr[1]), Convert.ToString(dr[2]),
+                        Convert.ToInt32(dr[3]), 0, Convert.ToInt32(dr[4]), Convert.ToString(dr[5]), null);
+                    requests.Add(restocky);
+                }
+
+                return requests.ToArray();
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show(e.ToString());
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
 
-        public void CreateRestockRequest(int productcode, int requester_bsn, int restock_amount, string requester_desc)
+        public RestockRequest[] GetAcceptedRestockRequests()
+        {
+            string sql = "SELECT ID, req.productcode, p.productname, requester_bsn, judge_bsn, restock_amount, requester_desc, judge_desc " +
+                         "FROM restockrequest req, product p " +
+                         "WHERE req.status = 'ACCEPTED' AND p.productcode = req.productcode;";
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+                conn.Open();
+
+                MySqlDataReader dr = cmd.ExecuteReader();
+
+                List<RestockRequest> requests = new List<RestockRequest>();
+                while (dr.Read())
+                {
+                    RestockRequest restocky = new RestockRequest(Convert.ToInt32(dr[0]), Convert.ToInt32(dr[1]),Convert.ToString(dr[2]),
+                        Convert.ToInt32(dr[3]), Convert.ToInt32(dr[4]), Convert.ToInt32(dr[5]), Convert.ToString(dr[6]), Convert.ToString(dr[7]));
+                    requests.Add(restocky);
+                }
+
+                return requests.ToArray();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public void CreateRestockRequest(RestockRequest req)
         {
             try
             {
@@ -276,11 +429,11 @@ namespace Proj_Desktop_App
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 conn.Open();
                 
-                cmd.Parameters.AddWithValue("@productcode", productcode);
-                cmd.Parameters.AddWithValue("@requester_bsn", requester_bsn);
-                cmd.Parameters.AddWithValue("@restock_amount", restock_amount);
-                cmd.Parameters.AddWithValue("@requester_desc", requester_desc);
-                cmd.Parameters.AddWithValue("@status", "pending");
+                cmd.Parameters.AddWithValue("@productcode", req.productCode);
+                cmd.Parameters.AddWithValue("@requester_bsn", req.requesterBsn);
+                cmd.Parameters.AddWithValue("@restock_amount", req.restockAmount);
+                cmd.Parameters.AddWithValue("@requester_desc", req.requester_desc);
+                cmd.Parameters.AddWithValue("@status", "PENDING");
 
                 cmd.ExecuteNonQuery();
             }
@@ -299,7 +452,7 @@ namespace Proj_Desktop_App
             try
             {
                 string sql = "UPDATE restockrequest " +
-                             "SET judge_bsn = @judge_bsn, description = @judge_desc, status = 'ACCEPTED' " +
+                             "SET judge_bsn = @judge_bsn, judge_desc = @judge_desc, status = 'ACCEPTED' " +
                              "WHERE ID = @restock_id;";
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 conn.Open();
@@ -312,7 +465,7 @@ namespace Proj_Desktop_App
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                MessageBox.Show(e.ToString());
             }
             finally
             {
@@ -338,7 +491,7 @@ namespace Proj_Desktop_App
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                MessageBox.Show(e.ToString());
             }
             finally
             {
@@ -346,28 +499,28 @@ namespace Proj_Desktop_App
             }
         }
 
-        public void RestockProduct(int restock_id, int product_id, int restocker_BSN, int restockedAmount, string report)
+        public void RestockProduct(RestockRequest req, int workerBsn,int restockAmount, string worker_report)
         {
 
             // REQUEST UPDATE
             try
             {
                 string sql = "UPDATE restockrequest " +
-                             "SET restocker_bsn = @restocker_bsn, restock_amount = @restock_amount, worker_report = @worker, status = 'COMPLETED' " +
+                             "SET restocker_bsn = @restocker_BSN, restock_amount = @restock_amount, worker_report = @worker_report, status = 'COMPLETED' " +
                              "WHERE ID = @restock_id;";
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 conn.Open();
 
-                cmd.Parameters.AddWithValue("@worker_report", report);
-                cmd.Parameters.AddWithValue("@restock_amount", restockedAmount);
-                cmd.Parameters.AddWithValue("@restocker_BSN", restocker_BSN);
-                cmd.Parameters.AddWithValue("@restock_id", restock_id);
+                cmd.Parameters.AddWithValue("@worker_report", worker_report);
+                cmd.Parameters.AddWithValue("@restock_amount", restockAmount);
+                cmd.Parameters.AddWithValue("@restocker_BSN", workerBsn);
+                cmd.Parameters.AddWithValue("@restock_id", req.restockID);
 
                 cmd.ExecuteNonQuery();
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                MessageBox.Show(e.ToString());
             }
             finally
             {
@@ -375,6 +528,11 @@ namespace Proj_Desktop_App
             }
             /// REQUEST UPDATE
 
+            UpdateProductStock(req, restockAmount);
+        }
+
+        private void UpdateProductStock(RestockRequest req, int restockAmount)
+        {
             // PRODUCT RESTOCK
 
             try
@@ -385,15 +543,15 @@ namespace Proj_Desktop_App
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 conn.Open();
 
-                int stock = GetProductStock(product_id) + restockedAmount;
+                int stock = GetProductStock(req.productCode) + restockAmount;
                 cmd.Parameters.AddWithValue("@stock", stock);
-                cmd.Parameters.AddWithValue("@restock_id", restock_id);
+                cmd.Parameters.AddWithValue("@product_id", req.productCode);
 
                 cmd.ExecuteNonQuery();
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                MessageBox.Show(e.ToString());
             }
             finally
             {
@@ -433,7 +591,7 @@ namespace Proj_Desktop_App
             }
         }
 
-        public Sale[] GetBestSellingProducts(DateTime period)
+        public Sale[] GetBestSellingProducts(DateTime startPeriod)
         {
             string sql = "SELECT p.productcode, p.productname, COUNT(*) AS sales " +
                          "FROM product p INNER JOIN productsales s ON p.productcode = s.product_code " +
@@ -443,7 +601,7 @@ namespace Proj_Desktop_App
             try
             {
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@salesPeriod", period);
+                cmd.Parameters.AddWithValue("@salesPeriod", startPeriod.ToString("yyyy-MM-dd"));
                 conn.Open();
                 MySqlDataReader dr = cmd.ExecuteReader();
                 List<Sale> sales = new List<Sale>();
@@ -475,8 +633,10 @@ namespace Proj_Desktop_App
             try
             {
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@startPeriod", startPeriod);
-                cmd.Parameters.AddWithValue("@endPeriod", endPeriod);
+                string from = startPeriod.ToString("yyyy-MM-dd");
+                string to = startPeriod.ToString("yyyy-MM-dd");
+                cmd.Parameters.AddWithValue("@startPeriod", from);
+                cmd.Parameters.AddWithValue("@endPeriod", to);
                 conn.Open();
                 MySqlDataReader dr = cmd.ExecuteReader();
                 List<Sale> sales = new List<Sale>();

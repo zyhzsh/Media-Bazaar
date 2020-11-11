@@ -1,6 +1,6 @@
 ﻿namespace Proj_Desktop_App
 {
-    partial class DepotManager
+    partial class PendingRestocksForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,30 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lbProducts = new System.Windows.Forms.ListBox();
             this.btnAcceptRestock = new System.Windows.Forms.Button();
             this.btnRejectRestock = new System.Windows.Forms.Button();
             this.lbIncomingRestocks = new System.Windows.Forms.ListBox();
-            this.btnAddProduct = new System.Windows.Forms.Button();
-            this.btnRemProduct = new System.Windows.Forms.Button();
-            this.btnUpdateProduct = new System.Windows.Forms.Button();
             this.btnDepotRefresh = new System.Windows.Forms.Button();
+            this.rtbRestockJustification = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
-            // 
-            // lbProducts
-            // 
-            this.lbProducts.FormattingEnabled = true;
-            this.lbProducts.ItemHeight = 16;
-            this.lbProducts.Location = new System.Drawing.Point(12, 131);
-            this.lbProducts.Name = "lbProducts";
-            this.lbProducts.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbProducts.Size = new System.Drawing.Size(481, 388);
-            this.lbProducts.TabIndex = 0;
             // 
             // btnAcceptRestock
             // 
             this.btnAcceptRestock.BackColor = System.Drawing.Color.ForestGreen;
-            this.btnAcceptRestock.Location = new System.Drawing.Point(614, 12);
+            this.btnAcceptRestock.Location = new System.Drawing.Point(721, 19);
             this.btnAcceptRestock.Name = "btnAcceptRestock";
             this.btnAcceptRestock.Size = new System.Drawing.Size(128, 113);
             this.btnAcceptRestock.TabIndex = 1;
@@ -62,7 +49,7 @@
             // btnRejectRestock
             // 
             this.btnRejectRestock.BackColor = System.Drawing.Color.Brown;
-            this.btnRejectRestock.Location = new System.Drawing.Point(748, 12);
+            this.btnRejectRestock.Location = new System.Drawing.Point(855, 19);
             this.btnRejectRestock.Name = "btnRejectRestock";
             this.btnRejectRestock.Size = new System.Drawing.Size(134, 113);
             this.btnRejectRestock.TabIndex = 2;
@@ -74,81 +61,52 @@
             // 
             this.lbIncomingRestocks.FormattingEnabled = true;
             this.lbIncomingRestocks.ItemHeight = 16;
-            this.lbIncomingRestocks.Location = new System.Drawing.Point(499, 131);
+            this.lbIncomingRestocks.Location = new System.Drawing.Point(12, 19);
             this.lbIncomingRestocks.Name = "lbIncomingRestocks";
-            this.lbIncomingRestocks.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbIncomingRestocks.Size = new System.Drawing.Size(383, 388);
+            this.lbIncomingRestocks.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.lbIncomingRestocks.Size = new System.Drawing.Size(704, 580);
             this.lbIncomingRestocks.TabIndex = 3;
-            // 
-            // btnAddProduct
-            // 
-            this.btnAddProduct.Location = new System.Drawing.Point(147, 12);
-            this.btnAddProduct.Name = "btnAddProduct";
-            this.btnAddProduct.Size = new System.Drawing.Size(129, 113);
-            this.btnAddProduct.TabIndex = 4;
-            this.btnAddProduct.Text = "Add New Product";
-            this.btnAddProduct.UseVisualStyleBackColor = true;
-            this.btnAddProduct.Click += new System.EventHandler(this.btnAddProduct_Click);
-            // 
-            // btnRemProduct
-            // 
-            this.btnRemProduct.Location = new System.Drawing.Point(282, 12);
-            this.btnRemProduct.Name = "btnRemProduct";
-            this.btnRemProduct.Size = new System.Drawing.Size(129, 113);
-            this.btnRemProduct.TabIndex = 5;
-            this.btnRemProduct.Text = "Remove Product";
-            this.btnRemProduct.UseVisualStyleBackColor = true;
-            this.btnRemProduct.Click += new System.EventHandler(this.btnRemProduct_Click);
-            // 
-            // btnUpdateProduct
-            // 
-            this.btnUpdateProduct.Location = new System.Drawing.Point(12, 12);
-            this.btnUpdateProduct.Name = "btnUpdateProduct";
-            this.btnUpdateProduct.Size = new System.Drawing.Size(129, 113);
-            this.btnUpdateProduct.TabIndex = 6;
-            this.btnUpdateProduct.Text = "Update Product";
-            this.btnUpdateProduct.UseVisualStyleBackColor = true;
-            this.btnUpdateProduct.Click += new System.EventHandler(this.btnUpdateProduct_Click);
             // 
             // btnDepotRefresh
             // 
             this.btnDepotRefresh.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.btnDepotRefresh.Location = new System.Drawing.Point(417, 12);
+            this.btnDepotRefresh.Location = new System.Drawing.Point(721, 323);
             this.btnDepotRefresh.Name = "btnDepotRefresh";
-            this.btnDepotRefresh.Size = new System.Drawing.Size(191, 113);
+            this.btnDepotRefresh.Size = new System.Drawing.Size(268, 78);
             this.btnDepotRefresh.TabIndex = 7;
             this.btnDepotRefresh.Text = "Refresh";
             this.btnDepotRefresh.UseVisualStyleBackColor = false;
             this.btnDepotRefresh.Click += new System.EventHandler(this.btnDepotRefresh_Click);
             // 
-            // DepotManager
+            // rtbRestockJustification
+            // 
+            this.rtbRestockJustification.Location = new System.Drawing.Point(722, 139);
+            this.rtbRestockJustification.Name = "rtbRestockJustification";
+            this.rtbRestockJustification.Size = new System.Drawing.Size(267, 178);
+            this.rtbRestockJustification.TabIndex = 8;
+            this.rtbRestockJustification.Text = "Description...";
+            // 
+            // PendingRestocksForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(894, 531);
+            this.ClientSize = new System.Drawing.Size(1036, 615);
+            this.Controls.Add(this.rtbRestockJustification);
             this.Controls.Add(this.btnDepotRefresh);
-            this.Controls.Add(this.btnUpdateProduct);
-            this.Controls.Add(this.btnRemProduct);
-            this.Controls.Add(this.btnAddProduct);
             this.Controls.Add(this.lbIncomingRestocks);
             this.Controls.Add(this.btnRejectRestock);
             this.Controls.Add(this.btnAcceptRestock);
-            this.Controls.Add(this.lbProducts);
-            this.Name = "DepotManager";
+            this.Name = "PendingRestocksForm";
             this.Text = "DepotManager";
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox lbProducts;
         private System.Windows.Forms.Button btnAcceptRestock;
         private System.Windows.Forms.Button btnRejectRestock;
         private System.Windows.Forms.ListBox lbIncomingRestocks;
-        private System.Windows.Forms.Button btnAddProduct;
-        private System.Windows.Forms.Button btnRemProduct;
-        private System.Windows.Forms.Button btnUpdateProduct;
         private System.Windows.Forms.Button btnDepotRefresh;
+        private System.Windows.Forms.RichTextBox rtbRestockJustification;
     }
 }
