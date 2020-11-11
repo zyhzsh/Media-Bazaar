@@ -70,7 +70,6 @@
             this.lbProducts.FormattingEnabled = true;
             this.lbProducts.ItemHeight = 16;
             this.lbProducts.Location = new System.Drawing.Point(12, 19);
-            this.lbProducts.MultiColumn = true;
             this.lbProducts.Name = "lbProducts";
             this.lbProducts.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lbProducts.Size = new System.Drawing.Size(633, 580);

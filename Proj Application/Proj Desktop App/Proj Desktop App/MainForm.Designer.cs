@@ -169,10 +169,10 @@
             // 
             this.tabLogOut.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.tabLogOut.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.tabLogOut.Image = global::Proj_Desktop_App.Properties.Resources.restocks;
+            this.tabLogOut.Image = global::Proj_Desktop_App.Properties.Resources.logout;
             this.tabLogOut.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tabLogOut.Name = "tabLogOut";
-            this.tabLogOut.Size = new System.Drawing.Size(110, 40);
+            this.tabLogOut.Size = new System.Drawing.Size(111, 40);
             this.tabLogOut.Text = "Log out";
             this.tabLogOut.Click += new System.EventHandler(this.tabLogOut_Click);
             // 

@@ -16,6 +16,7 @@ namespace Proj_Desktop_App
 
         private AdminForm employeesForm;
 
+        private ProductCRUDForm productCRUD;
         private ProductStatistics productStatistics;
         private Form restocks;
         private Scheduling scheduling;
@@ -40,6 +41,9 @@ namespace Proj_Desktop_App
             else if (position == PositionType.Depot_Manager)
             {
                 tabProducts.Visible = true;
+                productCRUD = new ProductCRUDForm();
+                InitializeForm(productCRUD);
+
                 tabStatistics.Visible = true;
                 productStatistics = new ProductStatistics();
                 InitializeForm(productStatistics);
@@ -119,7 +123,7 @@ namespace Proj_Desktop_App
         {
             if (selectedTab != tabProducts)
             {
-                ShowForm(restocks, tabProducts);
+                ShowForm(productCRUD, tabProducts);
             }
         }
 
