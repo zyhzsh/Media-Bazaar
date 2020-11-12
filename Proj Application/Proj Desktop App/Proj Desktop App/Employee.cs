@@ -46,7 +46,7 @@ namespace Proj_Desktop_App
 
             // Initialize first contract
             this.contracts = new List<Contract>();
-            this.contracts.Add(new Contract(startDate, endDate, 1, department, position, 1000 /* get starting salary */, fte));
+            AddContract(startDate, endDate, department, position, fte);
         }
 
         /// <summary>
@@ -84,6 +84,11 @@ namespace Proj_Desktop_App
             if (this.phoneNumber != phoneNumber) { this.phoneNumber = phoneNumber; }
             if (this.address != address) { this.address = address; }
             if (this.contactEmail != contactEmail) { this.contactEmail = contactEmail; }
+        }
+
+        public void AddContract(DateTime startDate, DateTime endDate, Departments department, PositionType position, decimal fte)
+        {
+            this.contracts.Add(new Contract(startDate, endDate, contracts.Count + 1, department, position, 1000 /* get starting salary */, fte));
         }
 
         public PositionType GetPosition()
@@ -135,6 +140,11 @@ namespace Proj_Desktop_App
                 }
             }
             return null;
+        }
+
+        public Contract GetLatestContract()
+        {
+            return contracts[contracts.Count - 1];
         }
 
         public Contract[] GetContracts()

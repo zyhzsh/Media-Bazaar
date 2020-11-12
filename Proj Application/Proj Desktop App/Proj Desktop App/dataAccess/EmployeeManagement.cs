@@ -13,7 +13,7 @@ namespace Proj_Desktop_App.dataAccess
     class EmployeeManagement : DatabaseConnection
     {
         public EmployeeManagement() : base() { }
-
+        
         public Employee GetEmployee(int bsn)
         {
             try
@@ -98,7 +98,11 @@ namespace Proj_Desktop_App.dataAccess
                             "contact_email, username, password) " +
                             "VALUES(@bsn, @first_name, @last_name, " +
                             "@gender, @phone, @date_birth, @address, @languages, @certificates, " +
-                            "@email, @username, @password);";
+                            "@email, @username, @password); " +
+                            "INSERT INTO contract (BSN, position_id, department_id, " +
+                            "start_date, end_date,iteration, salary, fte) " +
+                            "VALUES (@bsn, @position_id, @department_id, " +
+                            "@start_date, @end_date, @iteration, @salary, @fte);";
                         MySqlCommand cmd = new MySqlCommand(sql, conn);
                         cmd.Parameters.AddWithValue("@bsn", employee.GetBSN());
                         cmd.Parameters.AddWithValue("@first_name", employee.firstName);
@@ -112,6 +116,14 @@ namespace Proj_Desktop_App.dataAccess
                         cmd.Parameters.AddWithValue("@email", employee.contactEmail);
                         cmd.Parameters.AddWithValue("@username", GenerateUsername(employee));
                         cmd.Parameters.AddWithValue("@password", GeneratePassword(8));
+                        Contract contract = employee.GetLatestContract();
+                        cmd.Parameters.AddWithValue("@position_id", (int)contract.Position);
+                        cmd.Parameters.AddWithValue("@department_id", (int)contract.Department);
+                        cmd.Parameters.AddWithValue("@start_date", contract.StartDate.ToString("yyyy-MM-dd"));
+                        cmd.Parameters.AddWithValue("@end_date", contract.EndDate.ToString("yyyy-MM-dd"));
+                        cmd.Parameters.AddWithValue("@iteration", contract.Iteration);
+                        cmd.Parameters.AddWithValue("@salary", contract.Salary);
+                        cmd.Parameters.AddWithValue("@fte", contract.Fte);
                         conn.Open();
                         int result = cmd.ExecuteNonQuery();
                         return true;
@@ -174,6 +186,16 @@ namespace Proj_Desktop_App.dataAccess
             }
         }
 
+        public bool Promote()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool TerminateContract()
+        {
+            throw new NotImplementedException();
+        }
+
         private string GenerateUsername(Employee employee)
         {
             if (employee != null)
@@ -212,8 +234,6 @@ namespace Proj_Desktop_App.dataAccess
         {
             try
             {
-                PositionType position = GetPosition(Convert.ToInt32(dr["position_id"]));
-                Departments department = GetDepartment(Convert.ToInt32(dr["department_id"]));
                 Employee employee = new Employee(
                     Convert.ToInt32(dr["BSN"]),
                     dr["first_name"].ToString(),
@@ -227,8 +247,8 @@ namespace Proj_Desktop_App.dataAccess
                     dr["contact_email"].ToString(),
                     dr.GetDateTime("start_date"),
                     dr.GetDateTime("end_date"),
-                    position,
-                    department,
+                    (PositionType)dr["position_id"],
+                    (Departments)dr["department_id"],
                     Convert.ToDecimal(dr["fte"])
                     );
                 return employee;
@@ -237,46 +257,6 @@ namespace Proj_Desktop_App.dataAccess
             {
                 MessageBox.Show(ex.ToString());
                 return null;
-            }
-        }
-
-        private PositionType GetPosition(int positionId)
-        {
-            switch (positionId)
-            {
-                case 1:
-                    return PositionType.Sales_Worker;
-                case 2:
-                    return PositionType.Sales_Manager;
-                case 3:
-                    return PositionType.Depot_Worker;
-                case 4:
-                    return PositionType.Depot_Manager;
-                case 5:
-                    return PositionType.Administrator;
-                default:
-                    return PositionType.Other;
-            }
-        }
-
-        private Departments GetDepartment(int departmentId)
-        {
-            switch (departmentId)
-            {
-                case 1:
-                    return Departments.floorOne;
-                case 2:
-                    return Departments.floorTwo;
-                case 3:
-                    return Departments.floorThree;
-                case 4:
-                    return Departments.floorFour;
-                case 5:
-                    return Departments.warehouse;
-                case 6:
-                    return Departments.office;
-                default:
-                    throw new Exception("Depatemnt id doesn't exist");
             }
         }
     }

@@ -8,11 +8,11 @@ namespace Proj_Desktop_App
 {
     public enum Departments
     {
-        floorOne,
-        floorTwo,
-        floorThree,
-        floorFour,
-        warehouse,
-        office
+        floorOne = 1,
+        floorTwo = 2,
+        floorThree = 3,
+        floorFour = 4,
+        warehouse = 5,
+        office = 6
     }
 }

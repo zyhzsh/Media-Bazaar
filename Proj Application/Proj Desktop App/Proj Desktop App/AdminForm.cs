@@ -21,8 +21,9 @@ namespace Proj_Desktop_App
             this.store = store;
             store.EmployeeChanged += Store_EmployeeChanged;
             cbShowEmployed.Checked = true;
-            cbSearchBy.SelectedIndex = 0;
             selectedEmployee = null;
+            cbSearchBy.Items.AddRange( new string[] { "Name", "BSN" });
+            cbSearchBy.SelectedIndex = 0;
             UpdateEmployees(false);
         }
 
@@ -37,49 +38,31 @@ namespace Proj_Desktop_App
 
         public void UpdateEmployees(bool searching)
         {
-            Employee[] employees;
+            Employee[] employees = null;
 
             if (searching)
             {
-                bool searchByString = true;
-                if (cbSearchBy.SelectedItem.ToString() == "BSN")
+                string searchBy = cbSearchBy.SelectedItem.ToString();
+                if (searchBy == "Name")
                 {
-                    searchByString = false;
+                    employees = store.GetEmployees(cbShowEmployed.Checked, tbSearch.Text);
                 }
-
-                if (cbShowEmployed.Checked)
+                else if (searchBy == "BSN")
                 {
-                    if (searchByString)
+                    try
                     {
-                        employees = store.GetEmployees(true, tbSearch.Text);
+                        employees = store.GetEmployees(cbShowEmployed.Checked, Convert.ToInt32(tbSearch.Text));
                     }
-                    else
+                    catch (Exception)
                     {
-                        employees = store.GetEmployees(true, Convert.ToInt32(tbSearch.Text));
-                    }
-                }
-                else
-                {
-                    if (searchByString)
-                    {
-                        employees = store.GetEmployees(tbSearch.Text);
-                    }
-                    else
-                    {
-                        employees = store.GetEmployees(Convert.ToInt32(tbSearch.Text));
+                        MessageBox.Show("Please input only numbers to search by BSN to");
+                        return;
                     }
                 }
             }
             else
             {
-                if (cbShowEmployed.Checked)
-                {
-                    employees = store.GetEmployees(true);
-                }
-                else
-                {
-                    employees = store.GetEmployees();
-                }
+                employees = store.GetEmployees(cbShowEmployed.Checked);
             }
 
             // Load employees into listbox
@@ -105,6 +88,11 @@ namespace Proj_Desktop_App
         private void btnSearch_Click(object sender, EventArgs e)
         {
             UpdateEmployees(true);
+        }
+
+        private void btnShowAll_Click(object sender, EventArgs e)
+        {
+            UpdateEmployees(false);
         }
 
         private void lbEmployees_SelectedIndexChanged(object sender, EventArgs e)

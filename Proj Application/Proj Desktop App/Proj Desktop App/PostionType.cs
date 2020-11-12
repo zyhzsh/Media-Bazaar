@@ -8,12 +8,12 @@ namespace Proj_Desktop_App
 {
     public enum PositionType
     {
-        Administrator,
-        Depot_Manager,
-        Sales_Manager,
-        Depot_Worker,
-        Sales_Worker,
-        Other
+        Administrator = 5,
+        Depot_Manager = 4,
+        Sales_Manager = 2,
+        Depot_Worker = 3,
+        Sales_Worker = 1,
+        Other = 0
     }
 }
 
