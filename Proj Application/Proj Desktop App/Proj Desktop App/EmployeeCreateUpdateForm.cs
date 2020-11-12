@@ -38,6 +38,8 @@ namespace Proj_Desktop_App
             Text = "New Employee Form";
             btnConfirm.Text = "Add employee";
             rbMale.Checked = true;
+            dtpStartDate.MinDate = DateTime.Today;
+            dtpBirthdate.MaxDate = DateTime.Today.AddYears(-16);
         }
 
         /// <summary>
