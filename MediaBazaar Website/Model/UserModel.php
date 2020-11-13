@@ -27,7 +27,6 @@ public function CheckUsers($email,$password){
         $session->startSession();
         $session->__set($sessionName,$BSN);
         return true;
-      
     }
 
 }

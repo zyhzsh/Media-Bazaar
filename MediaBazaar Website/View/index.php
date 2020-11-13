@@ -10,7 +10,6 @@
  <?php 
 require_once('classes.php');
 include('navigation.php');
-
  if(isset($_GET['page'])){
  switch($_GET['page']) 
  {

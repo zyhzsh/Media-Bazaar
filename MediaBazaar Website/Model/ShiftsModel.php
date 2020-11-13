@@ -56,6 +56,42 @@ class ShiftsModel {
             return false;
         }
      }
-
+      
+    
+     public function LoadAssignedShift($BSN,$startingdate)
+     {
+        $session=$this->session();
+        $dbh=new Dbh();
+        $AssignedShifts=array();
+        if($BSN!=0)
+        {
+            $conn=$dbh->connection();
+            $currentdate=$startingdate;
+            for($i=0;$i<42;$i++)
+            {
+                $sql="SELECT * FROM assignedschdule WHERE BSN=(?) and date = (?);";
+                $stmt=$conn->prepare($sql);
+                $stmt->execute([$BSN,$currentdate]);
+                $result=$stmt->fetch();
+                if(empty($result))
+                {
+                    $AssignedShift=new AssignedShift($currentdate,"");
+                    $AssignedShifts[$i]=$AssignedShift;
+                }
+                else 
+                {
+                    $AssignedShift=new AssignedShift($currentdate,$result['assigned_shift_type']);
+                    $AssignedShifts[$i]=$AssignedShift;
+                }
+                $currentdate=date('Y-m-d',strtotime($currentdate."+1day"));
+            }
+           return $AssignedShifts;
+        }
+        else
+        {
+            return null;
+        }
+            $conn->close();
+     }
 }
 ?>
