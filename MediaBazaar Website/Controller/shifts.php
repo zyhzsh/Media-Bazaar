@@ -82,7 +82,7 @@ public function AddPreferedShift($date,$shiftType){
     //1.Get the first day of SeletedDate of the month
     $first_day_of_the_month=date('Y-m-1',strtotime($date));
     //2.Get the week day of the firstday of the month
-    $day_of_week=date('l', strtotime($date));
+    $day_of_week=date('l', strtotime($first_day_of_the_month));
     //3.Estimate the starting date
     if($day_of_week=="Monday"){
       $startingdate=$date;

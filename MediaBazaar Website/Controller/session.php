@@ -58,7 +58,7 @@ class Session
          //temporary code here, decided later
          //We assume the server's date and user's date are same.
          //When user login to this page, haven't Selet the date on Calendar, We set default value="Today";
-        $_SESSION['SeletedDate']=date("Y-m-d");
+        $_SESSION['SeletedMonth']=date("Y-m-1");
     }
     public  function __get( $name )
     {
