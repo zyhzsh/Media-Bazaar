@@ -11,16 +11,17 @@ using System.Windows.Forms;
 
 namespace Proj_Desktop_App
 {
-    public partial class WorkerStockRequests : Form
+    public partial class WorkerStockRequestsForm : Form
     {
-        private ProcuctManagement dtbMan;
-
+        private RestockRequestStorage RequestStorage;
+        private ProductStorage ProductStorage;
         private int currentUserBSN;
 
-        public WorkerStockRequests(int BSN)
+        public WorkerStockRequestsForm(int BSN, RestockRequestStorage requestStorage, ProductStorage productStorage)
         {
             InitializeComponent();
-            dtbMan = new ProcuctManagement();
+            this.RequestStorage = requestStorage;
+            this.ProductStorage = productStorage;
             currentUserBSN = BSN;
             ReloadRequests();
         }
@@ -28,20 +29,21 @@ namespace Proj_Desktop_App
         private void ReloadRequests()
         {
             lbRestockRequests.Items.Clear();
-            foreach (RestockRequest request in dtbMan.GetAcceptedRestockRequests())
+            foreach (RestockRequest request in RequestStorage.GetAccepted())
             {
-                lbRestockRequests.Items.Add(request);
+                if(request != null)
+                    lbRestockRequests.Items.Add(request);
             }
         }
 
         private void btnCompleteRestock_Click(object sender, EventArgs e)
         {
-            if (lbRestockRequests.SelectedItems.Count > 0)
+            if (lbRestockRequests.SelectedItems.Count > 0 && numRestockedAmount.Value > 0)
             {
                 for (int i = lbRestockRequests.SelectedItems.Count - 1; i >= 0; i--)
                 {
                     RestockRequest request = ((RestockRequest) lbRestockRequests.SelectedItems[i]);
-                    dtbMan.RestockProduct(request, currentUserBSN, (int)numRestockedAmount.Value, rtbRestockRequestComment.Text);
+                    RequestStorage.CompleteRequest(request.restockID, currentUserBSN, (int)numRestockedAmount.Value, rtbRestockRequestComment.Text);
                 }
                 MessageBox.Show("Requests completed");
                 ReloadRequests();

@@ -34,6 +34,7 @@
             this.dateTimeSalesTo = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnReset = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lbBestSoldProducts
@@ -42,16 +43,18 @@
             this.lbBestSoldProducts.ItemHeight = 16;
             this.lbBestSoldProducts.Location = new System.Drawing.Point(12, 49);
             this.lbBestSoldProducts.Name = "lbBestSoldProducts";
-            this.lbBestSoldProducts.Size = new System.Drawing.Size(580, 548);
+            this.lbBestSoldProducts.Size = new System.Drawing.Size(676, 548);
             this.lbBestSoldProducts.TabIndex = 0;
             // 
             // dateTimeSalesFrom
             // 
             this.dateTimeSalesFrom.AllowDrop = true;
+            this.dateTimeSalesFrom.Checked = false;
             this.dateTimeSalesFrom.Location = new System.Drawing.Point(59, 12);
             this.dateTimeSalesFrom.Name = "dateTimeSalesFrom";
             this.dateTimeSalesFrom.Size = new System.Drawing.Size(200, 22);
             this.dateTimeSalesFrom.TabIndex = 1;
+            this.dateTimeSalesFrom.Value = new System.DateTime(2020, 11, 13, 17, 15, 4, 0);
             // 
             // btnProductStatFilter
             // 
@@ -69,7 +72,7 @@
             this.dateTimeSalesTo.Name = "dateTimeSalesTo";
             this.dateTimeSalesTo.Size = new System.Drawing.Size(200, 22);
             this.dateTimeSalesTo.TabIndex = 3;
-            this.dateTimeSalesTo.Value = new System.DateTime(2020, 11, 5, 10, 9, 50, 0);
+            this.dateTimeSalesTo.Value = new System.DateTime(2020, 11, 13, 0, 0, 0, 0);
             // 
             // label1
             // 
@@ -89,11 +92,22 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "From";
             // 
+            // btnReset
+            // 
+            this.btnReset.Location = new System.Drawing.Point(600, 12);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(88, 22);
+            this.btnReset.TabIndex = 6;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
             // ProductStatistics
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(604, 611);
+            this.ClientSize = new System.Drawing.Size(700, 611);
+            this.Controls.Add(this.btnReset);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dateTimeSalesTo);
@@ -115,5 +129,6 @@
         private System.Windows.Forms.DateTimePicker dateTimeSalesTo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnReset;
     }
 }

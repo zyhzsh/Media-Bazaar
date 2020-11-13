@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proj_Desktop_App
 {
-    class Sale
+    public class Sale
     {
         public int productCode { get; private set; }
         public string productName { get; private set; }

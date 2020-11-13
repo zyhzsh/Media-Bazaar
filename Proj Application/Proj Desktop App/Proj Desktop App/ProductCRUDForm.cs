@@ -13,11 +13,11 @@ namespace Proj_Desktop_App
 {
     public partial class ProductCRUDForm : Form
     {
-        private ProcuctManagement dtbMan;
+        private ProductManagement dtbMan;
         public ProductCRUDForm()
         {
             InitializeComponent();
-            dtbMan = new ProcuctManagement();
+            dtbMan = new ProductManagement();
             ReloadProducts();
         }
 

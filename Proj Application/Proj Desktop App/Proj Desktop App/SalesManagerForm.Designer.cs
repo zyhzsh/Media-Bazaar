@@ -31,7 +31,7 @@
             this.btnProductSearch = new System.Windows.Forms.Button();
             this.cbProductSearchMethod = new System.Windows.Forms.ComboBox();
             this.tbProductSearchAttribute = new System.Windows.Forms.TextBox();
-            this.lbProductListStatistics = new System.Windows.Forms.ListBox();
+            this.lbProducts = new System.Windows.Forms.ListBox();
             this.btnRequestRestock = new System.Windows.Forms.Button();
             this.cbProductDepartmentSelector = new System.Windows.Forms.ComboBox();
             this.numStockRequest = new System.Windows.Forms.NumericUpDown();
@@ -71,16 +71,16 @@
             this.tbProductSearchAttribute.TabIndex = 38;
             this.tbProductSearchAttribute.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // lbProductListStatistics
+            // lbProducts
             // 
-            this.lbProductListStatistics.FormattingEnabled = true;
-            this.lbProductListStatistics.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.lbProductListStatistics.ItemHeight = 16;
-            this.lbProductListStatistics.Location = new System.Drawing.Point(10, 41);
-            this.lbProductListStatistics.Name = "lbProductListStatistics";
-            this.lbProductListStatistics.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbProductListStatistics.Size = new System.Drawing.Size(759, 532);
-            this.lbProductListStatistics.TabIndex = 29;
+            this.lbProducts.FormattingEnabled = true;
+            this.lbProducts.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.lbProducts.ItemHeight = 16;
+            this.lbProducts.Location = new System.Drawing.Point(10, 41);
+            this.lbProducts.Name = "lbProducts";
+            this.lbProducts.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lbProducts.Size = new System.Drawing.Size(759, 532);
+            this.lbProducts.TabIndex = 29;
             // 
             // btnRequestRestock
             // 
@@ -160,7 +160,7 @@
             this.Controls.Add(this.btnProductSearch);
             this.Controls.Add(this.cbProductSearchMethod);
             this.Controls.Add(this.tbProductSearchAttribute);
-            this.Controls.Add(this.lbProductListStatistics);
+            this.Controls.Add(this.lbProducts);
             this.Name = "SalesManagerForm";
             this.Text = "ProductStatistics";
             ((System.ComponentModel.ISupportInitialize)(this.numStockRequest)).EndInit();
@@ -173,7 +173,7 @@
         private System.Windows.Forms.Button btnProductSearch;
         private System.Windows.Forms.ComboBox cbProductSearchMethod;
         private System.Windows.Forms.TextBox tbProductSearchAttribute;
-        private System.Windows.Forms.ListBox lbProductListStatistics;
+        private System.Windows.Forms.ListBox lbProducts;
         private System.Windows.Forms.Button btnRequestRestock;
         private System.Windows.Forms.ComboBox cbProductDepartmentSelector;
         private System.Windows.Forms.NumericUpDown numStockRequest;

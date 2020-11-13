@@ -13,18 +13,18 @@ namespace Proj_Desktop_App
 {
     public partial class ProductManagementForm : Form
     {
-        private ProcuctManagement dtbMan;
+        private ProductManagement dtbMan;
         private int updateProduct;
         public ProductManagementForm()
         {
             InitializeComponent();
-            dtbMan = new ProcuctManagement();
+            dtbMan = new ProductManagement();
         }
 
         public ProductManagementForm(Product editProduct)
         {
             InitializeComponent();
-            ProcuctManagement dtbMan = new ProcuctManagement();
+            dtbMan = new ProductManagement();
             updateProduct = editProduct.id;
             tbProductName.Text = editProduct.Name;
             tbBrand.Text = editProduct.Brand;

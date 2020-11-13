@@ -13,20 +13,25 @@ namespace Proj_Desktop_App
 {
     public partial class PendingRestocksForm : Form
     {
-        private ProcuctManagement dtbMan;
-        public PendingRestocksForm(int BSN)
+        private RestockRequestStorage reqStorage;
+        private int currentUserBsn;
+        public PendingRestocksForm(int BSN, RestockRequestStorage requestStorage)
         {
             InitializeComponent();
-            dtbMan = new ProcuctManagement();
+            reqStorage = requestStorage;
+            currentUserBsn = BSN;
             ReloadRequests();
         }
 
         private void ReloadRequests()
         {
             lbIncomingRestocks.Items.Clear();
-            foreach (RestockRequest request in dtbMan.GetPendingRestockRequests())
+            foreach (RestockRequest request in reqStorage.GetPending())
             {
-                lbIncomingRestocks.Items.Add(request);
+                if(request != null)
+                {
+                    lbIncomingRestocks.Items.Add(request);
+                }
             }
         }
 
@@ -41,7 +46,7 @@ namespace Proj_Desktop_App
                 for (int i = lbIncomingRestocks.SelectedItems.Count - 1; i >= 0; i--)
                 {
                     RestockRequest resItem = (RestockRequest)lbIncomingRestocks.SelectedItems[i];
-                    dtbMan.AcceptRestockRequest(resItem.restockID, 100000000, rtbRestockJustification.Text);
+                    reqStorage.Accept(resItem.restockID, currentUserBsn, rtbRestockJustification.Text);
                 }
             }
             ReloadRequests();
@@ -49,10 +54,17 @@ namespace Proj_Desktop_App
 
         private void btnRejectRestock_Click(object sender, EventArgs e)
         {
-            for (int i = lbIncomingRestocks.SelectedItems.Count - 1; i >= 0; i--)
+            if(lbIncomingRestocks.SelectedItems.Count <= 0)
             {
-                RestockRequest resItem = (RestockRequest)lbIncomingRestocks.SelectedItems[i];
-                dtbMan.DeclineRestockRequest(resItem.restockID, 100000000, rtbRestockJustification.Text);
+                MessageBox.Show("No restocks selected");
+            }
+            else
+            {
+                for (int i = lbIncomingRestocks.SelectedItems.Count - 1; i >= 0; i--)
+                {
+                    RestockRequest resItem = (RestockRequest)lbIncomingRestocks.SelectedItems[i];
+                    reqStorage.Decline(resItem.restockID, currentUserBsn, rtbRestockJustification.Text);
+                }
             }
             ReloadRequests();
         }

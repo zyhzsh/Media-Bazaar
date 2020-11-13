@@ -29,7 +29,7 @@ namespace Proj_Desktop_App
             orders = new List<RestockRequest>();
             //AddEmployeeMockData();
             InitializeProducts();
-            ProcuctManagement dtbManagement = new ProcuctManagement();
+            ProductManagement dtbManagement = new ProductManagement();
             emplMan = new EmployeeManagement();
             Employee[] employees = emplMan.GetAllEmployees();
             if (employees != null)
@@ -202,7 +202,7 @@ namespace Proj_Desktop_App
 
         private void InitializeProducts()
         {
-            ProcuctManagement dtbMan = new ProcuctManagement();
+            ProductManagement dtbMan = new ProductManagement();
             Product[] dtbproducts;
             dtbproducts = dtbMan.GetAllProducts();
             foreach(Product p in dtbproducts)
@@ -277,7 +277,7 @@ namespace Proj_Desktop_App
 
         public void AddProduct(string productName, string brandName, double sellingPrice, double buyingPrice, Departments department)
         {
-            ProcuctManagement dtbMan = new ProcuctManagement();
+            ProductManagement dtbMan = new ProductManagement();
             dtbMan.AddProduct(department, productName, brandName, buyingPrice, sellingPrice);
         }
 

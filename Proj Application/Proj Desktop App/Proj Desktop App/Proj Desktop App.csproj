@@ -105,7 +105,8 @@
     <Compile Include="dataAccess\EmployeeManagement.cs" />
     <Compile Include="AssignedShift.cs" />
     <Compile Include="AvailableShift.cs" />
-    <Compile Include="dataAccess\ProcuctManagement.cs" />
+    <Compile Include="dataAccess\ProductManagement.cs" />
+    <Compile Include="dataAccess\RestockRequestManagement.cs" />
     <Compile Include="Departments.cs" />
     <Compile Include="PendingRestocksForm.cs">
       <SubType>Form</SubType>
@@ -154,6 +155,8 @@
     <Compile Include="ProductStatistics.Designer.cs">
       <DependentUpon>ProductStatistics.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProductStorage.cs" />
+    <Compile Include="RestockRequestStorage.cs" />
     <Compile Include="Sale.cs" />
     <Compile Include="SalesManagerForm.cs">
       <SubType>Form</SubType>
@@ -174,11 +177,11 @@
     </Compile>
     <Compile Include="ShiftType.cs" />
     <Compile Include="Store.cs" />
-    <Compile Include="WorkerStockRequests.cs">
+    <Compile Include="WorkerStockRequestsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WorkerStockRequests.Designer.cs">
-      <DependentUpon>WorkerStockRequests.cs</DependentUpon>
+    <Compile Include="WorkerStockRequestsForm.Designer.cs">
+      <DependentUpon>WorkerStockRequestsForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="AdminForm.resx">
       <DependentUpon>AdminForm.cs</DependentUpon>
@@ -220,8 +223,8 @@
     <EmbeddedResource Include="Scheduling.resx">
       <DependentUpon>Scheduling.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WorkerStockRequests.resx">
-      <DependentUpon>WorkerStockRequests.cs</DependentUpon>
+    <EmbeddedResource Include="WorkerStockRequestsForm.resx">
+      <DependentUpon>WorkerStockRequestsForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -24,6 +24,9 @@ namespace Proj_Desktop_App
         private ToolStripMenuItem selectedTab;
 
         //private EmployeeStorage empStorage;
+        //ScheduleStorage?
+        private ProductStorage prdStorage;
+        private RestockRequestStorage reqStorage;
 
         public MainForm(LoginForm loginForm, Store store, PositionType position)
         {
@@ -45,7 +48,8 @@ namespace Proj_Desktop_App
             }
             else if (position == PositionType.Depot_Manager)
             {
-                // Product storage
+                prdStorage = new ProductStorage();
+                reqStorage = new RestockRequestStorage(); 
                 // Schedule
 
                 tabProducts.Visible = true;
@@ -57,7 +61,7 @@ namespace Proj_Desktop_App
                 InitializeForm(productStatistics);
 
                 tabRestocks.Visible = true;
-                restocks = new PendingRestocksForm(100000000);
+                restocks = new PendingRestocksForm(100000000, reqStorage);
                 InitializeForm(restocks);
 
                 tabSchedule.Visible = true;
@@ -68,16 +72,21 @@ namespace Proj_Desktop_App
             }
             else if (position == PositionType.Depot_Worker)
             {
+                reqStorage = new RestockRequestStorage();
+
                 tabRestocks.Visible = true;
-                restocks = new WorkerStockRequests(100000000);
+                restocks = new WorkerStockRequestsForm(100000000, reqStorage, prdStorage);
                 InitializeForm(restocks);
 
                 tabRestocks.PerformClick();
             }
             else if (position == PositionType.Sales_Manager)
             {
+                prdStorage = new ProductStorage();
+                reqStorage = new RestockRequestStorage();
+
                 tabRestocks.Visible = true;
-                restocks = new SalesManagerForm(100000000);
+                restocks = new SalesManagerForm(100000000, Departments.floorOne, prdStorage, reqStorage);
                 InitializeForm(restocks);
 
                 tabSchedule.Visible = true;

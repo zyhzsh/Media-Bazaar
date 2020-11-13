@@ -9,7 +9,7 @@ using MySql.Data.MySqlClient;
 
 namespace Proj_Desktop_App.dataAccess
 {
-    abstract class DatabaseConnection
+    public abstract class DatabaseConnection
     {
         private static string server = "studmysql01.fhict.local";
         private static string database = "dbi443880";

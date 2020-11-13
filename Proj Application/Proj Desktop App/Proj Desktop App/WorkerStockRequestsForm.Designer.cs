@@ -1,6 +1,6 @@
 ﻿namespace Proj_Desktop_App
 {
-    partial class WorkerStockRequests
+    partial class WorkerStockRequestsForm
     {
         /// <summary>
         /// Required designer variable.

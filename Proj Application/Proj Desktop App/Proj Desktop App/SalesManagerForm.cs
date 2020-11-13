@@ -14,12 +14,17 @@ namespace Proj_Desktop_App
 {
     public partial class SalesManagerForm : Form
     {
-        private ProcuctManagement dtbMan;
-        public SalesManagerForm(int BSN)
+        private ProductStorage prdStorage;
+        private RestockRequestStorage reqStorage;
+        private int salesManagerBsn;
+        private Departments salesManagerDepartment;
+        public SalesManagerForm(int BSN, Departments dep, ProductStorage prdStorage, RestockRequestStorage reqStorage)
         {
             InitializeComponent();
-            dtbMan = new ProcuctManagement();
-
+            this.prdStorage = prdStorage;
+            this.reqStorage = reqStorage;
+            this.salesManagerBsn = BSN;
+            this.salesManagerDepartment = dep;
             ReloadProducts();
 
             ReloadRestockRequests();
@@ -27,63 +32,17 @@ namespace Proj_Desktop_App
 
         private void ReloadProducts()
         {
-            lbProductListStatistics.Items.Clear();
-            foreach (Product p in dtbMan.GetAllProducts())
+            lbProducts.Items.Clear();
+            foreach (Product p in prdStorage.ProductsByFloor(salesManagerDepartment))
             {
-                lbProductListStatistics.Items.Add(p);
-            }
-        }
-
-        private void ReloadProductsByFloors()
-        {
-            ReloadProducts();
-            switch (cbProductDepartmentSelector.SelectedItem.ToString().Trim())
-            {
-                case "Floor One":
-                    for (int i = lbProductListStatistics.Items.Count - 1; i >= 0; i--)
-                    {
-                        if (((Product)lbProductListStatistics.Items[i]).Department != Departments.floorOne)
-                        {
-                            lbProductListStatistics.Items.RemoveAt(i);
-                        }
-                    }
-                    break;
-                case "Floor Two":
-                    for (int i = lbProductListStatistics.Items.Count - 1; i >= 0; i--)
-                    {
-                        if (((Product)lbProductListStatistics.Items[i]).Department != Departments.floorTwo)
-                        {
-                            lbProductListStatistics.Items.RemoveAt(i);
-                        }
-                    }
-                    break;
-                case "Floor Three":
-                    for (int i = lbProductListStatistics.Items.Count - 1; i >= 0; i--)
-                    {
-                        if (((Product)lbProductListStatistics.Items[i]).Department != Departments.floorThree)
-                        {
-                            lbProductListStatistics.Items.RemoveAt(i);
-                        }
-                    }
-                    break;
-                case "Floor Four":
-                    for (int i = lbProductListStatistics.Items.Count - 1; i >= 0; i--)
-                    {
-                        if (((Product)lbProductListStatistics.Items[i]).Department != Departments.floorFour)
-                        {
-                            lbProductListStatistics.Items.RemoveAt(i);
-                        }
-                    }
-                    break;
-                default:
-                    break;
+                lbProducts.Items.Add(p);
             }
         }
 
         private void ReloadRestockRequests()
         {
             lbPendingRestocks.Items.Clear();
-            foreach (RestockRequest request in dtbMan.GetPendingRestockRequests())
+            foreach (RestockRequest request in reqStorage.GetPending())
             {
                 lbPendingRestocks.Items.Add(request);
             }
@@ -94,11 +53,11 @@ namespace Proj_Desktop_App
             if (numStockRequest.Value > 0)
             {
                 ReloadRestockRequests();
-                foreach (Product p in lbProductListStatistics.SelectedItems)
+                foreach (Product p in lbProducts.SelectedItems)
                 {
-                    RestockRequest req = new RestockRequest(p.id, p.Name, 100000000, (int)numStockRequest.Value, tbRestockDescription.Text);
-                    dtbMan.CreateRestockRequest(req);
-                    lbPendingRestocks.Items.Add(req);
+                    RestockRequest req = new RestockRequest(p.id, p.Name, this.salesManagerBsn, (int)numStockRequest.Value, tbRestockDescription.Text, "PENDING");
+                    reqStorage.Add(req);
+                    ReloadRestockRequests();
                 }
             }
             else
@@ -115,14 +74,14 @@ namespace Proj_Desktop_App
                     ReloadProducts();
                     if (tbProductSearchAttribute.Text.Length > 0)
                     {
-                        for (int i = lbProductListStatistics.Items.Count - 1; i >= 0; i--)
+                        for (int i = lbProducts.Items.Count - 1; i >= 0; i--)
                         {
-                            if (((Product)lbProductListStatistics.Items[i]).id != Convert.ToInt32(tbProductSearchAttribute.Text))
+                            if (((Product)lbProducts.Items[i]).id != Convert.ToInt32(tbProductSearchAttribute.Text))
                             {
-                                lbProductListStatistics.Items.RemoveAt(i);
+                                lbProducts.Items.RemoveAt(i);
                             }
                         }
-                        lbProductListStatistics.Refresh();
+                        lbProducts.Refresh();
                     }
                     else
                     {
@@ -130,17 +89,17 @@ namespace Proj_Desktop_App
                     }
                     break;
                 case "Product name":
-                    ReloadProductsByFloors();
+                    //ReloadProductsByFloors();
                     if (tbProductSearchAttribute.Text.Length > 0)
                     {
-                        for(int i = lbProductListStatistics.Items.Count - 1; i >= 0; i--)
+                        for(int i = lbProducts.Items.Count - 1; i >= 0; i--)
                         {
-                            if (!((Product)lbProductListStatistics.Items[i]).Name.Contains(tbProductSearchAttribute.Text))
+                            if (!((Product)lbProducts.Items[i]).Name.Contains(tbProductSearchAttribute.Text))
                             {
-                                lbProductListStatistics.Items.RemoveAt(i);
+                                lbProducts.Items.RemoveAt(i);
                             }
                         }
-                        lbProductListStatistics.Refresh();
+                        lbProducts.Refresh();
                     }
                     else
                     {
@@ -153,13 +112,13 @@ namespace Proj_Desktop_App
 
         private void cbProductDepartmentSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ReloadProductsByFloors();
-            MessageBox.Show(cbProductDepartmentSelector.SelectedItem.ToString());
+            //ReloadProductsByFloors();
+            //MessageBox.Show(cbProductDepartmentSelector.SelectedItem.ToString());
         }
 
         private void btnProductRefresh_Click(object sender, EventArgs e)
         {
-            ReloadProductsByFloors();
+            ReloadProducts();
             ReloadRestockRequests();
         }
     }

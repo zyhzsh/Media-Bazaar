@@ -15,28 +15,19 @@ namespace Proj_Desktop_App
         public double SellingPrice { get; private set; }
         public double BuyingPrice { get; private set; }
         public int Stock { get; private set; }
+        public string Description { get; private set; }
         public Departments Department { get; private set; }
 
-        public Product(int productCode, string name, string brand, double sell, double buy, Departments department, int current_stock)
+        public Product(int productCode, string name, string brand, double sell, double buy, string description, Departments department, int current_stock)
         {
             this.id = productCode;
             Name = name;
             Brand = brand;
             SellingPrice = sell;
             BuyingPrice = buy;
+            Description = description;
             Department = department;
             Stock = current_stock;
-        }
-
-        public Product(int productCode, string name, string brand, double sell, double buy, string Description,Departments department)
-        {
-            this.id = productCode;
-            Name = name;
-            Brand = brand;
-            SellingPrice = sell;
-            BuyingPrice = buy;
-            Department = department;
-            Stock = 0;
         }
 
 
