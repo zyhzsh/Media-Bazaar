@@ -71,6 +71,11 @@
             // numRestockedAmount
             // 
             this.numRestockedAmount.Location = new System.Drawing.Point(140, 18);
+            this.numRestockedAmount.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.numRestockedAmount.Name = "numRestockedAmount";
             this.numRestockedAmount.Size = new System.Drawing.Size(120, 22);
             this.numRestockedAmount.TabIndex = 34;
@@ -116,7 +121,7 @@
             this.label3.TabIndex = 38;
             this.label3.Text = "Pending restock requests";
             // 
-            // WorkerStockRequests
+            // WorkerStockRequestsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -124,7 +129,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lbRestockRequests);
-            this.Name = "WorkerStockRequests";
+            this.Name = "WorkerStockRequestsForm";
             this.Text = "WorkerStockRequests";
             ((System.ComponentModel.ISupportInitialize)(this.numRestockedAmount)).EndInit();
             this.groupBox1.ResumeLayout(false);

@@ -1,6 +1,6 @@
 ﻿namespace Proj_Desktop_App
 {
-    partial class ProductManagementForm
+    partial class ProductAddUpdateForm
     {
         /// <summary>
         /// Required designer variable.

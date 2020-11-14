@@ -15,7 +15,7 @@ namespace Proj_Desktop_App.dataAccess
     {
         public ProductManagement() : base() { }
 
-        public void AddProduct(Departments belongingDepartment, string productName, string brand, double boughtPrice, double soldPrice)
+        public void AddProduct(Departments belongingDepartment, string productName, string brand, double bought_price, double sold_price)
         {
             
             try
@@ -28,19 +28,20 @@ namespace Proj_Desktop_App.dataAccess
                     cmd.Parameters.AddWithValue("@department_id", Convert.ToInt32(belongingDepartment));
                     cmd.Parameters.AddWithValue("@productname", productName);
                     cmd.Parameters.AddWithValue("@brand", brand);
-                    cmd.Parameters.AddWithValue("@boughtPrice", boughtPrice);
-                    cmd.Parameters.AddWithValue("@soldPrice", soldPrice);
+                    cmd.Parameters.AddWithValue("@bought_price", bought_price);
+                    cmd.Parameters.AddWithValue("@sold_price", sold_price);
+                    cmd.Parameters.AddWithValue("@current_stock", 0);
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show(e.ToString());
             }
         }
 
-        public void AddProduct(Departments belongingDepartment, string productName, string brand, double boughtPrice, double soldPrice, string description)
+        public void AddProduct(Departments belongingDepartment, string productName, string brand, double bought_price, double sold_price, string description)
         {
             try
             {
@@ -53,9 +54,10 @@ namespace Proj_Desktop_App.dataAccess
                     cmd.Parameters.AddWithValue("@department_id", Convert.ToInt32(belongingDepartment));
                     cmd.Parameters.AddWithValue("@productname", productName);
                     cmd.Parameters.AddWithValue("@brand", brand);
-                    cmd.Parameters.AddWithValue("@boughtPrice", boughtPrice);
-                    cmd.Parameters.AddWithValue("@soldPrice", soldPrice);
+                    cmd.Parameters.AddWithValue("@bought_price", bought_price);
+                    cmd.Parameters.AddWithValue("@sold_price", sold_price);
                     cmd.Parameters.AddWithValue("@description", description);
+                    cmd.Parameters.AddWithValue("@current_stock", 0);
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
@@ -67,22 +69,22 @@ namespace Proj_Desktop_App.dataAccess
             }
         }
 
-        public void UpdateProduct(int productcode, Departments belongingDepartment, string productName, string brand, double soldPrice, double boughtPrice, string description)
+        public void UpdateProduct(int productcode, Departments belongingDepartment, string productName, string brand, double boughtPrice, double soldPrice, string description)
         {
             try
             {
                 using(MySqlConnection conn = base.GetConnection())
                 {
-                    string sql = "UPDATE product SET (department_id = @department_id, productname = @productname, brand = @brand, " +
-                         "bought_price = @bought_price, sold_price = @sold_price, current_stock = @current_stock, description = @description) " +
+                    string sql = "UPDATE product SET department_id = @department_id, productname = @productname, brand = @brand, " +
+                         "bought_price = @bought_price, sold_price = @sold_price, description = @description " +
                          "WHERE productcode = @productcode";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@department_id", Convert.ToInt32(belongingDepartment));
                     cmd.Parameters.AddWithValue("@productname", productName);
                     cmd.Parameters.AddWithValue("@brand", brand);
-                    cmd.Parameters.AddWithValue("@boughtPrice", boughtPrice);
-                    cmd.Parameters.AddWithValue("@soldPrice", soldPrice);
+                    cmd.Parameters.AddWithValue("@bought_price", boughtPrice);
+                    cmd.Parameters.AddWithValue("@sold_price", soldPrice);
                     cmd.Parameters.AddWithValue("@description", description);
                     cmd.Parameters.AddWithValue("@productcode", productcode);
                     conn.Open();
@@ -96,24 +98,26 @@ namespace Proj_Desktop_App.dataAccess
             }
         }
 
-        public void UpdateProduct(int productcode, Departments belongingDepartment, string productName, string brand, double soldPrice, double boughtPrice)
+        public void UpdateProduct(int productcode, Departments belongingDepartment, string productName, string brand, double boughtPrice, double soldPrice)
 
         {
             try
             {
                 using(MySqlConnection conn = base.GetConnection())
                 {
-                    string sql = "UPDATE product SET (department_id = @department_id, productname = @productname, brand = @brand, " +
-                         "bought_price = @bought_price, sold_price = @sold_price, current_stock = @current_stock, description = @description) " +
+                    string sql = "UPDATE product SET department_id = @department_id, productname = @productname, brand = @brand, " +
+                         "bought_price = @bought_price, sold_price = @sold_price " +
                          "WHERE productcode = @productcode";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@department_id", Convert.ToInt32(belongingDepartment));
+
+                    cmd.Parameters.AddWithValue("@department_id", (int)(belongingDepartment));
                     cmd.Parameters.AddWithValue("@productname", productName);
                     cmd.Parameters.AddWithValue("@brand", brand);
-                    cmd.Parameters.AddWithValue("@boughtPrice", boughtPrice);
-                    cmd.Parameters.AddWithValue("@soldPrice", soldPrice);
+                    cmd.Parameters.AddWithValue("@bought_price", boughtPrice);
+                    cmd.Parameters.AddWithValue("@sold_price", soldPrice);
                     cmd.Parameters.AddWithValue("@productcode", productcode);
+
                     conn.Open();
 
                     cmd.ExecuteNonQuery();
@@ -121,7 +125,7 @@ namespace Proj_Desktop_App.dataAccess
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show(e.ToString());
             }
         }
         
@@ -131,8 +135,8 @@ namespace Proj_Desktop_App.dataAccess
             {
                 using (MySqlConnection conn = base.GetConnection())
                 {
-                    string sql = "DELETE FROM product p" +
-                         "WHERE p.productcode = @productcode";
+                    string sql = "DELETE FROM product p " +
+                         "WHERE p.productcode = @productcode;";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@productcode", productcode);
                     conn.Open();
@@ -184,7 +188,7 @@ namespace Proj_Desktop_App.dataAccess
                     string sql = "SELECT p.productcode, p.productname, COUNT(*) AS sales " +
                          "FROM product p INNER JOIN productsales s ON p.productcode = s.product_code " +
                          "GROUP BY p.productcode " +
-                         "ORDER BY sales DESC;";
+                         "ORDER BY sales DESC, p.productname ASC;";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     conn.Open();
@@ -219,7 +223,7 @@ namespace Proj_Desktop_App.dataAccess
                          "FROM product p INNER JOIN productsales s ON p.productcode = s.product_code " +
                          "WHERE s.sales_date > @salesPeriod " +
                          "GROUP BY p.productcode " +
-                         "ORDER BY sales DESC;";
+                         "ORDER BY sales DESC, p.productname ASC;";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@salesPeriod", startPeriod.ToString("yyyy-MM-dd"));
@@ -252,7 +256,7 @@ namespace Proj_Desktop_App.dataAccess
                                  "FROM product p INNER JOIN productsales s ON p.productcode = s.product_code " +
                                  "WHERE s.sales_date > @startPeriod and s.sales_date < @endPeriod " +
                                  "GROUP BY p.productcode " +
-                                 "ORDER BY sales DESC;";
+                                 "ORDER BY sales DESC, p.productname ASC;";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     string from = startPeriod.ToString("yyyy-MM-dd");

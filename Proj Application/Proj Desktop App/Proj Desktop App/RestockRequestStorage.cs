@@ -88,14 +88,35 @@ namespace Proj_Desktop_App
             LoadRestockRequests();
             try
             {
-                List<RestockRequest> acceptedRequests = new List<RestockRequest>();
+                List<RestockRequest> pendingRequests = new List<RestockRequest>();
                 foreach (RestockRequest req in this.requests)
                 {
                     if (req != null)
                         if (req.status == "PENDING")
-                            acceptedRequests.Add(req);
+                            pendingRequests.Add(req);
                 }
-                return acceptedRequests.ToArray();
+                return pendingRequests.ToArray();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return null;
+            }
+        }
+
+        public RestockRequest[] GetPending(Departments department)
+        {
+            LoadRestockRequests();
+            try
+            {
+                List<RestockRequest> pendingRequests = new List<RestockRequest>();
+                foreach (RestockRequest req in this.requests)
+                {
+                    if (req != null)
+                        if (req.status == "PENDING")
+                            pendingRequests.Add(req);
+                }
+                return pendingRequests.ToArray();
             }
             catch (Exception e)
             {

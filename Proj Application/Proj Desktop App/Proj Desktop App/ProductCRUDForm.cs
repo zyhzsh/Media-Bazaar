@@ -13,18 +13,18 @@ namespace Proj_Desktop_App
 {
     public partial class ProductCRUDForm : Form
     {
-        private ProductManagement dtbMan;
-        public ProductCRUDForm()
+        private ProductStorage prdStorage;
+        public ProductCRUDForm(ProductStorage prdStorage)
         {
             InitializeComponent();
-            dtbMan = new ProductManagement();
+            this.prdStorage = prdStorage;
             ReloadProducts();
         }
 
-        private void ReloadProducts()
+        public void ReloadProducts()
         {
             lbProducts.Items.Clear();
-            foreach (Product p in dtbMan.GetAllProducts())
+            foreach (Product p in prdStorage.Products)
             {
                 lbProducts.Items.Add(p);
             }
@@ -38,13 +38,12 @@ namespace Proj_Desktop_App
             }
             else if (lbProducts.SelectedItems.Count <= 0)
             {
-                MessageBox.Show("No products have been selectedS");
+                MessageBox.Show("No products have been selected");
             }
             else
             {
-                ProductManagementForm addProd = new ProductManagementForm((Product)lbProducts.SelectedItem);
+                ProductAddUpdateForm addProd = new ProductAddUpdateForm(this, prdStorage, (Product)lbProducts.SelectedItem);
                 addProd.Show(this);
-                ReloadProducts();
             }
         }
 
@@ -58,7 +57,7 @@ namespace Proj_Desktop_App
             {
                 foreach (Product p in lbProducts.SelectedItems)
                 {
-                    dtbMan.RemoveProduct(p.id);
+                    prdStorage.Remove(p.id);
                 }
                 ReloadProducts();
             }
@@ -66,9 +65,8 @@ namespace Proj_Desktop_App
 
         private void btnAddProduct_Click(object sender, EventArgs e)
         {
-            ProductManagementForm addProd = new ProductManagementForm();
+            ProductAddUpdateForm addProd = new ProductAddUpdateForm(this, prdStorage);
             addProd.Show(this);
-            ReloadProducts();
         }
 
         private void btnProductRefresh_Click(object sender, EventArgs e)

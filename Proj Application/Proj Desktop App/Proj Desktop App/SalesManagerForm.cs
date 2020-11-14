@@ -55,7 +55,7 @@ namespace Proj_Desktop_App
                 ReloadRestockRequests();
                 foreach (Product p in lbProducts.SelectedItems)
                 {
-                    RestockRequest req = new RestockRequest(p.id, p.Name, this.salesManagerBsn, (int)numStockRequest.Value, tbRestockDescription.Text, "PENDING");
+                    RestockRequest req = new RestockRequest(p.id, p.Name, p.Department, this.salesManagerBsn, (int)numStockRequest.Value, tbRestockDescription.Text, "PENDING");
                     reqStorage.Add(req);
                     ReloadRestockRequests();
                 }

@@ -21,12 +21,11 @@ namespace Proj_Desktop_App
             ProductManagement dtbMan = new ProductManagement();
             lbBestSoldProducts.Items.Clear();
             dateTimeSalesFrom.Value.AddDays(-30);
-            Sale[] sales = dtbMan.GetBestSellingProducts(dateTimeSalesFrom.Value);
+            Sale[] sales = dtbMan.GetBestSellingProducts();
             foreach (Sale s in sales)
             {
                 lbBestSoldProducts.Items.Add(s);
             }
-            MessageBox.Show((DateTime.Today.AddDays(-30)).ToString());
         }
 
         private void btnProductStatFilter_Click(object sender, EventArgs e)
@@ -46,7 +45,7 @@ namespace Proj_Desktop_App
             dateTimeSalesTo.Value = DateTime.Today;
             dateTimeSalesFrom.Value = DateTime.Today;
             dateTimeSalesFrom.Value.AddDays(-30);
-            Sale[] sales = dtbMan.GetBestSellingProducts(dateTimeSalesFrom.Value, dateTimeSalesTo.Value);
+            Sale[] sales = dtbMan.GetBestSellingProducts();
             lbBestSoldProducts.Items.Clear();
             foreach (Sale s in sales)
             {

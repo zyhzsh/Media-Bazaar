@@ -143,11 +143,11 @@
     <Compile Include="ProductCRUDForm.Designer.cs">
       <DependentUpon>ProductCRUDForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ProductManagementForm.cs">
+    <Compile Include="ProductAddUpdateForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProductManagementFOrm.Designer.cs">
-      <DependentUpon>ProductManagementForm.cs</DependentUpon>
+    <Compile Include="ProductAddUpdateForm.Designer.cs">
+      <DependentUpon>ProductAddUpdateForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ProductStatistics.cs">
       <SubType>Form</SubType>
@@ -201,8 +201,8 @@
     <EmbeddedResource Include="ProductCRUDForm.resx">
       <DependentUpon>ProductCRUDForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProductManagementFOrm.resx">
-      <DependentUpon>ProductManagementForm.cs</DependentUpon>
+    <EmbeddedResource Include="ProductAddUpdateForm.resx">
+      <DependentUpon>ProductAddUpdateForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProductStatistics.resx">
       <DependentUpon>ProductStatistics.cs</DependentUpon>

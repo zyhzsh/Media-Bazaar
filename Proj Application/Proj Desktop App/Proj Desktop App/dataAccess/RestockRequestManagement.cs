@@ -129,7 +129,7 @@ namespace Proj_Desktop_App.dataAccess
                 using (MySqlConnection conn = base.GetConnection())
                 {
                     string sql = "UPDATE restockrequest " +
-                             "SET judge_bsn = @judge_bsn, description = @judge_desc, status = 'DECLINED' " +
+                             "SET judge_bsn = @judge_bsn, judge_desc = @judge_desc, status = 'DECLINED' " +
                              "WHERE ID = @restock_id;";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     conn.Open();
@@ -179,18 +179,17 @@ namespace Proj_Desktop_App.dataAccess
         private void UpdateProductStock(int productCode, int restockAmount)
         {
             // PRODUCT RESTOCK
-
+            int stock = GetProductStock(productCode) + restockAmount;
             try
             {
                 using (MySqlConnection conn = base.GetConnection())
                 {
                     string sql = "UPDATE product " +
-                             "SET current_stock = @stock" +
-                             "WHERE ID = @product_id;";
+                             "SET current_stock = @stock " +
+                             "WHERE productcode = @product_id;";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     conn.Open();
 
-                    int stock = GetProductStock(productCode) + restockAmount;
                     cmd.Parameters.AddWithValue("@stock", stock);
                     cmd.Parameters.AddWithValue("@product_id", productCode);
 
@@ -199,7 +198,7 @@ namespace Proj_Desktop_App.dataAccess
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show(e.ToString());
             }
             ///PRODUCT RESTOCK
         }
@@ -235,6 +234,7 @@ namespace Proj_Desktop_App.dataAccess
                     request = new RestockRequest(Convert.ToInt32(dr["ID"]),
                                                             Convert.ToInt32(dr["productcode"]),
                                                             dr["productname"].ToString(),
+                                                            (Departments)dr["department_id"],
                                                             Convert.ToInt32(dr["requester_bsn"]),
                                                             Convert.ToInt32(dr["judge_bsn"]),
                                                             Convert.ToInt32(dr["restocker_bsn"]),
@@ -249,6 +249,7 @@ namespace Proj_Desktop_App.dataAccess
                     request = new RestockRequest(Convert.ToInt32(dr["ID"]),
                                                             Convert.ToInt32(dr["productcode"]),
                                                             dr["productname"].ToString(),
+                                                            (Departments)(dr["department_id"]),
                                                             Convert.ToInt32(dr["requester_bsn"]),
                                                             Convert.ToInt32(dr["judge_bsn"]),
                                                             Convert.ToInt32(dr["restock_amount"]),
@@ -261,6 +262,7 @@ namespace Proj_Desktop_App.dataAccess
                     request = new RestockRequest(Convert.ToInt32(dr["ID"]),
                                                             Convert.ToInt32(dr["productcode"]),
                                                             dr["productname"].ToString(),
+                                                            (Departments)(dr["department_id"]),
                                                             Convert.ToInt32(dr["requester_bsn"]),
                                                             Convert.ToInt32(dr["restock_amount"]),
                                                             requester_desc,

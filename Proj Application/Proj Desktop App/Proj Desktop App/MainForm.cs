@@ -53,7 +53,7 @@ namespace Proj_Desktop_App
                 // Schedule
 
                 tabProducts.Visible = true;
-                productCRUD = new ProductCRUDForm();
+                productCRUD = new ProductCRUDForm(prdStorage);
                 InitializeForm(productCRUD);
 
                 tabStatistics.Visible = true;
