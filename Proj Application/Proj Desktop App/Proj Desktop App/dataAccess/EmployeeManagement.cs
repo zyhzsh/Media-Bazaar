@@ -13,7 +13,7 @@ namespace Proj_Desktop_App.dataAccess
     class EmployeeManagement : DatabaseConnection
     {
         public EmployeeManagement() : base() { }
-        
+
         public Employee GetEmployee(int bsn)
         {
             try
@@ -22,20 +22,15 @@ namespace Proj_Desktop_App.dataAccess
                 {
                     string sql =
                         "SELECT * " +
-                        "FROM employee e " +
-                        "INNER JOIN contract c " +
-                        "ON e.BSN = c.BSN " +
-                        "WHERE e.BSN = @bsn " +
-                        "AND c.is_active = TRUE " +
-                        "ORDER BY start_date DESCs" +
-                        "LIMIT 1;";
+                        "FROM employee " +
+                        "WHERE BSN = @bsn;";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@bsn", bsn);
                     conn.Open();
-                    MySqlDataReader dr = cmd.ExecuteReader();
-                    if (dr.Read())
+                    MySqlDataReader empl = cmd.ExecuteReader();
+                    if (empl.Read())
                     {
-                        return InitializeEmployee(dr);
+                        return InitializeEmployee(empl);
                     }
                     else
                     {
@@ -47,7 +42,6 @@ namespace Proj_Desktop_App.dataAccess
             {
                 return null;
             }
-
         }
 
         public Employee[] GetAllEmployees()
@@ -57,18 +51,14 @@ namespace Proj_Desktop_App.dataAccess
                 using (MySqlConnection conn = base.GetConnection())
                 {
                     string sql =
-                        "SELECT * FROM employee e " +
-                        "INNER JOIN contract c " +
-                        "ON e.BSN = c.BSN " +
-                        "WHERE c.is_active = 1 " +
-                        "GROUP BY e.BSN; ";
+                        "SELECT * FROM employee e;";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     conn.Open();
-                    MySqlDataReader dr = cmd.ExecuteReader();
+                    MySqlDataReader empl = cmd.ExecuteReader();
                     List<Employee> employees = new List<Employee>();
-                    while (dr.Read())
+                    while (empl.Read())
                     {
-                        Employee employee = InitializeEmployee(dr);
+                        Employee employee = InitializeEmployee(empl);
                         if (employee != null)
                         {
                             employees.Add(employee);
@@ -78,8 +68,9 @@ namespace Proj_Desktop_App.dataAccess
                     return employees.ToArray();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                MessageBox.Show(ex.ToString());
                 return null;
             }
         }
@@ -186,16 +177,6 @@ namespace Proj_Desktop_App.dataAccess
             }
         }
 
-        public bool Promote()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool TerminateContract()
-        {
-            throw new NotImplementedException();
-        }
-
         private string GenerateUsername(Employee employee)
         {
             if (employee != null)
@@ -230,27 +211,21 @@ namespace Proj_Desktop_App.dataAccess
             return password;
         }
 
-        private Employee InitializeEmployee(MySqlDataReader dr)
+        private Employee InitializeEmployee(MySqlDataReader empl)
         {
             try
             {
                 Employee employee = new Employee(
-                    Convert.ToInt32(dr["BSN"]),
-                    dr["first_name"].ToString(),
-                    dr["last_name"].ToString(),
-                    Convert.ToChar(dr["gender"]),
-                    Convert.ToDateTime(dr["date_birth"]),
-                    dr["languages"].ToString(),
-                    dr["certificates"].ToString(),
-                    dr["phone"].ToString(),
-                    dr["address"].ToString(),
-                    dr["contact_email"].ToString(),
-                    dr.GetDateTime("start_date"),
-                    dr.GetDateTime("end_date"),
-                    (PositionType)dr["position_id"],
-                    (Departments)dr["department_id"],
-                    Convert.ToDecimal(dr["fte"])
-                    );
+                    Convert.ToInt32(empl["BSN"]),
+                    empl["first_name"].ToString(),
+                    empl["last_name"].ToString(),
+                    Convert.ToChar(empl["gender"]),
+                    Convert.ToDateTime(empl["date_birth"]),
+                    empl["languages"].ToString(),
+                    empl["certificates"].ToString(),
+                    empl["phone"].ToString(),
+                    empl["address"].ToString(),
+                    empl["contact_email"].ToString());
                 return employee;
             }
             catch (Exception ex)

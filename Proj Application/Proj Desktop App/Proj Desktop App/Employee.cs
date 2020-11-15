@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proj_Desktop_App.dataAccess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -50,11 +51,10 @@ namespace Proj_Desktop_App
         }
 
         /// <summary>
-        /// For existing employees. Requires employee info and all contacts
+        /// For loading employees from DB. Requires employee info
         /// </summary>
         public Employee(int BSN, string firstName, string lastName, char gender, DateTime birthDate,
-            string languages, string certificates, string phoneNumber, string address, string contactEmail,
-            Contract[] contracts)
+            string languages, string certificates, string phoneNumber, string address, string contactEmail)
         {
             this.BSN = BSN;
             this.firstName = firstName;
@@ -67,7 +67,6 @@ namespace Proj_Desktop_App
             this.languages = languages;
             this.contactEmail = contactEmail;
             this.contracts = new List<Contract>();
-            this.contracts.AddRange(contracts);
         }
 
         /// <summary>
@@ -88,7 +87,16 @@ namespace Proj_Desktop_App
 
         public void AddContract(DateTime startDate, DateTime endDate, Departments department, PositionType position, decimal fte)
         {
-            this.contracts.Add(new Contract(startDate, endDate, contracts.Count + 1, department, position, 1000 /* get starting salary */, fte));
+            ContractManagement conrtMan = new ContractManagement();
+            this.contracts.Add(new Contract(startDate, endDate, contracts.Count + 1, department, position, conrtMan.GetStartingSalary(position), fte));
+        }
+
+        public void AddContracts(Contract[] contracts)
+        {
+            if (contracts != null && contracts.Length > 0)
+            {
+                this.contracts.AddRange(contracts);
+            }
         }
 
         public PositionType GetPosition()
@@ -130,7 +138,7 @@ namespace Proj_Desktop_App
             }
         }
 
-        private Contract GetActiveContract()
+        public Contract GetActiveContract()
         {
             foreach (Contract contract in contracts)
             {

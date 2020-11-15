@@ -36,6 +36,13 @@ namespace Proj_Desktop_App
             {
                 this.employees.AddRange(employees);
             }
+
+            ContractManagement contrMan = new ContractManagement();
+            foreach (Employee employee in employees)
+            {
+                Contract[] contracts = contrMan.GetAllContracts(employee.GetBSN());
+                employee.AddContracts(contracts);
+            }
         }
 
         /// <summary>

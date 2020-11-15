@@ -25,10 +25,11 @@ namespace Proj_Desktop_App
 
         //private EmployeeStorage empStorage;
 
-        public MainForm(LoginForm loginForm, Store store, PositionType position)
+        public MainForm(LoginForm loginForm, Store store, Employee currentUser)
         {
             InitializeComponent();
             this.Visible = true;
+            PositionType position = currentUser.GetPosition();
             if (position == PositionType.Administrator)
             {
                 //empStorage = new EmployeeStorage();
@@ -57,7 +58,7 @@ namespace Proj_Desktop_App
                 InitializeForm(productStatistics);
 
                 tabRestocks.Visible = true;
-                restocks = new PendingRestocksForm(100000000);
+                restocks = new PendingRestocksForm(currentUser.GetBSN());
                 InitializeForm(restocks);
 
                 tabSchedule.Visible = true;
@@ -69,7 +70,7 @@ namespace Proj_Desktop_App
             else if (position == PositionType.Depot_Worker)
             {
                 tabRestocks.Visible = true;
-                restocks = new WorkerStockRequests(100000000);
+                restocks = new WorkerStockRequests(currentUser.GetBSN());
                 InitializeForm(restocks);
 
                 tabRestocks.PerformClick();
@@ -77,7 +78,7 @@ namespace Proj_Desktop_App
             else if (position == PositionType.Sales_Manager)
             {
                 tabRestocks.Visible = true;
-                restocks = new SalesManagerForm(100000000);
+                restocks = new SalesManagerForm(currentUser.GetBSN());
                 InitializeForm(restocks);
 
                 tabSchedule.Visible = true;
@@ -87,11 +88,10 @@ namespace Proj_Desktop_App
                 tabRestocks.PerformClick();
             }
             else { this.Close(); }
-           
 
             this.loginForm = loginForm;
 
-            lblUser.Text = $"{position} | <user>";
+            lblUser.Text = $"{position} | {currentUser.firstName} {currentUser.lastName}";
         }
 
         private void InitializeForm(Form form)

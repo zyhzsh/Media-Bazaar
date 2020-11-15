@@ -101,6 +101,13 @@
       <DependentUpon>AdminForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Contract.cs" />
+    <Compile Include="ContractUpdateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ContractUpdateForm.Designer.cs">
+      <DependentUpon>ContractUpdateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dataAccess\ContractManagement.cs" />
     <Compile Include="dataAccess\DatabaseConnection.cs" />
     <Compile Include="dataAccess\EmployeeManagement.cs" />
     <Compile Include="AssignedShift.cs" />
@@ -182,6 +189,9 @@
     </Compile>
     <EmbeddedResource Include="AdminForm.resx">
       <DependentUpon>AdminForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContractUpdateForm.resx">
+      <DependentUpon>ContractUpdateForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PendingRestocksForm.resx">
       <DependentUpon>PendingRestocksForm.cs</DependentUpon>

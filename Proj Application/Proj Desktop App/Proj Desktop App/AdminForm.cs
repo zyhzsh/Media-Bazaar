@@ -74,10 +74,14 @@ namespace Proj_Desktop_App
             {
                 lbEmployees.SelectedIndex = lbEmployees.Items.IndexOf(selectedEmployee);
             }
-            else
+            else if(employees.Length > 0)
             {
                 lbEmployees.SelectedIndex = 0;
             }
+            //else
+            //{
+            //    lbEmployees.Items.Add("No employees to show");
+            //}
         }
 
         private void cbShowEmployed_CheckedChanged(object sender, EventArgs e)
@@ -133,12 +137,19 @@ namespace Proj_Desktop_App
                         lvContracts.Items.Add(item);
                         string[] subitems = contract.ToString().Split(',');
                         item.SubItems.AddRange(subitems);
+                        // Indicate if contract is active
                         Color isActive = Color.Salmon;
                         if (contract.IsActive())
                         {
                             isActive = Color.LightGreen;
                         }
                         item.BackColor = isActive;
+                        // Indicate if contract will end soon
+                        if (contract.IsCloseToEndDate())
+                        {
+                            item.SubItems[1].Text += '*'; 
+                            item.SubItems[1].ForeColor = Color.Red;
+                        }
                     }
 
                     // If employee isn't employed you can't update their details
@@ -166,17 +177,47 @@ namespace Proj_Desktop_App
 
         private void btnPromote_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            if (selectedEmployee != null)
+            {
+                Contract activeContract = selectedEmployee.GetActiveContract();
+                if (activeContract != null)
+                {
+                    new ContractUpdateForm(store, selectedEmployee, true);
+                }
+                else
+                {
+                    MessageBox.Show("This employee deosn't have an active contract.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an employee form the list.");
+            }
         }
 
         private void btnExtendCon_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            //new ContractUpdateForm();
         }
 
         private void btnTerminateCon_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            if (selectedEmployee != null)
+            {
+                Contract activeContract = selectedEmployee.GetActiveContract();
+                if (activeContract != null)
+                {
+                    new ContractUpdateForm(store, selectedEmployee, false);
+                }
+                else
+                {
+                    MessageBox.Show("This employee deosn't have an active contract.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an employee form the list.");
+            }
         }
     }
 }

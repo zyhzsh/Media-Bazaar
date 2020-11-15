@@ -30,7 +30,7 @@ namespace Proj_Desktop_App
 
         public bool Terminate(DateTime date)
         {
-            if (IsActive() && date < EndDate)
+            if (IsActive() && date < EndDate && date >= DateTime.Now)
             {
                 // End the contract
                 EndDate = date;
@@ -59,6 +59,18 @@ namespace Proj_Desktop_App
         public bool IsActive()
         {
             if (DateTime.Now >= StartDate && DateTime.Now <= EndDate)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool IsCloseToEndDate()
+        {
+            if (DateTime.Now.AddMonths(1) >= EndDate)
             {
                 return true;
             }
