@@ -62,5 +62,14 @@ class UserModel
 
     }
 
+    public function RequestChangeUserInformation($BSN, $phone, $adress, $email)
+    {
+        $dbh = new Dbh();
+        $sql = "INSERT INTO `employeechange` (`BSN`, `first_name`, `last_name`, `phone`, `adress`, `languages`, `certificates`, `contact_email` VALUES (:BSN, :firstName, :lastName, :phone, :adress, :languages, :certificates, :email ";
+        $conn = $dbh->connection();
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([':BSN' => $BSN, ':firstName'=> $x, ':lastName'=>$x , ':phone'=>$phone, ':adress'=>$adress, ':certificates'=>$x , ':email'=>$email]);
+    }
+
 
 }

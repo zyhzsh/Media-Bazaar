@@ -32,6 +32,12 @@ if(isset($_POST['loginPassword'])&&isset($_POST['loginEmail'])){
       return true;
   }
 }
+
+function ChangeUserInfoRequest(){
+   #check if anything is filled in
+
+   #check what is filled in, pass that. if nothing is filled in give null
+}
 }
 
 
@@ -43,4 +49,3 @@ if(isset($_POST['logoutBtn']) && preg_match("/\b(logout)\b/", $_POST['logoutBtn'
    echo 'session stoped';
    return true;
 }
-?>
