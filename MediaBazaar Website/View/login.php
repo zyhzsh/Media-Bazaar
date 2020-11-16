@@ -14,11 +14,7 @@
 <header>
 </header>
 <body>
-
-
-<h2>Sign in</h2> 
-  
-      
+<h2>Sign in</h2>     
          <form class = "form-signin" role = "form" 
             action ="" method = "post">
             <h4 class = "form-signin-heading">
@@ -33,10 +29,6 @@
             <button class = "btn btn-lg btn-primary btn-block" type = "submit" 
                name = "login">Login</button>
          </form>
-  
-
-
-
 </body>
 
 <footer>
