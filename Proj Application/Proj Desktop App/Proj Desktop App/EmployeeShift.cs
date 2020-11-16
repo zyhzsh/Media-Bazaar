@@ -11,9 +11,23 @@ namespace Proj_Desktop_App
         protected Employee employee;
         protected DateTime date;
         protected ShiftType shiftType;
-        abstract public Employee GetEmployee();
-        abstract public DateTime GetDate();
-        abstract public ShiftType GetShiftType();
+        public Employee GetEmployee() {return this.employee;}
+        public DateTime GetDate() { return this.date; }
+        public ShiftType GetShiftType() { return this.shiftType; }
+        public void UpDateShift(ShiftType shiftType) { this.shiftType = shiftType; }
+        public string GetShiftTypeToString()
+        {
+            switch (shiftType)
+            {
+                case ShiftType.Evening: return "Evening";
+                case ShiftType.Morning: return "Monring";
+                case ShiftType.Afternoon: return "Afternoon";
+                case ShiftType.Morning_Afternoon: return "Monrning,Afternoon";
+                case ShiftType.Morning_Evening: return "Monring,Evening";
+                case ShiftType.Afternoon_Evening: return "Afternoon,Evening";
+            }
+            return "";
+        }
     }
 
 }
