@@ -22,20 +22,15 @@ namespace Proj_Desktop_App.dataAccess
                 {
                     string sql =
                         "SELECT * " +
-                        "FROM employee e " +
-                        "INNER JOIN contract c " +
-                        "ON e.BSN = c.BSN " +
-                        "WHERE e.BSN = @bsn " +
-                        "AND c.is_active = TRUE " +
-                        "ORDER BY start_date DESCs" +
-                        "LIMIT 1;";
+                        "FROM employee " +
+                        "WHERE BSN = @bsn;";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@bsn", bsn);
                     conn.Open();
-                    MySqlDataReader dr = cmd.ExecuteReader();
-                    if (dr.Read())
+                    MySqlDataReader empl = cmd.ExecuteReader();
+                    if (empl.Read())
                     {
-                        return InitializeEmployee(dr);
+                        return InitializeEmployee(empl);
                     }
                     else
                     {
@@ -47,7 +42,6 @@ namespace Proj_Desktop_App.dataAccess
             {
                 return null;
             }
-
         }
 
         public Employee[] GetAllEmployees()
@@ -57,18 +51,14 @@ namespace Proj_Desktop_App.dataAccess
                 using (MySqlConnection conn = base.GetConnection())
                 {
                     string sql =
-                        "SELECT * FROM employee e " +
-                        "INNER JOIN contract c " +
-                        "ON e.BSN = c.BSN " +
-                        "WHERE c.is_active = 1 " +
-                        "GROUP BY e.BSN; ";
+                        "SELECT * FROM employee e;";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     conn.Open();
-                    MySqlDataReader dr = cmd.ExecuteReader();
+                    MySqlDataReader empl = cmd.ExecuteReader();
                     List<Employee> employees = new List<Employee>();
-                    while (dr.Read())
+                    while (empl.Read())
                     {
-                        Employee employee = InitializeEmployee(dr);
+                        Employee employee = InitializeEmployee(empl);
                         if (employee != null)
                         {
                             employees.Add(employee);
@@ -78,8 +68,9 @@ namespace Proj_Desktop_App.dataAccess
                     return employees.ToArray();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                MessageBox.Show(ex.ToString());
                 return null;
             }
         }
@@ -98,7 +89,11 @@ namespace Proj_Desktop_App.dataAccess
                             "contact_email, username, password) " +
                             "VALUES(@bsn, @first_name, @last_name, " +
                             "@gender, @phone, @date_birth, @address, @languages, @certificates, " +
-                            "@email, @username, @password);";
+                            "@email, @username, @password); " +
+                            "INSERT INTO contract (BSN, position_id, department_id, " +
+                            "start_date, end_date,iteration, salary, fte) " +
+                            "VALUES (@bsn, @position_id, @department_id, " +
+                            "@start_date, @end_date, @iteration, @salary, @fte);";
                         MySqlCommand cmd = new MySqlCommand(sql, conn);
                         cmd.Parameters.AddWithValue("@bsn", employee.GetBSN());
                         cmd.Parameters.AddWithValue("@first_name", employee.firstName);
@@ -112,6 +107,14 @@ namespace Proj_Desktop_App.dataAccess
                         cmd.Parameters.AddWithValue("@email", employee.contactEmail);
                         cmd.Parameters.AddWithValue("@username", GenerateUsername(employee));
                         cmd.Parameters.AddWithValue("@password", GeneratePassword(8));
+                        Contract contract = employee.GetLatestContract();
+                        cmd.Parameters.AddWithValue("@position_id", (int)contract.Position);
+                        cmd.Parameters.AddWithValue("@department_id", (int)contract.Department);
+                        cmd.Parameters.AddWithValue("@start_date", contract.StartDate.ToString("yyyy-MM-dd"));
+                        cmd.Parameters.AddWithValue("@end_date", contract.EndDate.ToString("yyyy-MM-dd"));
+                        cmd.Parameters.AddWithValue("@iteration", contract.Iteration);
+                        cmd.Parameters.AddWithValue("@salary", contract.Salary);
+                        cmd.Parameters.AddWithValue("@fte", contract.Fte);
                         conn.Open();
                         int result = cmd.ExecuteNonQuery();
                         return true;
@@ -208,75 +211,27 @@ namespace Proj_Desktop_App.dataAccess
             return password;
         }
 
-        private Employee InitializeEmployee(MySqlDataReader dr)
+        private Employee InitializeEmployee(MySqlDataReader empl)
         {
             try
             {
-                PositionType position = GetPosition(Convert.ToInt32(dr["position_id"]));
-                Departments department = GetDepartment(Convert.ToInt32(dr["department_id"]));
                 Employee employee = new Employee(
-                    Convert.ToInt32(dr["BSN"]),
-                    dr["first_name"].ToString(),
-                    dr["last_name"].ToString(),
-                    Convert.ToChar(dr["gender"]),
-                    Convert.ToDateTime(dr["date_birth"]),
-                    dr["languages"].ToString(),
-                    dr["certificates"].ToString(),
-                    dr["phone"].ToString(),
-                    dr["address"].ToString(),
-                    dr["contact_email"].ToString(),
-                    dr.GetDateTime("start_date"),
-                    dr.GetDateTime("end_date"),
-                    position,
-                    department,
-                    Convert.ToDecimal(dr["fte"])
-                    );
+                    Convert.ToInt32(empl["BSN"]),
+                    empl["first_name"].ToString(),
+                    empl["last_name"].ToString(),
+                    Convert.ToChar(empl["gender"]),
+                    Convert.ToDateTime(empl["date_birth"]),
+                    empl["languages"].ToString(),
+                    empl["certificates"].ToString(),
+                    empl["phone"].ToString(),
+                    empl["address"].ToString(),
+                    empl["contact_email"].ToString());
                 return employee;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
                 return null;
-            }
-        }
-
-        private PositionType GetPosition(int positionId)
-        {
-            switch (positionId)
-            {
-                case 1:
-                    return PositionType.Sales_Worker;
-                case 2:
-                    return PositionType.Sales_Manager;
-                case 3:
-                    return PositionType.Depot_Worker;
-                case 4:
-                    return PositionType.Depot_Manager;
-                case 5:
-                    return PositionType.Administrator;
-                default:
-                    return PositionType.Other;
-            }
-        }
-
-        private Departments GetDepartment(int departmentId)
-        {
-            switch (departmentId)
-            {
-                case 1:
-                    return Departments.floorOne;
-                case 2:
-                    return Departments.floorTwo;
-                case 3:
-                    return Departments.floorThree;
-                case 4:
-                    return Departments.floorFour;
-                case 5:
-                    return Departments.warehouse;
-                case 6:
-                    return Departments.office;
-                default:
-                    throw new Exception("Depatemnt id doesn't exist");
             }
         }
     }

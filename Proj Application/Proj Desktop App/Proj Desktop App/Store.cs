@@ -36,6 +36,13 @@ namespace Proj_Desktop_App
             {
                 this.employees.AddRange(employees);
             }
+
+            ContractManagement contrMan = new ContractManagement();
+            foreach (Employee employee in employees)
+            {
+                Contract[] contracts = contrMan.GetAllContracts(employee.GetBSN());
+                employee.AddContracts(contracts);
+            }
         }
 
         /// <summary>
@@ -111,64 +118,61 @@ namespace Proj_Desktop_App
             return null;
         }
 
-        /// <summary>
-        /// Get all employees
-        /// </summary>
-        public Employee[] GetEmployees()
-        {
-            return employees.ToArray();
-        }
 
         /// <summary>
-        /// Get all employees by partial bsn
+        /// Get employees by partial bsn
         /// </summary>
-        public Employee[] GetEmployees(int bsn)
-        {
-            // TO BE IMPLEMENTED
-            return employees.ToArray();
-        }
-
-        /// <summary>
-        /// Get all employees by partial bsn
-        /// </summary>
-        public Employee[] GetEmployees(bool employed, int bsn)
-        {
-            // TO BE IMPLEMENTED
-            return employees.ToArray();
-        }
-
-        /// <summary>
-        /// Get all employees by partial last name
-        /// </summary>
-        public Employee[] GetEmployees(string lastName)
-        {
-            // TO BE IMPLEMENTED
-            return employees.ToArray();
-        }
-
-        /// <summary>
-        /// Get employed employees by partial last name
-        /// </summary>
-        public Employee[] GetEmployees(bool employed, string lastName)
-        {
-            // TO BE IMPLEMENTED
-            return employees.ToArray();
-        }
-
-        /// <summary>
-        /// Get employees by their status
-        /// </summary>
-        public Employee[] GetEmployees(bool employed)
+        public Employee[] GetEmployees(bool onlyEmployed, int bsn)
         {
             List<Employee> employees = new List<Employee>();
-            foreach (Employee empl in this.employees)
+            foreach (Employee empl in GetEmployees(onlyEmployed))
             {
-                if(empl.IsEmployed() == employed)
+                if (empl.GetBSN().ToString().Contains(bsn.ToString()))
                 {
                     employees.Add(empl);
                 }
             }
             return employees.ToArray();
+        }
+
+        /// <summary>
+        /// Get employees by partial name
+        /// </summary>
+        public Employee[] GetEmployees(bool onlyEmployed, string name)
+        {
+            List<Employee> employees = new List<Employee>();
+            foreach (Employee empl in GetEmployees(onlyEmployed))
+            {
+                string fullName = $"{empl.firstName} {empl.lastName}".ToLower(); ;
+                if ((fullName).Contains(name.ToLower()))
+                {
+                    employees.Add(empl);
+                }
+            }
+            return employees.ToArray();
+        }
+
+        /// <summary>
+        /// Get all / only employed employees
+        /// </summary>
+        public Employee[] GetEmployees(bool onlyEmployed)
+        {
+            if (onlyEmployed)
+            {
+                List<Employee> employees = new List<Employee>();
+                foreach (Employee empl in this.employees)
+                {
+                    if (empl.IsEmployed() == onlyEmployed)
+                    {
+                        employees.Add(empl);
+                    }
+                }
+                return employees.ToArray();
+            }
+            else
+            {
+                return this.employees.ToArray();
+            }
         }
 
         /// <summary>

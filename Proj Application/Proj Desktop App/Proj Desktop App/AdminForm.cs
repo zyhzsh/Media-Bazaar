@@ -21,8 +21,9 @@ namespace Proj_Desktop_App
             this.store = store;
             store.EmployeeChanged += Store_EmployeeChanged;
             cbShowEmployed.Checked = true;
-            cbSearchBy.SelectedIndex = 0;
             selectedEmployee = null;
+            cbSearchBy.Items.AddRange( new string[] { "Name", "BSN" });
+            cbSearchBy.SelectedIndex = 0;
             UpdateEmployees(false);
         }
 
@@ -37,49 +38,31 @@ namespace Proj_Desktop_App
 
         public void UpdateEmployees(bool searching)
         {
-            Employee[] employees;
+            Employee[] employees = null;
 
             if (searching)
             {
-                bool searchByString = true;
-                if (cbSearchBy.SelectedItem.ToString() == "BSN")
+                string searchBy = cbSearchBy.SelectedItem.ToString();
+                if (searchBy == "Name")
                 {
-                    searchByString = false;
+                    employees = store.GetEmployees(cbShowEmployed.Checked, tbSearch.Text);
                 }
-
-                if (cbShowEmployed.Checked)
+                else if (searchBy == "BSN")
                 {
-                    if (searchByString)
+                    try
                     {
-                        employees = store.GetEmployees(true, tbSearch.Text);
+                        employees = store.GetEmployees(cbShowEmployed.Checked, Convert.ToInt32(tbSearch.Text));
                     }
-                    else
+                    catch (Exception)
                     {
-                        employees = store.GetEmployees(true, Convert.ToInt32(tbSearch.Text));
-                    }
-                }
-                else
-                {
-                    if (searchByString)
-                    {
-                        employees = store.GetEmployees(tbSearch.Text);
-                    }
-                    else
-                    {
-                        employees = store.GetEmployees(Convert.ToInt32(tbSearch.Text));
+                        MessageBox.Show("Please input only numbers to search by BSN to");
+                        return;
                     }
                 }
             }
             else
             {
-                if (cbShowEmployed.Checked)
-                {
-                    employees = store.GetEmployees(true);
-                }
-                else
-                {
-                    employees = store.GetEmployees();
-                }
+                employees = store.GetEmployees(cbShowEmployed.Checked);
             }
 
             // Load employees into listbox
@@ -91,10 +74,14 @@ namespace Proj_Desktop_App
             {
                 lbEmployees.SelectedIndex = lbEmployees.Items.IndexOf(selectedEmployee);
             }
-            else
+            else if(employees.Length > 0)
             {
                 lbEmployees.SelectedIndex = 0;
             }
+            //else
+            //{
+            //    lbEmployees.Items.Add("No employees to show");
+            //}
         }
 
         private void cbShowEmployed_CheckedChanged(object sender, EventArgs e)
@@ -105,6 +92,11 @@ namespace Proj_Desktop_App
         private void btnSearch_Click(object sender, EventArgs e)
         {
             UpdateEmployees(true);
+        }
+
+        private void btnShowAll_Click(object sender, EventArgs e)
+        {
+            UpdateEmployees(false);
         }
 
         private void lbEmployees_SelectedIndexChanged(object sender, EventArgs e)
@@ -145,12 +137,19 @@ namespace Proj_Desktop_App
                         lvContracts.Items.Add(item);
                         string[] subitems = contract.ToString().Split(',');
                         item.SubItems.AddRange(subitems);
+                        // Indicate if contract is active
                         Color isActive = Color.Salmon;
                         if (contract.IsActive())
                         {
                             isActive = Color.LightGreen;
                         }
                         item.BackColor = isActive;
+                        // Indicate if contract will end soon
+                        if (contract.IsCloseToEndDate())
+                        {
+                            item.SubItems[1].Text += '*'; 
+                            item.SubItems[1].ForeColor = Color.Red;
+                        }
                     }
 
                     // If employee isn't employed you can't update their details
@@ -178,17 +177,47 @@ namespace Proj_Desktop_App
 
         private void btnPromote_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            if (selectedEmployee != null)
+            {
+                Contract activeContract = selectedEmployee.GetActiveContract();
+                if (activeContract != null)
+                {
+                    new ContractUpdateForm(store, selectedEmployee, true);
+                }
+                else
+                {
+                    MessageBox.Show("This employee deosn't have an active contract.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an employee form the list.");
+            }
         }
 
         private void btnExtendCon_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            //new ContractUpdateForm();
         }
 
         private void btnTerminateCon_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            if (selectedEmployee != null)
+            {
+                Contract activeContract = selectedEmployee.GetActiveContract();
+                if (activeContract != null)
+                {
+                    new ContractUpdateForm(store, selectedEmployee, false);
+                }
+                else
+                {
+                    MessageBox.Show("This employee deosn't have an active contract.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an employee form the list.");
+            }
         }
     }
 }

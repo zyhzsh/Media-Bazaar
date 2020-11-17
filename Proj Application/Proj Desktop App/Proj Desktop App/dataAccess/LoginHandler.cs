@@ -14,52 +14,6 @@ namespace Proj_Desktop_App
     {
         public LoginHandler() : base() { }
 
-        public PositionType CheckLogin(string username, string password)
-        {
-            try
-            {
-                using (MySqlConnection conn = base.GetConnection())
-                {
-                    string sql = "SELECT position_name FROM position WHERE position_id IN (SELECT c.position_id FROM contract c INNER JOIN employee e ON c.BSN = e.BSN WHERE e.username = @username AND e.password = @password);";
-                    MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    conn.Open();
-                    cmd.Parameters.AddWithValue("@username", username);
-                    cmd.Parameters.AddWithValue("@password", password);
-                    MySqlDataReader dr = cmd.ExecuteReader();
-                    string positionStr = "";
-                    if (dr.Read())
-                    {
-                        positionStr = dr[0].ToString();
-                    }
-
-                    if (positionStr == "Administrator")
-                    {
-                        return PositionType.Administrator;
-                    }
-                    else if (positionStr == "DepotManager")
-                    {
-                        return PositionType.Depot_Manager;
-                    }
-                    else if (positionStr == "SalesManager")
-                    {
-                        return PositionType.Sales_Manager;
-                    }
-                    else if (positionStr == "DepotWorker")
-                    {
-                        return PositionType.Depot_Worker;
-                    }
-                    else
-                    {
-                        return PositionType.Other;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                return PositionType.Other;
-            }
-        }
-
         public int Login(string username, string password)
         {
             try

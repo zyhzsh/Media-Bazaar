@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proj_Desktop_App.dataAccess;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -44,16 +45,36 @@ namespace Proj_Desktop_App
 
         private void btLogin_Click(object sender, EventArgs e)
         {
-            PositionType position = loginHandler.CheckLogin(tbLogInUsername.Text, tbLogInPassword.Text);
+            int bsn = loginHandler.Login(tbLogInUsername.Text, tbLogInPassword.Text);
 
             // Credentials are correct
-            if (position != PositionType.Other)
+            if (bsn != -1)
             {
-                // Open app for particualr position
-                new MainForm(this, mediaBazaar, position);
-                this.Visible = false;
-                tbLogInUsername.Clear();
-                tbLogInPassword.Clear();
+                // Open app for particualr employee
+                EmployeeManagement emplMan = new EmployeeManagement();
+                Employee currentUser = emplMan.GetEmployee(bsn);
+
+                if (currentUser != null)
+                {
+                    ContractManagement contrMan = new ContractManagement();
+                    currentUser.AddContracts(contrMan.GetActiveContract(bsn));
+
+                    if (currentUser.IsEmployed())
+                    {
+                        new MainForm(this, mediaBazaar, currentUser);
+                        this.Visible = false;
+                        tbLogInUsername.Clear();
+                        tbLogInPassword.Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show("You no longer have permision to log in to the application.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Failed.");
+                }
             }
             else
             {

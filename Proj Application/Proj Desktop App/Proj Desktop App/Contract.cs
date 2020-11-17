@@ -8,29 +8,69 @@ namespace Proj_Desktop_App
 {
     public class Contract
     {
-        private DateTime startDate;
-        private DateTime endDate;
+        public DateTime StartDate { get; private set; }
+        public DateTime EndDate { get; private set; }
         public int Iteration { get; private set; }
         public Departments Department { get; private set; }
         public PositionType Position { get; private set; }
-        private decimal salary;
+        public decimal Salary { get; private set; }
         public decimal Fte { get; private set; }
 
         public Contract(DateTime startDate, DateTime endDate, int iteration, Departments department,
                                 PositionType position, decimal salary, decimal fte)
         {
-            this.startDate = startDate;
-            this.endDate = endDate;
+            this.StartDate = startDate;
+            this.EndDate = endDate;
             this.Iteration = iteration;
             this.Department = department;
             this.Position = position;
-            this.salary = salary;
+            this.Salary = salary;
             this.Fte = fte;
+        }
+
+        public bool Terminate(DateTime date)
+        {
+            if (IsActive() && date < EndDate && date >= DateTime.Now)
+            {
+                // End the contract
+                EndDate = date;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool Promote(decimal percent)
+        {
+            if (IsActive())
+            {
+                // Increse the salary
+                Salary += Salary * percent;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public bool IsActive()
         {
-            if (DateTime.Now >= startDate && DateTime.Now <= endDate)
+            if (DateTime.Now >= StartDate && DateTime.Now <= EndDate)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool IsCloseToEndDate()
+        {
+            if (DateTime.Now.AddMonths(1) >= EndDate)
             {
                 return true;
             }
@@ -42,16 +82,28 @@ namespace Proj_Desktop_App
 
         public override string ToString()
         {
-            string endDate = "none";
-            if (endDate != null)
+            string endDateStr = "N/A";
+            if (EndDate != null)
             {
-                endDate = this.endDate.ToString("dd/MM/yyyy");
+                endDateStr = EndDate.ToString("dd/MM/yyyy");
             }
-            string isActive = "not active";
-            if (IsActive()) { isActive = "active"; }
+
+            string status;
+            if (EndDate < DateTime.Now)
+            {
+                status = "ended";
+            }
+            else if (StartDate > DateTime.Now)
+            {
+                status = "not started";
+            }
+            else
+            {
+                status = "active";
+            }
 
 
-            return $"{startDate:dd/MM/yyyy},{endDate},{Position},{Department},{Fte},€{salary},{isActive}";
+            return $"{StartDate:dd/MM/yyyy},{endDateStr},{Position},{Department},{Fte},€{Salary},{status}";
         }
     }
 }
