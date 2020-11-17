@@ -14,26 +14,20 @@
 <header>
 </header>
 <body>
-
-
-<h2>Sign in</h2> 
-  
-      
          <form class = "form-signin" role = "form" 
             action ="" method = "post">
+            <h4> Writ your email and we will send you a link to your email account were you can change your password</h4>
             <h4 class = "form-signin-heading">
-               <?php $user= new User();   print_r($user->checkUser());
+               <?php $user= new User(); echo $user->checkEmail();
                ?>
              </h4>
             <input type = "text" class = "form-control" 
-               name = "loginEmail" placeholder = "Email" 
+               name = "CheckEmail" placeholder = "Email" 
                required autofocus></br>
-        
-            <input type = "password" class = "form-control"
-               name = "loginPassword" placeholder = "password " required><br>
+
             <button class = "btn btn-lg btn-primary btn-block" type = "submit" 
-               name = "login">Login</button>
-               <a href="?page=PageForgetPassowrd"><p >Forget my password/ChangePassword</p></a>
+               name = "ChangePassword">Send a verification </button>
+
          </form>
   
 
