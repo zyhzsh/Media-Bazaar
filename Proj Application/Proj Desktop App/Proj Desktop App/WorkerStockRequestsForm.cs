@@ -14,14 +14,12 @@ namespace Proj_Desktop_App
     public partial class WorkerStockRequestsForm : Form
     {
         private RestockRequestStorage RequestStorage;
-        private ProductStorage ProductStorage;
         private int currentUserBSN;
 
-        public WorkerStockRequestsForm(int BSN, RestockRequestStorage requestStorage, ProductStorage productStorage)
+        public WorkerStockRequestsForm(int BSN, RestockRequestStorage requestStorage)
         {
             InitializeComponent();
             this.RequestStorage = requestStorage;
-            this.ProductStorage = productStorage;
             currentUserBSN = BSN;
             ReloadRequests();
         }
