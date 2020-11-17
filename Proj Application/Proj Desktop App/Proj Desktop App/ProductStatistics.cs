@@ -20,7 +20,8 @@ namespace Proj_Desktop_App
             InitializeComponent();
             ProductManagement dtbMan = new ProductManagement();
             lbBestSoldProducts.Items.Clear();
-            dateTimeSalesFrom.Value.AddDays(-30);
+
+            dateTimeSalesFrom.Value = DateTime.Today.AddDays(-30);
             Sale[] sales = dtbMan.GetBestSellingProducts();
             foreach (Sale s in sales)
             {
