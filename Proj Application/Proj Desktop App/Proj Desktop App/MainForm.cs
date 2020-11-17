@@ -76,7 +76,7 @@ namespace Proj_Desktop_App
                 reqStorage = new RestockRequestStorage();
 
                 tabRestocks.Visible = true;
-                restocks = new WorkerStockRequests(currentUser.GetBSN(), reqStorage, prdStorage);
+                restocks = new WorkerStockRequestsForm(currentUser.GetBSN(), reqStorage, prdStorage);
                 InitializeForm(restocks);
 
                 tabRestocks.PerformClick();
@@ -87,11 +87,11 @@ namespace Proj_Desktop_App
                 reqStorage = new RestockRequestStorage();
 
                 tabRestocks.Visible = true;
-                restocks = new SalesManagerForm(currentUser.GetBSN(), Departments.floorOne, prdStorage, reqStorage);
+                restocks = new SalesManagerForm(currentUser.GetBSN(), currentUser.GetDepartment(), prdStorage, reqStorage);
                 InitializeForm(restocks);
 
                 tabSchedule.Visible = true;
-                scheduling = new Scheduling(Departments.floorOne);
+                scheduling = new Scheduling(currentUser.GetDepartment());
                 InitializeForm(scheduling);
 
                 tabRestocks.PerformClick();

@@ -28,7 +28,7 @@ namespace Proj_Desktop_App
             requests = new List<RestockRequest>();
             orders = new List<RestockRequest>();
             //AddEmployeeMockData();
-            InitializeProducts();
+            //InitializeProducts();
             ProductManagement dtbManagement = new ProductManagement();
             emplMan = new EmployeeManagement();
             Employee[] employees = emplMan.GetAllEmployees();
