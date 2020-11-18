@@ -12,14 +12,14 @@ namespace Proj_Desktop_App
 {
     public partial class AdminForm : Form
     {
-        private Store store;
+        private EmployeeStorage emplStorage;
         private Employee selectedEmployee;
 
-        public AdminForm(Store store)
+        public AdminForm()
         {
             InitializeComponent();
-            this.store = store;
-            store.EmployeeChanged += Store_EmployeeChanged;
+            this.emplStorage = new EmployeeStorage(PositionType.Administrator);
+            this.emplStorage.EmployeeChanged += Store_EmployeeChanged;
             cbShowEmployed.Checked = true;
             selectedEmployee = null;
             cbSearchBy.Items.AddRange( new string[] { "Name", "BSN" });
@@ -45,13 +45,13 @@ namespace Proj_Desktop_App
                 string searchBy = cbSearchBy.SelectedItem.ToString();
                 if (searchBy == "Name")
                 {
-                    employees = store.GetEmployees(cbShowEmployed.Checked, tbSearch.Text);
+                    employees = emplStorage.GetEmployees(cbShowEmployed.Checked, tbSearch.Text);
                 }
                 else if (searchBy == "BSN")
                 {
                     try
                     {
-                        employees = store.GetEmployees(cbShowEmployed.Checked, Convert.ToInt32(tbSearch.Text));
+                        employees = emplStorage.GetEmployees(cbShowEmployed.Checked, Convert.ToInt32(tbSearch.Text));
                     }
                     catch (Exception)
                     {
@@ -62,7 +62,7 @@ namespace Proj_Desktop_App
             }
             else
             {
-                employees = store.GetEmployees(cbShowEmployed.Checked);
+                employees = emplStorage.GetEmployees(cbShowEmployed.Checked);
             }
 
             // Load employees into listbox
@@ -160,14 +160,14 @@ namespace Proj_Desktop_App
 
         private void btnAddEmployee_Click(object sender, EventArgs e)
         {
-            new EmployeeCreateUpdateForm(store);
+            new EmployeeCreateUpdateForm(emplStorage);
         }
 
         private void btnUpdateDetails_Click(object sender, EventArgs e)
         {
             if (selectedEmployee != null)
             {
-                EmployeeCreateUpdateForm updateForm = new EmployeeCreateUpdateForm(store, selectedEmployee);
+                new EmployeeCreateUpdateForm(emplStorage, selectedEmployee);
             }
             else
             {
@@ -182,7 +182,7 @@ namespace Proj_Desktop_App
                 Contract activeContract = selectedEmployee.GetActiveContract();
                 if (activeContract != null)
                 {
-                    new ContractUpdateForm(store, selectedEmployee, true);
+                    new ContractUpdateForm(emplStorage, selectedEmployee, true);
                 }
                 else
                 {
@@ -207,7 +207,7 @@ namespace Proj_Desktop_App
                 Contract activeContract = selectedEmployee.GetActiveContract();
                 if (activeContract != null)
                 {
-                    new ContractUpdateForm(store, selectedEmployee, false);
+                    new ContractUpdateForm(emplStorage, selectedEmployee, false);
                 }
                 else
                 {

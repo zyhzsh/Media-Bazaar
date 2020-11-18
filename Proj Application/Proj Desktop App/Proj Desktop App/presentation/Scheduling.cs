@@ -19,11 +19,11 @@ namespace Proj_Desktop_App
         private ShiftType seletedshifttype;
         private DateTime seleteddate;
         private DateTime previousdate;
-        private Store store;
+        private EmployeeStorage store;
         public Scheduling(Departments department)
         {
             InitializeComponent();
-            store = new Store();
+            store = new EmployeeStorage(PositionType.Other);
             schedulemanager = new ScheduleManager(store);
             //1.update combo box
             cbDepartment.Items.Add(Departments.floorOne);
@@ -44,7 +44,7 @@ namespace Proj_Desktop_App
             //5.Update Employee list by department
             listboxAvailableEmployees.Items.Clear();
             
-            foreach (Employee x in store.GetEmployees((Departments)cbDepartment.SelectedItem))
+            foreach (Employee x in store.GetEmployees(true, (Departments)cbDepartment.SelectedItem))
             {
                 listboxAvailableEmployees.Items.Add(x.GetBsnAndName());
             }
@@ -191,7 +191,7 @@ namespace Proj_Desktop_App
         {
             //1.Update the employeelist by department
             listboxAvailableEmployees.Items.Clear();
-            foreach (Employee x in store.GetEmployees((Departments)cbDepartment.SelectedItem))
+            foreach (Employee x in store.GetEmployees(true, (Departments)cbDepartment.SelectedItem))
             {
                 listboxAvailableEmployees.Items.Add(x.GetBsnAndName());
             }

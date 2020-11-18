@@ -13,7 +13,7 @@ namespace Proj_Desktop_App.dataAccess
     {
         public ContractManagement() : base() { }
 
-        public Contract[] GetActiveContract(int bsn)
+        public Contract GetActiveContract(int bsn)
         {
             try
             {
@@ -31,10 +31,9 @@ namespace Proj_Desktop_App.dataAccess
                     conn.Open();
                     MySqlDataReader dr = cmd.ExecuteReader();
 
-                    Contract[] activeContract = new Contract[1];
                     if (dr.Read())
                     {
-                        activeContract[0] = new Contract(
+                        return new Contract(
                             Convert.ToDateTime(dr["start_date"]),
                             Convert.ToDateTime(dr["end_date"]),
                             Convert.ToInt32(dr["iteration"]),
@@ -42,7 +41,6 @@ namespace Proj_Desktop_App.dataAccess
                             (PositionType)dr["position_id"],
                             Convert.ToDecimal(dr["salary"]),
                             Convert.ToDecimal(dr["fte"]));
-                        return activeContract;
                     }
                     else { return null; }
                 }

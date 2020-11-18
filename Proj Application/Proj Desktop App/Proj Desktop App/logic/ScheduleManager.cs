@@ -11,10 +11,10 @@ namespace Proj_Desktop_App
         private List<AssignedShift> allAssignedShifts;
         //This contains all available shifts to be filled. Might be used for a standard roster later
         private List<AvailableShift> allAvailableShifts;
-        private Store store;
+        private EmployeeStorage store;
         private List<string> sqlstatements;
 
-        public ScheduleManager(Store store)
+        public ScheduleManager(EmployeeStorage store)
         {
             this.store = store;
             Schedule x = new Schedule();

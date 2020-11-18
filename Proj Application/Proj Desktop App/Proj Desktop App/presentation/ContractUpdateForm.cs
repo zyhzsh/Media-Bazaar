@@ -12,7 +12,7 @@ namespace Proj_Desktop_App
 {
     public partial class ContractUpdateForm : Form
     {
-        public ContractUpdateForm(Store store, Employee employee, bool promotion)
+        public ContractUpdateForm(EmployeeStorage store, Employee employee, bool promotion)
         {
             InitializeComponent();
             this.Visible = true;

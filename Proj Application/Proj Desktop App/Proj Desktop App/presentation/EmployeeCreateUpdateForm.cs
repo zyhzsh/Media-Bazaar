@@ -13,7 +13,7 @@ namespace Proj_Desktop_App
     public partial class EmployeeCreateUpdateForm : Form
     {
         // Store
-        private Store store;
+        private EmployeeStorage store;
 
         // For updating employee details
         private bool updateEmployee;
@@ -29,7 +29,7 @@ namespace Proj_Desktop_App
         /// <summary>
         /// Adding a new employee
         /// </summary>
-        public EmployeeCreateUpdateForm(Store store)
+        public EmployeeCreateUpdateForm(EmployeeStorage store)
         {
             InitializeComponent();
             InitializeElements();
@@ -45,7 +45,7 @@ namespace Proj_Desktop_App
         /// <summary>
         /// Updating employee details
         /// </summary>
-        public EmployeeCreateUpdateForm(Store store, Employee employee)
+        public EmployeeCreateUpdateForm(EmployeeStorage store, Employee employee)
         {
             InitializeComponent();
             InitializeElements();

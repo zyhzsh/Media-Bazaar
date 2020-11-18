@@ -12,39 +12,38 @@ namespace Proj_Desktop_App
 {
     public partial class MainForm : Form
     {
+        // Parent form
         private LoginForm loginForm;
 
+        // Forms to include in tabs
         private AdminForm employeesForm;
-
         private ProductCRUDForm productCRUD;
         private ProductStatistics productStatistics;
         private Form restocks;
         private Scheduling scheduling;
 
+        // Selected tab
         private ToolStripMenuItem selectedTab;
 
-        //private EmployeeStorage empStorage;
+        // Logic layer
         //ScheduleStorage?
         private ProductStorage prdStorage;
         private RestockRequestStorage reqStorage;
 
-        public MainForm(LoginForm loginForm, Store store, Employee currentUser)
+        public MainForm(LoginForm loginForm, Employee currentUser)
         {
             InitializeComponent();
             this.Visible = true;
+            selectedTab = null;
             PositionType position = currentUser.GetPosition();
             if (position == PositionType.Administrator)
             {
-                //empStorage = new EmployeeStorage();
-
                 tabEmployees.Visible = true;
-
-                employeesForm = new AdminForm(store);
+                employeesForm = new AdminForm();
                 InitializeForm(employeesForm);
 
                 tabDepartments.Visible = true;
 
-                selectedTab = null;
                 tabEmployees.PerformClick();
             }
             else if (position == PositionType.Depot_Manager)

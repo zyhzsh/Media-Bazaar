@@ -31,14 +31,14 @@ namespace Proj_Desktop_App
         // Username: chammon7
         // Password: XJlA0h
 
-        private Store mediaBazaar;
         private LoginHandler loginHandler;
 
         public LoginForm()
         {
             InitializeComponent();
-            mediaBazaar = new Store();
             loginHandler = new LoginHandler();
+
+            // For testing purposes:
             tbLogInUsername.Text = "gdambrogi6";
             tbLogInPassword.Text = "LbZAsgys63h";
         }
@@ -57,11 +57,11 @@ namespace Proj_Desktop_App
                 if (currentUser != null)
                 {
                     ContractManagement contrMan = new ContractManagement();
-                    currentUser.AddContracts(contrMan.GetActiveContract(bsn));
+                    currentUser.AddContracts(new Contract[] { contrMan.GetActiveContract(bsn) });
 
                     if (currentUser.IsEmployed())
                     {
-                        new MainForm(this, mediaBazaar, currentUser);
+                        new MainForm(this, currentUser);
                         this.Visible = false;
                         tbLogInUsername.Clear();
                         tbLogInPassword.Clear();
@@ -73,7 +73,7 @@ namespace Proj_Desktop_App
                 }
                 else
                 {
-                    MessageBox.Show("Failed.");
+                    MessageBox.Show("Login failed.");
                 }
             }
             else
@@ -84,6 +84,7 @@ namespace Proj_Desktop_App
 
         private void tbLogInUsername_KeyDown(object sender, KeyEventArgs e)
         {
+            // Login on pressing Enter
             if (e.KeyCode == Keys.Enter)
             {
                 btLogin_Click(this, new EventArgs());
@@ -92,6 +93,7 @@ namespace Proj_Desktop_App
 
         private void tbLogInPassword_KeyDown(object sender, KeyEventArgs e)
         {
+            // Login on pressing Enter
             if (e.KeyCode == Keys.Enter)
             {
                 btLogin_Click(this, new EventArgs());
