@@ -162,16 +162,8 @@ namespace Proj_Desktop_App
                     // Update employee
                     try
                     {
-                        if (store.UpdateEmployee(employeeToUpdate.GetBSN(),
-                            firstName, lastName, gender, languages, certificates,
-                            phone, address, email))
-                        {
-                            this.Close();
-                        }
-                        else
-                        {
-                            MessageBox.Show("An employee with this BSN doesn't exists!");
-                        }
+                        employeeToUpdate.UpdateInfo(firstName, lastName, gender, languages, certificates,
+                            phone, address, email);
                     }
                     catch (Exception ex)
                     {

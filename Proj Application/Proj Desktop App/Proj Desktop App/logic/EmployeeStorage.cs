@@ -9,14 +9,12 @@ using System.Windows.Forms;
 
 namespace Proj_Desktop_App
 {
-    public delegate void EmployeeHandler(Employee employee);
-
     public class EmployeeStorage
     {
         private List<Employee> employees;
 
         EmployeeManagement emplMan;
-        public event EmployeeHandler EmployeeChanged;
+        ContractManagement contrMan;
 
         public EmployeeStorage(PositionType position)
         {
@@ -29,7 +27,7 @@ namespace Proj_Desktop_App
                 this.employees.AddRange(employees);
             }
 
-            ContractManagement contrMan = new ContractManagement();
+            contrMan = new ContractManagement();
             foreach (Employee employee in employees)
             {
                 if (position == PositionType.Administrator)
@@ -56,47 +54,34 @@ namespace Proj_Desktop_App
         {
             if (GetEmployee(BSN) == null)
             {
-                Employee employee = new Employee(BSN, firstName, lastName, gender, birthDate, languages, certificates, phoneNumber, address, contactEmail, startDate, endDate, position, department, fte);
-                // Add employee to database
-                if (emplMan.AddEmployee(employee))
+                Employee employee = new Employee(BSN, firstName, lastName, gender, birthDate,
+                    languages, certificates, phoneNumber, address, contactEmail);
+
+                // Initialize first contract
+                Contract contract = new Contract(-1, startDate, endDate, 1,
+                    department, position, contrMan.GetStartingSalary(position), fte);
+
+                // Add employee and contarct to database
+                if (emplMan.AddEmployee(employee) && contrMan.AddContract(employee.GetLatestContract()))
                 {
-                    // Add employee locally
-                    employees.Add(employee);
-                    EmployeeChanged(employee);
-                    return true;
+                    // Add first contract to employee
+                    int id = contrMan.GetLatestContractId(BSN);
+                    if (id != -1)
+                    {
+                        contract.Id = id;
+                        employee.AddContract(contract);
+                        // Add employee locally
+                        employees.Add(employee);
+                        return true;
+                    }
+                    else
+                    {
+                        throw new Exception("Failed to add contract");
+                    }
                 }
                 else
                 {
                     throw new Exception("Failed to add employee");
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Update employee details
-        /// </summary>
-        public bool UpdateEmployee(int BSN, string firstName, string lastName, char gender, string languages,
-            string certificates, string phoneNumber, string address, string contactEmail)
-        {
-            Employee employee = GetEmployee(BSN);
-            if (employee != null)
-            {
-                // Update employee locally
-                employee.UpdateInfo(firstName, lastName, gender, languages, certificates,
-                         phoneNumber, address, contactEmail);
-                // Update employee in database
-                if (emplMan.UpdateEmployee(employee))
-                {
-                    EmployeeChanged(employee);
-                    return true;
-                }
-                else
-                {
-                    throw new Exception("Failed to update employee");
                 }
             }
             else
@@ -119,7 +104,6 @@ namespace Proj_Desktop_App
             }
             return null;
         }
-
 
         /// <summary>
         /// Get all / only employed employees

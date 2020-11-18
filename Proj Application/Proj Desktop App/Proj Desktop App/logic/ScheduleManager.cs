@@ -38,7 +38,7 @@ namespace Proj_Desktop_App
                 //if (e.GetDate().ToString("dd/MM/yyyy") == time.ToString("dd/MM/yyyy")&&e.GetEmployee().department== departments)
                 if (e.GetDate().ToString("yyyy-MM-dd") == time.ToString("yyyy-MM-dd") &&e.GetEmployee().GetDepartment()== departments)
                 {
-                    temp.Add($"{e.GetEmployee().GetBsnAndName()} Shift:{e.GetShiftTypeToString()} {e.GetDate().ToString("dddd, dd MMMM")}");
+                    temp.Add($"{e.GetEmployee().ToString()} Shift:{e.GetShiftTypeToString()} {e.GetDate().ToString("dddd, dd MMMM")}");
                 }
             }
             return temp.ToArray();
@@ -60,7 +60,7 @@ namespace Proj_Desktop_App
                 {
                     if (!AssignShift(date, i, shiftType))
                     {
-                        string temp = "It's over " + store.GetEmployee(i).GetBsnAndName()+ "'s FTE";                       
+                        string temp = "It's over " + store.GetEmployee(i).ToString() + "'s FTE";                       
                         MessageBox.Show(temp);
                     }
                 }              

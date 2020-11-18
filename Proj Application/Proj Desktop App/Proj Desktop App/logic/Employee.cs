@@ -26,33 +26,6 @@ namespace Proj_Desktop_App
         // Contracts:
         private List<Contract> contracts;
 
-        /// <summary>
-        /// For new employees. Requires employee info and one contact
-        /// </summary>
-        public Employee(int BSN, string firstName, string lastName, char gender, DateTime birthDate,
-            string languages, string certificates, string phoneNumber, string address, string contactEmail,
-            DateTime startDate, DateTime endDate, PositionType position, Departments department, decimal fte)
-        {
-            this.BSN = BSN;
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.gender = gender;
-            this.birthDate = birthDate;
-            this.languages = languages;
-            this.certificates = certificates;
-
-            this.phoneNumber = phoneNumber;
-            this.address = address;
-            this.contactEmail = contactEmail;
-
-            // Initialize first contract
-            this.contracts = new List<Contract>();
-            AddContract(startDate, endDate, department, position, fte);
-        }
-
-        /// <summary>
-        /// For loading employees from DB. Requires employee info
-        /// </summary>
         public Employee(int BSN, string firstName, string lastName, char gender, DateTime birthDate,
             string languages, string certificates, string phoneNumber, string address, string contactEmail)
         {
@@ -75,20 +48,50 @@ namespace Proj_Desktop_App
         public void UpdateInfo(string firstName, string lastName, char gender, string languages,
             string certificates, string phoneNumber, string address, string contactEmail)
         {
-            if (this.firstName != firstName) { this.firstName = firstName; }
-            if (this.lastName != lastName) { this.lastName = lastName; }
-            if (this.gender != gender) { this.gender = gender; }
-            if (this.certificates != certificates) { this.certificates = certificates; }
-            if (this.languages != languages) { this.languages = languages; }
-            if (this.phoneNumber != phoneNumber) { this.phoneNumber = phoneNumber; }
-            if (this.address != address) { this.address = address; }
-            if (this.contactEmail != contactEmail) { this.contactEmail = contactEmail; }
+            if (IsEmployed())
+            {
+                // Set information to update
+                if (firstName == null) { firstName = this.firstName; }
+                if (lastName == null) { lastName = this.lastName; }
+                if (gender.ToString() == null) { gender = this.gender; }
+                if (certificates == null) { certificates = this.certificates; }
+                if (languages == null) { languages = this.languages; }
+                if (phoneNumber == null) { phoneNumber = this.phoneNumber; }
+                if (address == null) { address = this.address; }
+                if (contactEmail == null) { contactEmail = this.contactEmail; }
+
+                // Update details in database
+                EmployeeManagement emplMan = new EmployeeManagement();
+                if (emplMan.UpdateEmployee(BSN, firstName, lastName, gender, languages,
+                    certificates, phoneNumber, address, contactEmail))
+                {
+                    // Update details locally
+                    if (this.firstName != firstName) { this.firstName = firstName; }
+                    if (this.lastName != lastName) { this.lastName = lastName; }
+                    if (this.gender != gender) { this.gender = gender; }
+                    if (this.certificates != certificates) { this.certificates = certificates; }
+                    if (this.languages != languages) { this.languages = languages; }
+                    if (this.phoneNumber != phoneNumber) { this.phoneNumber = phoneNumber; }
+                    if (this.address != address) { this.address = address; }
+                    if (this.contactEmail != contactEmail) { this.contactEmail = contactEmail; }
+                }
+                else
+                {
+                    throw new Exception("Failed to update details. Check database connection.");
+                }
+            }
+            else
+            {
+                throw new Exception("You can't update this employee's details since they are no loger employed.");
+            }
         }
 
-        public void AddContract(DateTime startDate, DateTime endDate, Departments department, PositionType position, decimal fte)
+        public void AddContract(Contract contract)
         {
-            ContractManagement conrtMan = new ContractManagement();
-            this.contracts.Add(new Contract(startDate, endDate, contracts.Count + 1, department, position, conrtMan.GetStartingSalary(position), fte));
+            if (contract != null)
+            {
+                this.contracts.Add(contract);
+            }
         }
 
         public void AddContracts(Contract[] contracts)
@@ -110,6 +113,11 @@ namespace Proj_Desktop_App
             {
                 throw new Exception("This employee doesnt have a position");
             }
+        }
+
+        public int GetBSN()
+        {
+            return BSN;
         }
 
         public Departments GetDepartment()
@@ -172,25 +180,10 @@ namespace Proj_Desktop_App
             }
         }
 
-        public string GetBsnAndName()
-        {
-            return $"BSN:{this.BSN} ----- Name:{this.firstName} {this.lastName}";
-        }
-
         public string Biscinfo()
         {
             return $"Name:{this.firstName} {this.lastName} Department:{GetDepartment()} ContactEmail:{this.contactEmail} Certificates:{this.certificates}"
-                +$" FTE:{GetFTE()}";   
-        }
-
-        public int GetBSN()
-        {
-            return BSN;
-        }
-
-        public override string ToString()
-        {
-            return $"{BSN}   {firstName} {lastName}";
+                +$" FTE:{GetFTE()}";
         }
 
         public string[] GetDetail()
@@ -214,6 +207,11 @@ namespace Proj_Desktop_App
             temp.Add($"----------------------------------");
 
             return temp.ToArray();
+        }
+
+        public override string ToString()
+        {
+            return $"{BSN}   {firstName} {lastName}";
         }
     }
 }

@@ -65,7 +65,7 @@ namespace Proj_Desktop_App
                 InitializeForm(restocks);
 
                 tabSchedule.Visible = true;
-                scheduling = new Scheduling(Departments.warehouse);
+                scheduling = new Scheduling(currentUser.GetDepartment());
                 InitializeForm(scheduling);
 
                 tabProducts.PerformClick();

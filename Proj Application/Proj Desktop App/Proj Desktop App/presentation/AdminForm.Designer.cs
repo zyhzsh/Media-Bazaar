@@ -426,6 +426,7 @@
             this.btnShowAll.TabIndex = 20;
             this.btnShowAll.Text = "Show all";
             this.btnShowAll.UseVisualStyleBackColor = false;
+            this.btnShowAll.Click += new System.EventHandler(this.btnShowAll_Click);
             // 
             // lvContracts
             // 

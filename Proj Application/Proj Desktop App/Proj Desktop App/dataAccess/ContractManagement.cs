@@ -20,7 +20,7 @@ namespace Proj_Desktop_App.dataAccess
                 using (MySqlConnection conn = base.GetConnection())
                 {
                     string sql =
-                            "SELECT iteration, position_id, department_id, start_date, end_date, salary, fte " +
+                            "SELECT contract_id, iteration, position_id, department_id, start_date, end_date, salary, fte " +
                             "FROM contract " +
                             "WHERE BSN = @bsn " +
                             "AND start_date <= @today " +
@@ -33,14 +33,7 @@ namespace Proj_Desktop_App.dataAccess
 
                     if (dr.Read())
                     {
-                        return new Contract(
-                            Convert.ToDateTime(dr["start_date"]),
-                            Convert.ToDateTime(dr["end_date"]),
-                            Convert.ToInt32(dr["iteration"]),
-                            (Departments)dr["department_id"],
-                            (PositionType)dr["position_id"],
-                            Convert.ToDecimal(dr["salary"]),
-                            Convert.ToDecimal(dr["fte"]));
+                        return InitializeContract(dr);
                     }
                     else { return null; }
                 }
@@ -59,7 +52,7 @@ namespace Proj_Desktop_App.dataAccess
                 using (MySqlConnection conn = base.GetConnection())
                 {
                     string sql =
-                            "SELECT iteration, position_id, department_id, start_date, end_date, salary, fte " +
+                            "SELECT contract_id, iteration, position_id, department_id, start_date, end_date, salary, fte " +
                             "FROM contract " +
                             "WHERE BSN = @bsn " +
                             "ORDER BY iteration DESC;";
@@ -71,15 +64,11 @@ namespace Proj_Desktop_App.dataAccess
                     List<Contract> contracts = new List<Contract>();
                     while (dr.Read())
                     {
-                        Contract contract = new Contract(
-                            Convert.ToDateTime(dr["start_date"]),
-                            Convert.ToDateTime(dr["end_date"]),
-                            Convert.ToInt32(dr["iteration"]),
-                            (Departments)dr["department_id"],
-                            (PositionType)dr["position_id"],
-                            Convert.ToDecimal(dr["salary"]),
-                            Convert.ToDecimal(dr["fte"]));
-                        contracts.Add(contract);
+                        Contract contract = InitializeContract(dr);
+                        if (contract != null)
+                        {
+                            contracts.Add(contract);
+                        }
                     }
 
                     return contracts.ToArray();
@@ -88,6 +77,36 @@ namespace Proj_Desktop_App.dataAccess
             catch (Exception)
             {
                 return null;
+            }
+        }
+
+        public int GetLatestContractId(int bsn)
+        {
+            try
+            {
+                using (MySqlConnection conn = base.GetConnection())
+                {
+                    string sql =
+                        "SELECT contract_id" +
+                        "FROM contract " +
+                        "WHERE BSN = @bsn " +
+                        "ORDER BY start_date DESC " +
+                        "LIMIT 1;";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@bsn", bsn);
+                    conn.Open();
+                    MySqlDataReader dr = cmd.ExecuteReader();
+
+                    if (dr.Read())
+                    {
+                        return Convert.ToInt32(dr["contract_id"]);
+                    }
+                    else { return -1; }
+                }
+            }
+            catch (Exception)
+            {
+                return -1;
             }
         }
 
@@ -121,19 +140,116 @@ namespace Proj_Desktop_App.dataAccess
             }
         }
 
-        public bool AddContract()
+        public bool AddContract(Contract contract)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (MySqlConnection conn = base.GetConnection())
+                {
+                    string sql =
+                        "INSERT INTO contract (BSN, position_id, department_id, " +
+                        "start_date, end_date,iteration, salary, fte) " +
+                        "VALUES (@bsn, @position_id, @department_id, " +
+                        "@start_date, @end_date, @iteration, @salary, @fte);";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@position_id", (int)contract.Position);
+                    cmd.Parameters.AddWithValue("@department_id", (int)contract.Department);
+                    cmd.Parameters.AddWithValue("@start_date", contract.StartDate.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@end_date", contract.EndDate.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@iteration", contract.Iteration);
+                    cmd.Parameters.AddWithValue("@salary", contract.Salary);
+                    cmd.Parameters.AddWithValue("@fte", contract.Fte);
+                    conn.Open();
+                    int result = cmd.ExecuteNonQuery();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
-        public bool Promote()
+        public bool Promote(int id, decimal newSalary)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (MySqlConnection conn = base.GetConnection())
+                {
+                    string sql =
+                        "UPDATE contract " +
+                        "SET salary = @salary " +
+                        "WHERE contract_id = @id;";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@salary", newSalary);
+                    cmd.Parameters.AddWithValue("@id", id);
+                    conn.Open();
+                    if (cmd.ExecuteNonQuery() == 1)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
-        public bool TerminateContract()
+        public bool TerminateContract(int id, DateTime endDate)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (MySqlConnection conn = base.GetConnection())
+                {
+                    string sql =
+                        "UPDATE contract " +
+                        "SET end_date = @end_date " +
+                        "WHERE contract_id = @id;";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@end_date", endDate.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@id", id);
+                    conn.Open();
+                    if (cmd.ExecuteNonQuery() == 1)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        private Contract InitializeContract(MySqlDataReader contr)
+        {
+            try
+            {
+                Contract contract = new Contract(
+                    Convert.ToInt32(contr["contract_id"]),
+                    Convert.ToDateTime(contr["start_date"]),
+                    Convert.ToDateTime(contr["end_date"]),
+                    Convert.ToInt32(contr["iteration"]),
+                    (Departments)contr["department_id"],
+                    (PositionType)contr["position_id"],
+                    Convert.ToDecimal(contr["salary"]),
+                    Convert.ToDecimal(contr["fte"]));
+                return contract;
+
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

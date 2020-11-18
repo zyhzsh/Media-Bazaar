@@ -89,11 +89,7 @@ namespace Proj_Desktop_App.dataAccess
                             "contact_email, username, password) " +
                             "VALUES(@bsn, @first_name, @last_name, " +
                             "@gender, @phone, @date_birth, @address, @languages, @certificates, " +
-                            "@email, @username, @password); " +
-                            "INSERT INTO contract (BSN, position_id, department_id, " +
-                            "start_date, end_date,iteration, salary, fte) " +
-                            "VALUES (@bsn, @position_id, @department_id, " +
-                            "@start_date, @end_date, @iteration, @salary, @fte);";
+                            "@email, @username, @password); ";
                         MySqlCommand cmd = new MySqlCommand(sql, conn);
                         cmd.Parameters.AddWithValue("@bsn", employee.GetBSN());
                         cmd.Parameters.AddWithValue("@first_name", employee.firstName);
@@ -107,14 +103,6 @@ namespace Proj_Desktop_App.dataAccess
                         cmd.Parameters.AddWithValue("@email", employee.contactEmail);
                         cmd.Parameters.AddWithValue("@username", GenerateUsername(employee));
                         cmd.Parameters.AddWithValue("@password", GeneratePassword(8));
-                        Contract contract = employee.GetLatestContract();
-                        cmd.Parameters.AddWithValue("@position_id", (int)contract.Position);
-                        cmd.Parameters.AddWithValue("@department_id", (int)contract.Department);
-                        cmd.Parameters.AddWithValue("@start_date", contract.StartDate.ToString("yyyy-MM-dd"));
-                        cmd.Parameters.AddWithValue("@end_date", contract.EndDate.ToString("yyyy-MM-dd"));
-                        cmd.Parameters.AddWithValue("@iteration", contract.Iteration);
-                        cmd.Parameters.AddWithValue("@salary", contract.Salary);
-                        cmd.Parameters.AddWithValue("@fte", contract.Fte);
                         conn.Open();
                         int result = cmd.ExecuteNonQuery();
                         return true;
@@ -132,7 +120,8 @@ namespace Proj_Desktop_App.dataAccess
             }
         }
 
-        public bool UpdateEmployee(Employee employee)
+        public bool UpdateEmployee(int bsn, string firstName, string lastName, char gender, string languages,
+            string certificates, string phoneNumber, string address, string contactEmail)
         {
             try
             {
@@ -150,18 +139,17 @@ namespace Proj_Desktop_App.dataAccess
                         "contact_email = @contact_email " +
                         "WHERE BSN = @bsn;";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@first_name", employee.firstName);
-                    cmd.Parameters.AddWithValue("@last_name", employee.lastName);
-                    cmd.Parameters.AddWithValue("@gender", employee.gender);
-                    cmd.Parameters.AddWithValue("@languages", employee.languages);
-                    cmd.Parameters.AddWithValue("@certificates", employee.certificates);
-                    cmd.Parameters.AddWithValue("@phone", employee.phoneNumber);
-                    cmd.Parameters.AddWithValue("@address", employee.address);
-                    cmd.Parameters.AddWithValue("@contact_email", employee.contactEmail);
-                    cmd.Parameters.AddWithValue("@bsn", employee.GetBSN());
+                    cmd.Parameters.AddWithValue("@first_name", firstName);
+                    cmd.Parameters.AddWithValue("@last_name", lastName);
+                    cmd.Parameters.AddWithValue("@gender", gender);
+                    cmd.Parameters.AddWithValue("@languages", languages);
+                    cmd.Parameters.AddWithValue("@certificates", certificates);
+                    cmd.Parameters.AddWithValue("@phone", phoneNumber);
+                    cmd.Parameters.AddWithValue("@address", address);
+                    cmd.Parameters.AddWithValue("@contact_email", contactEmail);
+                    cmd.Parameters.AddWithValue("@bsn", bsn);
                     conn.Open();
-                    int result = cmd.ExecuteNonQuery();
-                    if (result == 1)
+                    if (cmd.ExecuteNonQuery() == 1)
                     {
                         return true;
                     }
