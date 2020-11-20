@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proj_Desktop_App
 {
-    enum ShiftType
+   public enum ShiftType
     {
         Morning,
         Afternoon,
