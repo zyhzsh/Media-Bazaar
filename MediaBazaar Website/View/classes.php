@@ -5,5 +5,5 @@ include('../Model/ShiftsModel.php');
  include('../Controller/session.php');
  include('../Controller/User.php');
  include('../Controller/shifts.php');
-
+ include('../Controller/AssignedShift.php');
 ?>
