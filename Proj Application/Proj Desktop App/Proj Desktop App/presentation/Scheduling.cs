@@ -24,7 +24,7 @@ namespace Proj_Desktop_App
         public Scheduling(Departments department)
         {
             InitializeComponent();
-            store = new EmployeeStorage(PositionType.Other);
+            store = new EmployeeStorage();
             schedulemanager = new ScheduleManager(store);
             //1.update combo box
             cbDepartment.Items.Add(Departments.floorOne);
@@ -44,14 +44,14 @@ namespace Proj_Desktop_App
             previousdate = DateTime.Today;
             //5.Update Employee list by department
             listboxAvailableEmployees.Items.Clear();
-            
-            //foreach (Employee x in store.GetEmployees(true, (Departments)cbDepartment.SelectedItem))
-            //{
-            //    listboxAvailableEmployees.Items.Add(x);
-            //}
-            ////6.Update AssigngedShift list by department
-            //listboxAssignedEmployees.Items.Clear();
-            //listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate, (Departments)cbDepartment.SelectedItem));
+
+            foreach (Employee x in store.GetEmployees(true, (Departments)cbDepartment.SelectedItem))
+            {
+                listboxAvailableEmployees.Items.Add(x);
+            }
+            //6.Update AssigngedShift list by department
+            listboxAssignedEmployees.Items.Clear();
+            listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate, (Departments)cbDepartment.SelectedItem));
         }
 
         private bool CheckAssignedShiftType()

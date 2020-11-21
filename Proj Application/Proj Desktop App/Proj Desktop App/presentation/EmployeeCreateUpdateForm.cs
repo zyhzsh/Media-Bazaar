@@ -135,15 +135,10 @@ namespace Proj_Desktop_App
                         // Add new employee
                         try
                         {
-                            if (store.AddEmployee(bsn, firstName, lastName, gender, birthdate, languages, certificates,
-                                                  phone, address, email, startDate, endDate, position, department, fte))
-                            {
-                                this.Close();
-                            }
-                            else
-                            {
-                                MessageBox.Show("An employee with this BSN already exists!");
-                            }
+                            store.AddEmployee(bsn, firstName, lastName, gender, birthdate, languages, certificates,
+                                                  phone, address, email, startDate, endDate, position, department, fte);
+                            this.Close();
+                            
                         }
                         catch (Exception ex)
                         {

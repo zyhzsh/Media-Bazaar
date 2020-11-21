@@ -29,6 +29,7 @@ namespace Proj_Desktop_App
         public Employee(int BSN, string firstName, string lastName, char gender, DateTime birthDate,
             string languages, string certificates, string phoneNumber, string address, string contactEmail)
         {
+            // Set the values
             this.BSN = BSN;
             this.firstName = firstName;
             this.lastName = lastName;
@@ -86,15 +87,11 @@ namespace Proj_Desktop_App
             }
         }
 
-        public void AddContract(Contract contract)
-        {
-            if (contract != null)
-            {
-                this.contracts.Add(contract);
-            }
-        }
-
-        public void AddContracts(Contract[] contracts)
+        /// <summary>
+        /// Loads contracts to the employee object (for loading form DB)
+        /// </summary>
+        /// <param name="contracts"></param>
+        public void LoadContracts(Contract[] contracts)
         {
             if (contracts != null && contracts.Length > 0)
             {
@@ -102,16 +99,44 @@ namespace Proj_Desktop_App
             }
         }
 
-        public PositionType GetPosition()
+        /// <summary>
+        /// Adds a new contract to the employee and to the DB
+        /// </summary>
+        public void AddContract(Contract newContract)
         {
-            Contract activeContract = GetActiveContract();
-            if (activeContract != null)
+            if (newContract != null)
             {
-                return GetActiveContract().Position;
+                Contract latestContract = GetLatestContract();
+                if (latestContract != null)
+                {
+                    // Make sure there's no overlap of contracts
+                    if (newContract.StartDate <= latestContract.EndDate)
+                    {
+                        latestContract.Terminate(newContract.StartDate.AddDays(-1));
+                    }
+
+                    // Add new contract to DB
+                    ContractManagement contrMan = new ContractManagement();
+                    int id = contrMan.AddContract(BSN, newContract);
+                    if (id != -1)
+                    {
+                        newContract.Id = id;
+                        // Add new contract locally
+                        contracts.Add(newContract);
+                    }
+                    else
+                    {
+                        throw new Exception("Failed to add contract to database.");
+                    }
+                }
+                else
+                {
+                    throw new Exception("This employee doesn't have a contract to extend.");
+                }
             }
             else
             {
-                throw new Exception("This employee doesnt have a position");
+                throw new Exception("The provided contract is invalid.");
             }
         }
 
@@ -120,29 +145,42 @@ namespace Proj_Desktop_App
             return BSN;
         }
 
-        public Departments GetDepartment()
+        public PositionType GetPosition()
         {
-            Contract activeContract = GetActiveContract();
-            if (activeContract != null)
+            Contract activeCon = GetActiveContract();
+            if (activeCon != null)
             {
-                return GetActiveContract().Department;
+                return activeCon.Position;
             }
             else
             {
-                throw new Exception("This employee doesnt have a deparment");
+                throw new Exception("This employee doesnt have an active contract.");
+            }
+        }
+
+        public Departments GetDepartment()
+        {
+            Contract activeCon = GetActiveContract();
+            if (activeCon != null)
+            {
+                return activeCon.Department;
+            }
+            else
+            {
+                throw new Exception("This employee doesnt have an active contract.");
             }
         }
 
         public decimal GetFTE()
         {
-            Contract activeContract = GetActiveContract();
-            if (activeContract != null)
+            Contract activeCon = GetActiveContract();
+            if (activeCon != null)
             {
-                return GetActiveContract().Fte;
+                return activeCon.Fte;
             }
             else
             {
-                throw new Exception("This employee doesnt have fte");
+                throw new Exception("This employee doesnt have an active contract.");
             }
         }
 
@@ -150,7 +188,7 @@ namespace Proj_Desktop_App
         {
             foreach (Contract contract in contracts)
             {
-                if (contract.IsActive())
+                if (contract != null && contract.IsActive())
                 {
                     return contract;
                 }
@@ -160,7 +198,14 @@ namespace Proj_Desktop_App
 
         public Contract GetLatestContract()
         {
-            return contracts[contracts.Count - 1];
+            if (contracts.Count > 0)
+            {
+                return contracts[contracts.Count - 1];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public Contract[] GetContracts()
@@ -183,7 +228,7 @@ namespace Proj_Desktop_App
         public string Biscinfo()
         {
             return $"Name:{this.firstName} {this.lastName} Department:{GetDepartment()} ContactEmail:{this.contactEmail} Certificates:{this.certificates}"
-                +$" FTE:{GetFTE()}";
+                + $" FTE:{GetFTE()}";
         }
 
         public string[] GetDetail()

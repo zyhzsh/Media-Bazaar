@@ -31,6 +31,9 @@ namespace Proj_Desktop_App
             this.Fte = fte;
         }
 
+        /// <summary>
+        /// Changes the end date of a contract and updates DB
+        /// </summary>
         public void Terminate(DateTime date)
         {
             if (IsActive() && date < EndDate && date >= DateTime.Today)
@@ -52,6 +55,10 @@ namespace Proj_Desktop_App
             }
         }
 
+        /// <summary>
+        /// Upadetes the salary in a contrat and updates DB
+        /// </summary>
+        /// <param name="percent"></param>
         public void Promote(decimal percent)
         {
             if (IsActive())
@@ -88,7 +95,7 @@ namespace Proj_Desktop_App
 
         public bool IsCloseToEndDate()
         {
-            if (DateTime.Today.AddMonths(1) >= EndDate)
+            if (IsActive() && DateTime.Today.AddMonths(1) >= EndDate)
             {
                 return true;
             }

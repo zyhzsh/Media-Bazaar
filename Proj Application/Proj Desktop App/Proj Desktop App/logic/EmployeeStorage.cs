@@ -14,65 +14,50 @@ namespace Proj_Desktop_App
         private List<Employee> employees;
 
         EmployeeManagement emplMan;
-        ContractManagement contrMan;
 
-        public EmployeeStorage(PositionType position)
+        public EmployeeStorage()
         {
             this.employees = new List<Employee>();
 
+            // Load all employees from DB
             emplMan = new EmployeeManagement();
             Employee[] employees = emplMan.GetAllEmployees();
             if (employees != null)
             {
                 this.employees.AddRange(employees);
             }
-
-            contrMan = new ContractManagement();
-            foreach (Employee employee in employees)
-            {
-                if (position == PositionType.Administrator)
-                {
-                    // Administrator needs all contracts
-                    Contract[] contracts = contrMan.GetAllContracts(employee.GetBSN());
-                    employee.AddContracts(contracts);
-                }
-                else
-                {
-                    // Managers need only the active contract
-                    Contract activeContract = contrMan.GetActiveContract(employee.GetBSN());
-                    employee.AddContracts(new Contract[] { activeContract });
-                }
-            }
         }
 
         /// <summary>
         /// Add a new employee
         /// </summary>
-        public bool AddEmployee(int BSN, string firstName, string lastName, char gender, DateTime birthDate,
+        public void AddEmployee(int BSN, string firstName, string lastName, char gender, DateTime birthDate,
             string languages, string certificates, string phoneNumber, string address, string contactEmail,
             DateTime startDate, DateTime endDate, PositionType position, Departments department, decimal fte)
         {
+            // Check for unique BSN
             if (GetEmployee(BSN) == null)
             {
+                // Initialize employee
                 Employee employee = new Employee(BSN, firstName, lastName, gender, birthDate,
                     languages, certificates, phoneNumber, address, contactEmail);
 
-                // Initialize first contract
+                // Add first contract
+                ContractManagement contrMan = new ContractManagement();
                 Contract contract = new Contract(-1, startDate, endDate, 1,
                     department, position, contrMan.GetStartingSalary(position), fte);
+                employee.AddContract(contract);
 
                 // Add employee and contarct to database
-                if (emplMan.AddEmployee(employee) && contrMan.AddContract(employee.GetLatestContract()))
+                if (emplMan.AddEmployee(employee))
                 {
-                    // Add first contract to employee
+                    // Initialize auto incremented contract Id
                     int id = contrMan.GetLatestContractId(BSN);
                     if (id != -1)
                     {
                         contract.Id = id;
-                        employee.AddContract(contract);
                         // Add employee locally
                         employees.Add(employee);
-                        return true;
                     }
                     else
                     {
@@ -86,7 +71,7 @@ namespace Proj_Desktop_App
             }
             else
             {
-                return false;
+                throw new Exception("An employee with this BSN already exists");
             }
         }
 
@@ -177,6 +162,9 @@ namespace Proj_Desktop_App
             return temp.ToArray();
         }
 
+        /// <summary>
+        /// Leftover class for testing purposes
+        /// </summary>
         private void AddEmployeeMockData()
         {
             string format = "dd/MM/yyyy";

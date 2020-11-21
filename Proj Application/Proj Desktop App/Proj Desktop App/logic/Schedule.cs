@@ -41,7 +41,7 @@ namespace Proj_Desktop_App
         /// </summary>
         public void LoadSchduleFormDateBase(DateTime date)
         {   //to get the employee object, couble be change in the future;
-            EmployeeStorage a = new EmployeeStorage(PositionType.Other);
+            EmployeeStorage a = new EmployeeStorage();
             if (assignedShifts is null) { assignedShifts = new List<AssignedShift>(); }
             else { assignedShifts.Clear(); }
 

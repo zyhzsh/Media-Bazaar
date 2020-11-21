@@ -56,9 +56,6 @@ namespace Proj_Desktop_App
 
                 if (currentUser != null)
                 {
-                    ContractManagement contrMan = new ContractManagement();
-                    currentUser.AddContracts(new Contract[] { contrMan.GetActiveContract(bsn) });
-
                     if (currentUser.IsEmployed())
                     {
                         new MainForm(this, currentUser);

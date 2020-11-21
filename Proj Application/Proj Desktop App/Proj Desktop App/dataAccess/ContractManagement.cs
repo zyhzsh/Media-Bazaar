@@ -13,73 +13,6 @@ namespace Proj_Desktop_App.dataAccess
     {
         public ContractManagement() : base() { }
 
-        public Contract GetActiveContract(int bsn)
-        {
-            try
-            {
-                using (MySqlConnection conn = base.GetConnection())
-                {
-                    string sql =
-                            "SELECT contract_id, iteration, position_id, department_id, start_date, end_date, salary, fte " +
-                            "FROM contract " +
-                            "WHERE BSN = @bsn " +
-                            "AND start_date <= @today " +
-                            "AND end_date >= @today;";
-                    MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@bsn", bsn);
-                    cmd.Parameters.AddWithValue("@today", DateTime.Today.ToString("yyyy-MM-dd"));
-                    conn.Open();
-                    MySqlDataReader dr = cmd.ExecuteReader();
-
-                    if (dr.Read())
-                    {
-                        return InitializeContract(dr);
-                    }
-                    else { return null; }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-                return null;
-            }
-        }
-
-        public Contract[] GetAllContracts(int bsn)
-        {
-            try
-            {
-                using (MySqlConnection conn = base.GetConnection())
-                {
-                    string sql =
-                            "SELECT contract_id, iteration, position_id, department_id, start_date, end_date, salary, fte " +
-                            "FROM contract " +
-                            "WHERE BSN = @bsn " +
-                            "ORDER BY iteration DESC;";
-                    MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@bsn", bsn);
-                    conn.Open();
-                    MySqlDataReader dr = cmd.ExecuteReader();
-
-                    List<Contract> contracts = new List<Contract>();
-                    while (dr.Read())
-                    {
-                        Contract contract = InitializeContract(dr);
-                        if (contract != null)
-                        {
-                            contracts.Add(contract);
-                        }
-                    }
-
-                    return contracts.ToArray();
-                }
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
         public int GetLatestContractId(int bsn)
         {
             try
@@ -140,7 +73,7 @@ namespace Proj_Desktop_App.dataAccess
             }
         }
 
-        public bool AddContract(Contract contract)
+        public int AddContract(int bsn, Contract contract)
         {
             try
             {
@@ -150,8 +83,13 @@ namespace Proj_Desktop_App.dataAccess
                         "INSERT INTO contract (BSN, position_id, department_id, " +
                         "start_date, end_date,iteration, salary, fte) " +
                         "VALUES (@bsn, @position_id, @department_id, " +
-                        "@start_date, @end_date, @iteration, @salary, @fte);";
+                        "@start_date, @end_date, @iteration, @salary, @fte); " +
+                        "SELECT contract_id FROM contract " +
+                        "WHERE BSN=@bsn " +
+                        "ORDER BY start_date DESC " +
+                        "LIMIT 1;";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@bsn", bsn);
                     cmd.Parameters.AddWithValue("@position_id", (int)contract.Position);
                     cmd.Parameters.AddWithValue("@department_id", (int)contract.Department);
                     cmd.Parameters.AddWithValue("@start_date", contract.StartDate.ToString("yyyy-MM-dd"));
@@ -160,13 +98,20 @@ namespace Proj_Desktop_App.dataAccess
                     cmd.Parameters.AddWithValue("@salary", contract.Salary);
                     cmd.Parameters.AddWithValue("@fte", contract.Fte);
                     conn.Open();
-                    int result = cmd.ExecuteNonQuery();
-                    return true;
+                    MySqlDataReader dr = cmd.ExecuteReader();
+                    if (dr.Read())
+                    {
+                        return Convert.ToInt32(dr["contract_id"]);
+                    }
+                    else
+                    {
+                        return -1;
+                    }
                 }
             }
             catch (Exception)
             {
-                return false;
+                return -1;
             }
         }
 
