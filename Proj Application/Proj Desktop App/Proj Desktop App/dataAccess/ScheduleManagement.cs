@@ -1,39 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql;
+using MySql.Data;
 using MySql.Data.MySqlClient;
-namespace Proj_Desktop_App
+
+namespace Proj_Desktop_App.dataAccess
 {
-    class Schedule
+    class ScheduleManagement: DatabaseConnection
     {
-        //draft class right now
-        //we either safe everything in this class and display any date that is asked for
-        //or this class gets filled for the date and there is another entity (class/db) that has everything in it and sorts it per date
-        //currently this is the collection class with all the info
 
         private static List<AssignedShift> assignedShifts;
-        private static List<AvailableShift> availableShifts; //not in use as of yet
-
-        public Schedule()
-        {
-        }
-
+        private static List<Preferenceshift> availableShifts;
+        public ScheduleManagement() { }
         public List<AssignedShift> GetAssignedShifts()
         {
             return assignedShifts;
         }
-        public List<AvailableShift> GetAvailableShifts()
+        public List<Preferenceshift> GetAvailableShifts()
         {
             return availableShifts;
         }
-
-
-
         /// <summary>
         ///Specify the day
         ///This function will  
@@ -41,17 +30,17 @@ namespace Proj_Desktop_App
         /// </summary>
         public void LoadSchduleFormDateBase(DateTime date)
         {   //to get the employee object, couble be change in the future;
-            Store a = new Store();
+            EmployeeStorage a = new EmployeeStorage();
             if (assignedShifts is null) { assignedShifts = new List<AssignedShift>(); }
             else { assignedShifts.Clear(); }
 
-            if (availableShifts is null) { availableShifts = new List<AvailableShift>(); }
+            if (availableShifts is null) { availableShifts = new List<Preferenceshift>(); }
             else { availableShifts.Clear(); }
 
             string sql = $"SELECT * FROM `assignedschdule` WHERE year(date)='{date.ToString("yyyy")}' AND month(date)='{date.ToString("MM")}';";
             try
             {
-                MySqlConnection conn = new MySqlConnection("Server=studmysql01.fhict.local;Uid=dbi443880;Database=dbi443880;Pwd=123456");
+                MySqlConnection conn = base.GetConnection();
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 conn.Open();
                 MySqlDataReader dr = cmd.ExecuteReader();
@@ -68,7 +57,7 @@ namespace Proj_Desktop_App
                 }
                 conn.Close();
                 sql = $"SELECT * FROM `preferedschdule` WHERE year(dateShift)='{date.ToString("yyyy")}' AND month(dateShift)='{date.ToString("MM")}';";
-                cmd = new MySqlCommand(sql,conn);
+                cmd = new MySqlCommand(sql, conn);
                 conn.Open();
                 dr = cmd.ExecuteReader();
                 while (dr.Read())
@@ -79,14 +68,15 @@ namespace Proj_Desktop_App
                     else if (dr[2].ToString() == "Morning_Afternoon") { shifttype = ShiftType.Morning_Afternoon; }
                     else if (dr[2].ToString() == "Afternoon_Evening") { shifttype = ShiftType.Afternoon_Evening; }
                     else if (dr[2].ToString() == "Morning_Evening") { shifttype = ShiftType.Morning_Evening; }
-                    availableShifts.Add(new AvailableShift(a.GetEmployee(Convert.ToInt32(dr[0])), (DateTime)dr[1], shifttype));
+                    availableShifts.Add(new Preferenceshift(a.GetEmployee(Convert.ToInt32(dr[0])), (DateTime)dr[1], shifttype));
                 }
                 conn.Close();
+                   
             }
             catch (Exception ex)
             {
                 assignedShifts = new List<AssignedShift>();
-                availableShifts = new List<AvailableShift>();
+                availableShifts = new List<Preferenceshift>();
                 MessageBox.Show(ex.Message);
             }          
         }
@@ -103,19 +93,17 @@ namespace Proj_Desktop_App
                 sqlstatement += x;
             }
             if (sqlstatement == "") { return; }
-            MySqlConnection conn = new MySqlConnection("Server=studmysql01.fhict.local;Uid=dbi443880;Database=dbi443880;Pwd=123456");
-            try {
+            MySqlConnection conn = base.GetConnection();
+            try 
+            {
                 MySqlCommand cmd = new MySqlCommand(sqlstatement, conn);
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                assignedShifts = shifts;
+                assignedShifts = shifts;    
             }
             catch (Exception ex)
             { MessageBox.Show(ex.Message); }
             finally { conn.Close(); }        
         }
-
-
-
     }
 }

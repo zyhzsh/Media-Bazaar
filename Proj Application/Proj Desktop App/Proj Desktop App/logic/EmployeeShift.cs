@@ -6,15 +6,20 @@ using System.Threading.Tasks;
 
 namespace Proj_Desktop_App
 {
-    abstract class EmployeeShift
+    public abstract class EmployeeShift
     {
         protected Employee employee;
         protected DateTime date;
         protected ShiftType shiftType;
+        public EmployeeShift(Employee employee, DateTime date, ShiftType shiftType)
+        {
+            this.employee = employee;
+            this.date = date;
+            this.shiftType = shiftType;
+        }
         public Employee GetEmployee() {return this.employee;}
         public DateTime GetDate() { return this.date; }
         public ShiftType GetShiftType() { return this.shiftType; }
-        public void UpDateShift(ShiftType shiftType) { this.shiftType = shiftType; }
         public string GetShiftTypeToString()
         {
             switch (shiftType)

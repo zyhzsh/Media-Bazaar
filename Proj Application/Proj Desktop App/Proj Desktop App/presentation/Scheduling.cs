@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Proj_Desktop_App.dataAccess;
 namespace Proj_Desktop_App
 {
     public partial class Scheduling : Form
@@ -19,11 +20,12 @@ namespace Proj_Desktop_App
         private ShiftType seletedshifttype;
         private DateTime seleteddate;
         private DateTime previousdate;
-        private Store store;
+        private EmployeeStorage store;
+
         public Scheduling(Departments department)
         {
             InitializeComponent();
-            store = new Store();
+            store = new EmployeeStorage();
             schedulemanager = new ScheduleManager(store);
             //1.update combo box
             cbDepartment.Items.Add(Departments.floorOne);
@@ -43,28 +45,16 @@ namespace Proj_Desktop_App
             previousdate = DateTime.Today;
             //5.Update Employee list by department
             listboxAvailableEmployees.Items.Clear();
-            
-            foreach (Employee x in store.GetEmployees((Departments)cbDepartment.SelectedItem))
+
+            foreach (Employee x in store.GetEmployees(true, (Departments)cbDepartment.SelectedItem))
             {
-                listboxAvailableEmployees.Items.Add(x.GetBsnAndName());
+                listboxAvailableEmployees.Items.Add(x);
             }
             //6.Update AssigngedShift list by department
             listboxAssignedEmployees.Items.Clear();
             listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate, (Departments)cbDepartment.SelectedItem));
         }
 
-        private bool CheckAssignedShiftType()
-        {
-            if (ckbMorning.Checked) { seletedshifttype = ShiftType.Morning; }
-            if (ckbAfternoon.Checked) { seletedshifttype = ShiftType.Afternoon; }
-            if (CkbEvening.Checked) { seletedshifttype = ShiftType.Evening; }
-            if (ckbMorning.Checked && ckbAfternoon.Checked) { seletedshifttype = ShiftType.Morning_Afternoon; }
-            if (ckbMorning.Checked && CkbEvening.Checked) { seletedshifttype = ShiftType.Morning_Evening; }
-            if (ckbAfternoon.Checked && CkbEvening.Checked) { seletedshifttype = ShiftType.Afternoon_Evening; }
-            if (ckbMorning.Checked && ckbAfternoon.Checked && CkbEvening.Checked) { MessageBox.Show("it's illegal to assign empoyee working full day~!"); return false; }
-            if (ckbMorning.Checked == false && ckbAfternoon.Checked == false && CkbEvening.Checked == false) { return false; }
-            return true;
-        }
         private void btnAddEmpShift_Click(object sender, EventArgs e)
         {           
                 if (listboxAvailableEmployees.SelectedItems.Count != 0)
@@ -94,29 +84,11 @@ namespace Proj_Desktop_App
                     MessageBox.Show("Please select Employee then assign shift");
                 }
         }
+
         private void listboxAvailableEmployees_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateEmployeesInfo();
-        }
-        private void UpdateEmployeesInfo()
-        {
-            listBoxEmployeesDetails.Items.Clear();
-            List<int> seletedbsn = new List<int>();
-            List<Employee> tempoemployees = new List<Employee>();
-            foreach (object m in listboxAvailableEmployees.SelectedItems)
-            {
-                string extractbsn = Regex.Match(m.ToString(), @"[0-9]+").ToString();
-                seletedbsn.Add(Convert.ToInt32(extractbsn.ToString()));
-            }
-            foreach (int bsn in seletedbsn)
-            {
-                tempoemployees.Add(store.GetEmployee(bsn));
-            }
-            foreach (Employee e in tempoemployees)
-            {
-                listBoxEmployeesDetails.Items.Add(e.Biscinfo());
-            }
-        }
+        }        
         private void btnRmvEmployeeShift_Click(object sender, EventArgs e)
         {
             List<int> seletedbsn = new List<int>();
@@ -131,6 +103,7 @@ namespace Proj_Desktop_App
             seleteddate = monthCalendarScheduling.SelectionStart;
             listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate,(Departments)cbDepartment.SelectedItem));
         }
+
         private void listboxAssignedEmployees_SelectedIndexChanged(object sender, EventArgs e)
         {
             listBoxEmployeesDetails.Items.Clear();
@@ -151,6 +124,7 @@ namespace Proj_Desktop_App
                 listBoxEmployeesDetails.Items.AddRange(tempo.GetDetail());
             }
         }
+
         private void monthCalendarScheduling_DateSelected(object sender, DateRangeEventArgs e)
         {
             UpdateEmployeePreferenceShiftslists();
@@ -159,11 +133,12 @@ namespace Proj_Desktop_App
             if (previousdate.Month != seleteddate.Month)
             {
                 previousdate = seleteddate;
-                Schedule a = new Schedule();
+                ScheduleManagement a = new ScheduleManagement();
                 a.LoadSchduleFormDateBase(seleteddate);
             }
             listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate, (Departments)cbDepartment.SelectedItem));
         }
+
         private void btnSeachAvailableEmpByBsn_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < listboxAvailableEmployees.Items.Count; i++)
@@ -176,6 +151,7 @@ namespace Proj_Desktop_App
 
             }
         }
+
         private void btnSearchAssignedEmpByBsn_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < listboxAssignedEmployees.Items.Count; i++)
@@ -187,24 +163,57 @@ namespace Proj_Desktop_App
 
             }
         }
+
         private void cbDepartment_SelectedIndexChanged(object sender, EventArgs e)
         {
             //1.Update the employeelist by department
             listboxAvailableEmployees.Items.Clear();
-            foreach (Employee x in store.GetEmployees((Departments)cbDepartment.SelectedItem))
+            foreach (Employee x in store.GetEmployees(true, (Departments)cbDepartment.SelectedItem))
             {
-                listboxAvailableEmployees.Items.Add(x.GetBsnAndName());
+                listboxAvailableEmployees.Items.Add(x);
             }
             //2.Update the assignedemployeelist by department
             listboxAssignedEmployees.Items.Clear();
             listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate, (Departments)cbDepartment.SelectedItem));
         }
-
         private void listboxAvailableEmployees_Click(object sender, EventArgs e)
         {
             UpdateEmployeePreferenceShiftslists();
         }
 
+
+
+        private void UpdateEmployeesInfo()
+        {
+            listBoxEmployeesDetails.Items.Clear();
+            List<int> seletedbsn = new List<int>();
+            List<Employee> tempoemployees = new List<Employee>();
+            foreach (object m in listboxAvailableEmployees.SelectedItems)
+            {
+                string extractbsn = Regex.Match(m.ToString(), @"[0-9]+").ToString();
+                seletedbsn.Add(Convert.ToInt32(extractbsn.ToString()));
+            }
+            foreach (int bsn in seletedbsn)
+            {
+                tempoemployees.Add(store.GetEmployee(bsn));
+            }
+            foreach (Employee e in tempoemployees)
+            {
+                listBoxEmployeesDetails.Items.Add(e.Biscinfo());
+            }
+        }
+        private bool CheckAssignedShiftType()
+        {
+            if (ckbMorning.Checked) { seletedshifttype = ShiftType.Morning; }
+            if (ckbAfternoon.Checked) { seletedshifttype = ShiftType.Afternoon; }
+            if (CkbEvening.Checked) { seletedshifttype = ShiftType.Evening; }
+            if (ckbMorning.Checked && ckbAfternoon.Checked) { seletedshifttype = ShiftType.Morning_Afternoon; }
+            if (ckbMorning.Checked && CkbEvening.Checked) { seletedshifttype = ShiftType.Morning_Evening; }
+            if (ckbAfternoon.Checked && CkbEvening.Checked) { seletedshifttype = ShiftType.Afternoon_Evening; }
+            if (ckbMorning.Checked && ckbAfternoon.Checked && CkbEvening.Checked) { MessageBox.Show("it's illegal to assign empoyee working full day~!"); return false; }
+            if (ckbMorning.Checked == false && ckbAfternoon.Checked == false && CkbEvening.Checked == false) { return false; }
+            return true;
+        }
         private void UpdateEmployeePreferenceShiftslists()
         {
             if (listboxAvailableEmployees.SelectedItem != null)
@@ -232,7 +241,6 @@ namespace Proj_Desktop_App
             }
 
         }
-
         private string GetWeeklyShfitByDayIndex(int indexofweek, List<AvailableShift> templist)
         {
             string week = "";

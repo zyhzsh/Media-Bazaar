@@ -13,7 +13,7 @@ namespace Proj_Desktop_App
     public partial class EmployeeCreateUpdateForm : Form
     {
         // Store
-        private Store store;
+        private EmployeeStorage store;
 
         // For updating employee details
         private bool updateEmployee;
@@ -29,7 +29,7 @@ namespace Proj_Desktop_App
         /// <summary>
         /// Adding a new employee
         /// </summary>
-        public EmployeeCreateUpdateForm(Store store)
+        public EmployeeCreateUpdateForm(EmployeeStorage store)
         {
             InitializeComponent();
             InitializeElements();
@@ -38,12 +38,14 @@ namespace Proj_Desktop_App
             Text = "New Employee Form";
             btnConfirm.Text = "Add employee";
             rbMale.Checked = true;
+            dtpStartDate.MinDate = DateTime.Today;
+            dtpBirthdate.MaxDate = DateTime.Today.AddYears(-16);
         }
 
         /// <summary>
         /// Updating employee details
         /// </summary>
-        public EmployeeCreateUpdateForm(Store store, Employee employee)
+        public EmployeeCreateUpdateForm(EmployeeStorage store, Employee employee)
         {
             InitializeComponent();
             InitializeElements();
@@ -133,15 +135,10 @@ namespace Proj_Desktop_App
                         // Add new employee
                         try
                         {
-                            if (store.AddEmployee(bsn, firstName, lastName, gender, birthdate, languages, certificates,
-                                                  phone, address, email, startDate, endDate, position, department, fte))
-                            {
-                                this.Close();
-                            }
-                            else
-                            {
-                                MessageBox.Show("An employee with this BSN already exists!");
-                            }
+                            store.AddEmployee(bsn, firstName, lastName, gender, birthdate, languages, certificates,
+                                                  phone, address, email, startDate, endDate, position, department, fte);
+                            this.Close();
+                            
                         }
                         catch (Exception ex)
                         {
@@ -160,16 +157,8 @@ namespace Proj_Desktop_App
                     // Update employee
                     try
                     {
-                        if (store.UpdateEmployee(employeeToUpdate.GetBSN(),
-                            firstName, lastName, gender, languages, certificates,
-                            phone, address, email))
-                        {
-                            this.Close();
-                        }
-                        else
-                        {
-                            MessageBox.Show("An employee with this BSN doesn't exists!");
-                        }
+                        employeeToUpdate.UpdateInfo(firstName, lastName, gender, languages, certificates,
+                            phone, address, email);
                     }
                     catch (Exception ex)
                     {

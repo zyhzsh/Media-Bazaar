@@ -394,9 +394,6 @@
             // 
             this.cbSearchBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSearchBy.FormattingEnabled = true;
-            this.cbSearchBy.Items.AddRange(new object[] {
-            "BSN",
-            "Last Name"});
             this.cbSearchBy.Location = new System.Drawing.Point(16, 47);
             this.cbSearchBy.Name = "cbSearchBy";
             this.cbSearchBy.Size = new System.Drawing.Size(99, 26);
@@ -429,6 +426,7 @@
             this.btnShowAll.TabIndex = 20;
             this.btnShowAll.Text = "Show all";
             this.btnShowAll.UseVisualStyleBackColor = false;
+            this.btnShowAll.Click += new System.EventHandler(this.btnShowAll_Click);
             // 
             // lvContracts
             // 

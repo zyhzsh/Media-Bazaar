@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace Proj_Desktop_App
 {
-    public enum PositionType
+   public enum ShiftType
     {
-        Administrator,
-        Depot_Manager,
-        Sales_Manager,
-        Depot_Worker,
-        Sales_Worker,
-        Other
+        Morning,
+        Afternoon,
+        Evening,
+        Morning_Afternoon,
+        Morning_Evening,
+        Afternoon_Evening
     }
 }
-
