@@ -94,16 +94,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="logic\Product\ProductStorage.cs" />
-    <Compile Include="logic\Product\RestockRequest.cs" />
-    <Compile Include="logic\Product\RestockRequestStorage.cs" />
+    <Compile Include="logic\AssignedShift.cs" />
+    <Compile Include="logic\PreferenceShift.cs" />
+    <Compile Include="logic\Contract.cs" />
+    <Compile Include="logic\Departments.cs" />
+    <Compile Include="logic\Employee.cs" />
+    <Compile Include="logic\EmployeeShift.cs" />
+    <Compile Include="logic\PostionType.cs" />
+    <Compile Include="logic\Product.cs" />
+    <Compile Include="logic\ProductStorage.cs" />
+    <Compile Include="logic\RestockRequest.cs" />
+    <Compile Include="logic\RestockRequestStorage.cs" />
+    <Compile Include="logic\Sale.cs" />
+    <Compile Include="logic\ScheduleManager.cs" />
+    <Compile Include="logic\ShiftType.cs" />
     <Compile Include="presentation\AdminForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="presentation\AdminForm.Designer.cs">
       <DependentUpon>AdminForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="logic\Administration\Contract.cs" />
     <Compile Include="presentation\ContractUpdateForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,25 +123,20 @@
     <Compile Include="dataAccess\ContractManagement.cs" />
     <Compile Include="dataAccess\DatabaseConnection.cs" />
     <Compile Include="dataAccess\EmployeeManagement.cs" />
-    <Compile Include="logic\Schedule\AssignedShift.cs" />
-    <Compile Include="logic\Schedule\AvailableShift.cs" />
     <Compile Include="dataAccess\ProductManagement.cs" />
     <Compile Include="dataAccess\RestockRequestManagement.cs" />
-    <Compile Include="logic\Administration\Departments.cs" />
     <Compile Include="presentation\PendingRestocksForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="presentation\PendingRestocksForm.Designer.cs">
       <DependentUpon>PendingRestocksForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="logic\Administration\Employee.cs" />
     <Compile Include="presentation\EmployeeCreateUpdateForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="presentation\EmployeeCreateUpdateForm.Designer.cs">
       <DependentUpon>EmployeeCreateUpdateForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="logic\Schedule\EmployeeShift.cs" />
     <Compile Include="presentation\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,8 +150,6 @@
     <Compile Include="presentation\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="logic\Administration\PostionType.cs" />
-    <Compile Include="logic\Product\Product.cs" />
     <Compile Include="presentation\ProductCRUDForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -165,7 +168,6 @@
     <Compile Include="presentation\ProductStatistics.Designer.cs">
       <DependentUpon>ProductStatistics.cs</DependentUpon>
     </Compile>
-    <Compile Include="logic\Product\Sale.cs" />
     <Compile Include="presentation\SalesManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -175,14 +177,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="dataAccess\ScheduleManagement.cs" />
-    <Compile Include="logic\Schedule\ScheduleManager.cs" />
     <Compile Include="presentation\Scheduling.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="presentation\Scheduling.Designer.cs">
       <DependentUpon>Scheduling.cs</DependentUpon>
     </Compile>
-    <Compile Include="logic\Schedule\ShiftType.cs" />
     <Compile Include="logic\EmployeeStorage.cs" />
     <Compile Include="presentation\WorkerStockRequestsForm.cs">
       <SubType>Form</SubType>

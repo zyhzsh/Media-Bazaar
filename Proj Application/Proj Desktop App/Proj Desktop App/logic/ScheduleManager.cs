@@ -9,7 +9,7 @@ namespace Proj_Desktop_App
     class ScheduleManager
     {
         private List<AssignedShift> allAssignedShifts;
-        private List<Preferenceshift> allAvailableShifts;
+        private List<PreferenceShift> allAvailableShifts;
         private EmployeeStorage store;
         private List<string> sqlstatements;
         public ScheduleManager(EmployeeStorage store)
@@ -244,9 +244,9 @@ namespace Proj_Desktop_App
         /// </summary>
         /// <param name="date"></param>
         /// <returns></returns>
-        public List<Preferenceshift> GetEmployee_Preference_Shift_For_The_Week(Employee employee,DateTime date)
+        public List<PreferenceShift> GetEmployee_Preference_Shift_For_The_Week(Employee employee,DateTime date)
         {
-            List<Preferenceshift> temp = new List<Preferenceshift>();
+            List<PreferenceShift> temp = new List<PreferenceShift>();
             //Check Current List
             DateTime startdate = date;
             if (date.DayOfWeek.ToString() == "Monday") { startdate = date; }
@@ -260,8 +260,8 @@ namespace Proj_Desktop_App
             {   //Get the shift list for this week
                 temp.AddRange(Get_Preference_Shifts_By_Date(startdate.AddDays(i)));
             }
-            List<Preferenceshift> employee_shift = new List<Preferenceshift>();
-            foreach (Preferenceshift e in temp)
+            List<PreferenceShift> employee_shift = new List<PreferenceShift>();
+            foreach (PreferenceShift e in temp)
             {
                 if (e.GetEmployee().GetBSN() == employee.GetBSN())
                 {
@@ -282,10 +282,10 @@ namespace Proj_Desktop_App
             }
             return temp;
         }
-        private List<Preferenceshift> Get_Preference_Shifts_By_Date(DateTime date)
+        private List<PreferenceShift> Get_Preference_Shifts_By_Date(DateTime date)
         {
-            List<Preferenceshift> temp = new List<Preferenceshift>();
-            foreach (Preferenceshift e in allAvailableShifts)
+            List<PreferenceShift> temp = new List<PreferenceShift>();
+            foreach (PreferenceShift e in allAvailableShifts)
             {
                 if (e.GetDate().ToString("yyyy-MM-dd") == date.ToString("yyyy-MM-dd"))
                 {
