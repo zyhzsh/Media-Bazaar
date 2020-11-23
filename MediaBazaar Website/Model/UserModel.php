@@ -33,6 +33,31 @@ class UserModel
         }
     }
 
+    public function CheckPassword($BSN, $password)
+    {
+        $dbh = new Dbh();
+        $sql = "SELECT * FROM `employee` Where BSN=(:uBSN) And password=(:pwd)";
+        $conn = $dbh->connection();
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([':uBSN' => $BSN, 'pwd' => $password]);
+        $result = $stmt->fetch();;
+        if (empty($result)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public function ChangePassword($BSN, $oldPassword, $newPassword)
+    {
+        $dbh = new Dbh();
+        $sql = "UPDATE `employee` SET password=(:nPassword) WHERE passsword=(:oPassword) AND BSN=(:b) ";
+        $conn = $dbh->connection();
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([':nPassword' => $newPassword, ':oPassword' => $oldPassword, ':b' => $BSN]);
+    }
+
+
     public function ChangeUserEmail($oldEmail, $newEmail, $BSN)
     {
         $dbh = new Dbh();
