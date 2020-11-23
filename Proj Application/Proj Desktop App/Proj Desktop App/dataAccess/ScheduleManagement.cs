@@ -13,13 +13,13 @@ namespace Proj_Desktop_App.dataAccess
     {
 
         private static List<AssignedShift> assignedShifts;
-        private static List<Preferenceshift> availableShifts;
+        private static List<PreferenceShift> availableShifts;
         public ScheduleManagement() { }
         public List<AssignedShift> GetAssignedShifts()
         {
             return assignedShifts;
         }
-        public List<Preferenceshift> GetAvailableShifts()
+        public List<PreferenceShift> GetAvailableShifts()
         {
             return availableShifts;
         }
@@ -34,7 +34,7 @@ namespace Proj_Desktop_App.dataAccess
             if (assignedShifts is null) { assignedShifts = new List<AssignedShift>(); }
             else { assignedShifts.Clear(); }
 
-            if (availableShifts is null) { availableShifts = new List<Preferenceshift>(); }
+            if (availableShifts is null) { availableShifts = new List<PreferenceShift>(); }
             else { availableShifts.Clear(); }
 
             string sql = $"SELECT * FROM `assignedschdule` WHERE year(date)='{date.ToString("yyyy")}' AND month(date)='{date.ToString("MM")}';";
@@ -68,7 +68,7 @@ namespace Proj_Desktop_App.dataAccess
                     else if (dr[2].ToString() == "Morning_Afternoon") { shifttype = ShiftType.Morning_Afternoon; }
                     else if (dr[2].ToString() == "Afternoon_Evening") { shifttype = ShiftType.Afternoon_Evening; }
                     else if (dr[2].ToString() == "Morning_Evening") { shifttype = ShiftType.Morning_Evening; }
-                    availableShifts.Add(new Preferenceshift(a.GetEmployee(Convert.ToInt32(dr[0])), (DateTime)dr[1], shifttype));
+                    availableShifts.Add(new PreferenceShift(a.GetEmployee(Convert.ToInt32(dr[0])), (DateTime)dr[1], shifttype));
                 }
                 conn.Close();
                    
@@ -76,7 +76,7 @@ namespace Proj_Desktop_App.dataAccess
             catch (Exception ex)
             {
                 assignedShifts = new List<AssignedShift>();
-                availableShifts = new List<Preferenceshift>();
+                availableShifts = new List<PreferenceShift>();
                 MessageBox.Show(ex.Message);
             }          
         }
