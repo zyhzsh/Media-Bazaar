@@ -12,76 +12,38 @@ namespace Proj_Desktop_App
 {
     public partial class AdminForm : Form
     {
-        private Store store;
+        private EmployeeStorage emplStorage;
         private Employee selectedEmployee;
 
-        public AdminForm(Store store)
+        private ContractUpdateForm contrUForm;
+        private EmployeeCreateUpdateForm emplCUForm;
+
+        public AdminForm()
         {
             InitializeComponent();
-            this.store = store;
-            store.EmployeeChanged += Store_EmployeeChanged;
+            this.emplStorage = new EmployeeStorage();
             cbShowEmployed.Checked = true;
             selectedEmployee = null;
-            cbSearchBy.Items.AddRange( new string[] { "Name", "BSN" });
+            cbSearchBy.Items.AddRange(new string[] { "Name", "BSN" });
             cbSearchBy.SelectedIndex = 0;
-            UpdateEmployees(false);
+            emplCUForm = null;
+            contrUForm = null;
         }
 
-        private void Store_EmployeeChanged(Employee employee)
+        private void EmplCUForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             UpdateEmployees(false);
-            if (lbEmployees.Items.Count > 0)
-            {
-                lbEmployees.SelectedItem = employee;
-            }
-        }
-
-        public void UpdateEmployees(bool searching)
-        {
-            Employee[] employees = null;
-
-            if (searching)
-            {
-                string searchBy = cbSearchBy.SelectedItem.ToString();
-                if (searchBy == "Name")
-                {
-                    employees = store.GetEmployees(cbShowEmployed.Checked, tbSearch.Text);
-                }
-                else if (searchBy == "BSN")
-                {
-                    try
-                    {
-                        employees = store.GetEmployees(cbShowEmployed.Checked, Convert.ToInt32(tbSearch.Text));
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Please input only numbers to search by BSN to");
-                        return;
-                    }
-                }
-            }
-            else
-            {
-                employees = store.GetEmployees(cbShowEmployed.Checked);
-            }
-
-            // Load employees into listbox
-            lbEmployees.Items.Clear();
-            lbEmployees.Items.AddRange(employees);
-            lblTotal.Text = employees.Length.ToString();
-
-            if (selectedEmployee != null && lbEmployees.Items.Contains(selectedEmployee))
-            {
-                lbEmployees.SelectedIndex = lbEmployees.Items.IndexOf(selectedEmployee);
-            }
-            else if(employees.Length > 0)
-            {
-                lbEmployees.SelectedIndex = 0;
-            }
-            //else
+            //if (lbEmployees.Items.Count > 0 && lbEmployees.Items.Contains(employee))
             //{
-            //    lbEmployees.Items.Add("No employees to show");
+            //    lbEmployees.SelectedItem = employee;
             //}
+            emplCUForm = null;
+        }
+
+        private void ContrUForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            LoadContracts();
+            contrUForm = null;
         }
 
         private void cbShowEmployed_CheckedChanged(object sender, EventArgs e)
@@ -129,28 +91,7 @@ namespace Proj_Desktop_App
                     }
 
                     // Show employee contracts:
-                    lvContracts.Items.Clear();
-                    Contract[] contracts = selectedEmployee.GetContracts();
-                    foreach (Contract contract in contracts)
-                    {
-                        ListViewItem item = new ListViewItem(contract.Iteration.ToString());
-                        lvContracts.Items.Add(item);
-                        string[] subitems = contract.ToString().Split(',');
-                        item.SubItems.AddRange(subitems);
-                        // Indicate if contract is active
-                        Color isActive = Color.Salmon;
-                        if (contract.IsActive())
-                        {
-                            isActive = Color.LightGreen;
-                        }
-                        item.BackColor = isActive;
-                        // Indicate if contract will end soon
-                        if (contract.IsCloseToEndDate())
-                        {
-                            item.SubItems[1].Text += '*'; 
-                            item.SubItems[1].ForeColor = Color.Red;
-                        }
-                    }
+                    LoadContracts();
 
                     // If employee isn't employed you can't update their details
                     btnUpdateDetails.Enabled = selectedEmployee.IsEmployed();
@@ -158,16 +99,102 @@ namespace Proj_Desktop_App
             }
         }
 
+        /// <summary>
+        /// Update the listbox of employees
+        /// </summary>
+        private void UpdateEmployees(bool searching)
+        {
+            Employee[] employees = null;
+
+            if (searching)
+            {
+                string searchBy = cbSearchBy.SelectedItem.ToString();
+                if (searchBy == "Name")
+                {
+                    employees = emplStorage.GetEmployees(cbShowEmployed.Checked, tbSearch.Text);
+                }
+                else if (searchBy == "BSN")
+                {
+                    try
+                    {
+                        employees = emplStorage.GetEmployees(cbShowEmployed.Checked, Convert.ToInt32(tbSearch.Text));
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Please input only numbers to search by BSN to");
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                employees = emplStorage.GetEmployees(cbShowEmployed.Checked);
+            }
+
+            // Load employees into listbox
+            lbEmployees.Items.Clear();
+            lbEmployees.Items.AddRange(employees);
+            lblTotal.Text = employees.Length.ToString();
+
+            if (selectedEmployee != null && lbEmployees.Items.Contains(selectedEmployee))
+            {
+                lbEmployees.SelectedIndex = lbEmployees.Items.IndexOf(selectedEmployee);
+            }
+            else if (employees.Length > 0)
+            {
+                lbEmployees.SelectedIndex = 0;
+            }
+            //else
+            //{
+            //    lbEmployees.Items.Add("No employees to show");
+            //}
+        }
+
+        /// <summary>
+        /// Display all contracts of an employee
+        /// </summary>
+        private void LoadContracts()
+        {
+            lvContracts.Items.Clear();
+            Contract[] contracts = selectedEmployee.GetContracts();
+            foreach (Contract contract in contracts)
+            {
+                ListViewItem item = new ListViewItem(contract.Iteration.ToString());
+                lvContracts.Items.Add(item);
+                string[] subitems = contract.ToString().Split(',');
+                item.SubItems.AddRange(subitems);
+
+                // Indicate if contract is active
+                Color isActive = Color.Salmon;
+                if (contract.IsActive())
+                {
+                    isActive = Color.LightGreen;
+                }
+
+                // Indicate if contract will end soon
+                if (contract.IsCloseToEndDate())
+                {
+                    isActive = Color.SandyBrown;
+                    item.SubItems[2].Text += '*';
+                }
+                item.BackColor = isActive;
+            }
+        }
+
         private void btnAddEmployee_Click(object sender, EventArgs e)
         {
-            new EmployeeCreateUpdateForm(store);
+            // Open form for creating a new employee
+            emplCUForm = new EmployeeCreateUpdateForm(emplStorage);
+            emplCUForm.FormClosed += EmplCUForm_FormClosed;
         }
 
         private void btnUpdateDetails_Click(object sender, EventArgs e)
         {
             if (selectedEmployee != null)
             {
-                EmployeeCreateUpdateForm updateForm = new EmployeeCreateUpdateForm(store, selectedEmployee);
+                // Open form for updating an employee's details
+                emplCUForm = new EmployeeCreateUpdateForm(emplStorage, selectedEmployee);
+                emplCUForm.FormClosed += EmplCUForm_FormClosed;
             }
             else
             {
@@ -182,7 +209,9 @@ namespace Proj_Desktop_App
                 Contract activeContract = selectedEmployee.GetActiveContract();
                 if (activeContract != null)
                 {
-                    new ContractUpdateForm(store, selectedEmployee, true);
+                    // Open form for promotiing
+                    contrUForm = new ContractUpdateForm(selectedEmployee, activeContract, ContractAction.Promote);
+                    contrUForm.FormClosed += ContrUForm_FormClosed;
                 }
                 else
                 {
@@ -197,7 +226,32 @@ namespace Proj_Desktop_App
 
         private void btnExtendCon_Click(object sender, EventArgs e)
         {
-            //new ContractUpdateForm();
+            if (selectedEmployee != null)
+            {
+                Contract activeContract = selectedEmployee.GetActiveContract();
+                Contract latestContract = selectedEmployee.GetLatestContract();
+                if (activeContract == latestContract || (activeContract == null && latestContract != null))
+                {
+                    if (latestContract != null)
+                    {
+                        // Open form for extending a contract
+                        contrUForm = new ContractUpdateForm(selectedEmployee, latestContract, ContractAction.Extend);
+                        contrUForm.FormClosed += ContrUForm_FormClosed;
+                    }
+                    else
+                    {
+                        MessageBox.Show("This employee doen't have a contract to extend.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("This employee already has an extention to their active contract.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an employee form the list.");
+            }
         }
 
         private void btnTerminateCon_Click(object sender, EventArgs e)
@@ -207,7 +261,9 @@ namespace Proj_Desktop_App
                 Contract activeContract = selectedEmployee.GetActiveContract();
                 if (activeContract != null)
                 {
-                    new ContractUpdateForm(store, selectedEmployee, false);
+                    // Open form for terminating a contarct
+                    contrUForm = new ContractUpdateForm(selectedEmployee, activeContract, ContractAction.Terminate);
+                    contrUForm.FormClosed += ContrUForm_FormClosed;
                 }
                 else
                 {

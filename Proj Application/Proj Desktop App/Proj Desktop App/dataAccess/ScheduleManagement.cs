@@ -30,7 +30,7 @@ namespace Proj_Desktop_App.dataAccess
         /// </summary>
         public void LoadSchduleFormDateBase(DateTime date)
         {   //to get the employee object, couble be change in the future;
-            Store a = new Store();
+            EmployeeStorage a = new EmployeeStorage();
             if (assignedShifts is null) { assignedShifts = new List<AssignedShift>(); }
             else { assignedShifts.Clear(); }
 

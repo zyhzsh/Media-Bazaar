@@ -22,18 +22,37 @@ namespace Proj_Desktop_App.dataAccess
                 {
                     string sql =
                         "SELECT * " +
-                        "FROM employee " +
-                        "WHERE BSN = @bsn;";
+                        "FROM employee e " +
+                        "LEFT JOIN contract c " +
+                        "ON e.BSN = c.BSN " +
+                        "WHERE e.BSN = @bsn " +
+                        "ORDER BY c.start_date;";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@bsn", bsn);
                     conn.Open();
-                    MySqlDataReader empl = cmd.ExecuteReader();
-                    if (empl.Read())
+                    MySqlDataReader dr = cmd.ExecuteReader();
+                    if (dr.Read())
                     {
-                        return InitializeEmployee(empl);
+                        // Initialize employee
+                        Employee employee = InitializeEmployee(dr);
+                        List<Contract> contracts = new List<Contract>();
+                        do
+                        {
+                            // Add contract
+                            Contract contract = InitializeContract(dr);
+                            if (contract != null)
+                            {
+                                contracts.Add(contract);
+                            }
+                        } 
+                        while (dr.Read());
+                        // Load the contracts
+                        employee.LoadContracts(contracts.ToArray());
+
+                        return employee;
                     }
-                    else
-                    {
+                    else 
+                    { 
                         return null;
                     }
                 }
@@ -51,18 +70,52 @@ namespace Proj_Desktop_App.dataAccess
                 using (MySqlConnection conn = base.GetConnection())
                 {
                     string sql =
-                        "SELECT * FROM employee e;";
+                        "SELECT * FROM employee e " +
+                        "LEFT JOIN contract c " +
+                        "ON e.BSN = c.BSN " +
+                        "ORDER BY e.BSN, c.start_date;";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     conn.Open();
-                    MySqlDataReader empl = cmd.ExecuteReader();
+                    MySqlDataReader dr = cmd.ExecuteReader();
                     List<Employee> employees = new List<Employee>();
-                    while (empl.Read())
+                    bool reading = dr.Read();
+                    while (reading)
                     {
-                        Employee employee = InitializeEmployee(empl);
-                        if (employee != null)
+                        // Initialize new employee
+                        Employee employee = InitializeEmployee(dr);
+                        bool newEmployee = false;
+
+                        // An empty list for contracts
+                        List<Contract> contracts = new List<Contract>();
+                        do
                         {
-                            employees.Add(employee);
+                            // Add contract
+                            Contract contract = InitializeContract(dr);
+                            if (contract != null)
+                            {
+                                contracts.Add(contract);
+                            }
+                            // Proceed to next one
+                            if (dr.Read())
+                            {
+                                reading = true;
+                                if (Convert.ToInt32(dr["BSN"]) != employee.GetBSN())
+                                {
+                                    newEmployee = true;
+                                }
+                            }
+                            else
+                            {
+                                // End of data reader
+                                reading = false;
+                                break;
+                            }
                         }
+                        while (!newEmployee);
+                        
+                        // Load the contracts and add employee
+                        employee.LoadContracts(contracts.ToArray());
+                        employees.Add(employee);
                     }
 
                     return employees.ToArray();
@@ -84,17 +137,20 @@ namespace Proj_Desktop_App.dataAccess
                     using (MySqlConnection conn = base.GetConnection())
                     {
                         string sql =
+                            // Add employee
                             "INSERT INTO employee (BSN, first_name, last_name, " +
                             "gender, phone, date_birth, address, languages, certificates, " +
                             "contact_email, username, password) " +
                             "VALUES(@bsn, @first_name, @last_name, " +
                             "@gender, @phone, @date_birth, @address, @languages, @certificates, " +
-                            "@email, @username, @password); " +
-                            "INSERT INTO contract (BSN, position_id, department_id, " +
+                            "@email, @username, @password) " +
+                            // Add contract
+                            "INSERT INTO contract(BSN, position_id, department_id, " +
                             "start_date, end_date,iteration, salary, fte) " +
                             "VALUES (@bsn, @position_id, @department_id, " +
                             "@start_date, @end_date, @iteration, @salary, @fte);";
                         MySqlCommand cmd = new MySqlCommand(sql, conn);
+                        // Employee
                         cmd.Parameters.AddWithValue("@bsn", employee.GetBSN());
                         cmd.Parameters.AddWithValue("@first_name", employee.firstName);
                         cmd.Parameters.AddWithValue("@last_name", employee.lastName);
@@ -107,7 +163,10 @@ namespace Proj_Desktop_App.dataAccess
                         cmd.Parameters.AddWithValue("@email", employee.contactEmail);
                         cmd.Parameters.AddWithValue("@username", GenerateUsername(employee));
                         cmd.Parameters.AddWithValue("@password", GeneratePassword(8));
+                        // Contract
                         Contract contract = employee.GetLatestContract();
+                        if (contract == null)
+                        { throw new Exception("Failed to add contarct"); }
                         cmd.Parameters.AddWithValue("@position_id", (int)contract.Position);
                         cmd.Parameters.AddWithValue("@department_id", (int)contract.Department);
                         cmd.Parameters.AddWithValue("@start_date", contract.StartDate.ToString("yyyy-MM-dd"));
@@ -132,7 +191,8 @@ namespace Proj_Desktop_App.dataAccess
             }
         }
 
-        public bool UpdateEmployee(Employee employee)
+        public bool UpdateEmployee(int bsn, string firstName, string lastName, char gender, string languages,
+            string certificates, string phoneNumber, string address, string contactEmail)
         {
             try
             {
@@ -150,18 +210,17 @@ namespace Proj_Desktop_App.dataAccess
                         "contact_email = @contact_email " +
                         "WHERE BSN = @bsn;";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@first_name", employee.firstName);
-                    cmd.Parameters.AddWithValue("@last_name", employee.lastName);
-                    cmd.Parameters.AddWithValue("@gender", employee.gender);
-                    cmd.Parameters.AddWithValue("@languages", employee.languages);
-                    cmd.Parameters.AddWithValue("@certificates", employee.certificates);
-                    cmd.Parameters.AddWithValue("@phone", employee.phoneNumber);
-                    cmd.Parameters.AddWithValue("@address", employee.address);
-                    cmd.Parameters.AddWithValue("@contact_email", employee.contactEmail);
-                    cmd.Parameters.AddWithValue("@bsn", employee.GetBSN());
+                    cmd.Parameters.AddWithValue("@first_name", firstName);
+                    cmd.Parameters.AddWithValue("@last_name", lastName);
+                    cmd.Parameters.AddWithValue("@gender", gender);
+                    cmd.Parameters.AddWithValue("@languages", languages);
+                    cmd.Parameters.AddWithValue("@certificates", certificates);
+                    cmd.Parameters.AddWithValue("@phone", phoneNumber);
+                    cmd.Parameters.AddWithValue("@address", address);
+                    cmd.Parameters.AddWithValue("@contact_email", contactEmail);
+                    cmd.Parameters.AddWithValue("@bsn", bsn);
                     conn.Open();
-                    int result = cmd.ExecuteNonQuery();
-                    if (result == 1)
+                    if (cmd.ExecuteNonQuery() == 1)
                     {
                         return true;
                     }
@@ -231,6 +290,28 @@ namespace Proj_Desktop_App.dataAccess
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
+                return null;
+            }
+        }
+
+        private Contract InitializeContract(MySqlDataReader contr)
+        {
+            try
+            {
+                Contract contract = new Contract(
+                    Convert.ToInt32(contr["contract_id"]),
+                    Convert.ToDateTime(contr["start_date"]),
+                    Convert.ToDateTime(contr["end_date"]),
+                    Convert.ToInt32(contr["iteration"]),
+                    (Departments)contr["department_id"],
+                    (PositionType)contr["position_id"],
+                    Convert.ToDecimal(contr["salary"]),
+                    Convert.ToDecimal(contr["fte"]));
+                return contract;
+
+            }
+            catch (Exception)
+            {
                 return null;
             }
         }

@@ -183,7 +183,7 @@
       <DependentUpon>Scheduling.cs</DependentUpon>
     </Compile>
     <Compile Include="logic\Schedule\ShiftType.cs" />
-    <Compile Include="logic\Store.cs" />
+    <Compile Include="logic\EmployeeStorage.cs" />
     <Compile Include="presentation\WorkerStockRequestsForm.cs">
       <SubType>Form</SubType>
     </Compile>
