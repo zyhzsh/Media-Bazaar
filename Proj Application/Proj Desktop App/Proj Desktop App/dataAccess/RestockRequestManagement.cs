@@ -225,7 +225,7 @@ namespace Proj_Desktop_App.dataAccess
                 }
                 if (dr["requester_desc"] != DBNull.Value)
                 {
-                    requester_desc = dr["judge_desc"].ToString();
+                    requester_desc = dr["requester_desc"].ToString();
                 }
                 RestockRequest request;
 
