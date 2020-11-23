@@ -14,36 +14,50 @@ namespace Proj_Desktop_App
     public partial class WorkerStockRequestsForm : Form
     {
         private RestockRequestStorage RequestStorage;
-        private ProductStorage ProductStorage;
         private int currentUserBSN;
 
-        public WorkerStockRequestsForm(int BSN, RestockRequestStorage requestStorage, ProductStorage productStorage)
+        public WorkerStockRequestsForm(int BSN, RestockRequestStorage requestStorage)
         {
             InitializeComponent();
             this.RequestStorage = requestStorage;
-            this.ProductStorage = productStorage;
             currentUserBSN = BSN;
             ReloadRequests();
         }
 
         private void ReloadRequests()
         {
-            lbRestockRequests.Items.Clear();
+            lvRestocks.Items.Clear();
             foreach (RestockRequest request in RequestStorage.GetAccepted())
             {
                 if(request != null)
-                    lbRestockRequests.Items.Add(request);
+                {
+                    ListViewItem item = new ListViewItem(request.restockID.ToString());
+                    item.SubItems.Add(request.productCode.ToString());
+                    item.SubItems.Add(request.productName);
+                    item.SubItems.Add(request.requester_desc);
+                    item.SubItems.Add(request.judge_desc);
+                    item.SubItems.Add(request.restockAmount.ToString());
+
+                    lvRestocks.Items.Add(item);
+                }
+            }
+
+            foreach (ColumnHeader column in lvRestocks.Columns)
+            {
+                if (column.Text == "Response Message" || column.Text == "Request Message")
+                {
+                    column.Width = -1;
+                }
             }
         }
 
         private void btnCompleteRestock_Click(object sender, EventArgs e)
         {
-            if (lbRestockRequests.SelectedItems.Count > 0 && numRestockedAmount.Value > 0)
+            if (lvRestocks.SelectedItems.Count > 0 && numRestockedAmount.Value > 0)
             {
-                for (int i = lbRestockRequests.SelectedItems.Count - 1; i >= 0; i--)
+                for (int i = lvRestocks.SelectedItems.Count - 1; i >= 0; i--)
                 {
-                    RestockRequest request = ((RestockRequest) lbRestockRequests.SelectedItems[i]);
-                    RequestStorage.CompleteRequest(request.restockID, currentUserBSN, (int)numRestockedAmount.Value, rtbRestockRequestComment.Text);
+                    RequestStorage.CompleteRequest(Convert.ToInt32(lvRestocks.SelectedItems[i].Text), currentUserBSN, (int)numRestockedAmount.Value, rtbRestockRequestComment.Text);
                 }
                 MessageBox.Show("Requests completed");
                 ReloadRequests();

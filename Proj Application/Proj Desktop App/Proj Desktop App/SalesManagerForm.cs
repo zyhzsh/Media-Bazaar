@@ -25,6 +25,8 @@ namespace Proj_Desktop_App
             this.reqStorage = reqStorage;
             this.salesManagerBsn = BSN;
             this.salesManagerDepartment = dep;
+            cbProductSearchMethod.SelectedIndex = 0;
+
             ReloadProducts();
 
             ReloadRestockRequests();
@@ -32,19 +34,53 @@ namespace Proj_Desktop_App
 
         private void ReloadProducts()
         {
-            lbProducts.Items.Clear();
+            lvProducts.Items.Clear();
+
             foreach (Product p in prdStorage.ProductsByFloor(salesManagerDepartment))
             {
-                lbProducts.Items.Add(p);
+                ListViewItem item = new ListViewItem(p.id.ToString());
+                item.SubItems.Add(p.Name);
+                item.SubItems.Add(p.Brand);
+                item.SubItems.Add(p.Description);
+                item.SubItems.Add(p.SoldPrice.ToString());
+                item.SubItems.Add(p.BoughtPrice.ToString());
+                item.SubItems.Add(p.Department.ToString());
+                item.SubItems.Add(p.Stock.ToString());
+
+                lvProducts.Items.Add(item);
+            }
+
+            foreach(ColumnHeader column in lvProducts.Columns)
+            {
+                if(column.Text == "Name" || column.Text == "Brand")
+                {
+                    column.Width = -1;
+                }
             }
         }
 
         private void ReloadRestockRequests()
         {
-            lbPendingRestocks.Items.Clear();
+            lvRestocks.Items.Clear();
             foreach (RestockRequest request in reqStorage.GetPending())
             {
-                lbPendingRestocks.Items.Add(request);
+                ListViewItem item = new ListViewItem(request.restockID.ToString());
+                item.SubItems.Add(request.productCode.ToString());
+                item.SubItems.Add(request.productName.ToString());
+                item.SubItems.Add(request.requester_desc);
+                item.SubItems.Add(request.restockAmount.ToString());
+
+                lvRestocks.Items.Add(item);
+            }
+
+            foreach (ColumnHeader column in lvRestocks.Columns)
+            {
+                if (column.Text == "Request Message" || column.Text == "Product Name")
+                {
+                    column.Width = -1;
+                    if (lvRestocks.Items.Count <= 0)
+                        column.Width = -2;
+                }
             }
         }
 
@@ -53,9 +89,9 @@ namespace Proj_Desktop_App
             if (numStockRequest.Value > 0)
             {
                 ReloadRestockRequests();
-                foreach (Product p in lbProducts.SelectedItems)
+                foreach (ListViewItem item in lvProducts.SelectedItems)
                 {
-                    RestockRequest req = new RestockRequest(p.id, p.Name, p.Department, this.salesManagerBsn, (int)numStockRequest.Value, tbRestockDescription.Text, "PENDING");
+                    RestockRequest req = new RestockRequest(Convert.ToInt32(item.Text), item.SubItems[0].Text, salesManagerDepartment , this.salesManagerBsn, (int)numStockRequest.Value, tbRestockDescription.Text, "PENDING");
                     reqStorage.Add(req);
                     ReloadRestockRequests();
                 }
@@ -74,14 +110,14 @@ namespace Proj_Desktop_App
                     ReloadProducts();
                     if (tbProductSearchAttribute.Text.Length > 0)
                     {
-                        for (int i = lbProducts.Items.Count - 1; i >= 0; i--)
+                        for (int i = lvProducts.Items.Count - 1; i >= 0; i--)
                         {
-                            if (((Product)lbProducts.Items[i]).id != Convert.ToInt32(tbProductSearchAttribute.Text))
+                            if (lvProducts.Items[i].Text != tbProductSearchAttribute.Text)
                             {
-                                lbProducts.Items.RemoveAt(i);
+                                lvProducts.Items.RemoveAt(i);
                             }
                         }
-                        lbProducts.Refresh();
+                        lvProducts.Refresh();
                     }
                     else
                     {
@@ -92,14 +128,14 @@ namespace Proj_Desktop_App
                     //ReloadProductsByFloors();
                     if (tbProductSearchAttribute.Text.Length > 0)
                     {
-                        for(int i = lbProducts.Items.Count - 1; i >= 0; i--)
+                        for(int i = lvProducts.Items.Count - 1; i >= 0; i--)
                         {
-                            if (!((Product)lbProducts.Items[i]).Name.Contains(tbProductSearchAttribute.Text))
+                            if (!lvProducts.Items[i].SubItems[1].ToString().Contains(tbProductSearchAttribute.Text))
                             {
-                                lbProducts.Items.RemoveAt(i);
+                                lvProducts.Items.RemoveAt(i);
                             }
                         }
-                        lbProducts.Refresh();
+                        lvProducts.Refresh();
                     }
                     else
                     {
@@ -108,12 +144,6 @@ namespace Proj_Desktop_App
                     break;
 
             }
-        }
-
-        private void cbProductDepartmentSelector_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //ReloadProductsByFloors();
-            //MessageBox.Show(cbProductDepartmentSelector.SelectedItem.ToString());
         }
 
         private void btnProductRefresh_Click(object sender, EventArgs e)

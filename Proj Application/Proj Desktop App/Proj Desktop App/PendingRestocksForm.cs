@@ -25,28 +25,41 @@ namespace Proj_Desktop_App
 
         private void ReloadRequests()
         {
-            lbIncomingRestocks.Items.Clear();
+            lvRestocks.Items.Clear();
             foreach (RestockRequest request in reqStorage.GetPending())
             {
-                if(request != null)
+                if (request != null)
                 {
-                    lbIncomingRestocks.Items.Add(request);
+                    ListViewItem item = new ListViewItem(request.restockID.ToString());
+                    item.SubItems.Add(request.productCode.ToString());
+                    item.SubItems.Add(request.productName);
+                    item.SubItems.Add(request.requester_desc);
+                    item.SubItems.Add(request.restockAmount.ToString());
+
+                    lvRestocks.Items.Add(item);
+                }
+            }
+
+            foreach (ColumnHeader column in lvRestocks.Columns)
+            {
+                if (column.Text == "Product Name" || column.Text == "Request Message")
+                {
+                    column.Width = -1;
                 }
             }
         }
 
         private void btnAcceptRestock_Click(object sender, EventArgs e)
         {
-            if (lbIncomingRestocks.SelectedItems.Count <= 0)
+            if (lvRestocks.SelectedItems.Count <= 0)
             {
                 MessageBox.Show("No restocks selected");
             }
             else
             {
-                for (int i = lbIncomingRestocks.SelectedItems.Count - 1; i >= 0; i--)
+                for (int i = lvRestocks.SelectedItems.Count - 1; i >= 0; i--)
                 {
-                    RestockRequest resItem = (RestockRequest)lbIncomingRestocks.SelectedItems[i];
-                    reqStorage.Accept(resItem.restockID, currentUserBsn, rtbRestockJustification.Text);
+                    reqStorage.Accept(Convert.ToInt32(lvRestocks.Items[i].Text), currentUserBsn, rtbRestockJustification.Text);
                 }
             }
             ReloadRequests();
@@ -54,16 +67,15 @@ namespace Proj_Desktop_App
 
         private void btnRejectRestock_Click(object sender, EventArgs e)
         {
-            if(lbIncomingRestocks.SelectedItems.Count <= 0)
+            if(lvRestocks.SelectedItems.Count <= 0)
             {
                 MessageBox.Show("No restocks selected");
             }
             else
             {
-                for (int i = lbIncomingRestocks.SelectedItems.Count - 1; i >= 0; i--)
+                for (int i = lvRestocks.SelectedItems.Count - 1; i >= 0; i--)
                 {
-                    RestockRequest resItem = (RestockRequest)lbIncomingRestocks.SelectedItems[i];
-                    reqStorage.Decline(resItem.restockID, currentUserBsn, rtbRestockJustification.Text);
+                    reqStorage.Decline(Convert.ToInt32(lvRestocks.Items[i].Text), currentUserBsn, rtbRestockJustification.Text);
                 }
             }
             ReloadRequests();

@@ -75,7 +75,7 @@ namespace Proj_Desktop_App
                 reqStorage = new RestockRequestStorage();
 
                 tabRestocks.Visible = true;
-                restocks = new WorkerStockRequestsForm(100000000, reqStorage, prdStorage);
+                restocks = new WorkerStockRequestsForm(100000000, reqStorage);
                 InitializeForm(restocks);
 
                 tabRestocks.PerformClick();

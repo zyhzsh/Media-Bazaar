@@ -39,6 +39,7 @@ namespace Proj_Desktop_App
             {
                 this.requests.Add(req);
                 reqMan.CreateRestockRequest(req);
+                LoadRestockRequests();
                 return true;
             }
             else
