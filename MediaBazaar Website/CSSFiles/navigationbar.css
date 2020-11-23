@@ -1,10 +1,7 @@
-
 body {
   box-sizing: border-box;
   margin: 0px;
-}
-
-  
+} 
   /* Fixed sidenav, full height */
   .sidenav {
     display: grid;
@@ -41,14 +38,6 @@ body {
     color:#000;
   }
   
-  /* Main content */
-  .main {
-    margin-left: 200px; /* Same as the width of the sidenav */
-    font-size: 20px; /* Increased text to enable scrolling */
-  }
-  
-
-
   /* Optional: Style the caret down icon */
   .fa-caret-down {
     float: right;

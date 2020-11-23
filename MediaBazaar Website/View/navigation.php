@@ -7,7 +7,7 @@
     if($bsn==0){echo 'Login';}?> </a>
     <a href=?page=PirsonalInfo> <?php $session=session:: getInstance();
     $bsn=$session-> __get('BSN'); 
-    if(isset($bsn)){echo'Pirsonal Info' ;}?> </a>
+    if(isset($bsn)){echo'Personal Info' ;}?> </a>
 <a href="?page=pageAssignedShift"><?php $session=session:: getInstance();
     $bsn=$session-> __get('BSN'); 
     if($bsn!=0){echo 'Assigned shifts';} ?></a>

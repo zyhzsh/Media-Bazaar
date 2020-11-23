@@ -135,9 +135,12 @@ if(isset($_POST['btn_submit_form']))
     <title>Preference Schedule</title>
 </head>
 <body>
-<div class='box lightGreen'></div> None selected shift<br><br>
-<div class='box darkGreen'></div> Selected shift<br>
 <div class="Container">
+<div class="SideNote" >
+<h3>Note: For Checking Your Preference Submition</h3>
+<div class="lightGreen_Container"><div class="lightGreen">Unset</div></div>
+<div class="darkGreen_Container"><div class="darkGreen">Setted</div></div>
+</div>
     <div class="Preference_Shift_Form_Container">
         <div class=Form_Title>
             <form method="post" action="#">

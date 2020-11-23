@@ -180,12 +180,46 @@
 }
 
 
+/*Side Note*/
+.SideNote{
+  box-sizing: border-box;
+  height: 680px;
+  width: 320px;
+  background-color:#579181;
+  margin-right: 100px;
+  border: 1px solid;
+  border-radius: 20px;
+  display: grid;
+  grid-template-columns: repeat(1,1fr);
+  grid-template-rows: 1fr,6fr.6fr;
+  text-align: center;
+}
+.lightGreen_Container{
+  display: flex;
+  align-self: center;
+  justify-items: center;
+}
 .lightGreen {
   background-color: #A7C5BD;
-  float: left;
+  width: 200px;
+  height:200px ;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-self: center;
+  justify-items: center;
+  color: #fff;
+  font-size: 30px;
 }
-
 .darkGreen {
   background-color:  #07634C;
-  float: left;
+  width: 200px;
+  height:200px ;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-self: center;
+  justify-items: center;
+  color: #fff;
+  font-size: 30px;
 }
