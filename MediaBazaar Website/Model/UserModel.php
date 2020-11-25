@@ -85,12 +85,19 @@ class UserModel
         $stmt->execute([':nPhone' => $newPhone, ':oPhone' => $oldPhone, ':b' => $BSN]);
     }
 
-    public function RequestChangeUserInformation($BSN, $firstName, $lastName, $gender, $phone, $adress, $languages, $certificates, $email)
+    public function RequestChangeUserInformation($BSN, $firstName, $lastName, $gender, $phone, $address, $languages, $certificates, $email)
     {
         $dbh = new Dbh();
-        $sql = "INSERT INTO `employeechange` (`BSN`, `first_name`, `last_name`, `gender`, `phone`, `adress`, `languages`, `certificates`, `contact_email` VALUES (:BSN, :firstName, :lastName, :gender, :phone, :adress, :languages, :certificates, :email ";
-        $conn = $dbh->connection();
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([':BSN' => $BSN, ':firstName' => $firstName, ':lastName' => $lastName, ':gender' => $gender, ':phone' => $phone, ':adress' => $adress, ':certificates' => $certificates, ':email' => $email]);
+        $sql = "INSERT INTO `employeechange` (`BSN`, `first_name`, `last_name`, `gender`, `phone`, `address`, `languages`, `certificates`, `contact_email`) VALUES (:BSN, :firstName, :lastName, :gender, :phone, :address, :languages, :certificates, :email) ";
+        
+        try {
+            $conn = $dbh->connection();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(['BSN' => $BSN, 'firstName' => $firstName, 'lastName' => $lastName, 'gender' => $gender, 'phone' => $phone, 'address' => $address, 'languages' => $languages,  'certificates' => $certificates, 'email' => $email]);
+        } catch (\PDOException $e) {
+            echo $e->getMessage();
+            return;
+        }
+
     }
 }

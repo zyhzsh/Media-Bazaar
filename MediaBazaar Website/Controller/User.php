@@ -49,7 +49,7 @@ class User
       $certificates = null;
       $contactEmail = null;
 
-      if (isset($__POST['firstnName']) || isset($__POST['lastName']) || isset($__POST['gender']) || isset($__POST['phone']) || isset($__POST['adress']) || isset($__POST['languages']) || isset($__POST['certificates']) || isset($__POST['contactEmail'])) {
+      if (isset($_POST['firstnName']) || isset($_POST['lastName']) || isset($_POST['gender']) || isset($_POST['phone']) || isset($_POST['adress']) || isset($_POST['languages']) || isset($_POST['certificates']) || isset($_POST['contactEmail'])) {
          $firstName = $_POST['firstName'];
          $lastName = $_POST['lastName'];
          $gender = $_POST['gender'];
@@ -61,6 +61,8 @@ class User
 
          $userModel->RequestChangeUserInformation($BSN, $firstName, $lastName, $gender, $phone, $adress, $languages, $certificates, $contactEmail);
       }
+
+         
    }
 
    function ChangePassword()
