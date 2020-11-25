@@ -14,6 +14,7 @@ public function connection(){
     try{
     $dsn='mysql:host='. $this->host  . ';dbname=' . $this->db;
     $conn=new PDO($dsn, $this->DbUsername, $this->DbPassword);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } 
     catch(PDOException $e) 
         { 

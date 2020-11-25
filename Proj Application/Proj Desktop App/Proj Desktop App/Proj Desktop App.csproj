@@ -94,119 +94,130 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EmployeeContractsForm.cs">
+    <Compile Include="logic\AssignedShift.cs" />
+    <Compile Include="logic\PreferenceShift.cs" />
+    <Compile Include="logic\Contract.cs" />
+    <Compile Include="logic\Departments.cs" />
+    <Compile Include="logic\Employee.cs" />
+    <Compile Include="logic\EmployeeShift.cs" />
+    <Compile Include="logic\PostionType.cs" />
+    <Compile Include="logic\Product.cs" />
+    <Compile Include="logic\ProductStorage.cs" />
+    <Compile Include="logic\RestockRequest.cs" />
+    <Compile Include="logic\RestockRequestStorage.cs" />
+    <Compile Include="logic\Sale.cs" />
+    <Compile Include="logic\ScheduleManager.cs" />
+    <Compile Include="logic\ShiftType.cs" />
+    <Compile Include="presentation\AdminForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EmployeeContractsForm.Designer.cs">
-      <DependentUpon>EmployeeContractsForm.cs</DependentUpon>
+    <Compile Include="presentation\AdminForm.Designer.cs">
+      <DependentUpon>AdminForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="EmployeesForm.cs">
+    <Compile Include="presentation\ContractUpdateForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EmployeesForm.Designer.cs">
-      <DependentUpon>EmployeesForm.cs</DependentUpon>
+    <Compile Include="presentation\ContractUpdateForm.Designer.cs">
+      <DependentUpon>ContractUpdateForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Adminstration.cs" />
-    <Compile Include="AssignedShift.cs" />
-    <Compile Include="AvailableShift.cs" />
-    <Compile Include="DatabaseManagement.cs" />
-    <Compile Include="Departments.cs" />
-    <Compile Include="DepotManager.cs">
+    <Compile Include="dataAccess\ContractManagement.cs" />
+    <Compile Include="dataAccess\DatabaseConnection.cs" />
+    <Compile Include="dataAccess\EmployeeManagement.cs" />
+    <Compile Include="dataAccess\ProductManagement.cs" />
+    <Compile Include="dataAccess\RestockRequestManagement.cs" />
+    <Compile Include="presentation\PendingRestocksForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DepotManager.Designer.cs">
-      <DependentUpon>DepotManager.cs</DependentUpon>
+    <Compile Include="presentation\PendingRestocksForm.Designer.cs">
+      <DependentUpon>PendingRestocksForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DepotWorker.cs" />
-    <Compile Include="Employee.cs" />
-    <Compile Include="EmployeeManagment.cs" />
-    <Compile Include="EmployeeManagmentForm.cs">
+    <Compile Include="presentation\EmployeeCreateUpdateForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EmployeeManagmentForm.Designer.cs">
-      <DependentUpon>EmployeeManagmentForm.cs</DependentUpon>
+    <Compile Include="presentation\EmployeeCreateUpdateForm.Designer.cs">
+      <DependentUpon>EmployeeCreateUpdateForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="EmployeeShift.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="presentation\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="presentation\LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="LoginHandler.cs" />
-    <Compile Include="MainForm.cs">
+    <Compile Include="dataAccess\LoginHandler.cs" />
+    <Compile Include="presentation\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="presentation\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Manager.cs" />
-    <Compile Include="PostionType.cs" />
-    <Compile Include="Product.cs" />
-    <Compile Include="ProductManagementForm.cs">
+    <Compile Include="presentation\ProductCRUDForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProductManagementFOrm.Designer.cs">
-      <DependentUpon>ProductManagementForm.cs</DependentUpon>
+    <Compile Include="presentation\ProductCRUDForm.Designer.cs">
+      <DependentUpon>ProductCRUDForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ProductStatistics.cs">
+    <Compile Include="presentation\ProductAddUpdateForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProductStatistics.Designer.cs">
+    <Compile Include="presentation\ProductAddUpdateForm.Designer.cs">
+      <DependentUpon>ProductAddUpdateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="presentation\ProductStatistics.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="presentation\ProductStatistics.Designer.cs">
       <DependentUpon>ProductStatistics.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sale.cs" />
-    <Compile Include="SalesManagerForm.cs">
+    <Compile Include="presentation\SalesManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SalesManagerForm.Designer.cs">
+    <Compile Include="presentation\SalesManagerForm.Designer.cs">
       <DependentUpon>SalesManagerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RestockRequest.cs" />
-    <Compile Include="SaleWorker.cs" />
-    <Compile Include="Schedule.cs" />
-    <Compile Include="ScheduleManager.cs" />
-    <Compile Include="Scheduling.cs">
+    <Compile Include="dataAccess\ScheduleManagement.cs" />
+    <Compile Include="presentation\Scheduling.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Scheduling.Designer.cs">
+    <Compile Include="presentation\Scheduling.Designer.cs">
       <DependentUpon>Scheduling.cs</DependentUpon>
     </Compile>
-    <Compile Include="ShiftType.cs" />
-    <Compile Include="Store.cs" />
-    <Compile Include="WorkerStockRequests.cs">
+    <Compile Include="logic\EmployeeStorage.cs" />
+    <Compile Include="presentation\WorkerStockRequestsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WorkerStockRequests.Designer.cs">
-      <DependentUpon>WorkerStockRequests.cs</DependentUpon>
+    <Compile Include="presentation\WorkerStockRequestsForm.Designer.cs">
+      <DependentUpon>WorkerStockRequestsForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="EmployeeContractsForm.resx">
-      <DependentUpon>EmployeeContractsForm.cs</DependentUpon>
+    <EmbeddedResource Include="presentation\AdminForm.resx">
+      <DependentUpon>AdminForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EmployeesForm.resx">
-      <DependentUpon>EmployeesForm.cs</DependentUpon>
+    <EmbeddedResource Include="presentation\ContractUpdateForm.resx">
+      <DependentUpon>ContractUpdateForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DepotManager.resx">
-      <DependentUpon>DepotManager.cs</DependentUpon>
+    <EmbeddedResource Include="presentation\PendingRestocksForm.resx">
+      <DependentUpon>PendingRestocksForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EmployeeManagmentForm.resx">
-      <DependentUpon>EmployeeManagmentForm.cs</DependentUpon>
+    <EmbeddedResource Include="presentation\EmployeeCreateUpdateForm.resx">
+      <DependentUpon>EmployeeCreateUpdateForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="presentation\LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="presentation\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProductManagementFOrm.resx">
-      <DependentUpon>ProductManagementForm.cs</DependentUpon>
+    <EmbeddedResource Include="presentation\ProductCRUDForm.resx">
+      <DependentUpon>ProductCRUDForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProductStatistics.resx">
+    <EmbeddedResource Include="presentation\ProductAddUpdateForm.resx">
+      <DependentUpon>ProductAddUpdateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="presentation\ProductStatistics.resx">
       <DependentUpon>ProductStatistics.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SalesManagerForm.resx">
+    <EmbeddedResource Include="presentation\SalesManagerForm.resx">
       <DependentUpon>SalesManagerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -217,12 +228,13 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Scheduling.resx">
+    <EmbeddedResource Include="presentation\Scheduling.resx">
       <DependentUpon>Scheduling.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WorkerStockRequests.resx">
-      <DependentUpon>WorkerStockRequests.cs</DependentUpon>
+    <EmbeddedResource Include="presentation\WorkerStockRequestsForm.resx">
+      <DependentUpon>WorkerStockRequestsForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -241,6 +253,15 @@
   <ItemGroup>
     <Content Include="bin\Debug\Proj Desktop App.exe" />
     <Content Include="bin\Debug\Proj Desktop App.pdb" />
+    <None Include="Resources\statistics.png" />
+    <None Include="Resources\search.png" />
+    <None Include="Resources\schedule.png" />
+    <None Include="Resources\restocks.png" />
+    <None Include="Resources\products.png" />
+    <None Include="Resources\logout.png" />
+    <None Include="Resources\employees.png" />
+    <None Include="Resources\employee-add.png" />
+    <None Include="Resources\department.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Release\" />

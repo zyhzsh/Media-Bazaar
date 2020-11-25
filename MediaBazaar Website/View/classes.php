@@ -1,9 +1,10 @@
 <?php
 include('../Model/UserModel.php');
 include('../Model/ShiftsModel.php');
- include('../Model/Dbh.php');
- include('../Controller/session.php');
- include('../Controller/User.php');
- include('../Controller/shifts.php');
-
+include('../Model/Dbh.php');
+include('../Controller/session.php');
+include('../Controller/UserController.php');
+include('../Controller/shifts.php');
+include('../Controller/AssignedShift.php');
+include('../Controller/PreferenceShift.php');
 ?>

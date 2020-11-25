@@ -1,28 +1,21 @@
 <!DOCTYPE html>
 <html>
-
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link href="../CSSFiles/loginStyle.css" type="text/css" rel="stylesheet" />
    <title>Home</title>
    <?php   require_once('classes.php');?>
-   <style>
-      
-   </style>
 </head>
-<header>
-</header>
 <body>
-
-
-<h2>Sign in</h2> 
-  
-      
+   
+   <div class="Content">
+      <div class="Login_Container">
          <form class = "form-signin" role = "form" 
             action ="" method = "post">
+            <h2>Sign in</h2>     
             <h4 class = "form-signin-heading">
-               <?php $user= new User();   print_r($user->checkUser());
+               <?php $user= new UserController();   print_r($user->checkUser());
                ?>
              </h4>
             <input type = "text" class = "form-control" 
@@ -33,15 +26,10 @@
             <button class = "btn btn-lg btn-primary btn-block" type = "submit" 
                name = "login">Login</button>
          </form>
-  
-
-
-
+      </div>
+   </div>
 </body>
 
 <footer>
 </footer>
-
-
-
 </html>
