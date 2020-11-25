@@ -101,3 +101,10 @@ button:hover {
    
    background-color: aquamarine;
  }
+ .main2{
+  
+   align-items: center;  
+   position: relative;
+   float: left;
+
+ }

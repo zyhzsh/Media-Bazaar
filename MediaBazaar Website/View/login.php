@@ -8,13 +8,14 @@
    <?php   require_once('classes.php');?>
 </head>
 <body>
+   
    <div class="Content">
       <div class="Login_Container">
          <form class = "form-signin" role = "form" 
             action ="" method = "post">
             <h2>Sign in</h2>     
             <h4 class = "form-signin-heading">
-               <?php $user= new User();   print_r($user->checkUser());
+               <?php $user= new UserController();   print_r($user->checkUser());
                ?>
              </h4>
             <input type = "text" class = "form-control" 

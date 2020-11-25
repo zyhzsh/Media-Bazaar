@@ -1,6 +1,6 @@
 <?php
 require_once('classes.php');
-class User
+class UserController
 {
 
 
