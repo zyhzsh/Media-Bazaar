@@ -1,27 +1,15 @@
-  .btn-logout{
-    display: block;
-    width: 50pt;
-    height: 30pt;
-    float: right;
-    text-align: center;
-    color: rgb(0, 0, 0);
-    background-color: marine;
-    position: relative;
-  }
 
-  
 /*Calendar Container*/
 .Container{
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #D3DBD9;
+  height: 100vh;
 }
 .Calendar_Container{
-  margin-top: 4rem;
   width: 1204px;
   height: 798px;
-  background-color:blanchedalmond;
-  
 }
 
 /*Calendar Title*/
@@ -33,10 +21,34 @@
   text-align: center;
   width: inherit;
   height: 40px;
-  background-color: gray;
+  background-color: #07634C;
+}
+.btn_CheckLastMonth,.btn_CheckNextMonth{
+  height: 40px;
+  background-color: #889794;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  opacity: 0.5;
+}
+.btn_CheckLastMonth{
+  float: left;
+
+}
+.btn_CheckNextMonth{
+  float: right;
 }
 
-
+.btn_CheckLastMonth:hover,.btn_CheckNextMonth:hover{
+opacity: 1;
+}
+.Date_On_Calendar_Title{
+  font-size: 34px;
+}
 
 
 .Week_Days{
@@ -48,6 +60,7 @@
   text-align: center;
 }
 .Week_Day{
+  border: 1px solid #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,18 +74,26 @@
   grid-template-rows: repeat(6,1fr);
 }
 /*Calendar Item*/
-.Grid_Item_In_Calendar
+.Grid_Item_In_Calendar,.Grid_Item_In_Calendar_Current_Month,.Grid_Item_In_Calendar_Today
 {
   box-sizing: border-box;
   width: 172px;
   height: 120px;
-  background-color: gray;
+  background-color:#889794;
   border: solid 1px #fff;
   opacity: 0.5;
 }
-.Grid_Item_In_Calendar:hover{
+.Grid_Item_In_Calendar_Current_Month{
+  opacity: 0.9;
+}
+.Grid_Item_In_Calendar_Today{
+  background-color:#87B0A6;
   opacity: 1;
 }
+.Grid_Item_In_Calendar:hover,.Grid_Item_In_Calendar_Current_Month:hover{
+  opacity: 1;
+}
+
 .Day{
   display: grid;
   justify-content: end;
@@ -80,7 +101,6 @@
 .Day>div{
   width: 23px;
   height:23px;
-  background-color:black;
   color: #fff;
   border: solid 1px #fff;
   border-radius: 20px;
@@ -88,25 +108,8 @@
   align-items: center;
   justify-content: center; 
 }
-
-.Grid_Item_In_Calendar_Current_Month{
-  box-sizing: border-box;
-  width: 172px;
-  height: 120px;
-  background-color: gray;
-  border: solid 1px #fff;
-  opacity: 0.9;
-}
-.Grid_Item_In_Calendar_Current_Month:hover{
-  opacity: 1;
-}
-
-.Grid_Item_In_Calendar_Today{
-  box-sizing: border-box;
-  width: 172px;
-  height: 120px;
-  background-color:gold;
-  border: solid 1px #fff;
+.Grid_Item_In_Calendar_Today>.Day>div{
+  background-color:#000;
 }
 
 
