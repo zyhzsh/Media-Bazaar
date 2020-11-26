@@ -94,7 +94,7 @@ namespace Proj_Desktop_App
 
         private Product InitializeProduct(ListViewItem item)
         {
-            Product prod = new Product(Convert.ToInt32(item.Text), item.SubItems[0].Text, item.SubItems[1].Text, Convert.ToDouble(item.SubItems[3].Text), Convert.ToDouble(item.SubItems[4].Text), item.SubItems[2].Text, GetDepartment(item.SubItems[5].Text), Convert.ToInt32(item.SubItems[6].Text));
+            Product prod = prdStorage.GetProductById(Convert.ToInt32(item.Text));
             return prod;
         }
 

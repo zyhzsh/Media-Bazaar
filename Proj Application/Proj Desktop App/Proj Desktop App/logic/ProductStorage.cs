@@ -87,6 +87,7 @@ namespace Proj_Desktop_App
             if (p != null)
             {
                 products.Remove(p);
+                prdMan.RemoveProduct(id);
             }
         }
 
@@ -103,7 +104,7 @@ namespace Proj_Desktop_App
         /// </summary>
         public void Update(Product productToUpdate, Departments department, string productName, string productBrand, double bought_price, double sold_price, string description)
         {
-            prdMan.UpdateProduct(productToUpdate.id, department, productName, productBrand, bought_price, sold_price);
+            prdMan.UpdateProduct(productToUpdate.id, department, productName, productBrand, bought_price, sold_price, description);
             productToUpdate.Update(productName, productBrand, bought_price, sold_price, department, description);
         }
 

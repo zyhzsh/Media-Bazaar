@@ -135,8 +135,8 @@ namespace Proj_Desktop_App.dataAccess
             {
                 using (MySqlConnection conn = base.GetConnection())
                 {
-                    string sql = "DELETE FROM product p " +
-                         "WHERE p.productcode = @productcode;";
+                    string sql = "DELETE FROM product " +
+                         "WHERE productcode = @productcode;";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@productcode", productcode);
                     conn.Open();
