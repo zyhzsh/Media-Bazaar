@@ -60,6 +60,7 @@ class Session
          //When user login to this page, haven't Selet the date on Calendar, We set default value="Today";
         $_SESSION['SeletedDate']=date("Y-m-1");
     }
+    
     public  function __get( $name )
     {
         if ( isset($_SESSION[$name]))

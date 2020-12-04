@@ -29,7 +29,46 @@ class UserModel
             $session = $this->session();
             $session->startSession();
             $session->__set($sessionName, $BSN);
+            $this->FetchUsers($BSN);
             return true;
+        }
+    }
+
+    public function FetchUsers($BSN)
+    {
+        $dbh = new Dbh();
+        $sql = "SELECT * FROM `employee` Where BSN=(:bBSN) ";
+        $conn = $dbh->connection();
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['bBSN' => $BSN]);
+        $result = $stmt->fetch();;
+        if (empty($result)) {
+            return false;
+        } else {
+            $BSN = $result['BSN'];
+            $firstName = $result['first_name'];
+            $lastName = $result['last_name'];
+            $gender = $result['gender'];
+            $phone = $result['phone'];
+            $dateBirth = $result['date_birth'];
+            $address = $result['address'];
+            $languages = $result['languages'];
+            $certificates = $result['certificates'];
+            $contactEmail = $result['contact_email'];
+
+            //note, not selected for current contract just any contract
+            $sql = "SELECT * FROM `contract` Where BSN=(:bBSN) ";
+            $conn = $dbh->connection();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(['bBSN' => $BSN]);
+            $result = $stmt->fetch();
+
+            $fte = $result['fte'];
+
+            $user = new User($BSN, $firstName, $lastName, $gender, $phone, $dateBirth, $address, $languages, $certificates, $contactEmail, $fte);
+
+            $session = $this->session();
+            $session->__set("user", $user);
         }
     }
 
@@ -57,39 +96,11 @@ class UserModel
         $stmt->execute([':nPassword' => $newPassword, ':oPassword' => $oldPassword, ':b' => $BSN]);
     }
 
-
-    public function ChangeUserEmail($oldEmail, $newEmail, $BSN)
-    {
-        $dbh = new Dbh();
-        $sql = "UPDATE `employee` SET username=(:nEmail) WHERE username=(:oEmail) AND BSN=(:b) ";
-        $conn = $dbh->connection();
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([':nEmail' => $newEmail, ':oEmail' => $oldEmail, ':b' => $BSN]);
-    }
-
-    public function ChangeUserAdres($oldAdress, $newAdress, $BSN)
-    {
-        $dbh = new Dbh();
-        $sql = "UPDATE `employee` SET adress=(:nAdress) WHERE adress=(:oAdress) AND BSN=(:b) ";
-        $conn = $dbh->connection();
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([':nAdress' => $newAdress, ':oAdress' => $oldAdress, ':b' => $BSN]);
-    }
-
-    public function ChangeUserPhone($oldPhone, $newPhone, $BSN)
-    {
-        $dbh = new Dbh();
-        $sql = "UPDATE `employee` SET phone=(:nPhone) WHERE phone=(:oPhone) AND BSN=(:b) ";
-        $conn = $dbh->connection();
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([':nPhone' => $newPhone, ':oPhone' => $oldPhone, ':b' => $BSN]);
-    }
-
     public function RequestChangeUserInformation($BSN, $firstName, $lastName, $gender, $phone, $address, $languages, $certificates, $email)
     {
         $dbh = new Dbh();
         $sql = "INSERT INTO `employeechange` (`BSN`, `first_name`, `last_name`, `gender`, `phone`, `address`, `languages`, `certificates`, `contact_email`) VALUES (:BSN, :firstName, :lastName, :gender, :phone, :address, :languages, :certificates, :email) ";
-        
+
         try {
             $conn = $dbh->connection();
             $stmt = $conn->prepare($sql);
@@ -98,6 +109,5 @@ class UserModel
             echo $e->getMessage();
             return;
         }
-
     }
 }
