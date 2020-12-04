@@ -10,17 +10,28 @@
 </head>
 
 <body>
-
+<div class="flex-container">
    <div>
-      <?php $user = new UserController();
-      //here profile would be loaded in
-      //use a data transfer object (DTO) to efficiently populate??
+      <h1>Profile</h1>
+      <?php $userController = new UserController();
+         $session = session::getInstance();
+         $user = $session->__get("user");
+         
+         echo " <p> name :   " . $user->firstName . " " . $user->lastName . " </p>";
+         echo "<p> gender : " . $user->gender. " </p>";
+         echo "<p>phone : " . $user->phone. " </p>";
+         echo "<p>date of Birth : " . $user->dateOfBirth. " </p>";
+         echo "<p>adress : " . $user->adress. " </p>";
+         echo "<p>languages : " . $user->languages. " </p>";
+         echo "<p>certificates : " . $user->certificates. " </p>";
+         echo "<p>contact email : " . $user->contactEmail. " </p>";
+         echo "<p>weekly hours : " . $user->weeklyHours. " </p>";
+
       ?>
-      profile will come here
 
    </div>
-
-
+</div>
+<div class="flex-container">
    <div>
       <form class="form-changeInfo" role="form" action="" method="post">
          <h4 class="form-changeInfo-heading">
@@ -55,4 +66,4 @@
          <input type="password" class="form-control" name="newPasswordCheck" placeholder="new password"></br>
          <button class="btn btn-lg btn-primary btn-block" type="submit" name="submitChangePassword">Change passsword</button>
       </form>
-
+</div>>

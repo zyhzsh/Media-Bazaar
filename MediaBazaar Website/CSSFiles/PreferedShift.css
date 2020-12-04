@@ -183,15 +183,27 @@
 /*Side Note*/
 .SideNote{
   box-sizing: border-box;
+
   height: 680px;
+
   width: 320px;
+
   background-color:#579181;
-  margin-right: 100px;
+
+  margin-right: 0px;
+
+  margin-left: 50px;
+
   border: 1px solid;
+
   border-radius: 20px;
+
   display: grid;
+
   grid-template-columns: repeat(1,1fr);
+
   grid-template-rows: 1fr,6fr.6fr;
+
   text-align: center;
 }
 .lightGreen_Container{

@@ -7,4 +7,5 @@ include('../Controller/UserController.php');
 include('../Controller/shifts.php');
 include('../Controller/AssignedShift.php');
 include('../Controller/PreferenceShift.php');
+include('../DTO/User.php');
 ?>
