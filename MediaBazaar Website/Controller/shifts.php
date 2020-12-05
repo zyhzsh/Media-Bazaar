@@ -100,7 +100,7 @@ class shifts{
       {
         $tempcounter=count($_POST[$day]);
         $submiton_shift_counter+=$tempcounter;
-        if($tempcounter==3){$shifttype="FullDay";}
+        if($tempcounter==3){$shifttype="FullDay";$submiton_shift_counter-=1;}
         else if($_POST[$day][0]=="Morning"){
         $shifttype="Morning";
         if(isset($_POST[$day][1])){
