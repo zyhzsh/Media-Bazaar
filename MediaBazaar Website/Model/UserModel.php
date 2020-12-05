@@ -3,11 +3,8 @@ require_once('classes.php');
 class UserModel
 {
 
-
-
     private  function session()
     {
-
         return session::getInstance();
     }
 
@@ -62,11 +59,8 @@ class UserModel
             $stmt = $conn->prepare($sql);
             $stmt->execute(['bBSN' => $BSN]);
             $result = $stmt->fetch();
-
             $fte = $result['fte'];
-
             $user = new User($BSN, $firstName, $lastName, $gender, $phone, $dateBirth, $address, $languages, $certificates, $contactEmail, $fte);
-
             $session = $this->session();
             $session->__set("user", $user);
         }

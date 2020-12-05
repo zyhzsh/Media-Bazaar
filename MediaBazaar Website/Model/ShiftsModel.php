@@ -1,65 +1,11 @@
 <?php 
  require_once('classes.php');
 class ShiftsModel {
-
-
     private  function session(){
-
         return session::getInstance();
-        
-        }
-
-    public function GetAllUserShifts($BSN){
-        $session=$this->session();
-        $dbh=new Dbh();
-        if($BSN!=0){
-            $sql="SELECT * FROM `assignedschdule` WHERE BSN=(:uBSN)";
-            $conn=$dbh->connection();
-            $stmt=$conn->prepare($sql);
-            $stmt->execute([':uBSN'=>$BSN]);
-           $result=$stmt->fetchAll();
-           return $result;
-        }else{
-            
-            return 'not availble';
-        }
-        $conn->close();
-     }
-    
-     public function GetAllPreferedUserShifts($BSN){
-        $session=$this->session();
-        $dbh=new Dbh();
-        if($BSN!=0){
-            $sql="SELECT * FROM `preferedschdule` WHERE BSN=(:uBSN)";
-            $conn=$dbh->connection();
-            $stmt=$conn->prepare($sql);
-            $stmt->execute([':uBSN'=>$BSN]);
-            $result=$stmt->fetchAll();
-           return $result;
-        }else{
-            
-            return 'not availble';
-        }
-        $conn->close();
-     }
-    
-     public function AddPreferedShift($BSN,$date,$shiftType){
-        $dbh=new Dbh();
-        $session=$this->session();
-        if($BSN!=0){
-            $sql="INSERT INTO `preferedschdule` (`BSN`, `dateShift`, `preference_shift_type`) VALUES (:BSN, :selectedDate, :shiftType)";
-            $conn=$dbh->connection();
-            $stmt=$conn->prepare($sql);
-            $stmt->execute(['BSN'=>$BSN,'selectedDate'=>$date,'shiftType'=>$shiftType]);
-            return $shiftType;
-        }else{
-            return false;
-        }
-     }
-      
-    
-     public function LoadAssignedShift($BSN,$startingdate)
-     {
+    }
+    public function LoadAssignedShift($BSN,$startingdate)
+    {
         $session=$this->session();
         $dbh=new Dbh();
         $AssignedShifts=array();
@@ -134,18 +80,31 @@ class ShiftsModel {
             return null;
         }
         
+     }
+
+ 
+    public function Get_Availabity($BSN)
+    {   
+        if($BSN!=0)
+        {
+            $session=$this->session();
+            $dbh=new Dbh(); 
+            $conn=$dbh->connection();  
+            $sql='SELECT * FROM availability WHERE BSN=(?)';
+            $stmt=$conn->prepare($sql);
+            $stmt->execute([$BSN]);
+            $result=$stmt->fetch();
+            if(empty($result)){return null;}
+            else{ 
+                $availability =new Availability($result['Monday'],$result['Tuesday'],$result['Wednesday'],$result['Thursday'],$result['Friday']);
+                return $availability;
+            }
+        }
     }
-
-
-
-
-
-
-
     /********************************************/
     /*                 |                        |
     /* Exist Database  |  Not Exist in database |
-    /* ----------------|------------------------|               
+    /* ----------------|------------------------|
     /*   1   |    2    |      3      |    4     |
     /* Empty | Exist   |    Empty    |  Exist   |
     /*Object | Object  |    Object   |  Object  |
@@ -155,53 +114,43 @@ class ShiftsModel {
     //2.UPDATE
     //3.Do Nothing
     //4.INSERT
-    public function Update_Preference_Shifts($BSN,$PreferenceShifts)
+    public function Update_Availabity($BSN,$availabilitySetting)
     {
-        $session=$this->session();
-        $dbh=new Dbh();
+        //if empty insert
         if($BSN!=0)
         {
+            $session=$this->session();
+            $dbh=new Dbh();
             $conn=$dbh->connection();
-            foreach($PreferenceShifts as $shift)
-            {
-                $date=date("Y-m-d",strtotime($shift->Get_Shift_Date()));
-                $shifttype=$shift->Get_Shift_Type();
-                //Check shift exist on database or not
-                $sql="SELECT * FROM preferedschdule WHERE BSN=(?) and dateShift =(?)";
+            //Check shift exist on database or not
+            $sql="SELECT * FROM availability WHERE BSN=(?)";
+            $stmt=$conn->prepare($sql);
+            $stmt->execute([$BSN]);
+            $result=$stmt->fetch();
+            //Prepare shifttype
+            $monday=$availabilitySetting->Get_Availability_By_Day_Of_The_Week(1);
+            $tuesday=$availabilitySetting->Get_Availability_By_Day_Of_The_Week(2);
+            $wednesday=$availabilitySetting->Get_Availability_By_Day_Of_The_Week(3);
+            $thursday=$availabilitySetting->Get_Availability_By_Day_Of_The_Week(4);
+            $friday=$availabilitySetting->Get_Availability_By_Day_Of_The_Week(5);
+            //When it's not exsit in the database
+            if(empty($result))
+            {   
+ 
+                $sql="INSERT INTO availability (BSN, Monday, Tuesday,Wednesday,Thursday,Friday) VALUES ((?),(?),(?),(?),(?),(?))";
                 $stmt=$conn->prepare($sql);
-                $stmt->execute([$BSN,$date]);
-                $result=$stmt->fetch();
-                //When it's not exsit in the database
-                if(empty($result))
-                {   
-                    if($shifttype!="")
-                    {
-                        $sql="INSERT INTO preferedschdule (BSN, dateShift, preference_shift_type) VALUES ((?), (?), (?))";
-                        $stmt=$conn->prepare($sql);
-                        $stmt->execute([$BSN,$date,$shifttype]);
-                    }
-                }
-                else 
-                {   //When it's exsit in the database
-                    if($shifttype!="")
-                    {
-                        $sql='UPDATE preferedschdule SET preference_shift_type=(?) WHERE BSN=(?) AND dateShift=(?)';
-                        $stmt=$conn->prepare($sql);
-                        $stmt->execute([$shifttype,$BSN,$date]);
-                    }
-                    else 
-                    {
-                        $sql='DELETE FROM preferedschdule WHERE BSN=(?) AND dateShift=(?)';
-                        $stmt=$conn->prepare($sql);
-                        $stmt->execute([$BSN,$date]);
-                    }
-                }
+                $stmt->execute([$BSN,$monday,$tuesday,$wednesday,$thursday,$friday]);
             }
+            else 
+            {   //When it's exsit in the database
+                $sql='UPDATE availability SET Monday=(?),Tuesday=(?),Wednesday=(?),Thursday=(?),Friday=(?) WHERE BSN=(?)';
+                $stmt=$conn->prepare($sql);
+                $stmt->execute([$monday,$tuesday,$wednesday,$thursday,$friday,$BSN]);
+            }           
             $conn=null;
             return true;
         }
         return false; 
-        
     }
 }
 ?>

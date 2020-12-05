@@ -6,10 +6,6 @@ private $db ="dbi443880";
 private $DbUsername ="dbi443880";
 private $DbPassword ="123456";
 private $BSN;
-
-
-
-
 public function connection(){
     try{
     $dsn='mysql:host='. $this->host  . ';dbname=' . $this->db;

@@ -2,10 +2,6 @@
 require_once('classes.php');
 class UserController
 {
-
-
-
-
    function checkUser()
    {
       if (isset($_POST['loginPassword']) && isset($_POST['loginEmail'])) {
@@ -22,7 +18,6 @@ class UserController
          }
       }
    }
-
    function logout()
    {
       if (isset($_POST['logoutBtn']) && preg_match("/\b(logout)\b/", $_POST['logoutBtn'])) {
@@ -33,7 +28,6 @@ class UserController
          return true;
       }
    }
-
    function ChangeUserInfoRequest()
    {
       $userModel = new UserModel();
@@ -64,7 +58,6 @@ class UserController
 
          
    }
-
    function ChangePassword()
    {
       $session = session::getInstance();
@@ -90,8 +83,6 @@ class UserController
       }
    }
 }
-
-
 //if it's inside the class can not accsse the $_post 
 if (isset($_POST['logoutBtn']) && preg_match("/\b(logout)\b/", $_POST['logoutBtn'])) {
    $session = session::getInstance();

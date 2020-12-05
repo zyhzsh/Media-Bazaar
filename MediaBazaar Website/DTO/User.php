@@ -29,6 +29,9 @@ class User
         $this->fte = $fte;
         $this->weeklyHours = $fte * 40;
     }
-     
+    public function Get_Fte()
+    {
+        return $this->fte;
+    }
     
 }
