@@ -115,6 +115,12 @@ function Generate_Checkbox()
 </head>
 <body>
 <div class="Container">
+<div class="SideNote" >
+<h3>Note: For Checking Your Preference Submition</h3>
+<div class="lightGreen_Container"><div class="lightGreen">Unset</div></div>
+<div class="darkGreen_Container"><div class="darkGreen">Setted</div></div>
+</div>
+<div class="Container">
     <div class="Preference_Shift_Form_Container">
         <div class=Form_Title>
             <?php  
