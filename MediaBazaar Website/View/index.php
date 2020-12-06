@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="../CSSFiles/navigationbar.css" type="text/css" rel="stylesheet" />
     <title>Media Bazaar</title>
 </head>
 <body>
@@ -13,7 +14,7 @@ include('navigation.php');
  switch($_GET['page']) 
  {
      case 'pageAssignedShift':
-         echo '<div class="main">'; include 'Calendar.php'; echo '</div>';
+        include 'Calendar.php';
          break;
      case 'pageAvailability':
          echo '<div class="main">'; include 'Availability.php'; echo '</div>';
