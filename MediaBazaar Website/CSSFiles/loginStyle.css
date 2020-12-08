@@ -1,6 +1,6 @@
 
 body {  
-   background-color: #D3DBD9;
+   background-color: #E3F2FB;
    height: 100vh;
 }
 
@@ -76,11 +76,11 @@ button{
    width: 215px;
    padding: 10px;
    font-size: 16px;
-   background-color: #87B0A6;
+   background-color: #83B4D1;
    border-radius: 10vh;
 }
 button:hover {
-   background-color: aquamarine;
+   background-color: #CDE6F4;
  }
 
  input {
@@ -88,8 +88,13 @@ button:hover {
    padding: 12px 20px;
    margin: 8px 0;
    box-sizing: border-box;
-   background-color: rgb(179, 212, 245);
+   background-color: #83B4D1;
    border: none;
    margin-bottom: 1vh;
-
+ }
+ input::placeholder{
+   background-color: #83B4D1;
+ }
+ :focus::-webkit-input-placeholder {
+   color: #83B4D1;
  }

@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #D3DBD9;
+    background-color: #E3F2FB;
     height: 100vh;
 }
 .Preference_Shift_Form_Container{
@@ -18,7 +18,7 @@
     text-align: center;
     width: inherit;
     height: 40px;
-    background-color: #07634C;
+    background-color: #83B4D1;
 }
 
 /*Form Title---->Title Text->Date*/
@@ -41,8 +41,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #fff;
-    color: #fff;
+    border: 1px solid white;
+    color: white;
   }
 
 /*Form*/
@@ -55,7 +55,7 @@
 .Sift_Types{
     display: grid;
     height: 600px;
-    background-color: #07634C;
+    background-color: #9CC6DF;
     grid-template-rows: 1fr 1fr 1fr;
 }
 .Shit_Type{
@@ -64,7 +64,7 @@
     align-items: center;
     justify-content: center;
     border: 1px solid #fff;
-    color: #fff;
+    color: rgb(0, 0, 0);
 }
 
 .Shift_Form_Container{
@@ -97,7 +97,7 @@
     position: absolute;
     height: 199px;
     width: 199px;
-    background-color: #A7C5BD;
+    background-color: #CDE6F4;
     border: 1px solid #fff;
   }
   
@@ -107,7 +107,7 @@
   }
   /* When the checkbox is checked, add a blue background */
   .customer_checkbox_container input:checked ~ .customer_checkbox {
-    background-color: #07634C;
+    background-color: #83B4D1;
   }
   
 
@@ -117,7 +117,7 @@
 /*Submit_Button*/
 .btn_submit_form{
   height: 60px;
-  background-color: #07634C;
+  background-color: #83B4D1;
   border: black;
   color: rgb(3, 3, 3);
   padding: 15px 32px;
@@ -128,9 +128,11 @@
   align-items: center;
   justify-content: center;
   float: right;
+  font-weight: bold;
+  border-radius: 0%;
 }
 .btn_submit_form:hover{
-  background-color: #A7C5BD;
+  background-color: #9CC6DF;
 }
 
 
@@ -138,7 +140,7 @@
 .Notice
 {
   text-align: center;
-  color: #2b221f;
+  color: #ff0800;
 }
 .SideNote{
   box-sizing: border-box;
@@ -147,15 +149,14 @@
 
   width: 320px;
 
-  background-color:#579181;
+  background-color:#83B4D1;
 
-  margin-right: 0px;
+  margin-right: 15px;
 
-  margin-left: 50px;
+  margin-left: 200px;
 
   border: 1px solid;
 
-  border-radius: 20px;
 
   display: grid;
 
@@ -171,7 +172,7 @@
   justify-items: center;
 }
 .lightGreen {
-  background-color: #A7C5BD;
+  background-color: #CDE6F4;
   width: 200px;
   height:200px ;
   margin-left: auto;
@@ -179,11 +180,11 @@
   display: flex;
   align-self: center;
   justify-items: center;
-  color: #fff;
+  color: #000000;
   font-size: 30px;
 }
 .darkGreen {
-  background-color:  #07634C;
+  background-color:  #9CC6DF;
   width: 200px;
   height:200px ;
   margin-left: auto;
@@ -191,6 +192,6 @@
   display: flex;
   align-self: center;
   justify-items: center;
-  color: #fff;
+  color: rgb(0, 0, 0);
   font-size: 30px;
 }

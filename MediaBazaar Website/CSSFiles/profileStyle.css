@@ -2,7 +2,7 @@
 body {
   
    padding-bottom: 40px;
-   background-color: #ffffff;
+   background-color: #E3F2FB;
 }
 
 .form-changeInfo {
@@ -63,6 +63,10 @@ button{
     padding: 10px;
     font-size: 16px;
 }
+button:hover{
+
+   background-color: #CDE6F4;
+}
 .buttonBlue{
    position: relative;
    height: auto;
@@ -72,7 +76,7 @@ button{
    width: 215px;
    padding: 10px;
    font-size: 16px;
-   background-color: #07634C;
+   background-color: #83B4D1;
    border-radius: 10vh;
 }
 input {
@@ -80,14 +84,12 @@ input {
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
-  background-color:#87B0A6;
+  background-color:#83B4D1;
   border: none;
   margin-bottom: 1vh;
-  
-
 }
 ::placeholder {
-   color:rgb(68, 64, 64);
+   color:#000000;
    opacity: 1; /* Firefox */
  }
 .main {

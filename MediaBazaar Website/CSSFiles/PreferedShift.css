@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #D3DBD9;
+    background-color: #E3F2FB;
     height: 100vh;
 }
 .Preference_Shift_Form_Container{
@@ -18,12 +18,12 @@
     text-align: center;
     width: inherit;
     height: 40px;
-    background-color: #07634C;
+    background-color: #83B4D1;
 }
 /*Form Title---->Btn*/
 .btn_CheckLastWeek,.btn_CheckNextWeek{
     height: 40px;
-    background-color: #889794;
+    background-color: #CDE6F4;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -62,8 +62,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #fff;
-    color: #fff;
+    border: 1px solid rgb(0, 0, 0);
+    color: rgb(3, 3, 3);
   }
   .Week_Day_Today{
     display: flex;
@@ -71,7 +71,7 @@
     justify-content: center;
     border: 1px solid #fff;
     color: #fff;
-    background-color:#074C3B;
+    background-color:#83B4D1;
   }
 
 /*Form*/
@@ -84,7 +84,7 @@
 .Sift_Types{
     display: grid;
     height: 600px;
-    background-color: #07634C;
+    background-color: #83B4D1;
     grid-template-rows: 1fr 1fr 1fr;
 }
 .Shit_Type{
@@ -126,7 +126,7 @@
     position: absolute;
     height: 199px;
     width: 199px;
-    background-color: #A7C5BD;
+    background-color: #83B4D1;
     border: 1px solid #fff;
   }
   
@@ -136,7 +136,7 @@
   }
   /* When the checkbox is checked, add a blue background */
   .customer_checkbox_container input:checked ~ .customer_checkbox {
-    background-color: #07634C;
+    background-color: #83B4D1;
   }
   
 
@@ -188,11 +188,11 @@
 
   width: 320px;
 
-  background-color:#579181;
+  background-color:#83B4D1;
 
   margin-right: 0px;
 
-  margin-left: 50px;
+  margin-left: 100px;
 
   border: 1px solid;
 
