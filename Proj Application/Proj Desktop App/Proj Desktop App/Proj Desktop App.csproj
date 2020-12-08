@@ -95,7 +95,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="logic\AssignedShift.cs" />
-    <Compile Include="logic\PreferenceShift.cs" />
+    <Compile Include="logic\AutomaticScheduling.cs" />
+    <Compile Include="logic\Availability.cs" />
     <Compile Include="logic\Contract.cs" />
     <Compile Include="logic\Departments.cs" />
     <Compile Include="logic\Employee.cs" />

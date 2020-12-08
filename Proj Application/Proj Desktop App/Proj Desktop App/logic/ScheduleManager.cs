@@ -9,7 +9,7 @@ namespace Proj_Desktop_App
     class ScheduleManager
     {
         private List<AssignedShift> allAssignedShifts;
-        private List<PreferenceShift> allAvailableShifts;
+        private List<Availability> allAvailableShifts;
         private EmployeeStorage store;
         private List<string> sqlstatements;
         public ScheduleManager(EmployeeStorage store)

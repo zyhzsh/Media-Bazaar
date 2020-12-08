@@ -13,13 +13,13 @@ namespace Proj_Desktop_App.dataAccess
     {
 
         private static List<AssignedShift> assignedShifts;
-        private static List<PreferenceShift> availableShifts;
+        private static List<Availability> availableShifts;
         public ScheduleManagement() { }
         public List<AssignedShift> GetAssignedShifts()
         {
             return assignedShifts;
         }
-        public List<PreferenceShift> GetAvailableShifts()
+        public List<Availability> GetAvailableShifts()
         {
             return availableShifts;
         }
