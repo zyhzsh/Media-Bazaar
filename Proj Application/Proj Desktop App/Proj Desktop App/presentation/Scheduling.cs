@@ -16,10 +16,12 @@ namespace Proj_Desktop_App
 {
     public partial class Scheduling : Form
     {
-        private ScheduleManager schedulemanager;
         private ShiftType seletedshifttype;
         private DateTime seleteddate;
         private DateTime previousdate;
+
+
+        private ScheduleManager schedulemanager;
         private EmployeeStorage store;
 
         public Scheduling(Departments department)
@@ -45,7 +47,6 @@ namespace Proj_Desktop_App
             previousdate = DateTime.Today;
             //5.Update Employee list by department
             listboxAvailableEmployees.Items.Clear();
-
             foreach (Employee x in store.GetEmployees(true, (Departments)cbDepartment.SelectedItem))
             {
                 listboxAvailableEmployees.Items.Add(x);
@@ -53,6 +54,8 @@ namespace Proj_Desktop_App
             //6.Update AssigngedShift list by department
             listboxAssignedEmployees.Items.Clear();
             listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate, (Departments)cbDepartment.SelectedItem));
+
+            listBox1.Items.AddRange(schedulemanager.test());
         }
 
         private void btnAddEmpShift_Click(object sender, EventArgs e)
@@ -134,7 +137,7 @@ namespace Proj_Desktop_App
             {
                 previousdate = seleteddate;
                 ScheduleManagement a = new ScheduleManagement();
-                a.LoadSchduleFormDateBase(seleteddate);
+                a.LoadSchduleFormDateBase(seleteddate,store);
             }
             listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate, (Departments)cbDepartment.SelectedItem));
         }
@@ -180,9 +183,6 @@ namespace Proj_Desktop_App
         {
             UpdateEmployeePreferenceShiftslists();
         }
-
-
-
         private void UpdateEmployeesInfo()
         {
             listBoxEmployeesDetails.Items.Clear();
@@ -216,51 +216,51 @@ namespace Proj_Desktop_App
         }
         private void UpdateEmployeePreferenceShiftslists()
         {
-            if (listboxAvailableEmployees.SelectedItem != null)
-            {
-                listboxEmployeePreferenceShifts.Items.Clear();
-                //Get the employee's BSN
-                object m = listboxAvailableEmployees.SelectedItem;
-                string extractbsn = Regex.Match(m.ToString(), @"[0-9]+").ToString();
-                //Get the employee's Object
-                Employee employee = store.GetEmployee(Convert.ToInt32(extractbsn));
-                //Let Schdule Manager to Processing Someting To Get the List of Preferences Shifts
-                List<PreferenceShift> personalpreferemceshift = schedulemanager.GetEmployee_Preference_Shift_For_The_Week(employee, seleteddate);
-                //Display the listboxEmployeePreferenceShifts by weekly view
-                listboxEmployeePreferenceShifts.Items.Add("Monday-------");
-                listboxEmployeePreferenceShifts.Items.Add("Tuesday------");
-                listboxEmployeePreferenceShifts.Items.Add("Wednesday----");
-                listboxEmployeePreferenceShifts.Items.Add("Thursday-----");
-                listboxEmployeePreferenceShifts.Items.Add("Friday-------");
-                listboxEmployeePreferenceShifts.Items.Add("Saturday-----");
-                listboxEmployeePreferenceShifts.Items.Add("Sunday-------");
-                for (int i = 0; i < 7; i++)
-                {
-                    listboxEmployeePreferenceShifts.Items[i] += GetWeeklyShfitByDayIndex(i, personalpreferemceshift);
-                }
-            }
+            //if (listboxAvailableEmployees.SelectedItem != null)
+            //{
+            //    listboxEmployeePreferenceShifts.Items.Clear();
+            //    //Get the employee's BSN
+            //    object m = listboxAvailableEmployees.SelectedItem;
+            //    string extractbsn = Regex.Match(m.ToString(), @"[0-9]+").ToString();
+            //    //Get the employee's Object
+            //    Employee employee = store.GetEmployee(Convert.ToInt32(extractbsn));
+            //    //Let Schdule Manager to Processing Someting To Get the List of Preferences Shifts
+            //    List<PreferenceShift> personalpreferemceshift = schedulemanager.GetEmployee_Preference_Shift_For_The_Week(employee, seleteddate);
+            //    //Display the listboxEmployeePreferenceShifts by weekly view
+            //    listboxEmployeePreferenceShifts.Items.Add("Monday-------");
+            //    listboxEmployeePreferenceShifts.Items.Add("Tuesday------");
+            //    listboxEmployeePreferenceShifts.Items.Add("Wednesday----");
+            //    listboxEmployeePreferenceShifts.Items.Add("Thursday-----");
+            //    listboxEmployeePreferenceShifts.Items.Add("Friday-------");
+            //    listboxEmployeePreferenceShifts.Items.Add("Saturday-----");
+            //    listboxEmployeePreferenceShifts.Items.Add("Sunday-------");
+            //    for (int i = 0; i < 7; i++)
+            //    {
+            //        listboxEmployeePreferenceShifts.Items[i] += GetWeeklyShfitByDayIndex(i, personalpreferemceshift);
+            //    }
+            //}
 
         }
-        private string GetWeeklyShfitByDayIndex(int indexofweek, List<PreferenceShift> templist)
-        {
-            string week = "";
-            if (indexofweek == 0) { week = "Monday"; }
-            else if (indexofweek == 1) { week = "Tuesday"; }
-            else if (indexofweek == 2) { week = "Wednesday"; }
-            else if (indexofweek == 3) { week = "Thursday"; }
-            else if (indexofweek == 4) { week = "Friday"; }
-            else if (indexofweek == 5) { week = "Saturday"; }
-            else if (indexofweek == 6) { week = "Sunday"; }
-            string temp = "Not Set Yet";
-            foreach (PreferenceShift x in templist)
-            {
-                if (x.GetDate().DayOfWeek.ToString() == week)
-                {
-                    temp = " "+x.GetDate().ToString("MM-dd")+" "+x.GetShiftTypeToString();
-                }
-            }
-            return temp;
-        }
+        //private string GetWeeklyShfitByDayIndex(int indexofweek, List<PreferenceShift> templist)
+        //{
+        //    string week = "";
+        //    if (indexofweek == 0) { week = "Monday"; }
+        //    else if (indexofweek == 1) { week = "Tuesday"; }
+        //    else if (indexofweek == 2) { week = "Wednesday"; }
+        //    else if (indexofweek == 3) { week = "Thursday"; }
+        //    else if (indexofweek == 4) { week = "Friday"; }
+        //    else if (indexofweek == 5) { week = "Saturday"; }
+        //    else if (indexofweek == 6) { week = "Sunday"; }
+        //    string temp = "Not Set Yet";
+        //    foreach (PreferenceShift x in templist)
+        //    {
+        //        if (x.GetDate().DayOfWeek.ToString() == week)
+        //        {
+        //            temp = " "+x.GetDate().ToString("MM-dd")+" "+x.GetShiftTypeToString();
+        //        }
+        //    }
+        //    return temp;
+        //}
 
     }
 }

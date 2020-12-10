@@ -49,6 +49,7 @@
             this.lbdepartment = new System.Windows.Forms.Label();
             this.listboxEmployeePreferenceShifts = new System.Windows.Forms.ListBox();
             this.labelEmployeePereferenceShifts = new System.Windows.Forms.Label();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -253,11 +254,20 @@
             this.labelEmployeePereferenceShifts.TabIndex = 40;
             this.labelEmployeePereferenceShifts.Text = "PerferenceShifts";
             // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(189, 397);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(220, 95);
+            this.listBox1.TabIndex = 41;
+            // 
             // Scheduling
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1040, 589);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.labelEmployeePereferenceShifts);
             this.Controls.Add(this.listboxEmployeePreferenceShifts);
             this.Controls.Add(this.lbdepartment);
@@ -308,5 +318,6 @@
         private System.Windows.Forms.Label lbdepartment;
         private System.Windows.Forms.ListBox listboxEmployeePreferenceShifts;
         private System.Windows.Forms.Label labelEmployeePereferenceShifts;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }

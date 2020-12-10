@@ -14,6 +14,7 @@ namespace Proj_Desktop_App
         Morning_Afternoon,
         Morning_Evening,
         Afternoon_Evening,
-        FullDay
+        FullDay,
+        None
     }
 }
