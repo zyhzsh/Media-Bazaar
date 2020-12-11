@@ -17,7 +17,7 @@
     if($session-> __isset('BSN')){echo '<button class="btn_logout" value="logout" type="submit" name="logoutBtn"> <i class="fas fa-sign-out-alt"> SignOut</i></button>';} ?>
     </form>
 </div>
-<span style="font-size:30px;cursor:pointer;position: fixed;" onclick="openNav()">&#9776; Menu</span>
+<span style="font-size:30px;cursor:pointer;position: relative;" onclick="openNav()">&#9776; Menu</span>
 
 <script>
 function openNav() {

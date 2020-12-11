@@ -13,7 +13,6 @@
 
 <body>
 <div class="main">
-   <div>
       <h1>Profile</h1>
       <?php $userController = new UserController();
          $session = session::getInstance();
@@ -30,9 +29,7 @@
          echo "<p><strong>weekly hours : </strong> " . $user->weeklyHours. " </p>";
       ?>
 
-   
- </div>
- <div class="flex-container">
+<div class="container"><div class="item"> 
       <form class="form-changeInfo" role="form" action="" method="post">
          <h4>Request change your personal information</h4>
          <?php $user = new UserController();
@@ -41,22 +38,23 @@
              <?php $userController = new UserController();
          $session = session::getInstance();
          $user = $session->__get("user");
-        echo'<p class="form-control"><strong>First name: </strong>  <input type="text" class="form-control" name="firstName" value= '.$user->firstName .'></br></P>';
-        echo'<p class="form-control"><strong> Last name : </strong>  <input type="text" class="form-control" name="lastName" value= '.$user->lastName .'></br></P>';
-        echo'<p class="form-control"><strong> gender : </strong>  <input type="text" class="form-control" name="gender" value= '.$user->gender .'></br></P>';
-        echo'<p class="form-control"><strong> phone : </strong>  <input type="text" class="form-control" name="phone" value='.$user->phone .'></br></P>';
-        echo'<p class="form-control"><strong> adress : </strong>  <input type="text" class="form-control" name="adress" value= '.$user->adress .'></br></P>';
-        echo'<p class="form-control"><strong> languages : </strong>  <input type="text" class="form-control" name="languages" value= '.$user->languages .'></br></P>';
-        echo'<p class="form-control"><strong> certificates : </strong>  <input type="text"  name="certificates" value= '.$user->certificates .'></br></P>';
-        echo'<p class="form-control"><strong> contact email : </strong>  <input type="text"  name="contactEmail" value= '.$user->contactEmail .'></br></P>';
+         
+        echo'<p class="form-control"><strong>First name: </strong> </p> <input type="text" class="form-control" name="firstName" value= '.$user->firstName .'></br>';
+        echo'<p class="form-control"><strong> Last name : </strong>  </p><input type="text" class="form-control" name="lastName" value= '.$user->lastName .'></br>';
+        echo'<p class="form-control"><strong> Gender : </strong>  </p><input type="text" class="form-control" name="gender" value= '.$user->gender .'></br>';
+        echo'<p class="form-control"><strong> Phone : </strong>  </p><input type="text" class="form-control" name="phone" value='.$user->phone .'></br>';
+        echo'<p class="form-control"><strong> Adress : </strong>  </p><input type="text" class="form-control" name="adress" value= '.$user->adress .'></br>';
+        echo'<p class="form-control"><strong> Languages : </strong>  </p><input type="text" class="form-control" name="languages" value= '.$user->languages .'></br></P>';
+        echo'<p class="form-control"><strong> Certificates : </strong>  </p><input type="text"  name="certificates" value= '.$user->certificates .'></br></P>';
+        echo'<p class="form-control"><strong> Contact email : </strong>  </p><input type="text"  name="contactEmail" value= '.$user->contactEmail .'></br></P>';
          ?>
          <button class="buttonBlue" type="submit" name="submitRequest">Submit request</button>
       </form>
-  
-
-
-      <form class=" form-changeInfo" name="changePassword" role="form" action="" 
-       onsubmit="return validateChangePassword()" metehod="post">
+   </div>
+     
+      <div class="item">
+       <form class=" form-changeInfo" name="changePassword" role="form" action="" 
+       onsubmit="return validateChangePassword()" metbhod="post">
          <h4 class="form-changeInfo-heading">
             Change password
             <?php $user = new UserController();
@@ -69,6 +67,8 @@
          <button class="buttonBlue" type="submit" name="submitChangePassword">Change passsword</button>
          <p style="color:red" id="validInput"></p></br>
       </form>
+
    </div>
+ </div>
 </div>
 </body>

@@ -5,11 +5,13 @@
   align-items: center;
   justify-content: center;
   background-color: #E3F2FB;
-  height: 100vh;
+  height: auto;
+  position: relative;
 }
 .Calendar_Container{
   width: 1204px;
   height: 798px;
+  position: relative;
 }
 
 /*Calendar Title*/
