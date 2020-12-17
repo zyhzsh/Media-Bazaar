@@ -73,7 +73,8 @@ class UserModel
         $conn = $dbh->connection();
         $stmt = $conn->prepare($sql);
         $stmt->execute([':uBSN' => $BSN, 'pwd' => $password]);
-        $result = $stmt->fetch();;
+        $result = $stmt->fetch();
+        $conn=null;
         if (empty($result)) {
             return false;
         } else {
@@ -81,13 +82,15 @@ class UserModel
         }
     }
 
-    public function ChangePassword($BSN, $oldPassword, $newPassword)
+    public function ChangePassword($BSN,$newPassword)
     {
+       // UPDATE `employee` SET `password` = '123' WHERE `employee`.`BSN` = 100000002
         $dbh = new Dbh();
-        $sql = "UPDATE `employee` SET password=(:nPassword) WHERE passsword=(:oPassword) AND BSN=(:b) ";
+        $sql = "UPDATE `employee` SET `password`=(:nPassword) WHERE BSN=(:b) ";
         $conn = $dbh->connection();
         $stmt = $conn->prepare($sql);
-        $stmt->execute([':nPassword' => $newPassword, ':oPassword' => $oldPassword, ':b' => $BSN]);
+        $stmt->execute([':nPassword' => $newPassword,':b' => $BSN]);
+       // $conn=null;
     }
 
     public function RequestChangeUserInformation($BSN, $firstName, $lastName, $gender, $phone, $address, $languages, $certificates, $email)

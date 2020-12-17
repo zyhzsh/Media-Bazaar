@@ -71,7 +71,7 @@ class UserController
          if ($newpassword == $newPasswordCheck) {
             $_dbh = new UserModel();
             if ($_dbh->CheckPassword($BSN, $oldpassword) == true) {
-               $_dbh->ChangePassword($BSN, $oldpassword, $newpassword);
+               $_dbh->ChangePassword($BSN,$newpassword);
                return 'Your password is changed';
             } else {
                return 'Check your old password';
@@ -84,7 +84,7 @@ class UserController
    }
 }
 //if it's inside the class can not accsse the $_post 
-if (isset($_POST['logoutBtn']) && preg_match("/\b(logout)\b/", $_POST['logoutBtn'])) {
+if (isset($_POST['logoutBtn']) ) {
    $session = session::getInstance();
    $session->__unset('BSN');
    header("Location:?page=default");
