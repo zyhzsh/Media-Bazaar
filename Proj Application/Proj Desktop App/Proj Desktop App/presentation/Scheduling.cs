@@ -16,6 +16,7 @@ namespace Proj_Desktop_App
 {
     public partial class Scheduling : Form
     {
+        private AutomaticScheduling automaticScheduling;
         private ScheduleManager schedulemanager;
         private ShiftType seletedshifttype;
         private DateTime seleteddate;
@@ -25,6 +26,7 @@ namespace Proj_Desktop_App
         public Scheduling(Departments department)
         {
             InitializeComponent();
+            automaticScheduling = new AutomaticScheduling(department);
             store = new EmployeeStorage();
             schedulemanager = new ScheduleManager(store);
             //1.update combo box
@@ -262,5 +264,9 @@ namespace Proj_Desktop_App
             return temp;
         }
 
+        private void btnDoTheSchedule_Click(object sender, EventArgs e)
+        {
+            automaticScheduling.DoTheSchedule();
+        }
     }
 }
