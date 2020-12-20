@@ -9,19 +9,19 @@ namespace Proj_Desktop_App
 {
     class ScheduleStorage
     {
-        private List<AssignedShift> allAssignedShifts;
-        private List<Availability> allAvailableShifts;
+        private static List<AssignedShift> allAssignedShifts;
+        private static List<Availability> allAvailableShifts;
         private EmployeeStorage store;
         private ScheduleManagement schedule;
         public ScheduleStorage(EmployeeStorage store)
         {
             this.store = store;
-            schedule = new ScheduleManagement();
+            schedule = new ScheduleManagement();      
             schedule.LoadSchduleFormDateBase(DateTime.Now,store);
             allAssignedShifts = new List<AssignedShift>();
             allAvailableShifts = new List<Availability>();
-            this.allAssignedShifts.AddRange(schedule.GetAssignedShifts());
-            this.allAvailableShifts.AddRange(schedule.GetAvailableShifts());
+            allAssignedShifts.AddRange(schedule.GetAssignedShifts());
+            allAvailableShifts.AddRange(schedule.GetAvailableShifts());
         }
         /// <summary>
         /// Specify the day and Department then return list of employee's information
@@ -67,6 +67,7 @@ namespace Proj_Desktop_App
                 return false;
             }
             UpDateAssignedShiftToSchdule();
+            ReLoadSchdule(date);
             return true;
         }
         /// <summary>
@@ -134,8 +135,8 @@ namespace Proj_Desktop_App
                 if (haverecords == false)
                 {
                     AssignedShift x = new AssignedShift(employee, date, shiftType);
-                    allAssignedShifts.Add(x);
-                    schedule.AddNewShift(shiftType, employee.GetBSN(),date);         
+                    //allAssignedShifts.Add(x);
+                    schedule.AddNewShift(shiftType, employee.GetBSN(),date);       
                     return true;
                 }
             }           
@@ -170,7 +171,7 @@ namespace Proj_Desktop_App
                     {
                         if (b.Employee.GetBSN() == e.GetBSN())
                         {
-                            allAssignedShifts.Remove(b);
+                            //allAssignedShifts.Remove(b);
                             schedule.RemoveAssignedShift(e.GetBSN(),date);
                             break;
                         }
@@ -183,13 +184,14 @@ namespace Proj_Desktop_App
                 return false;
             }
             UpDateAssignedShiftToSchdule();
+            ReLoadSchdule(date);
             return true;
         }
         /// <summary>
         /// Update Current list of Shift information form Schdule Class
         /// </summary>
         /// <param name="date"></param>
-        private void ReLoadSchdule(DateTime date)
+        public void ReLoadSchdule(DateTime date)
         {
             schedule.LoadSchduleFormDateBase(date,store);
             allAssignedShifts.Clear();
@@ -202,12 +204,10 @@ namespace Proj_Desktop_App
         /// </summary>
         private void UpDateAssignedShiftToSchdule()
         {
-            string updatefeedback = schedule.UpDateAssignedShift(allAssignedShifts);
-            if (updatefeedback == "") { MessageBox.Show("Nothing to Update");}
-            else if (updatefeedback == "Update completed") { MessageBox.Show("Nothing to Update"); }
-            else if (updatefeedback == "Update failed") { MessageBox.Show("Nothing to Update"); }
-            allAssignedShifts.Clear();
-            allAssignedShifts.AddRange(schedule.GetAssignedShifts());
+            string updatefeedback = schedule.UpDateAssignedShift();
+            if (updatefeedback == "") { MessageBox.Show("Nothing to Update"); }
+            else if (updatefeedback == "Update completed") { MessageBox.Show("Update completed"); }
+            else if (updatefeedback == "Update failed") { MessageBox.Show("Update filed"); }
         }
         /// <summary>
         /// Specify the employee and date, the function will return the shift list of the week about the employee.

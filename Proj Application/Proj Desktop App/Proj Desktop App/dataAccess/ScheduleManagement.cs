@@ -12,17 +12,22 @@ namespace Proj_Desktop_App.dataAccess
     class ScheduleManagement : DatabaseConnection
     {
 
-        private static List<AssignedShift> assignedShifts;
-        private static List<Availability> availableShifts;
+        private  List<AssignedShift> assignedShifts;
+        private  List<Availability> availableShifts;
         private string sqlstatements;
-        public ScheduleManagement() { sqlstatements = ""; }
-        public AssignedShift[] GetAssignedShifts()
-        {
-            return assignedShifts.ToArray();
+        public ScheduleManagement() 
+        { 
+            sqlstatements = "";
+            assignedShifts = new List<AssignedShift>();
+            availableShifts = new List<Availability>();
         }
-        public Availability[] GetAvailableShifts()
+        public List<AssignedShift> GetAssignedShifts()
         {
-            return availableShifts.ToArray();
+            return assignedShifts;
+        }
+        public List<Availability> GetAvailableShifts()
+        {
+            return availableShifts;
         }
         /// <summary>
         ///Specify the day
@@ -32,12 +37,11 @@ namespace Proj_Desktop_App.dataAccess
         public void LoadSchduleFormDateBase(DateTime date, EmployeeStorage store)
         {   //to get the employee object, couble be change in the future;
             EmployeeStorage a = new EmployeeStorage();
-            if (assignedShifts is null) { assignedShifts = new List<AssignedShift>(); }
-            else { assignedShifts.Clear(); }
-            if (availableShifts is null) { availableShifts = new List<Availability>(); }
-            else { availableShifts.Clear(); }
-            DateTime bufferdateforautomaticassignedshift = date.AddDays(40);
-            string sql = $"SELECT * FROM `assignedschdule` WHERE date BETWEEN {date.ToString("yyyy-MM-dd")} AND {bufferdateforautomaticassignedshift.ToString("yyyy-MM-dd")}";
+            assignedShifts.Clear(); 
+            availableShifts.Clear();
+            DateTime bufferdataforautomaticassignedshift = date.AddDays(40);
+            string sql = $"SELECT * FROM `assignedschdule` WHERE date BETWEEN '{date.ToString("yyyy-MM-01")}' AND '{bufferdataforautomaticassignedshift.ToString("yyyy-MM-dd")}';";
+            //string sql = $"SELECT * FROM `assignedschdule`;";
             try
             {
                 MySqlConnection conn = base.GetConnection();
@@ -87,44 +91,43 @@ namespace Proj_Desktop_App.dataAccess
             catch (Exception ex)
             {
                 assignedShifts = new List<AssignedShift>();
-                // availableShifts = new List<PreferenceShift>();
                 MessageBox.Show(ex.Message);
             }
         }
-
         /// <summary>
         /// Update the shift data to the database
         /// </summary>
         /// <param name="UpdatedShifts">Application Side Assigned Shift Lists after user assign shifts</param>
-        public string UpDateAssignedShift(List<AssignedShift> shifts)
+        public string UpDateAssignedShift()
         {
-            if (sqlstatements == "") { return ""; }
-            MySqlConnection conn = base.GetConnection();
-            try
-            {
-                MySqlCommand cmd = new MySqlCommand(sqlstatements, conn);
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                assignedShifts = shifts;
-                return "Update completed";
+            string feedback = "";
+            if (sqlstatements == "") { feedback = ""; }
+            else {
+                MySqlConnection conn = base.GetConnection();
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(sqlstatements, conn);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    feedback = "Update completed";
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    feedback = "Update failed";
+                }
+                finally
+                {
+                    sqlstatements = "";
+                    conn.Close();
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return "Update failed";
-            }
-            finally
-            {
-                sqlstatements = "";
-                conn.Close();
-            }
+            return feedback;
         }
-
         public void ChangeShiftType(ShiftType shiftype, int bsn, DateTime date)
         {
             sqlstatements += $"UPDATE `assignedschdule` SET `assigned_shift_type`= '{shiftype.ToString()}' WHERE BSN ='{bsn}' AND date='{date.ToString("yyyy-MM-dd")}';";
         }
-
         public void AddNewShift(ShiftType shiftype, int bsn, DateTime date)
         {
             sqlstatements += $"INSERT INTO `assignedschdule` (`BSN`, `date`, `assigned_shift_type`) VALUES('{bsn}', '{date.ToString("yyyy-MM-dd")}', '{shiftype.ToString()}');";
