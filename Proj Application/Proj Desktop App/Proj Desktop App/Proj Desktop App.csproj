@@ -106,7 +106,7 @@
     <Compile Include="logic\RestockRequest.cs" />
     <Compile Include="logic\RestockRequestStorage.cs" />
     <Compile Include="logic\Sale.cs" />
-    <Compile Include="logic\ScheduleManager.cs" />
+    <Compile Include="logic\ScheduleStorage.cs" />
     <Compile Include="logic\ShiftType.cs" />
     <Compile Include="presentation\AdminForm.cs">
       <SubType>Form</SubType>

@@ -12,7 +12,6 @@ namespace Proj_Desktop_App
         public Employee Employee { get; private set; }
         public ShiftType[] WeekAvailability { get; private set; }
         public decimal Leeway { get; set; } 
-
         public Availability(Employee employee,ShiftType[] shiftTypes)
         {
             Employee = employee;

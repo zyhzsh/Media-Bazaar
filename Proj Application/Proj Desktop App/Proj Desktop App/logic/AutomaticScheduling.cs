@@ -18,10 +18,7 @@ namespace Proj_Desktop_App
         {
             assignedEmployees = new List<Employee>[15];
         }
-
-        //public bool DoTheSchedule()
-        //{
-
-        //}
+        
+        
     }
 }

@@ -21,14 +21,14 @@ namespace Proj_Desktop_App
         private DateTime previousdate;
 
 
-        private ScheduleManager schedulemanager;
+        private ScheduleStorage schedulemanager;
         private EmployeeStorage store;
 
         public Scheduling(Departments department)
         {
             InitializeComponent();
             store = new EmployeeStorage();
-            schedulemanager = new ScheduleManager(store);
+            schedulemanager = new ScheduleStorage(store);
             //1.update combo box
             cbDepartment.Items.Add(Departments.floorOne);
             cbDepartment.Items.Add(Departments.floorTwo);
