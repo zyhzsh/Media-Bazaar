@@ -11,65 +11,37 @@ namespace Proj_Desktop_App.dataAccess
 {
     class ScheduleManagement : DatabaseConnection
     {
-
-        private  List<AssignedShift> assignedShifts;
-        private  List<Availability> availableShifts;
         private string sqlstatements;
         public ScheduleManagement() 
-        { 
+        {
             sqlstatements = "";
-            assignedShifts = new List<AssignedShift>();
-            availableShifts = new List<Availability>();
-        }
-        public List<AssignedShift> GetAssignedShifts()
-        {
-            return assignedShifts;
-        }
-        public List<Availability> GetAvailableShifts()
-        {
-            return availableShifts;
         }
         /// <summary>
         ///Specify the day
         ///This function will  
         ///Load this month of schdule data from database
         /// </summary>
-        public void LoadSchduleFormDateBase(DateTime date, EmployeeStorage store)
-        {   //to get the employee object, couble be change in the future;
-            EmployeeStorage a = new EmployeeStorage();
-            assignedShifts.Clear(); 
-            availableShifts.Clear();
-            DateTime bufferdataforautomaticassignedshift = date.AddDays(40);
-            string sql = $"SELECT * FROM `assignedschdule` WHERE date BETWEEN '{date.ToString("yyyy-MM-01")}' AND '{bufferdataforautomaticassignedshift.ToString("yyyy-MM-dd")}';";
-            //string sql = $"SELECT * FROM `assignedschdule`;";
+        public List<Availability> LoadAvailability(EmployeeStorage empStorage)
+        {
+            //to get the employee object, couble be change in the future;
+            MySqlConnection conn = base.GetConnection();
+            string sql = $"SELECT * FROM `availability`;";
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+            List<Availability> availabilities = new List<Availability>();
             try
             {
-                MySqlConnection conn = base.GetConnection();
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                
                 conn.Open();
                 MySqlDataReader dr = cmd.ExecuteReader();
-                ShiftType shifttype = ShiftType.Morning;
-                while (dr.Read())
-                {
-                    if (dr[2].ToString() == "Morning") { shifttype = ShiftType.Morning; }
-                    else if (dr[2].ToString() == "Afternoon") { shifttype = ShiftType.Afternoon; }
-                    else if (dr[2].ToString() == "Evening") { shifttype = ShiftType.Evening; }
-                    else if (dr[2].ToString() == "Morning_Afternoon") { shifttype = ShiftType.Morning_Afternoon; }
-                    else if (dr[2].ToString() == "Afternoon_Evening") { shifttype = ShiftType.Afternoon_Evening; }
-                    else if (dr[2].ToString() == "Morning_Evening") { shifttype = ShiftType.Morning_Evening; }
-                    assignedShifts.Add(new AssignedShift(a.GetEmployee(Convert.ToInt32(dr[0])), (DateTime)dr[1], shifttype));
-                }
-                conn.Close();
-                sql = $"SELECT * FROM `availability`;";
-                cmd = new MySqlCommand(sql, conn);
-                conn.Open();
-                dr = cmd.ExecuteReader();
-                Employee employee = null;
+
                 List<ShiftType> weeklyavailbility = new List<ShiftType>();
+                Employee emp;
+                
                 while (dr.Read())
                 {
                     //1.Get emloyee
-                    employee = store.GetEmployee(Convert.ToInt32(dr[0]));
+                    emp = empStorage.GetEmployee(Convert.ToInt32(dr[0]));
                     weeklyavailbility.Clear();
                     //2.Formulate ShiftType
                     for (int i = 1; i <= 5; i++)
@@ -84,14 +56,55 @@ namespace Proj_Desktop_App.dataAccess
                         else { weeklyavailbility.Add(ShiftType.None); }
                     }
                     //3.Adding Aailibility
-                    availableShifts.Add(new Availability(employee, weeklyavailbility.ToArray()));
+                    availabilities.Add(new Availability(emp, weeklyavailbility.ToArray()));
                 }
-                conn.Close();
+                return availabilities;
             }
             catch (Exception ex)
             {
-                assignedShifts = new List<AssignedShift>();
                 MessageBox.Show(ex.Message);
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public List<AssignedShift> LoadAssignedShifts(DateTime date, EmployeeStorage empStorage)
+        {
+            DateTime bufferdataforautomaticassignedshift = date.AddDays(40);
+            string sql = $"SELECT * FROM `assignedschdule` WHERE date BETWEEN '{date.ToString("yyyy-MM-01")}' AND '{bufferdataforautomaticassignedshift.ToString("yyyy-MM-dd")}';";
+            List<AssignedShift> assignedShifts = new List<AssignedShift>();
+            MySqlConnection conn = base.GetConnection();
+            try
+            {
+                
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                conn.Open();
+                MySqlDataReader dr = cmd.ExecuteReader();
+                ShiftType shifttype = ShiftType.Morning;
+                
+                while (dr.Read())
+                {
+                    if (dr[2].ToString() == "Morning") { shifttype = ShiftType.Morning; }
+                    else if (dr[2].ToString() == "Afternoon") { shifttype = ShiftType.Afternoon; }
+                    else if (dr[2].ToString() == "Evening") { shifttype = ShiftType.Evening; }
+                    else if (dr[2].ToString() == "Morning_Afternoon") { shifttype = ShiftType.Morning_Afternoon; }
+                    else if (dr[2].ToString() == "Afternoon_Evening") { shifttype = ShiftType.Afternoon_Evening; }
+                    else if (dr[2].ToString() == "Morning_Evening") { shifttype = ShiftType.Morning_Evening; }
+                    assignedShifts.Add(new AssignedShift(empStorage.GetEmployee(Convert.ToInt32(dr[0])), (DateTime)dr[1], shifttype));
+                }
+                return assignedShifts;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+            finally
+            {
+                conn.Close();
             }
         }
         /// <summary>

@@ -30,9 +30,10 @@ namespace Proj_Desktop_App
         /// </summary>
         private List<string> reports;
 
-        public AutomaticScheduling(Departments managerDepartment)
+        public AutomaticScheduling(Departments managerDepartment, ScheduleStorage schStorage)
         {
             assignedEmployees = new List<Employee>[15];
+            availableEmployees = schStorage.GetAvailabilitiesByDepartment(managerDepartment);
             this.managerDepartment = managerDepartment;
         }
 

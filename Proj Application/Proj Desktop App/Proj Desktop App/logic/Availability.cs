@@ -52,7 +52,7 @@ namespace Proj_Desktop_App
          
         public int CompareTo(Availability other)
         {
-            return Leeway.CompareTo(other.Leeway);
+            return this.leeway.CompareTo(other.leeway);
         }
 
 

@@ -31,9 +31,9 @@ namespace Proj_Desktop_App
         public Scheduling(Departments department)
         {
             InitializeComponent();
-            automaticScheduling = new AutomaticScheduling(department);
             store = new EmployeeStorage();
             schedule = new ScheduleStorage(store);
+            automaticScheduling = new AutomaticScheduling(department, schedule);
             //1.update combo box
             cbDepartment.Items.Add(Departments.floorOne);
             cbDepartment.Items.Add(Departments.floorTwo);
@@ -59,8 +59,6 @@ namespace Proj_Desktop_App
             //6.Update AssigngedShift list by department
             listboxAssignedEmployees.Items.Clear();
             listboxAssignedEmployees.Items.AddRange(schedule.GetEmployeesInfoByDateAndDepartment(seleteddate, (Departments)cbDepartment.SelectedItem));
-
-            listBox1.Items.AddRange(schedule.test());
         }
 
         private void btnAddEmpShift_Click(object sender, EventArgs e)

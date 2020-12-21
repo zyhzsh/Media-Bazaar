@@ -7,7 +7,7 @@ using System.IO.Pipes;
 
 namespace Proj_Desktop_App
 {
-    class ScheduleStorage
+    public class ScheduleStorage
     {
         private static List<AssignedShift> allAssignedShifts;
         private static List<Availability> allAvailableShifts;
@@ -16,12 +16,11 @@ namespace Proj_Desktop_App
         public ScheduleStorage(EmployeeStorage store)
         {
             this.store = store;
-            schedule = new ScheduleManagement();      
-            schedule.LoadSchduleFormDateBase(DateTime.Now,store);
+            schedule = new ScheduleManagement();
             allAssignedShifts = new List<AssignedShift>();
             allAvailableShifts = new List<Availability>();
-            allAssignedShifts.AddRange(schedule.GetAssignedShifts());
-            allAvailableShifts.AddRange(schedule.GetAvailableShifts());
+            allAssignedShifts.AddRange(schedule.LoadAssignedShifts(DateTime.Now, store));
+            allAvailableShifts.AddRange(schedule.LoadAvailability(store));
         }
         /// <summary>
         /// Specify the day and Department then return list of employee's information
@@ -193,11 +192,10 @@ namespace Proj_Desktop_App
         /// <param name="date"></param>
         public void ReLoadSchdule(DateTime date)
         {
-            schedule.LoadSchduleFormDateBase(date,store);
             allAssignedShifts.Clear();
             allAvailableShifts.Clear();
-            allAssignedShifts.AddRange(schedule.GetAssignedShifts());
-            allAvailableShifts.AddRange(schedule.GetAvailableShifts());
+            allAssignedShifts.AddRange(schedule.LoadAssignedShifts(DateTime.Now, store));
+            allAvailableShifts.AddRange(schedule.LoadAvailability(store));
         }
         /// <summary>
         /// Update the shift changes to the Schdule Class 
@@ -257,15 +255,6 @@ namespace Proj_Desktop_App
             }
             return temp;
         }
-        public string[] test()
-        {
-            List<string> x = new List<string>();
-            foreach (Availability i in allAvailableShifts)
-            {
-                x.Add(i.test());
-            }
-            return x.ToArray();
-        }
         //public List<PreferenceShift> GetEmployee_Preference_Shift_For_The_Week(Employee employee,DateTime date)
         //{
         //    List<PreferenceShift> temp = new List<PreferenceShift>();
@@ -305,5 +294,22 @@ namespace Proj_Desktop_App
         //    }
         //    return temp;
         //}
+        public List<Availability> GetAvailabilities()
+        {
+            return allAvailableShifts;
+        }
+
+        public List<Availability> GetAvailabilitiesByDepartment(Departments department)
+        {
+            List<Availability> result = new List<Availability>();
+            foreach(Availability availability in allAvailableShifts)
+            {
+                if(availability.employee.GetDepartment() == department)
+                {
+                    result.Add(availability);
+                }
+            }
+            return result;
+        }
     }
 }
