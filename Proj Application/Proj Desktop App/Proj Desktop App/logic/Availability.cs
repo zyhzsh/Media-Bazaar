@@ -10,6 +10,9 @@ namespace Proj_Desktop_App
     {
         public decimal leeway;
 
+        /// <summary>
+        /// 5 length array of the employee's shifts for each working day
+        /// </summary>
         public ShiftType[] WeekAvailability { get; private set; }
 
         public Employee employee { get; private set; }
@@ -47,7 +50,17 @@ namespace Proj_Desktop_App
         }
         public int CompareTo(object obj)
         {
-            throw new NotImplementedException();
+            if(obj != null)
+            {
+                Availability otherAvailability = obj as Availability;
+                if(otherAvailability != null)
+                {
+                    if (otherAvailability.leeway > this.leeway) return 1;
+                    else if (otherAvailability.leeway < this.leeway) return -1;
+                    else return 0;
+                }
+            }
+            return 1;
         }
     }
 }

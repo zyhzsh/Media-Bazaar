@@ -8,6 +8,10 @@ namespace Proj_Desktop_App
 {
     public class AutomaticScheduling
     {
+
+        //Find some way to implement scheduleStorage here
+        //will need merge
+
         /// <summary>
         /// Contains all submitted availability in order of leeway ascending
         /// </summary>
@@ -36,19 +40,54 @@ namespace Proj_Desktop_App
         {
             InitializeAssignmentArray();
             availableEmployees.Sort();
+            foreach(Availability availability in this.availableEmployees)
+            {
+                while(availability.leeway > 0)
+                {
+                    int mostCrowdedShift = -1;
+                    int assignedEmployeeCount = -1;
+                    for(int i = 0; i < 14; i++)
+                    {
+                        if (this.assignedEmployees[i].Contains(availability.employee))
+                        {
+                            if(this.assignedEmployees[i].Count > assignedEmployeeCount)
+                            {
+                                assignedEmployeeCount = this.assignedEmployees[i].Count;
+                                mostCrowdedShift = i;
+                            }
+                        }
+                    }
+                    if(assignedEmployeeCount > 5 && (availability.employee.GetActiveContract().Position == PositionType.Depot_Worker || availability.employee.GetActiveContract().Position == PositionType.Sales_Worker))
+                    {
+                        this.assignedEmployees[mostCrowdedShift].Remove(availability.employee);
+                        availability.leeway = availability.leeway - 1;
+                    }
+                    else if(assignedEmployeeCount > 3 && (availability.employee.GetActiveContract().Position == PositionType.Depot_Worker || availability.employee.GetActiveContract().Position == PositionType.Sales_Worker))
+                    {
+                        this.assignedEmployees[mostCrowdedShift].Remove(availability.employee);
+                        availability.leeway = availability.leeway - 1;
+                    }
+                }
+            }
             return false;
         }
+        /// <summary>
+        /// Add all availabilities to assigned shifts
+        /// </summary>
         private void InitializeAssignmentArray()
         {
+            //The main goal here is to treat each availability as an assigned shift
+            //These are then iterated through until employees no longer work extra shifts
             foreach(Availability availability in availableEmployees) //iterate through employees with submitted availabilities
             {
-                for(int i = 0; i < 5; i++) //Iterate through weekdats
+                for(int i = 0; i < 5; i++) //Iterate through weekdays
                 {
                     switch (availability.WeekAvailability[i]) //Determine what employee has submitted for this week day
                     {
                         //assign employee's submitted shift to 
-                        //by adding i to the shift type (morning 0 ... evening 2) 
+                        //by adding i to the shift type (morning 0 afternoon 1 evening 2) 
                         //we can access any specific shift of the week in a loop
+                        //For example i = 4 refers to tuesday afternoon and i = 0 monday morning
                         case ShiftType.Morning:
                             assignedEmployees[0 + i].Add(availability.employee);
                             break;
