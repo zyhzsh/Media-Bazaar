@@ -255,50 +255,22 @@ namespace Proj_Desktop_App
             }
             return temp;
         }
-        //public List<PreferenceShift> GetEmployee_Preference_Shift_For_The_Week(Employee employee,DateTime date)
-        //{
-        //    List<PreferenceShift> temp = new List<PreferenceShift>();
-        //    //Check Current List
-        //    DateTime startdate = date;
-        //    if (date.DayOfWeek.ToString() == "Monday") { startdate = date; }
-        //    else if (date.DayOfWeek.ToString() == "Tuesday") { startdate = date.AddDays(-1); }
-        //    else if (date.DayOfWeek.ToString() == "Wednesday") { startdate = date.AddDays(-2); }
-        //    else if (date.DayOfWeek.ToString() == "Thursday") { startdate = date.AddDays(-3); }
-        //    else if (date.DayOfWeek.ToString() == "Friday") { startdate = date.AddDays(-4); }
-        //    else if (date.DayOfWeek.ToString() == "Saturday") { startdate = date.AddDays(-5); }
-        //    else if (date.DayOfWeek.ToString() == "Sunday") { startdate = date.AddDays(-6); }
-        //    for (int i = 0; i < 7; i++)
-        //    {   //Get the shift list for this week
-        //        temp.AddRange(Get_Preference_Shifts_By_Date(startdate.AddDays(i)));
-        //    }
-        //    List<PreferenceShift> employee_shift = new List<PreferenceShift>();
-        //    foreach (PreferenceShift e in temp)
-        //    {
-        //        if (e.GetEmployee().GetBSN() == employee.GetBSN())
-        //        {
-        //            employee_shift.Add(e);
-        //        }
-        //    }
-        //    return employee_shift;
-        //}
- 
-        //private List<PreferenceShift> Get_Preference_Shifts_By_Date(DateTime date)
-        //{
-        //    List<PreferenceShift> temp = new List<PreferenceShift>();
-        //    foreach (PreferenceShift e in allAvailableShifts)
-        //    {
-        //        if (e.GetDate().ToString("yyyy-MM-dd") == date.ToString("yyyy-MM-dd"))
-        //        {
-        //            temp.Add(e);
-        //        }
-        //    }
-        //    return temp;
-        //}
+        public Availability GetAvailability(int bsn)
+        {
+            //Check Current List
+            foreach (Availability x in allAvailableShifts)
+            {
+                if (x.employee.GetBSN() == bsn)
+                {
+                    return x;
+                }
+            }
+            return null;
+        }
         public List<Availability> GetAvailabilities()
         {
             return allAvailableShifts;
         }
-
         public List<Availability> GetAvailabilitiesByDepartment(Departments department)
         {
             List<Availability> result = new List<Availability>();
