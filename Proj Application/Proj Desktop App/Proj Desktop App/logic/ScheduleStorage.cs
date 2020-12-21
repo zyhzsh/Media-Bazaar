@@ -3,23 +3,25 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Proj_Desktop_App.dataAccess;
+using System.IO.Pipes;
 
 namespace Proj_Desktop_App
 {
-    class ScheduleManager
+    class ScheduleStorage
     {
-        private List<AssignedShift> allAssignedShifts;
-        private List<Availability> allAvailableShifts;
+        private static List<AssignedShift> allAssignedShifts;
+        private static List<Availability> allAvailableShifts;
         private EmployeeStorage store;
-        private List<string> sqlstatements;
-        public ScheduleManager(EmployeeStorage store)
+        private ScheduleManagement schedule;
+        public ScheduleStorage(EmployeeStorage store)
         {
             this.store = store;
-            ScheduleManagement x = new ScheduleManagement();
-            x.LoadSchduleFormDateBase(DateTime.Now);
-            this.allAssignedShifts = x.GetAssignedShifts();
-            this.allAvailableShifts = x.GetAvailableShifts();
-            sqlstatements = new List<string>();
+            schedule = new ScheduleManagement();      
+            schedule.LoadSchduleFormDateBase(DateTime.Now,store);
+            allAssignedShifts = new List<AssignedShift>();
+            allAvailableShifts = new List<Availability>();
+            allAssignedShifts.AddRange(schedule.GetAssignedShifts());
+            allAvailableShifts.AddRange(schedule.GetAvailableShifts());
         }
         /// <summary>
         /// Specify the day and Department then return list of employee's information
@@ -31,14 +33,13 @@ namespace Proj_Desktop_App
             List<string> temp = new List<string>();
             foreach (AssignedShift e in allAssignedShifts)
             {               
-                if (e.GetDate().ToString("yyyy-MM-dd") == time.ToString("yyyy-MM-dd") &&e.GetEmployee().GetDepartment()== departments)
+                if (e.Date.ToString("yyyy-MM-dd") == time.ToString("yyyy-MM-dd") &&e.Employee.GetDepartment()== departments)
                 {
-                    temp.Add($"{e.GetEmployee().ToString()} Shift:{e.GetShiftTypeToString()} {e.GetDate().ToString("dddd, dd MMMM")}");
+                    temp.Add($"{e.Employee.ToString()} Shift:{e.GetShiftTypeToString()} {e.Date.ToString("dddd, dd MMMM")}");
                 }
             }
             return temp.ToArray();
         }
-
         /// <summary>
         /// Get list of BSN , Date, Shiftype Then Assigned the shift
         /// </summary>
@@ -48,7 +49,6 @@ namespace Proj_Desktop_App
         /// <returns></returns>
         public bool AssignShift(ShiftType shiftType, DateTime date, List<int> bsns)
         {
-           sqlstatements.Clear();
            try
             {
                 ReLoadSchdule(date); 
@@ -66,7 +66,8 @@ namespace Proj_Desktop_App
                 MessageBox.Show(ex.Message);
                 return false;
             }
-            UpDateAssignedShiftToSchdule(sqlstatements);
+            UpDateAssignedShiftToSchdule();
+            ReLoadSchdule(date);
             return true;
         }
         /// <summary>
@@ -87,8 +88,7 @@ namespace Proj_Desktop_App
             //3.if have the shift
             foreach (AssignedShift e in current_week_shift_list_for_the_employee)
             {
-                //if (e.GetDate().ToString("dd/MM/yyyy") == date.ToString("dd/MM/yyyy"))
-                if (e.GetDate().ToString("yyyy-MM-dd") == date.ToString("yyyy-MM-dd"))
+                if (e.Date.ToString("yyyy-MM-dd") == date.ToString("yyyy-MM-dd"))
                 {   //4.update the shift type
                     e.UpDateShiftType(shiftType);
                     havetheshift = true;
@@ -104,7 +104,7 @@ namespace Proj_Desktop_App
             int after_assigned_shift_workhours = 0;
             foreach (AssignedShift assigned in current_week_shift_list_for_the_employee)
             {
-                switch (assigned.GetShiftType())
+                switch (assigned.ShiftType)
                 {
                     case ShiftType.Morning:
                     case ShiftType.Afternoon:
@@ -115,20 +115,18 @@ namespace Proj_Desktop_App
                     case ShiftType.Morning_Evening:
                         after_assigned_shift_workhours += 8; break;
                 }
-            }
-           
+            }          
             if (after_assigned_shift_workhours <= employee.GetFTE() * 40)
             {
                 bool haverecords = false;
                 foreach (AssignedShift e in allAssignedShifts)
                 {
-                    //if (e.GetDate().ToString("dd/MM/yyyy") == date.ToString("dd/MM/yyyy"))
-                    if (e.GetDate().ToString("yyyy-MM-dd") == date.ToString("yyyy-MM-dd"))
+                    if (e.Date.ToString("yyyy-MM-dd") == date.ToString("yyyy-MM-dd"))
                     {
-                        if (e.GetEmployee().GetBSN() == employee.GetBSN())
+                        if (e.Employee.GetBSN() == employee.GetBSN())
                         {
                             e.UpDateShiftType(shiftType);
-                            sqlstatements.Add($"UPDATE `assignedschdule` SET `assigned_shift_type`= '{shiftType.ToString()}' WHERE BSN ='{employee.GetBSN()}' AND date='{date.ToString("yyyy-MM-dd")}';");
+                            schedule.ChangeShiftType(shiftType,employee.GetBSN(),date);  
                             haverecords = true;
                             return true;
                         }
@@ -137,8 +135,8 @@ namespace Proj_Desktop_App
                 if (haverecords == false)
                 {
                     AssignedShift x = new AssignedShift(employee, date, shiftType);
-                    allAssignedShifts.Add(x);
-                    sqlstatements.Add($"INSERT INTO `assignedschdule` (`BSN`, `date`, `assigned_shift_type`) VALUES('{employee.GetBSN()}', '{date.ToString("yyyy-MM-dd")}', '{shiftType}');");
+                    //allAssignedShifts.Add(x);
+                    schedule.AddNewShift(shiftType, employee.GetBSN(),date);       
                     return true;
                 }
             }           
@@ -152,7 +150,6 @@ namespace Proj_Desktop_App
         /// <returns></returns>
         public bool RemoveShift(DateTime date, List<int> bsns)
         {
-            sqlstatements.Clear();
             try
             {
                 List<Employee> emp = new List<Employee>();
@@ -163,7 +160,7 @@ namespace Proj_Desktop_App
                 List<AssignedShift> temp = new List<AssignedShift>();
                 foreach (AssignedShift e in allAssignedShifts)
                 {
-                    if (e.GetDate().ToString("yyyy-MM-dd") == date.ToString("yyyy-MM-dd"))
+                    if (e.Date.ToString("yyyy-MM-dd") == date.ToString("yyyy-MM-dd"))
                     {
                         temp.Add(e);
                     }
@@ -172,10 +169,10 @@ namespace Proj_Desktop_App
                 {
                     foreach (AssignedShift b in temp)
                     {
-                        if (b.GetEmployee().GetBSN() == e.GetBSN())
+                        if (b.Employee.GetBSN() == e.GetBSN())
                         {
-                            allAssignedShifts.Remove(b);                    
-                            sqlstatements.Add($"DELETE FROM `assignedschdule` WHERE date='{date.ToString("yyyy-MM-dd")}' AND BSN='{e.GetBSN()}';");
+                            //allAssignedShifts.Remove(b);
+                            schedule.RemoveAssignedShift(e.GetBSN(),date);
                             break;
                         }
                     }
@@ -186,27 +183,31 @@ namespace Proj_Desktop_App
                 MessageBox.Show(ex.Message);
                 return false;
             }
-            UpDateAssignedShiftToSchdule(sqlstatements);
+            UpDateAssignedShiftToSchdule();
+            ReLoadSchdule(date);
             return true;
         }
         /// <summary>
         /// Update Current list of Shift information form Schdule Class
         /// </summary>
         /// <param name="date"></param>
-        private void ReLoadSchdule(DateTime date)
+        public void ReLoadSchdule(DateTime date)
         {
-            ScheduleManagement a = new ScheduleManagement();
-            a.LoadSchduleFormDateBase(date);
-            allAssignedShifts = a.GetAssignedShifts();
-            allAvailableShifts=a.GetAvailableShifts();
+            schedule.LoadSchduleFormDateBase(date,store);
+            allAssignedShifts.Clear();
+            allAvailableShifts.Clear();
+            allAssignedShifts.AddRange(schedule.GetAssignedShifts());
+            allAvailableShifts.AddRange(schedule.GetAvailableShifts());
         }
         /// <summary>
         /// Update the shift changes to the Schdule Class 
         /// </summary>
-        private void UpDateAssignedShiftToSchdule(List<string> sqls)
+        private void UpDateAssignedShiftToSchdule()
         {
-            ScheduleManagement a = new ScheduleManagement();         
-            a.UpDateSchdule(allAssignedShifts,sqls);
+            string updatefeedback = schedule.UpDateAssignedShift();
+            if (updatefeedback == "") { MessageBox.Show("Nothing to Update"); }
+            else if (updatefeedback == "Update completed") { MessageBox.Show("Update completed"); }
+            else if (updatefeedback == "Update failed") { MessageBox.Show("Update filed"); }
         }
         /// <summary>
         /// Specify the employee and date, the function will return the shift list of the week about the employee.
@@ -214,7 +215,7 @@ namespace Proj_Desktop_App
         /// <param name="date"></param>
         /// <param name="employee"></param>
         /// <returns></returns>
-        public List<AssignedShift> GetEmployee_Assigned_Shift_For_The_Week(DateTime date, Employee employee)
+        private List<AssignedShift> GetEmployee_Assigned_Shift_For_The_Week(DateTime date, Employee employee)
         {
             List<AssignedShift> temp = new List<AssignedShift>();
             DateTime startdate=date;
@@ -232,7 +233,7 @@ namespace Proj_Desktop_App
             List<AssignedShift> employee_shift = new List<AssignedShift>();
             foreach (AssignedShift e in temp)
             {
-                if (e.GetEmployee().GetBSN() == employee.GetBSN())
+                if (e.Employee.GetBSN() == employee.GetBSN())
                 {
                     employee_shift.Add(e);
                 }
@@ -244,55 +245,65 @@ namespace Proj_Desktop_App
         /// </summary>
         /// <param name="date"></param>
         /// <returns></returns>
-        public List<PreferenceShift> GetEmployee_Preference_Shift_For_The_Week(Employee employee,DateTime date)
-        {
-            List<PreferenceShift> temp = new List<PreferenceShift>();
-            //Check Current List
-            DateTime startdate = date;
-            if (date.DayOfWeek.ToString() == "Monday") { startdate = date; }
-            else if (date.DayOfWeek.ToString() == "Tuesday") { startdate = date.AddDays(-1); }
-            else if (date.DayOfWeek.ToString() == "Wednesday") { startdate = date.AddDays(-2); }
-            else if (date.DayOfWeek.ToString() == "Thursday") { startdate = date.AddDays(-3); }
-            else if (date.DayOfWeek.ToString() == "Friday") { startdate = date.AddDays(-4); }
-            else if (date.DayOfWeek.ToString() == "Saturday") { startdate = date.AddDays(-5); }
-            else if (date.DayOfWeek.ToString() == "Sunday") { startdate = date.AddDays(-6); }
-            for (int i = 0; i < 7; i++)
-            {   //Get the shift list for this week
-                temp.AddRange(Get_Preference_Shifts_By_Date(startdate.AddDays(i)));
-            }
-            List<PreferenceShift> employee_shift = new List<PreferenceShift>();
-            foreach (PreferenceShift e in temp)
-            {
-                if (e.GetEmployee().GetBSN() == employee.GetBSN())
-                {
-                    employee_shift.Add(e);
-                }
-            }
-            return employee_shift;
-        }
         private List<AssignedShift> Get_Assigned_Shifts_By_Date(DateTime date)
         {
             List<AssignedShift> temp = new List<AssignedShift>();
             foreach (AssignedShift e in allAssignedShifts)
             {
-                if (e.GetDate().ToString("yyyy-MM-dd") == date.ToString("yyyy-MM-dd"))
+                if (e.Date.ToString("yyyy-MM-dd") == date.ToString("yyyy-MM-dd"))
                 {
                     temp.Add(e);
                 }
             }
             return temp;
         }
-        private List<PreferenceShift> Get_Preference_Shifts_By_Date(DateTime date)
+        public string[] test()
         {
-            List<PreferenceShift> temp = new List<PreferenceShift>();
-            foreach (PreferenceShift e in allAvailableShifts)
+            List<string> x = new List<string>();
+            foreach (Availability i in allAvailableShifts)
             {
-                if (e.GetDate().ToString("yyyy-MM-dd") == date.ToString("yyyy-MM-dd"))
-                {
-                    temp.Add(e);
-                }
+                x.Add(i.test());
             }
-            return temp;
+            return x.ToArray();
         }
+        //public List<PreferenceShift> GetEmployee_Preference_Shift_For_The_Week(Employee employee,DateTime date)
+        //{
+        //    List<PreferenceShift> temp = new List<PreferenceShift>();
+        //    //Check Current List
+        //    DateTime startdate = date;
+        //    if (date.DayOfWeek.ToString() == "Monday") { startdate = date; }
+        //    else if (date.DayOfWeek.ToString() == "Tuesday") { startdate = date.AddDays(-1); }
+        //    else if (date.DayOfWeek.ToString() == "Wednesday") { startdate = date.AddDays(-2); }
+        //    else if (date.DayOfWeek.ToString() == "Thursday") { startdate = date.AddDays(-3); }
+        //    else if (date.DayOfWeek.ToString() == "Friday") { startdate = date.AddDays(-4); }
+        //    else if (date.DayOfWeek.ToString() == "Saturday") { startdate = date.AddDays(-5); }
+        //    else if (date.DayOfWeek.ToString() == "Sunday") { startdate = date.AddDays(-6); }
+        //    for (int i = 0; i < 7; i++)
+        //    {   //Get the shift list for this week
+        //        temp.AddRange(Get_Preference_Shifts_By_Date(startdate.AddDays(i)));
+        //    }
+        //    List<PreferenceShift> employee_shift = new List<PreferenceShift>();
+        //    foreach (PreferenceShift e in temp)
+        //    {
+        //        if (e.GetEmployee().GetBSN() == employee.GetBSN())
+        //        {
+        //            employee_shift.Add(e);
+        //        }
+        //    }
+        //    return employee_shift;
+        //}
+ 
+        //private List<PreferenceShift> Get_Preference_Shifts_By_Date(DateTime date)
+        //{
+        //    List<PreferenceShift> temp = new List<PreferenceShift>();
+        //    foreach (PreferenceShift e in allAvailableShifts)
+        //    {
+        //        if (e.GetDate().ToString("yyyy-MM-dd") == date.ToString("yyyy-MM-dd"))
+        //        {
+        //            temp.Add(e);
+        //        }
+        //    }
+        //    return temp;
+        //}
     }
 }

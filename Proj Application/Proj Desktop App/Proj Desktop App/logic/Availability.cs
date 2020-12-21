@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Proj_Desktop_App
 {
-    public class Availability : IComparable
+    public class Availability : IComparable<Availability>
     {
         public decimal leeway;
 
@@ -48,19 +49,12 @@ namespace Proj_Desktop_App
                 return 1;
             }
         }
-        public int CompareTo(object obj)
+         
+        public int CompareTo(Availability other)
         {
-            if(obj != null)
-            {
-                Availability otherAvailability = obj as Availability;
-                if(otherAvailability != null)
-                {
-                    if (otherAvailability.leeway > this.leeway) return 1;
-                    else if (otherAvailability.leeway < this.leeway) return -1;
-                    else return 0;
-                }
-            }
-            return 1;
+            return Leeway.CompareTo(other.Leeway);
         }
+
+
     }
 }
