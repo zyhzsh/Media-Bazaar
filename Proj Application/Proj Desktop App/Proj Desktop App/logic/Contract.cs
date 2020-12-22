@@ -13,12 +13,12 @@ namespace Proj_Desktop_App
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
         public int Iteration { get; private set; }
-        public Departments Department { get; private set; }
+        public Department Department { get; private set; }
         public PositionType Position { get; private set; }
         public decimal Salary { get; private set; }
         public decimal Fte { get; private set; }
 
-        public Contract(int id, DateTime startDate, DateTime endDate, int iteration, Departments department,
+        public Contract(int id, DateTime startDate, DateTime endDate, int iteration, Department department,
                                 PositionType position, decimal salary, decimal fte)
         {
             this.Id = id;

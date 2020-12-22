@@ -16,9 +16,9 @@ namespace Proj_Desktop_App
         public double BoughtPrice { get; private set; }
         public int Stock { get; private set; }
         public string Description { get; private set; }
-        public Departments Department { get; private set; }
+        public Department Department { get; private set; }
 
-        public Product(int productCode, string name, string brand, double sell, double buy, string description, Departments department, int current_stock)
+        public Product(int productCode, string name, string brand, double sell, double buy, string description, Department department, int current_stock)
         {
             this.id = productCode;
             Name = name;
@@ -30,7 +30,7 @@ namespace Proj_Desktop_App
             Stock = current_stock;
         }
 
-        public void Update(string productName, string brandName, double buy, double sell, Departments department)
+        public void Update(string productName, string brandName, double buy, double sell, Department department)
         {
             Name = productName;
             Brand = brandName;
@@ -38,7 +38,7 @@ namespace Proj_Desktop_App
             BoughtPrice = buy;
             Department = department;
         }
-        public void Update(string productName, string brandName, double buy, double sell, Departments department, string Description)
+        public void Update(string productName, string brandName, double buy, double sell, Department department, string Description)
         {
             Name = productName;
             Brand = brandName;

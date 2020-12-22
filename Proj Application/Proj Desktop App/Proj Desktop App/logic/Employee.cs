@@ -158,7 +158,7 @@ namespace Proj_Desktop_App
             }
         }
 
-        public Departments GetDepartment()
+        public Department GetDepartment()
         {
             Contract activeCon = GetActiveContract();
             if (activeCon != null)

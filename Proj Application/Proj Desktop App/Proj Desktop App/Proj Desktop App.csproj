@@ -94,8 +94,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="dataAccess\DepartmentManagement.cs" />
     <Compile Include="logic\AssignedShift.cs" />
     <Compile Include="logic\Department.cs" />
+    <Compile Include="logic\DepartmentStorage.cs" />
     <Compile Include="logic\PreferenceShift.cs" />
     <Compile Include="logic\Contract.cs" />
     <Compile Include="logic\Departments.cs" />
