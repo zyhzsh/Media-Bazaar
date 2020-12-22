@@ -12,15 +12,16 @@ namespace Proj_Desktop_App.presentation
 {
     public partial class RequestInfoChangeForm : Form
     {
-        private List<RequestInfoChange> requestInfoChanges;
+        private RequestInfoChange requestInfoChanges;
         public RequestInfoChangeForm()
         {
             InitializeComponent();
-            requestInfoChanges = new List<RequestInfoChange>();
+            requestInfoChanges = new RequestInfoChange();
+            GUI();
         }
         public void GUI()
         {
-            listBox1.DataSource = requestInfoChanges;
+            listBox1.DataSource = requestInfoChanges.GetRequestInfos();
         }
     }
 }

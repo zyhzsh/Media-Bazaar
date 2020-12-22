@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Proj_Desktop_App.dataAccess;
 
 namespace Proj_Desktop_App
 {
@@ -21,7 +22,7 @@ namespace Proj_Desktop_App
         public string address { get; private set; }
         public string contactEmail { get; private set; }
 
-
+        private EmployeeManagement management;
 
         public RequestInfoChange(int BSN, string firstName, string lastName, char gender,
             string languages, string certificates, string phoneNumber, string address, string contactEmail)
@@ -36,6 +37,14 @@ namespace Proj_Desktop_App
             this.certificates = certificates;
             this.languages = languages;
             this.contactEmail = contactEmail;
+        }
+        public RequestInfoChange()
+        {
+
+        }
+        public RequestInfoChange[] GetRequestInfos() 
+        {
+            return management.GetAllEmployeesrequests();
         }
 
     }
