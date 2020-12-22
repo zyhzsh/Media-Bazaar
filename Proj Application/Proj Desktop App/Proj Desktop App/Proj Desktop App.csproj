@@ -103,6 +103,7 @@
     <Compile Include="logic\PostionType.cs" />
     <Compile Include="logic\Product.cs" />
     <Compile Include="logic\ProductStorage.cs" />
+    <Compile Include="logic\RequestInfoChange.cs" />
     <Compile Include="logic\RestockRequest.cs" />
     <Compile Include="logic\RestockRequestStorage.cs" />
     <Compile Include="logic\Sale.cs" />
@@ -168,6 +169,12 @@
     <Compile Include="presentation\ProductStatistics.Designer.cs">
       <DependentUpon>ProductStatistics.cs</DependentUpon>
     </Compile>
+    <Compile Include="presentation\RequestInfoChangeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="presentation\RequestInfoChangeForm.Designer.cs">
+      <DependentUpon>RequestInfoChangeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="presentation\SalesManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -216,6 +223,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="presentation\ProductStatistics.resx">
       <DependentUpon>ProductStatistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="presentation\RequestInfoChangeForm.resx">
+      <DependentUpon>RequestInfoChangeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="presentation\SalesManagerForm.resx">
       <DependentUpon>SalesManagerForm.cs</DependentUpon>

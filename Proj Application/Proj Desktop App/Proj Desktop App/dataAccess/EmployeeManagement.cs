@@ -44,15 +44,15 @@ namespace Proj_Desktop_App.dataAccess
                             {
                                 contracts.Add(contract);
                             }
-                        } 
+                        }
                         while (dr.Read());
                         // Load the contracts
                         employee.LoadContracts(contracts.ToArray());
 
                         return employee;
                     }
-                    else 
-                    { 
+                    else
+                    {
                         return null;
                     }
                 }
@@ -112,7 +112,7 @@ namespace Proj_Desktop_App.dataAccess
                             }
                         }
                         while (!newEmployee);
-                        
+
                         // Load the contracts and add employee
                         employee.LoadContracts(contracts.ToArray());
                         employees.Add(employee);
@@ -312,6 +312,77 @@ namespace Proj_Desktop_App.dataAccess
             }
             catch (Exception)
             {
+                return null;
+            }
+        }
+        private RequestInfoChange InitializeRequestInfoChange(MySqlDataReader empl)
+        {
+            int BSN;
+            string firstName;
+            string lastName;
+            char gender;
+            DateTime birthDate;
+            string languages;
+            string certificates;
+
+            // Contact details:
+            string phoneNumber;
+            string address;
+            string contactEmail;
+            //    if (int.TryParse((string)empl["BSN"], out int bsn)) { BSN = bsn; };
+            //   if (string.IsNullOrEmpty((string)empl["first_name"])) { firstName=" "; };
+            try
+            {
+                RequestInfoChange requestInfo = new RequestInfoChange(
+                    Convert.ToInt32(empl["BSN"]),
+                    empl["first_name"].ToString(),
+                    empl["last_name"].ToString(),
+                    Convert.ToChar(empl["gender"]),
+                    empl["languages"].ToString(),
+                    empl["certificates"].ToString(),
+                    empl["phone"].ToString(),
+                    empl["address"].ToString(),
+                    empl["contact_email"].ToString());
+
+                return requestInfo;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                return null;
+            }
+        }
+        public RequestInfoChange[] GetAllEmployeesrequests()
+        {
+            try
+            {
+                using (MySqlConnection conn = base.GetConnection())
+                {
+                    string sql =
+                        "SELECT * FROM employeechange";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    conn.Open();
+                    MySqlDataReader dr = cmd.ExecuteReader();
+                    List<RequestInfoChange> requests = new List<RequestInfoChange>();
+                    bool reading = dr.Read();
+                    while (reading)
+                    {
+
+                        RequestInfoChange employeeRequest = InitializeRequestInfoChange(dr);
+                        if (!dr.Read())
+                        {
+                            return requests.ToArray();
+                            break;
+                        }
+
+                    }
+
+                    return requests.ToArray();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
                 return null;
             }
         }

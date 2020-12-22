@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proj_Desktop_App.presentation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,6 +22,7 @@ namespace Proj_Desktop_App
         private ProductStatistics productStatistics;
         private Form restocks;
         private Scheduling scheduling;
+        private RequestInfoChangeForm requestInfoChange;
 
         // Selected tab
         private ToolStripMenuItem selectedTab;
@@ -41,10 +43,11 @@ namespace Proj_Desktop_App
                 tabEmployees.Visible = true;
                 employeesForm = new AdminForm();
                 InitializeForm(employeesForm);
-
                 tabDepartments.Visible = true;
-
                 tabEmployees.PerformClick();
+                tabRequestInfoChange.Visible = true;
+                requestInfoChange = new RequestInfoChangeForm();
+                InitializeForm(requestInfoChange);
             }
             else if (position == PositionType.Depot_Manager)
             {
@@ -179,5 +182,12 @@ namespace Proj_Desktop_App
             loginForm.Visible = true;
         }
 
+        private void requestInfoChangeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (selectedTab != tabSchedule)
+            {
+                ShowForm(requestInfoChange, tabRequestInfoChange);
+            }
+        }
     }
 }

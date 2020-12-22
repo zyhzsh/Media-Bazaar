@@ -40,6 +40,7 @@
             this.mediaBazaarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblUser = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlContent = new System.Windows.Forms.Panel();
+            this.tabRequestInfoChange = new System.Windows.Forms.ToolStripMenuItem();
             this.navbar.SuspendLayout();
             this.topbar.SuspendLayout();
             this.SuspendLayout();
@@ -57,7 +58,8 @@
             this.tabProducts,
             this.tabStatistics,
             this.tabRestocks,
-            this.tabSchedule});
+            this.tabSchedule,
+            this.tabRequestInfoChange});
             this.navbar.Location = new System.Drawing.Point(0, 44);
             this.navbar.Name = "navbar";
             this.navbar.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
@@ -202,6 +204,13 @@
             this.pnlContent.Size = new System.Drawing.Size(1156, 657);
             this.pnlContent.TabIndex = 48;
             // 
+            // tabRequestInfoChange
+            // 
+            this.tabRequestInfoChange.Name = "tabRequestInfoChange";
+            this.tabRequestInfoChange.Size = new System.Drawing.Size(127, 19);
+            this.tabRequestInfoChange.Text = "Request Info change";
+            this.tabRequestInfoChange.Click += new System.EventHandler(this.requestInfoChangeToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -237,5 +246,6 @@
         private System.Windows.Forms.Panel pnlContent;
         private System.Windows.Forms.ToolStripMenuItem mediaBazaarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lblUser;
+        private System.Windows.Forms.ToolStripMenuItem tabRequestInfoChange;
     }
 }
