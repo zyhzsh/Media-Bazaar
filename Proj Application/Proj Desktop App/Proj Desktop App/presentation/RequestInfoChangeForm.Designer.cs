@@ -60,6 +60,7 @@
             this.brnReject.TabIndex = 2;
             this.brnReject.Text = " Reject";
             this.brnReject.UseVisualStyleBackColor = true;
+            this.brnReject.Click += new System.EventHandler(this.brnReject_Click);
             // 
             // lvrequests
             // 
