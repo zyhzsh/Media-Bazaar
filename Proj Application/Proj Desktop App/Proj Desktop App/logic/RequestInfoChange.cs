@@ -45,14 +45,5 @@ namespace Proj_Desktop_App
         {
 
         }
-        public RequestInfoChange[] GetRequestInfos() 
-        {
-            return management.GetAllEmployeesrequests();
-        }
-        public string ToString()
-        {
-            return $"{BSN }    {firstName}";
-        }
-
     }
 }

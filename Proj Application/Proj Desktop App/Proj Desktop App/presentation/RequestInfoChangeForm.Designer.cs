@@ -37,9 +37,9 @@
             this.gender = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.phone = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Address = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.language = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.certificates = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Email = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.language = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // btnAccept
@@ -50,6 +50,7 @@
             this.btnAccept.TabIndex = 1;
             this.btnAccept.Text = "Accept";
             this.btnAccept.UseVisualStyleBackColor = true;
+            this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click);
             // 
             // brnReject
             // 
@@ -105,6 +106,11 @@
             // 
             this.Address.Text = "Address";
             // 
+            // language
+            // 
+            this.language.DisplayIndex = 8;
+            this.language.Text = "Language";
+            // 
             // certificates
             // 
             this.certificates.DisplayIndex = 6;
@@ -114,11 +120,6 @@
             // 
             this.Email.DisplayIndex = 7;
             this.Email.Text = "Email";
-            // 
-            // language
-            // 
-            this.language.DisplayIndex = 8;
-            this.language.Text = "Language";
             // 
             // RequestInfoChangeForm
             // 

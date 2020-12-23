@@ -37,5 +37,13 @@ namespace Proj_Desktop_App
         {
             return requestInfoChanges.ToArray();
         }
+        public Employee GetEmployeeByBsn(int bsn)
+        {
+            return empMan.GetEmployee(bsn);
+        }
+        public void DeleteRequest(int bsn)
+        {
+            empMan.DeleteRequest(bsn);
+        }
     }
 }

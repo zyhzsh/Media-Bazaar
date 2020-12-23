@@ -15,11 +15,15 @@ namespace Proj_Desktop_App.presentation
     {
         private RequestInfoChange infoChange = new RequestInfoChange();
         private RequestChangeStorage RequestChangeStorage;
+        private EmployeeCreateUpdateForm emplCUForm;
+        private EmployeeStorage emplStorage;
         public RequestInfoChangeForm()
         {
             InitializeComponent();
             RequestChangeStorage = new RequestChangeStorage();
+            this.emplStorage = new EmployeeStorage();
             lvrequests.MultiSelect = true;
+            lvrequests.FullRowSelect = true;
             GUI();
         }
         public void GUI()
@@ -37,6 +41,24 @@ namespace Proj_Desktop_App.presentation
                 item.SubItems.Add(request.certificates);
                 item.SubItems.Add(request.contactEmail);
                 lvrequests.Items.Add(item);
+            }
+        }
+
+        private void btnAccept_Click(object sender, EventArgs e)
+        {
+
+            if (lvrequests.SelectedItems != null)
+            {
+                ListViewItem item = lvrequests.SelectedItems[0];
+                int BSN = Convert.ToInt32(item.SubItems[0].Text);
+                Employee employee = RequestChangeStorage.GetEmployeeByBsn(BSN);
+                // Open form for updating an employee's details
+                emplCUForm = new EmployeeCreateUpdateForm(emplStorage, employee);
+                RequestChangeStorage.DeleteRequest(BSN);
+            }
+            else
+            {
+                MessageBox.Show("Please select an employee form the list to procces the request.");
             }
         }
     }

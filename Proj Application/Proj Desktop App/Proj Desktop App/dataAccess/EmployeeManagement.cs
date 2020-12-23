@@ -352,7 +352,7 @@ namespace Proj_Desktop_App.dataAccess
                 MessageBox.Show(ex.ToString());
                 return null;
             }
-        } 
+        }
         public RequestInfoChange[] GetAllEmployeesrequests()
         {
             try
@@ -386,6 +386,26 @@ namespace Proj_Desktop_App.dataAccess
             {
                 MessageBox.Show(ex.ToString());
                 return null;
+            }
+        }
+        public void DeleteRequest(int bsn)
+        {
+            try
+            {
+                using (MySqlConnection conn = base.GetConnection())
+                {
+                    string sql =
+                        $"DELETE FROM `employeechange` WHERE `employeechange`.`BSN` ={bsn} ";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    conn.Open();
+                    MySqlDataReader dr = cmd.ExecuteReader();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+
             }
         }
     }
