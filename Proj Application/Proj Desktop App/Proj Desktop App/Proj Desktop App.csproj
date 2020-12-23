@@ -103,6 +103,7 @@
     <Compile Include="logic\PostionType.cs" />
     <Compile Include="logic\Product.cs" />
     <Compile Include="logic\ProductStorage.cs" />
+    <Compile Include="logic\RequestInfoChangeStorage.cs" />
     <Compile Include="logic\RequestInfoChange.cs" />
     <Compile Include="logic\RestockRequest.cs" />
     <Compile Include="logic\RestockRequestStorage.cs" />

@@ -28,23 +28,108 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.btnAccept = new System.Windows.Forms.Button();
+            this.brnReject = new System.Windows.Forms.Button();
+            this.lvrequests = new System.Windows.Forms.ListView();
+            this.BSN = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.firstName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lastName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.gender = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.phone = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Address = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.certificates = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Email = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.language = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
-            // listBox1
+            // btnAccept
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(118, 68);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(552, 160);
-            this.listBox1.TabIndex = 0;
+            this.btnAccept.Location = new System.Drawing.Point(163, 269);
+            this.btnAccept.Name = "btnAccept";
+            this.btnAccept.Size = new System.Drawing.Size(191, 67);
+            this.btnAccept.TabIndex = 1;
+            this.btnAccept.Text = "Accept";
+            this.btnAccept.UseVisualStyleBackColor = true;
+            // 
+            // brnReject
+            // 
+            this.brnReject.Location = new System.Drawing.Point(424, 269);
+            this.brnReject.Name = "brnReject";
+            this.brnReject.Size = new System.Drawing.Size(191, 67);
+            this.brnReject.TabIndex = 2;
+            this.brnReject.Text = " Reject";
+            this.brnReject.UseVisualStyleBackColor = true;
+            // 
+            // lvrequests
+            // 
+            this.lvrequests.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.BSN,
+            this.firstName,
+            this.lastName,
+            this.gender,
+            this.phone,
+            this.Address,
+            this.language,
+            this.certificates,
+            this.Email});
+            this.lvrequests.HideSelection = false;
+            this.lvrequests.HoverSelection = true;
+            this.lvrequests.Location = new System.Drawing.Point(12, 38);
+            this.lvrequests.Name = "lvrequests";
+            this.lvrequests.Size = new System.Drawing.Size(776, 225);
+            this.lvrequests.TabIndex = 3;
+            this.lvrequests.UseCompatibleStateImageBehavior = false;
+            this.lvrequests.View = System.Windows.Forms.View.Details;
+            // 
+            // BSN
+            // 
+            this.BSN.Text = "BSN";
+            // 
+            // firstName
+            // 
+            this.firstName.Text = "First name";
+            // 
+            // lastName
+            // 
+            this.lastName.Text = "Last name";
+            // 
+            // gender
+            // 
+            this.gender.Text = "Gender";
+            // 
+            // phone
+            // 
+            this.phone.Text = "Phone";
+            // 
+            // Address
+            // 
+            this.Address.Text = "Address";
+            // 
+            // certificates
+            // 
+            this.certificates.DisplayIndex = 6;
+            this.certificates.Text = "certificates";
+            // 
+            // Email
+            // 
+            this.Email.DisplayIndex = 7;
+            this.Email.Text = "Email";
+            // 
+            // language
+            // 
+            this.language.DisplayIndex = 8;
+            this.language.Text = "Language";
             // 
             // RequestInfoChangeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.lvrequests);
+            this.Controls.Add(this.brnReject);
+            this.Controls.Add(this.btnAccept);
             this.Name = "RequestInfoChangeForm";
             this.Text = "RequestInfoChangeForm";
             this.ResumeLayout(false);
@@ -52,7 +137,17 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Button btnAccept;
+        private System.Windows.Forms.Button brnReject;
+        private System.Windows.Forms.ListView lvrequests;
+        private System.Windows.Forms.ColumnHeader BSN;
+        private System.Windows.Forms.ColumnHeader firstName;
+        private System.Windows.Forms.ColumnHeader lastName;
+        private System.Windows.Forms.ColumnHeader gender;
+        private System.Windows.Forms.ColumnHeader phone;
+        private System.Windows.Forms.ColumnHeader Address;
+        private System.Windows.Forms.ColumnHeader certificates;
+        private System.Windows.Forms.ColumnHeader Email;
+        private System.Windows.Forms.ColumnHeader language;
     }
 }

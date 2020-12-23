@@ -11,6 +11,7 @@ namespace Proj_Desktop_App
     {
         // Personal details:
         public int BSN { get; private set; }
+        public string dateOfRequest { get; private set; }
         public string firstName { get; private set; }
         public string lastName { get; private set; }
         public char gender { get; private set; }
@@ -22,10 +23,10 @@ namespace Proj_Desktop_App
         public string address { get; private set; }
         public string contactEmail { get; private set; }
 
-        private EmployeeManagement management;
+        private EmployeeManagement management=new EmployeeManagement();
 
         public RequestInfoChange(int BSN, string firstName, string lastName, char gender,
-            string languages, string certificates, string phoneNumber, string address, string contactEmail)
+            string languages, string certificates, string phoneNumber, string address, string contactEmail,string dateOfRequest)
         {
             // Set the values
             this.BSN = BSN;
@@ -37,6 +38,8 @@ namespace Proj_Desktop_App
             this.certificates = certificates;
             this.languages = languages;
             this.contactEmail = contactEmail;
+            this.dateOfRequest = dateOfRequest;
+            
         }
         public RequestInfoChange()
         {
@@ -45,6 +48,10 @@ namespace Proj_Desktop_App
         public RequestInfoChange[] GetRequestInfos() 
         {
             return management.GetAllEmployeesrequests();
+        }
+        public string ToString()
+        {
+            return $"{BSN }    {firstName}";
         }
 
     }

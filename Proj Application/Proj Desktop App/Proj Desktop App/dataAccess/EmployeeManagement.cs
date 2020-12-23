@@ -342,7 +342,8 @@ namespace Proj_Desktop_App.dataAccess
                     empl["certificates"].ToString(),
                     empl["phone"].ToString(),
                     empl["address"].ToString(),
-                    empl["contact_email"].ToString());
+                    empl["contact_email"].ToString(),
+                    empl["date_requested"].ToString());
 
                 return requestInfo;
             }
@@ -351,7 +352,7 @@ namespace Proj_Desktop_App.dataAccess
                 MessageBox.Show(ex.ToString());
                 return null;
             }
-        }
+        } 
         public RequestInfoChange[] GetAllEmployeesrequests()
         {
             try
@@ -369,6 +370,7 @@ namespace Proj_Desktop_App.dataAccess
                     {
 
                         RequestInfoChange employeeRequest = InitializeRequestInfoChange(dr);
+                        requests.Add(employeeRequest);
                         if (!dr.Read())
                         {
                             return requests.ToArray();
