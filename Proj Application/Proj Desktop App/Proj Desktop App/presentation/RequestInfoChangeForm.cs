@@ -47,7 +47,7 @@ namespace Proj_Desktop_App.presentation
         private void btnAccept_Click(object sender, EventArgs e)
         {
 
-            if (lvrequests.SelectedItems != null)
+            try
             {
                 ListViewItem item = lvrequests.SelectedItems[0];
                 int BSN = Convert.ToInt32(item.SubItems[0].Text);
@@ -57,24 +57,26 @@ namespace Proj_Desktop_App.presentation
                 //Delet the request from database after ubdating
                 RequestChangeStorage.DeleteRequest(BSN);
             }
-            else
+            catch(Exception ex)
             {
                 MessageBox.Show("Please select an employee form the list to accept the request.");
+                MessageBox.Show(ex.ToString());
             }
         }
 
         private void brnReject_Click(object sender, EventArgs e)
         {
-            if (lvrequests.SelectedItems != null)
+            try
             {
                 ListViewItem item = lvrequests.SelectedItems[0];
                 int BSN = Convert.ToInt32(item.SubItems[0].Text);
                 //Delet the request from database 
                 RequestChangeStorage.DeleteRequest(BSN);
             }
-            else
+            catch (Exception ex)
             {
                 MessageBox.Show("Please select an employee form the list to reject the request.");
+                MessageBox.Show(ex.ToString());
             }
         }
     }

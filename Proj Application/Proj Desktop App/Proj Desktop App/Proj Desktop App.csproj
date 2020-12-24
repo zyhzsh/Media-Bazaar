@@ -264,6 +264,7 @@
   <ItemGroup>
     <Content Include="bin\Debug\Proj Desktop App.exe" />
     <Content Include="bin\Debug\Proj Desktop App.pdb" />
+    <None Include="Resources\requestIcon3.png" />
     <None Include="Resources\statistics.png" />
     <None Include="Resources\search.png" />
     <None Include="Resources\schedule.png" />

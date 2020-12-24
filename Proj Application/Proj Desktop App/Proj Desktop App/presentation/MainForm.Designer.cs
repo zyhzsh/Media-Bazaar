@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             this.navbar = new System.Windows.Forms.MenuStrip();
+            this.topbar = new System.Windows.Forms.MenuStrip();
+            this.mediaBazaarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblUser = new System.Windows.Forms.ToolStripMenuItem();
+            this.pnlContent = new System.Windows.Forms.Panel();
             this.tabEmployees = new System.Windows.Forms.ToolStripMenuItem();
             this.tabDepartments = new System.Windows.Forms.ToolStripMenuItem();
             this.tabProducts = new System.Windows.Forms.ToolStripMenuItem();
             this.tabStatistics = new System.Windows.Forms.ToolStripMenuItem();
             this.tabRestocks = new System.Windows.Forms.ToolStripMenuItem();
             this.tabSchedule = new System.Windows.Forms.ToolStripMenuItem();
-            this.topbar = new System.Windows.Forms.MenuStrip();
-            this.tabLogOut = new System.Windows.Forms.ToolStripMenuItem();
-            this.mediaBazaarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblUser = new System.Windows.Forms.ToolStripMenuItem();
-            this.pnlContent = new System.Windows.Forms.Panel();
             this.tabRequestInfoChange = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabLogOut = new System.Windows.Forms.ToolStripMenuItem();
             this.navbar.SuspendLayout();
             this.topbar.SuspendLayout();
             this.SuspendLayout();
@@ -66,6 +66,47 @@
             this.navbar.Size = new System.Drawing.Size(128, 657);
             this.navbar.TabIndex = 45;
             this.navbar.Text = "menuStrip1";
+            // 
+            // topbar
+            // 
+            this.topbar.AutoSize = false;
+            this.topbar.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.topbar.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.topbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tabLogOut,
+            this.mediaBazaarToolStripMenuItem,
+            this.lblUser});
+            this.topbar.Location = new System.Drawing.Point(0, 0);
+            this.topbar.Name = "topbar";
+            this.topbar.Size = new System.Drawing.Size(1284, 44);
+            this.topbar.TabIndex = 0;
+            this.topbar.Text = "menuStrip2";
+            // 
+            // mediaBazaarToolStripMenuItem
+            // 
+            this.mediaBazaarToolStripMenuItem.Enabled = false;
+            this.mediaBazaarToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mediaBazaarToolStripMenuItem.Name = "mediaBazaarToolStripMenuItem";
+            this.mediaBazaarToolStripMenuItem.Size = new System.Drawing.Size(125, 40);
+            this.mediaBazaarToolStripMenuItem.Text = "Media Bazaar";
+            // 
+            // lblUser
+            // 
+            this.lblUser.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.lblUser.Enabled = false;
+            this.lblUser.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUser.Name = "lblUser";
+            this.lblUser.Size = new System.Drawing.Size(164, 40);
+            this.lblUser.Text = "<position> | <user>";
+            // 
+            // pnlContent
+            // 
+            this.pnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlContent.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pnlContent.Location = new System.Drawing.Point(128, 44);
+            this.pnlContent.Name = "pnlContent";
+            this.pnlContent.Size = new System.Drawing.Size(1156, 657);
+            this.pnlContent.TabIndex = 48;
             // 
             // tabEmployees
             // 
@@ -152,20 +193,16 @@
             this.tabSchedule.Visible = false;
             this.tabSchedule.Click += new System.EventHandler(this.tabSchedule_Click);
             // 
-            // topbar
+            // tabRequestInfoChange
             // 
-            this.topbar.AutoSize = false;
-            this.topbar.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.topbar.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.topbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tabLogOut,
-            this.mediaBazaarToolStripMenuItem,
-            this.lblUser});
-            this.topbar.Location = new System.Drawing.Point(0, 0);
-            this.topbar.Name = "topbar";
-            this.topbar.Size = new System.Drawing.Size(1284, 44);
-            this.topbar.TabIndex = 0;
-            this.topbar.Text = "menuStrip2";
+            this.tabRequestInfoChange.AutoSize = false;
+            this.tabRequestInfoChange.BackColor = System.Drawing.Color.Transparent;
+            this.tabRequestInfoChange.Image = global::Proj_Desktop_App.Properties.Resources.requestIcon3;
+            this.tabRequestInfoChange.Name = "tabRequestInfoChange";
+            this.tabRequestInfoChange.Size = new System.Drawing.Size(121, 100);
+            this.tabRequestInfoChange.Text = "Request Info";
+            this.tabRequestInfoChange.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tabRequestInfoChange.Click += new System.EventHandler(this.requestInfoChangeToolStripMenuItem_Click);
             // 
             // tabLogOut
             // 
@@ -177,39 +214,6 @@
             this.tabLogOut.Size = new System.Drawing.Size(111, 40);
             this.tabLogOut.Text = "Log out";
             this.tabLogOut.Click += new System.EventHandler(this.tabLogOut_Click);
-            // 
-            // mediaBazaarToolStripMenuItem
-            // 
-            this.mediaBazaarToolStripMenuItem.Enabled = false;
-            this.mediaBazaarToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mediaBazaarToolStripMenuItem.Name = "mediaBazaarToolStripMenuItem";
-            this.mediaBazaarToolStripMenuItem.Size = new System.Drawing.Size(125, 40);
-            this.mediaBazaarToolStripMenuItem.Text = "Media Bazaar";
-            // 
-            // lblUser
-            // 
-            this.lblUser.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.lblUser.Enabled = false;
-            this.lblUser.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUser.Name = "lblUser";
-            this.lblUser.Size = new System.Drawing.Size(164, 40);
-            this.lblUser.Text = "<position> | <user>";
-            // 
-            // pnlContent
-            // 
-            this.pnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlContent.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pnlContent.Location = new System.Drawing.Point(128, 44);
-            this.pnlContent.Name = "pnlContent";
-            this.pnlContent.Size = new System.Drawing.Size(1156, 657);
-            this.pnlContent.TabIndex = 48;
-            // 
-            // tabRequestInfoChange
-            // 
-            this.tabRequestInfoChange.Name = "tabRequestInfoChange";
-            this.tabRequestInfoChange.Size = new System.Drawing.Size(127, 19);
-            this.tabRequestInfoChange.Text = "Request Info change";
-            this.tabRequestInfoChange.Click += new System.EventHandler(this.requestInfoChangeToolStripMenuItem_Click);
             // 
             // MainForm
             // 
