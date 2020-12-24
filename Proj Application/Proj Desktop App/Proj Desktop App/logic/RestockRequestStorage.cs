@@ -105,7 +105,7 @@ namespace Proj_Desktop_App
             }
         }
 
-        public RestockRequest[] GetPending(Departments department)
+        public RestockRequest[] GetPending(Department department)
         {
             LoadRestockRequests();
             try

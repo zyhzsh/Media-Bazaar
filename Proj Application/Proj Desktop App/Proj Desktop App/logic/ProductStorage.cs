@@ -45,7 +45,7 @@ namespace Proj_Desktop_App
             }
             return null;
         }
-        public Product[] ProductsByFloor(Departments dep)
+        public Product[] ProductsByFloor(Department dep)
         {
             List<Product> flooredProducts = new List<Product>();
             foreach(Product p in products)
@@ -61,7 +61,7 @@ namespace Proj_Desktop_App
         /// <summary>
         /// Add product without description
         /// </summary>
-        public void Add(Departments belongingDepartment, string productName, string productBrand, double bought_price, double sold_price)
+        public void Add(Department belongingDepartment, string productName, string productBrand, double bought_price, double sold_price)
         {
             prdMan.AddProduct(belongingDepartment, productName, productBrand, bought_price, sold_price);
             LoadProducts();
@@ -70,7 +70,7 @@ namespace Proj_Desktop_App
         /// <summary>
         /// Add product with description
         /// </summary>
-        public void Add(Departments belongingDepartment, string productName, string productBrand, double bought_price, double sold_price, string description)
+        public void Add(Department belongingDepartment, string productName, string productBrand, double bought_price, double sold_price, string description)
         {
             prdMan.AddProduct(belongingDepartment, productName, productBrand, bought_price, sold_price, description);
             LoadProducts();
@@ -94,7 +94,7 @@ namespace Proj_Desktop_App
         /// <summary>
         /// Update product without description
         /// </summary>
-        public void Update(Product productToUpdate, Departments department, string productName, string productBrand, double bought_price, double sold_price)
+        public void Update(Product productToUpdate, Department department, string productName, string productBrand, double bought_price, double sold_price)
         {
             prdMan.UpdateProduct(productToUpdate.id, department, productName, productBrand, bought_price, sold_price);
             productToUpdate.Update(productName, productBrand, bought_price, sold_price, department);
@@ -102,7 +102,7 @@ namespace Proj_Desktop_App
         /// <summary>
         /// Update product with description
         /// </summary>
-        public void Update(Product productToUpdate, Departments department, string productName, string productBrand, double bought_price, double sold_price, string description)
+        public void Update(Product productToUpdate, Department department, string productName, string productBrand, double bought_price, double sold_price, string description)
         {
             prdMan.UpdateProduct(productToUpdate.id, department, productName, productBrand, bought_price, sold_price, description);
             productToUpdate.Update(productName, productBrand, bought_price, sold_price, department, description);

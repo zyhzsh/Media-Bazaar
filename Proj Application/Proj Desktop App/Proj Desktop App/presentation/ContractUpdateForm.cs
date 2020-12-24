@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proj_Desktop_App.dataAccess;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,6 +20,7 @@ namespace Proj_Desktop_App
     {
         private Contract activeContract;
         private Employee employee;
+        private DepartmentStorage departmentStorage;
 
         private NumericUpDown nudPromotion;
         private DateTimePicker dtpTerminateDate;
@@ -45,8 +47,8 @@ namespace Proj_Desktop_App
                 pnlExtendContract.Enabled = true;
                 nudPromotion = null;
                 dtpTerminateDate = null;
-                cbPosition.DataSource = Enum.GetValues(typeof(PositionType));
-                cbDepartment.DataSource = Enum.GetValues(typeof(Departments));
+                cbPosition.DataSource = departmentStorage.GetDepartments();
+                cbDepartment.DataSource = departmentStorage.GetDepartments();
 
                 cbPosition.SelectedItem = activeContract.Position;
                 cbDepartment.SelectedItem = activeContract.Department;

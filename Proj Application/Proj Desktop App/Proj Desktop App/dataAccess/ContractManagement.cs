@@ -91,7 +91,7 @@ namespace Proj_Desktop_App.dataAccess
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@bsn", bsn);
                     cmd.Parameters.AddWithValue("@position_id", (int)contract.Position);
-                    cmd.Parameters.AddWithValue("@department_id", (int)contract.Department);
+                    cmd.Parameters.AddWithValue("@department_id", (int)contract.Department.Id);
                     cmd.Parameters.AddWithValue("@start_date", contract.StartDate.ToString("yyyy-MM-dd"));
                     cmd.Parameters.AddWithValue("@end_date", contract.EndDate.ToString("yyyy-MM-dd"));
                     cmd.Parameters.AddWithValue("@iteration", contract.Iteration);
