@@ -26,6 +26,44 @@ namespace Proj_Desktop_App.presentation
             lvrequests.FullRowSelect = true;
             GUI();
         }
+
+        private void btnAccept_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                ListViewItem item = lvrequests.SelectedItems[0];
+                int BSN = Convert.ToInt32(item.SubItems[0].Text);
+                Employee employee = RequestChangeStorage.GetEmployeeByBsn(BSN);
+                // Open form for updating an employee's details
+                emplCUForm = new EmployeeCreateUpdateForm(emplStorage, employee);
+                //Delet the request from database after ubdating
+                RequestChangeStorage.DeleteRequest(BSN);
+                GUI();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Please select an employee form the list to accept the request.");
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void brnReject_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ListViewItem item = lvrequests.SelectedItems[0];
+                int BSN = Convert.ToInt32(item.SubItems[0].Text);
+                //Delet the request from database 
+                RequestChangeStorage.DeleteRequest(BSN);
+                GUI();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Please select an employee form the list to reject the request.");
+                MessageBox.Show(ex.ToString());
+            }
+        }
         public void GUI()
         {
             RequestInfoChange[] temp = RequestChangeStorage.GetRequestInfoChanges();
@@ -44,40 +82,5 @@ namespace Proj_Desktop_App.presentation
             }
         }
 
-        private void btnAccept_Click(object sender, EventArgs e)
-        {
-
-            try
-            {
-                ListViewItem item = lvrequests.SelectedItems[0];
-                int BSN = Convert.ToInt32(item.SubItems[0].Text);
-                Employee employee = RequestChangeStorage.GetEmployeeByBsn(BSN);
-                // Open form for updating an employee's details
-                emplCUForm = new EmployeeCreateUpdateForm(emplStorage, employee);
-                //Delet the request from database after ubdating
-                RequestChangeStorage.DeleteRequest(BSN);
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show("Please select an employee form the list to accept the request.");
-                MessageBox.Show(ex.ToString());
-            }
-        }
-
-        private void brnReject_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                ListViewItem item = lvrequests.SelectedItems[0];
-                int BSN = Convert.ToInt32(item.SubItems[0].Text);
-                //Delet the request from database 
-                RequestChangeStorage.DeleteRequest(BSN);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Please select an employee form the list to reject the request.");
-                MessageBox.Show(ex.ToString());
-            }
-        }
     }
 }

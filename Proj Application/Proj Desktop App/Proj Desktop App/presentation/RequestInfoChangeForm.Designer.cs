@@ -44,22 +44,24 @@
             // 
             // btnAccept
             // 
+            this.btnAccept.BackColor = System.Drawing.Color.ForestGreen;
             this.btnAccept.Location = new System.Drawing.Point(163, 269);
             this.btnAccept.Name = "btnAccept";
             this.btnAccept.Size = new System.Drawing.Size(191, 67);
             this.btnAccept.TabIndex = 1;
             this.btnAccept.Text = "Accept";
-            this.btnAccept.UseVisualStyleBackColor = true;
+            this.btnAccept.UseVisualStyleBackColor = false;
             this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click);
             // 
             // brnReject
             // 
+            this.brnReject.BackColor = System.Drawing.Color.Brown;
             this.brnReject.Location = new System.Drawing.Point(424, 269);
             this.brnReject.Name = "brnReject";
             this.brnReject.Size = new System.Drawing.Size(191, 67);
             this.brnReject.TabIndex = 2;
             this.brnReject.Text = " Reject";
-            this.brnReject.UseVisualStyleBackColor = true;
+            this.brnReject.UseVisualStyleBackColor = false;
             this.brnReject.Click += new System.EventHandler(this.brnReject_Click);
             // 
             // lvrequests
