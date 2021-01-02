@@ -168,7 +168,7 @@ namespace Proj_Desktop_App.dataAccess
                         if (contract == null)
                         { throw new Exception("Failed to add contarct"); }
                         cmd.Parameters.AddWithValue("@position_id", (int)contract.Position);
-                        cmd.Parameters.AddWithValue("@department_id", (int)contract.Department);
+                        cmd.Parameters.AddWithValue("@department_id", contract.Department.Id);
                         cmd.Parameters.AddWithValue("@start_date", contract.StartDate.ToString("yyyy-MM-dd"));
                         cmd.Parameters.AddWithValue("@end_date", contract.EndDate.ToString("yyyy-MM-dd"));
                         cmd.Parameters.AddWithValue("@iteration", contract.Iteration);
@@ -298,12 +298,16 @@ namespace Proj_Desktop_App.dataAccess
         {
             try
             {
+                // Get department by id
+                DepartmentStorage departmentStorage = new DepartmentStorage();
+                Department department = departmentStorage.GetDepartment(Convert.ToInt32(contr["department_id"]));
+
                 Contract contract = new Contract(
                     Convert.ToInt32(contr["contract_id"]),
                     Convert.ToDateTime(contr["start_date"]),
                     Convert.ToDateTime(contr["end_date"]),
                     Convert.ToInt32(contr["iteration"]),
-                    (Departments)contr["department_id"],
+                    department,
                     (PositionType)contr["position_id"],
                     Convert.ToDecimal(contr["salary"]),
                     Convert.ToDecimal(contr["fte"]));

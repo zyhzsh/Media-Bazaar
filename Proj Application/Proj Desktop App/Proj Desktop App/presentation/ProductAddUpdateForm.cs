@@ -16,6 +16,8 @@ namespace Proj_Desktop_App
         private ProductStorage prdStorage;
         private ProductCRUDForm crudForm;
         private Product updateProduct;
+        private DepartmentStorage departmentStorage = new DepartmentStorage();
+        
         public ProductAddUpdateForm(ProductCRUDForm crudForm, ProductStorage prdStorage)
         {
             InitializeComponent();
@@ -24,6 +26,9 @@ namespace Proj_Desktop_App
 
             this.Text = "Add product";
             btnConfirm.Text = "Add";
+
+            cbDepartment.Items.AddRange(departmentStorage.GetSellingDepartments());
+            cbDepartment.SelectedIndex = 0;
         }
 
         public ProductAddUpdateForm(ProductCRUDForm crudForm, ProductStorage prdStorage, Product editProduct)
@@ -38,7 +43,8 @@ namespace Proj_Desktop_App
             tbBrand.Text = editProduct.Brand;
             numBuyingPrice.Value = (decimal)editProduct.BoughtPrice;
             numSellingPrice.Value = (decimal)editProduct.SoldPrice;
-            cbDepartment.SelectedIndex = ((int)(editProduct.Department)) - 1;
+            cbDepartment.Items.AddRange(departmentStorage.GetSellingDepartments());
+            cbDepartment.SelectedItem = departmentStorage.GetDepartment(editProduct.Department.Id);
 
 
             this.Text = "Update product";
@@ -59,7 +65,7 @@ namespace Proj_Desktop_App
             }
             else
             {
-                Departments department = DepartmentFromString(cbDepartment.SelectedItem.ToString().Trim());
+                Department department = (Department)cbDepartment.SelectedItem;
                 double buy = (double)Math.Round(numBuyingPrice.Value, 2);
                 double sell = (double)Math.Round(numSellingPrice.Value, 2);
                 if (btnConfirm.Text == "Add")
@@ -92,29 +98,6 @@ namespace Proj_Desktop_App
                     Close();
                 }
             }
-        }
-        private Departments DepartmentFromString(string departmentString)
-        {
-            Departments department;
-            switch (departmentString)
-            {
-                case "Floor 1":
-                    department = Departments.floorOne;
-                    break;
-                case "Floor 2":
-                    department = Departments.floorTwo;
-                    break;
-                case "Floor 3":
-                    department = Departments.floorThree;
-                    break;
-                case "Floor 4":
-                    department = Departments.floorFour;
-                    break;
-                default:
-                    department = Departments.floorOne;
-                    break;
-            }
-            return department;
         }
     }
 }

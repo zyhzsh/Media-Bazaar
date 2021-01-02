@@ -62,12 +62,6 @@
             // 
             this.cbDepartment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDepartment.FormattingEnabled = true;
-            this.cbDepartment.Items.AddRange(new object[] {
-            "Floor 1",
-            "Floor 2",
-            "Floor 3",
-            "Floor 4"});
-            this.cbDepartment.Location = new System.Drawing.Point(109, 136);
             this.cbDepartment.Name = "cbDepartment";
             this.cbDepartment.Size = new System.Drawing.Size(204, 24);
             this.cbDepartment.TabIndex = 11;

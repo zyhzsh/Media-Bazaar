@@ -17,8 +17,8 @@ namespace Proj_Desktop_App
         private ProductStorage prdStorage;
         private RestockRequestStorage reqStorage;
         private int salesManagerBsn;
-        private Departments salesManagerDepartment;
-        public SalesManagerForm(int BSN, Departments dep, ProductStorage prdStorage, RestockRequestStorage reqStorage)
+        private Department salesManagerDepartment;
+        public SalesManagerForm(int BSN, Department dep, ProductStorage prdStorage, RestockRequestStorage reqStorage)
         {
             InitializeComponent();
             this.prdStorage = prdStorage;

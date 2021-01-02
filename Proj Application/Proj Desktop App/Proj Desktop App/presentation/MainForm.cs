@@ -30,12 +30,15 @@ namespace Proj_Desktop_App
         private ProductStorage prdStorage;
         private RestockRequestStorage reqStorage;
 
+        private DepartmentStorage deptStorage;
+
         public MainForm(LoginForm loginForm, Employee currentUser)
         {
             InitializeComponent();
             this.Visible = true;
             selectedTab = null;
             PositionType position = currentUser.GetPosition();
+            deptStorage = new DepartmentStorage();
             if (position == PositionType.Administrator)
             {
                 tabEmployees.Visible = true;

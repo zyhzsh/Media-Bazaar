@@ -97,26 +97,5 @@ namespace Proj_Desktop_App
             Product prod = prdStorage.GetProductById(Convert.ToInt32(item.Text));
             return prod;
         }
-
-        private Departments GetDepartment(string dep)
-        {
-            Departments depart = Departments.floorOne;
-            switch (dep)
-            {
-                case "floorOne":
-                    depart = Departments.floorOne;
-                    break;
-                case "floorTwo":
-                    depart = Departments.floorTwo;
-                    break;
-                case "floorThree":
-                    depart = Departments.floorThree;
-                    break;
-                case "floorFour":
-                    depart = Departments.floorFour;
-                    break;
-            }
-            return depart;
-        }
     }
 }

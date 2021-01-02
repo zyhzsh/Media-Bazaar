@@ -149,12 +149,12 @@ namespace Proj_Desktop_App
         /// <summary>
         /// Get employees by department
         /// </summary>
-        public Employee[] GetEmployees(bool onlyEmployed, Department department)
+        public Employee[] GetEmployees(Department department)
         {
             List<Employee> temp = new List<Employee>();
-            foreach(Employee e in GetEmployees(onlyEmployed))
+            foreach(Employee e in GetEmployees(true))
             {
-                if (e.IsEmployed() == true && e.GetDepartment() == department)
+                if (e.IsEmployed() == true && e.GetDepartment().Id == department.Id)
                 {
                     temp.Add(e);
                 }

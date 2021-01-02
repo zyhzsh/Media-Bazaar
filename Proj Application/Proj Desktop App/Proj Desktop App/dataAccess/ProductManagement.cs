@@ -15,7 +15,7 @@ namespace Proj_Desktop_App.dataAccess
     {
         public ProductManagement() : base() { }
 
-        public void AddProduct(Departments belongingDepartment, string productName, string brand, double bought_price, double sold_price)
+        public void AddProduct(Department belongingDepartment, string productName, string brand, double bought_price, double sold_price)
         {
             
             try
@@ -25,7 +25,7 @@ namespace Proj_Desktop_App.dataAccess
                     string sql = "INSERT INTO product(department_id, productname, brand, bought_price, sold_price, current_stock)" +
                          "VALUES (@department_id, @productname, @brand, @bought_price, @sold_price, @current_stock)";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@department_id", Convert.ToInt32(belongingDepartment));
+                    cmd.Parameters.AddWithValue("@department_id", belongingDepartment.Id);
                     cmd.Parameters.AddWithValue("@productname", productName);
                     cmd.Parameters.AddWithValue("@brand", brand);
                     cmd.Parameters.AddWithValue("@bought_price", bought_price);
@@ -41,7 +41,7 @@ namespace Proj_Desktop_App.dataAccess
             }
         }
 
-        public void AddProduct(Departments belongingDepartment, string productName, string brand, double bought_price, double sold_price, string description)
+        public void AddProduct(Department belongingDepartment, string productName, string brand, double bought_price, double sold_price, string description)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace Proj_Desktop_App.dataAccess
                             "VALUES (@department_id, @productname, @brand, @bought_price, @sold_price, @current_stock, @description)";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@department_id", Convert.ToInt32(belongingDepartment));
+                    cmd.Parameters.AddWithValue("@department_id", belongingDepartment.Id);
                     cmd.Parameters.AddWithValue("@productname", productName);
                     cmd.Parameters.AddWithValue("@brand", brand);
                     cmd.Parameters.AddWithValue("@bought_price", bought_price);
@@ -69,7 +69,7 @@ namespace Proj_Desktop_App.dataAccess
             }
         }
 
-        public void UpdateProduct(int productcode, Departments belongingDepartment, string productName, string brand, double boughtPrice, double soldPrice, string description)
+        public void UpdateProduct(int productcode, Department belongingDepartment, string productName, string brand, double boughtPrice, double soldPrice, string description)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace Proj_Desktop_App.dataAccess
                          "WHERE productcode = @productcode";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@department_id", Convert.ToInt32(belongingDepartment));
+                    cmd.Parameters.AddWithValue("@department_id", belongingDepartment.Id);
                     cmd.Parameters.AddWithValue("@productname", productName);
                     cmd.Parameters.AddWithValue("@brand", brand);
                     cmd.Parameters.AddWithValue("@bought_price", boughtPrice);
@@ -98,7 +98,7 @@ namespace Proj_Desktop_App.dataAccess
             }
         }
 
-        public void UpdateProduct(int productcode, Departments belongingDepartment, string productName, string brand, double boughtPrice, double soldPrice)
+        public void UpdateProduct(int productcode, Department belongingDepartment, string productName, string brand, double boughtPrice, double soldPrice)
 
         {
             try
@@ -111,7 +111,7 @@ namespace Proj_Desktop_App.dataAccess
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
 
-                    cmd.Parameters.AddWithValue("@department_id", (int)(belongingDepartment));
+                    cmd.Parameters.AddWithValue("@department_id", belongingDepartment.Id);
                     cmd.Parameters.AddWithValue("@productname", productName);
                     cmd.Parameters.AddWithValue("@brand", brand);
                     cmd.Parameters.AddWithValue("@bought_price", boughtPrice);
@@ -286,7 +286,10 @@ namespace Proj_Desktop_App.dataAccess
         {
             try
             {
-                Departments department = GetDepartment(Convert.ToInt32(dr["department_id"]));
+                // Get department by id
+                DepartmentStorage departmentStorage = new DepartmentStorage();
+                Department department = departmentStorage.GetDepartment(Convert.ToInt32(dr["department_id"]));
+
                 string description = "no description";
                 if(dr["description"] != DBNull.Value)
                 {
@@ -326,23 +329,6 @@ namespace Proj_Desktop_App.dataAccess
                 return null;
             }
             
-        }
-
-        private Departments GetDepartment(int departmentId)
-        {
-            switch (departmentId)
-            {
-                case 1:
-                    return Departments.floorOne;
-                case 2:
-                    return Departments.floorTwo;
-                case 3:
-                    return Departments.floorThree;
-                case 4:
-                    return Departments.floorFour;
-                default:
-                    throw new Exception("Invalid Department id");
-            }
         }
     }
 }

@@ -48,5 +48,18 @@ namespace Proj_Desktop_App
         {
             return this.departments.ToArray();
         }
+
+        public Department[] GetSellingDepartments()
+        {
+            List<Department> departments = new List<Department>();
+            foreach (Department department in this.departments)
+            {
+                if (department.SellsProducts)
+                {
+                    departments.Add(department);
+                }
+            }
+            return departments.ToArray();
+        }
     }
 }

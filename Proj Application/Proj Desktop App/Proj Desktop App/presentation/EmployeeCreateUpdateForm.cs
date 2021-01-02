@@ -14,6 +14,7 @@ namespace Proj_Desktop_App
     {
         // Store
         private EmployeeStorage store;
+        private DepartmentStorage departmentStorage = new DepartmentStorage();
 
         // For updating employee details
         private bool updateEmployee;
@@ -23,7 +24,7 @@ namespace Proj_Desktop_App
         {
             this.Visible = true;
             cbPosition.DataSource = Enum.GetValues(typeof(PositionType));
-            cbDepartment.DataSource = Enum.GetValues(typeof(Departments));
+            cbDepartment.Items.AddRange(departmentStorage.GetDepartments());
         }
 
         /// <summary>
@@ -71,9 +72,9 @@ namespace Proj_Desktop_App
 
             try
             {
-            cbPosition.SelectedItem = employeeToUpdate.GetPosition();
-            cbDepartment.SelectedItem = employeeToUpdate.GetDepartment();
-            nudFTE.Value = Convert.ToDecimal(employeeToUpdate.GetFTE());
+                cbPosition.SelectedItem = employeeToUpdate.GetPosition();
+                cbDepartment.SelectedItem = departmentStorage.GetDepartment(employeeToUpdate.GetDepartment().Id);
+                nudFTE.Value = Convert.ToDecimal(employeeToUpdate.GetFTE());
             }
             catch(Exception)
             {
@@ -129,7 +130,7 @@ namespace Proj_Desktop_App
                         int duration = Convert.ToInt32(nudDuration.Value);
                         DateTime endDate = startDate.AddMonths(duration);
                         PositionType position = (PositionType)cbPosition.SelectedItem;
-                        Departments department = (Departments)cbDepartment.SelectedItem;
+                        Department department = (Department)cbDepartment.SelectedItem;
                         decimal fte = nudFTE.Value;
 
                         // Add new employee
@@ -192,19 +193,19 @@ namespace Proj_Desktop_App
                 switch (selectedPosition)
                 {
                     case PositionType.Administrator:
-                        cbDepartment.SelectedItem = Departments.office;
+                        cbDepartment.SelectedItem = departmentStorage.GetDepartment(6); // HR
                         cbDepartment.Enabled = false;
                         break;
 
                     case PositionType.Depot_Manager:
                     case PositionType.Depot_Worker:
-                        cbDepartment.SelectedItem = Departments.warehouse;
+                        cbDepartment.SelectedItem = departmentStorage.GetDepartment(5); // Warehouse
                         cbDepartment.Enabled = false;
                         break;
 
                     case PositionType.Sales_Manager:
                     case PositionType.Sales_Worker:
-                        cbDepartment.SelectedItem = Departments.floorOne;
+                        cbDepartment.SelectedItem = departmentStorage.GetDepartment(1); // Floor one
                         cbDepartment.Enabled = true;
                         break;
 
@@ -227,13 +228,13 @@ namespace Proj_Desktop_App
                 if (position != null)
                 {
                     PositionType selectedPosition = (PositionType)position;
-                    Departments selectedDepartment = (Departments)cbDepartment.SelectedItem;
+                    Department selectedDepartment = (Department)cbDepartment.SelectedItem;
                     if ((selectedPosition == PositionType.Sales_Manager ||
                        selectedPosition == PositionType.Sales_Worker) &&
-                       (selectedDepartment == Departments.office ||
-                       selectedDepartment == Departments.warehouse))
+                       (selectedDepartment == departmentStorage.GetDepartment(6) || // HR
+                       selectedDepartment == departmentStorage.GetDepartment(5))) // Warehouse
                     {
-                        cbDepartment.SelectedItem = Departments.floorOne;
+                        cbDepartment.SelectedItem = departmentStorage.GetDepartment(1); // Floor one
                     }
                 }
             }

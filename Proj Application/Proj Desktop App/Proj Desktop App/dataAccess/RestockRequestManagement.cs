@@ -207,6 +207,10 @@ namespace Proj_Desktop_App.dataAccess
         {
             try
             {
+                // Get department by id
+                DepartmentStorage departmentStorage = new DepartmentStorage();
+                Department department = departmentStorage.GetDepartment(Convert.ToInt32(dr["department_id"]));
+
                 bool judged = dr["judge_bsn"] != DBNull.Value;
                 bool completed = judged && dr["restocker_bsn"] != DBNull.Value;
 
@@ -234,7 +238,7 @@ namespace Proj_Desktop_App.dataAccess
                     request = new RestockRequest(Convert.ToInt32(dr["ID"]),
                                                             Convert.ToInt32(dr["productcode"]),
                                                             dr["productname"].ToString(),
-                                                            (Departments)dr["department_id"],
+                                                            department,
                                                             Convert.ToInt32(dr["requester_bsn"]),
                                                             Convert.ToInt32(dr["judge_bsn"]),
                                                             Convert.ToInt32(dr["restocker_bsn"]),
@@ -249,7 +253,7 @@ namespace Proj_Desktop_App.dataAccess
                     request = new RestockRequest(Convert.ToInt32(dr["ID"]),
                                                             Convert.ToInt32(dr["productcode"]),
                                                             dr["productname"].ToString(),
-                                                            (Departments)(dr["department_id"]),
+                                                            department,
                                                             Convert.ToInt32(dr["requester_bsn"]),
                                                             Convert.ToInt32(dr["judge_bsn"]),
                                                             Convert.ToInt32(dr["restock_amount"]),
@@ -262,7 +266,7 @@ namespace Proj_Desktop_App.dataAccess
                     request = new RestockRequest(Convert.ToInt32(dr["ID"]),
                                                             Convert.ToInt32(dr["productcode"]),
                                                             dr["productname"].ToString(),
-                                                            (Departments)(dr["department_id"]),
+                                                            department,
                                                             Convert.ToInt32(dr["requester_bsn"]),
                                                             Convert.ToInt32(dr["restock_amount"]),
                                                             requester_desc,

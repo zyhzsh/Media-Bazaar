@@ -50,7 +50,7 @@ namespace Proj_Desktop_App
             List<Product> flooredProducts = new List<Product>();
             foreach(Product p in products)
             {
-                if(p.Department == dep)
+                if(p.Department.Id == dep.Id)
                 {
                     flooredProducts.Add(p);
                 }

@@ -29,7 +29,8 @@ namespace Proj_Desktop_App.dataAccess
                     {
                         Department department = new Department(
                                 Convert.ToInt32(dr["department_id"]),
-                                dr["department_name"].ToString());
+                                dr["department_name"].ToString(),
+                                Convert.ToBoolean(dr["sells_products"]));
                         departments.Add(department);
                     }
                     return departments.ToArray();

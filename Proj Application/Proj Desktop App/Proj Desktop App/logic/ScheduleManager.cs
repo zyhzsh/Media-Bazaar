@@ -26,12 +26,12 @@ namespace Proj_Desktop_App
         /// </summary>
         /// <param name="time"> DateTime</param>
         /// <returns></returns>
-        public string[] GetEmployeesInfoByDateAndDepartment(DateTime time,Departments departments)
+        public string[] GetEmployeesInfoByDateAndDepartment(DateTime time,Department department)
         {
             List<string> temp = new List<string>();
             foreach (AssignedShift e in allAssignedShifts)
             {               
-                if (e.GetDate().ToString("yyyy-MM-dd") == time.ToString("yyyy-MM-dd") &&e.GetEmployee().GetDepartment()== departments)
+                if (e.GetDate().ToString("yyyy-MM-dd") == time.ToString("yyyy-MM-dd") && e.GetEmployee().GetDepartment().Id == department.Id)
                 {
                     temp.Add($"{e.GetEmployee().ToString()} Shift:{e.GetShiftTypeToString()} {e.GetDate().ToString("dddd, dd MMMM")}");
                 }
