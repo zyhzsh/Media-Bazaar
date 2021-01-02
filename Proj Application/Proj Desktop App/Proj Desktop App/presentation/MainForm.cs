@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Proj_Desktop_App.presentation;
 
 namespace Proj_Desktop_App
 {
@@ -21,12 +22,12 @@ namespace Proj_Desktop_App
         private ProductStatistics productStatistics;
         private Form restocks;
         private Scheduling scheduling;
+        private WeeklyScheduleGridForm autoSchedule;
 
         // Selected tab
         private ToolStripMenuItem selectedTab;
 
         // Logic layer
-        //ScheduleStorage?
         private ProductStorage prdStorage;
         private RestockRequestStorage reqStorage;
 
@@ -68,6 +69,11 @@ namespace Proj_Desktop_App
                 scheduling = new Scheduling(currentUser.GetDepartment());
                 InitializeForm(scheduling);
 
+                tabAutoSchedule.Visible = true;
+                autoSchedule = new WeeklyScheduleGridForm(currentUser.GetDepartment());
+                InitializeForm(autoSchedule);
+
+
                 tabProducts.PerformClick();
             }
             else if (position == PositionType.Depot_Worker)
@@ -92,6 +98,10 @@ namespace Proj_Desktop_App
                 tabSchedule.Visible = true;
                 scheduling = new Scheduling(currentUser.GetDepartment());
                 InitializeForm(scheduling);
+
+                tabAutoSchedule.Visible = true;
+                autoSchedule = new WeeklyScheduleGridForm(currentUser.GetDepartment());
+                InitializeForm(autoSchedule);
 
                 tabRestocks.PerformClick();
             }
@@ -179,5 +189,12 @@ namespace Proj_Desktop_App
             loginForm.Visible = true;
         }
 
+        private void tabAutoSchedule_Click(object sender, EventArgs e)
+        {
+            if (selectedTab != tabAutoSchedule)
+            {
+                ShowForm(autoSchedule, tabAutoSchedule);
+            }
+        }
     }
 }
