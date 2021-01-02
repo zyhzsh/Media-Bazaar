@@ -22,18 +22,16 @@ namespace Proj_Desktop_App
         private DateTime previousdate;
         private EmployeeStorage store;
 
-        public Scheduling(Departments department)
+        public Scheduling(DepartmentStorage departments)
         {
             InitializeComponent();
             store = new EmployeeStorage();
             schedulemanager = new ScheduleManager(store);
             //1.update combo box
-            cbDepartment.Items.Add(Departments.floorOne);
-            cbDepartment.Items.Add(Departments.floorTwo);
-            cbDepartment.Items.Add(Departments.floorThree);
-            cbDepartment.Items.Add(Departments.floorFour);
-            cbDepartment.Items.Add(Departments.office);
-            cbDepartment.Items.Add(Departments.warehouse);
+            foreach(Department d in departments.GetDepartments())
+            {
+                cbDepartment.Items.Add(d.Name);
+            }
             //2.set default vale for combo box by department
             cbDepartment.SelectedItem = department;
             //3.automatic set the default shifttype
@@ -46,13 +44,13 @@ namespace Proj_Desktop_App
             //5.Update Employee list by department
             listboxAvailableEmployees.Items.Clear();
 
-            foreach (Employee x in store.GetEmployees((Departments)cbDepartment.SelectedItem))
+            foreach (Employee x in store.GetEmployees((Department)cbDepartment.SelectedItem))
             {
                 listboxAvailableEmployees.Items.Add(x);
             }
             //6.Update AssigngedShift list by department
             listboxAssignedEmployees.Items.Clear();
-            listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate, (Departments)cbDepartment.SelectedItem));
+            listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate, (Department)cbDepartment.SelectedItem));
         }
 
         private void btnAddEmpShift_Click(object sender, EventArgs e)
@@ -72,7 +70,7 @@ namespace Proj_Desktop_App
                         //3. Assign sift                      
                         if (schedulemanager.AssignShift(seletedshifttype, seleteddate, seletedbsn))
                         {
-                            listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate,(Departments)cbDepartment.SelectedItem));
+                            listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate,(Department)cbDepartment.SelectedItem));
                         }
                         else { MessageBox.Show("Assign failed, Please try again~!"); }
                     }
@@ -101,7 +99,7 @@ namespace Proj_Desktop_App
             listboxAssignedEmployees.Items.Clear();
             schedulemanager.RemoveShift(seleteddate, seletedbsn);
             seleteddate = monthCalendarScheduling.SelectionStart;
-            listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate,(Departments)cbDepartment.SelectedItem));
+            listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate,(Department)cbDepartment.SelectedItem));
         }
 
         private void listboxAssignedEmployees_SelectedIndexChanged(object sender, EventArgs e)
@@ -136,7 +134,7 @@ namespace Proj_Desktop_App
                 ScheduleManagement a = new ScheduleManagement();
                 a.LoadSchduleFormDateBase(seleteddate);
             }
-            listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate, (Departments)cbDepartment.SelectedItem));
+            listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate, (Department)cbDepartment.SelectedItem));
         }
 
         private void btnSeachAvailableEmpByBsn_Click(object sender, EventArgs e)
@@ -168,13 +166,13 @@ namespace Proj_Desktop_App
         {
             //1.Update the employeelist by department
             listboxAvailableEmployees.Items.Clear();
-            foreach (Employee x in store.GetEmployees((Departments)cbDepartment.SelectedItem))
+            foreach (Employee x in store.GetEmployees((Department)cbDepartment.SelectedItem))
             {
                 listboxAvailableEmployees.Items.Add(x);
             }
             //2.Update the assignedemployeelist by department
             listboxAssignedEmployees.Items.Clear();
-            listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate, (Departments)cbDepartment.SelectedItem));
+            listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate, (Department)cbDepartment.SelectedItem));
         }
         private void listboxAvailableEmployees_Click(object sender, EventArgs e)
         {

@@ -68,7 +68,7 @@ namespace Proj_Desktop_App
                 InitializeForm(restocks);
 
                 tabSchedule.Visible = true;
-                scheduling = new Scheduling(currentUser.GetDepartment());
+                scheduling = new Scheduling(deptStorage);
                 InitializeForm(scheduling);
 
                 tabProducts.PerformClick();
@@ -93,7 +93,7 @@ namespace Proj_Desktop_App
                 InitializeForm(restocks);
 
                 tabSchedule.Visible = true;
-                scheduling = new Scheduling(currentUser.GetDepartment());
+                scheduling = new Scheduling(deptStorage);
                 InitializeForm(scheduling);
 
                 tabRestocks.PerformClick();
