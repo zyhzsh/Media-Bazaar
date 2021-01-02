@@ -25,7 +25,7 @@ namespace Proj_Desktop_App.dataAccess
         {
             //to get the employee object, couble be change in the future;
             MySqlConnection conn = base.GetConnection();
-            string sql = $"SELECT * FROM `availability`;";
+            string sql = $"SELECT * FROM availability;";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
 
             List<Availability> availabilities = new List<Availability>();
