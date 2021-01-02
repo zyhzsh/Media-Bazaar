@@ -12,28 +12,30 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Proj_Desktop_App.dataAccess;
+using Proj_Desktop_App.presentation;
+
 namespace Proj_Desktop_App
 {
     public partial class Scheduling : Form
     {
 
         private AutomaticScheduling automaticScheduling;
-
-
         private ShiftType seletedshifttype;
         private DateTime seleteddate;
         private DateTime previousdate;
 
 
-        private ScheduleStorage schedule;
-        private EmployeeStorage store;
+        private ScheduleStorage scheduleStorage;
+        private EmployeeStorage empStorage;
 
         public Scheduling(Departments department)
         {
             InitializeComponent();
-            store = new EmployeeStorage();
-            schedule = new ScheduleStorage(store);
-            automaticScheduling = new AutomaticScheduling(department, schedule);
+            empStorage = new EmployeeStorage();
+            this.scheduleStorage = new ScheduleStorage(empStorage);
+
+            automaticScheduling = new AutomaticScheduling(department, scheduleStorage);
+
             //1.update combo box
             cbDepartment.Items.Add(Departments.floorOne);
             cbDepartment.Items.Add(Departments.floorTwo);
@@ -52,13 +54,13 @@ namespace Proj_Desktop_App
             previousdate = DateTime.Today;
             //5.Update Employee list by department
             listboxAvailableEmployees.Items.Clear();
-            foreach (Employee x in store.GetEmployees(true, (Departments)cbDepartment.SelectedItem))
+            foreach (Employee x in empStorage.GetEmployees(true, (Departments)cbDepartment.SelectedItem))
             {
                 listboxAvailableEmployees.Items.Add(x);
             }
             //6.Update AssigngedShift list by department
             listboxAssignedEmployees.Items.Clear();
-            listboxAssignedEmployees.Items.AddRange(schedule.GetEmployeesInfoByDateAndDepartment(seleteddate, (Departments)cbDepartment.SelectedItem));
+            listboxAssignedEmployees.Items.AddRange(scheduleStorage.GetEmployeesInfoByDateAndDepartment(seleteddate, (Departments)cbDepartment.SelectedItem));
         }
 
         private void btnAddEmpShift_Click(object sender, EventArgs e)
@@ -76,10 +78,10 @@ namespace Proj_Desktop_App
                             seletedbsn.Add(Convert.ToInt32(extractbsn.ToString()));
                         }
                         //3. Assign sift                      
-                        if (schedule.AssignShift(seletedshifttype, seleteddate, seletedbsn))
+                        if (scheduleStorage.AssignShift(seletedshifttype, seleteddate, seletedbsn))
                         {
                         //4.update to the shift list
-                            listboxAssignedEmployees.Items.AddRange(schedule.GetEmployeesInfoByDateAndDepartment(seleteddate,(Departments)cbDepartment.SelectedItem));
+                            listboxAssignedEmployees.Items.AddRange(scheduleStorage.GetEmployeesInfoByDateAndDepartment(seleteddate,(Departments)cbDepartment.SelectedItem));
                         }
                         else { MessageBox.Show("Assign failed, Please try again~!"); }
                     }
@@ -106,9 +108,9 @@ namespace Proj_Desktop_App
                 seletedbsn.Add(Convert.ToInt32(extractbsn.ToString()));
             }
             listboxAssignedEmployees.Items.Clear();
-            schedule.RemoveShift(seleteddate, seletedbsn);
+            scheduleStorage.RemoveShift(seleteddate, seletedbsn);
             seleteddate = monthCalendarScheduling.SelectionStart;
-            listboxAssignedEmployees.Items.AddRange(schedule.GetEmployeesInfoByDateAndDepartment(seleteddate,(Departments)cbDepartment.SelectedItem));
+            listboxAssignedEmployees.Items.AddRange(scheduleStorage.GetEmployeesInfoByDateAndDepartment(seleteddate,(Departments)cbDepartment.SelectedItem));
         }
 
         private void listboxAssignedEmployees_SelectedIndexChanged(object sender, EventArgs e)
@@ -123,7 +125,7 @@ namespace Proj_Desktop_App
             }
             foreach (int bsn in seletedbsn)
             {
-               tempoemployees.Add(store.GetEmployee(bsn));
+               tempoemployees.Add(empStorage.GetEmployee(bsn));
             }
             foreach (Employee tempo in tempoemployees)
             {
@@ -139,9 +141,9 @@ namespace Proj_Desktop_App
             if (previousdate.Month != seleteddate.Month)
             {
                 previousdate = seleteddate;
-                schedule.ReLoadSchdule(seleteddate);
+                scheduleStorage.ReloadSchedule(seleteddate);
             }
-            listboxAssignedEmployees.Items.AddRange(schedule.GetEmployeesInfoByDateAndDepartment(seleteddate, (Departments)cbDepartment.SelectedItem));
+            listboxAssignedEmployees.Items.AddRange(scheduleStorage.GetEmployeesInfoByDateAndDepartment(seleteddate, (Departments)cbDepartment.SelectedItem));
         }
 
         private void btnSeachAvailableEmpByBsn_Click(object sender, EventArgs e)
@@ -172,13 +174,13 @@ namespace Proj_Desktop_App
         {
             //1.Update the employeelist by department
             listboxAvailableEmployees.Items.Clear();
-            foreach (Employee x in store.GetEmployees(true, (Departments)cbDepartment.SelectedItem))
+            foreach (Employee x in empStorage.GetEmployees(true, (Departments)cbDepartment.SelectedItem))
             {
                 listboxAvailableEmployees.Items.Add(x);
             }
             //2.Update the assignedemployeelist by department
             listboxAssignedEmployees.Items.Clear();
-            listboxAssignedEmployees.Items.AddRange(schedule.GetEmployeesInfoByDateAndDepartment(seleteddate, (Departments)cbDepartment.SelectedItem));
+            listboxAssignedEmployees.Items.AddRange(scheduleStorage.GetEmployeesInfoByDateAndDepartment(seleteddate, (Departments)cbDepartment.SelectedItem));
         }
         private void listboxAvailableEmployees_Click(object sender, EventArgs e)
         {
@@ -196,7 +198,7 @@ namespace Proj_Desktop_App
             }
             foreach (int bsn in seletedbsn)
             {
-                tempoemployees.Add(store.GetEmployee(bsn));
+                tempoemployees.Add(empStorage.GetEmployee(bsn));
             }
             foreach (Employee e in tempoemployees)
             {
@@ -262,10 +264,5 @@ namespace Proj_Desktop_App
         //    }
         //    return temp;
         //}
-
-        private void btnDoTheSchedule_Click(object sender, EventArgs e)
-        {
-            automaticScheduling.DoTheSchedule();
-        }
     }
 }
