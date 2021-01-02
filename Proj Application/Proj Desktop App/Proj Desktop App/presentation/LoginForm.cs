@@ -31,6 +31,10 @@ namespace Proj_Desktop_App
         // Username: chammon7
         // Password: XJlA0h
 
+        // ALT SALES MANAGER:
+        // Username: mood
+        // Password: 123
+
         private LoginHandler loginHandler;
 
         public LoginForm()
