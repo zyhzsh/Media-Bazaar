@@ -9,18 +9,19 @@ namespace Proj_Desktop_App
 {
     public class ScheduleStorage
     {
-        private static List<AssignedShift> allAssignedShifts;
-        private static List<Availability> allAvailableShifts;
-        private EmployeeStorage store;
+        private List<AssignedShift> allAssignedShifts;
+        private List<Availability> allAvailableShifts;
+        private EmployeeStorage empStorage;
         private ScheduleManagement schedule;
-        public ScheduleStorage(EmployeeStorage store)
+        public ScheduleStorage(EmployeeStorage empStorage)
         {
-            this.store = store;
+            this.empStorage = empStorage;
             schedule = new ScheduleManagement();
             allAssignedShifts = new List<AssignedShift>();
             allAvailableShifts = new List<Availability>();
-            allAssignedShifts.AddRange(schedule.LoadAssignedShifts(DateTime.Now, store));
-            allAvailableShifts.AddRange(schedule.LoadAvailability(store));
+
+            allAssignedShifts.AddRange(schedule.LoadAssignedShifts(DateTime.Now, empStorage));
+            allAvailableShifts.AddRange(schedule.LoadAvailability(empStorage));
         }
         /// <summary>
         /// Specify the day and Department then return list of employee's information
@@ -50,12 +51,12 @@ namespace Proj_Desktop_App
         {
            try
             {
-                ReLoadSchdule(date); 
+                ReloadSchedule(date); 
                 foreach (int i in bsns)
                 {
                     if (!AssignShift(date, i, shiftType))
                     {
-                        string temp = "It's over " + store.GetEmployee(i).ToString() + "'s FTE";                       
+                        string temp = "It's over " + empStorage.GetEmployee(i).ToString() + "'s FTE";                       
                         MessageBox.Show(temp);
                     }
                 }              
@@ -66,7 +67,7 @@ namespace Proj_Desktop_App
                 return false;
             }
             UpDateAssignedShiftToSchdule();
-            ReLoadSchdule(date);
+            ReloadSchedule(date);
             return true;
         }
         /// <summary>
@@ -80,7 +81,7 @@ namespace Proj_Desktop_App
         private bool AssignShift(DateTime date,int bsn , ShiftType shiftType)
         {
             //1.Get Employee
-            Employee employee = store.GetEmployee(bsn);
+            Employee employee = empStorage.GetEmployee(bsn);
             //2.Get employee's Assigned shift list for the week
             List<AssignedShift> current_week_shift_list_for_the_employee = GetEmployee_Assigned_Shift_For_The_Week(date, employee);           
             bool havetheshift = false;
@@ -154,7 +155,7 @@ namespace Proj_Desktop_App
                 List<Employee> emp = new List<Employee>();
                 foreach (int i in bsns)
                 {
-                    emp.Add(store.GetEmployee(i));
+                    emp.Add(empStorage.GetEmployee(i));
                 }
                 List<AssignedShift> temp = new List<AssignedShift>();
                 foreach (AssignedShift e in allAssignedShifts)
@@ -183,19 +184,19 @@ namespace Proj_Desktop_App
                 return false;
             }
             UpDateAssignedShiftToSchdule();
-            ReLoadSchdule(date);
+            ReloadSchedule(date);
             return true;
         }
         /// <summary>
         /// Update Current list of Shift information form Schdule Class
         /// </summary>
         /// <param name="date"></param>
-        public void ReLoadSchdule(DateTime date)
+        public void ReloadSchedule(DateTime date)
         {
             allAssignedShifts.Clear();
             allAvailableShifts.Clear();
-            allAssignedShifts.AddRange(schedule.LoadAssignedShifts(DateTime.Now, store));
-            allAvailableShifts.AddRange(schedule.LoadAvailability(store));
+            allAssignedShifts.AddRange(schedule.LoadAssignedShifts(DateTime.Now, empStorage));
+            allAvailableShifts.AddRange(schedule.LoadAvailability(empStorage));
         }
         /// <summary>
         /// Update the shift changes to the Schdule Class 
@@ -299,17 +300,47 @@ namespace Proj_Desktop_App
             return allAvailableShifts;
         }
 
-        public List<Availability> GetAvailabilitiesByDepartment(Departments department)
+        public List<Availability> GetWorkerAvailabilitiesByDepartment (Departments department)
         {
             List<Availability> result = new List<Availability>();
             foreach(Availability availability in allAvailableShifts)
             {
-                if(availability.employee.GetDepartment() == department)
+                if(availability.employee.GetDepartment() == department && (availability.employee.GetPosition() == PositionType.Depot_Worker || availability.employee.GetPosition() == PositionType.Sales_Worker))
                 {
                     result.Add(availability);
                 }
             }
             return result;
+        }
+
+        public List<Availability> GetManagerAvailabilitiesByDepartment(Departments department)
+        {
+            List<Availability> result = new List<Availability>();
+            foreach (Availability availability in allAvailableShifts)
+            {
+                if (availability.employee.GetDepartment() == department && (availability.employee.GetPosition() == PositionType.Depot_Manager || availability.employee.GetPosition() == PositionType.Sales_Manager))
+                {
+                    result.Add(availability);
+                }
+            }
+            return result;
+        }
+
+        private void DeleteAssignedShiftsFromNextWeek()
+        {
+            DateTime tomorrow = DateTime.Today.AddDays(1);
+            int daysUntilMonday = ((int)DayOfWeek.Monday - (int)tomorrow.DayOfWeek + 7) % 7;
+            DateTime nextMonday = tomorrow.AddDays(daysUntilMonday);
+            DateTime nextWeekFriday = nextMonday.AddDays(4);
+
+            for(int i = allAssignedShifts.Count; i > -1; i--)
+            {
+                if(allAssignedShifts[i].Date >= nextMonday && allAssignedShifts[i].Date <= nextWeekFriday)
+                {
+                    allAssignedShifts.Remove(allAssignedShifts[i]);
+                }
+            }
+
         }
     }
 }
