@@ -14,10 +14,10 @@ namespace Proj_Desktop_App
         private RestockRequestManagement reqMan;
 
         public RestockRequest[] Requests { get { return this.requests.ToArray(); } }
-        public RestockRequestStorage()
+        public RestockRequestStorage(DepartmentStorage departments)
         {
             requests = new List<RestockRequest>();
-            reqMan = new RestockRequestManagement();
+            reqMan = new RestockRequestManagement(departments);
             LoadRestockRequests();
         }
 

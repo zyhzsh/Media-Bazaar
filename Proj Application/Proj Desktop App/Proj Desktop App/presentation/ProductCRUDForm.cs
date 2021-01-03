@@ -14,10 +14,12 @@ namespace Proj_Desktop_App
     public partial class ProductCRUDForm : Form
     {
         private ProductStorage prdStorage;
-        public ProductCRUDForm(ProductStorage prdStorage)
+        private DepartmentStorage departments;
+        public ProductCRUDForm(ProductStorage prdStorage, DepartmentStorage departments)
         {
             InitializeComponent();
             this.prdStorage = prdStorage;
+            this.departments = departments;
             ReloadProducts();
         }
 
@@ -60,7 +62,7 @@ namespace Proj_Desktop_App
             }
             else
             {
-                ProductAddUpdateForm addProd = new ProductAddUpdateForm(this, prdStorage, InitializeProduct(lvProducts.SelectedItems[0]));
+                ProductAddUpdateForm addProd = new ProductAddUpdateForm(this, prdStorage, InitializeProduct(lvProducts.SelectedItems[0]), departments);
                 addProd.Show(this);
             }
         }
@@ -83,7 +85,7 @@ namespace Proj_Desktop_App
 
         private void btnAddProduct_Click(object sender, EventArgs e)
         {
-            ProductAddUpdateForm addProd = new ProductAddUpdateForm(this, prdStorage);
+            ProductAddUpdateForm addProd = new ProductAddUpdateForm(this, prdStorage, departments);
             addProd.Show(this);
         }
 

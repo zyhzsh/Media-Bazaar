@@ -7,7 +7,7 @@ using Proj_Desktop_App.dataAccess;
 
 namespace Proj_Desktop_App
 {
-    class DepartmentStorage
+    public class DepartmentStorage
     {
         private List<Department> departments;
 

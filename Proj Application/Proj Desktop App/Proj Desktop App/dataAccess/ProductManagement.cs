@@ -13,7 +13,12 @@ namespace Proj_Desktop_App.dataAccess
 {
     public class ProductManagement : DatabaseConnection
     {
-        public ProductManagement() : base() { }
+        private DepartmentStorage departmentStorage;
+
+        public ProductManagement(DepartmentStorage departmentStorage) : base()
+        {
+            this.departmentStorage = departmentStorage;
+        }
 
         public void AddProduct(Department belongingDepartment, string productName, string brand, double bought_price, double sold_price)
         {
@@ -287,7 +292,6 @@ namespace Proj_Desktop_App.dataAccess
             try
             {
                 // Get department by id
-                DepartmentStorage departmentStorage = new DepartmentStorage();
                 Department department = departmentStorage.GetDepartment(Convert.ToInt32(dr["department_id"]));
 
                 string description = "no description";

@@ -14,7 +14,13 @@ namespace Proj_Desktop_App.dataAccess
 
         private static List<AssignedShift> assignedShifts;
         private static List<PreferenceShift> availableShifts;
-        public ScheduleManagement() { }
+
+        private EmployeeStorage employeeStorage;
+
+        public ScheduleManagement(EmployeeStorage employeeStorage)
+        {
+            this.employeeStorage = employeeStorage;
+        }
         public List<AssignedShift> GetAssignedShifts()
         {
             return assignedShifts;
@@ -29,8 +35,7 @@ namespace Proj_Desktop_App.dataAccess
         ///Load this month of schdule data from database
         /// </summary>
         public void LoadSchduleFormDateBase(DateTime date)
-        {   //to get the employee object, couble be change in the future;
-            EmployeeStorage a = new EmployeeStorage();
+        {   
             if (assignedShifts is null) { assignedShifts = new List<AssignedShift>(); }
             else { assignedShifts.Clear(); }
 
@@ -53,7 +58,7 @@ namespace Proj_Desktop_App.dataAccess
                     else if (dr[2].ToString() == "Morning_Afternoon") { shifttype = ShiftType.Morning_Afternoon; }
                     else if (dr[2].ToString() == "Afternoon_Evening") { shifttype = ShiftType.Afternoon_Evening; }
                     else if (dr[2].ToString() == "Morning_Evening") { shifttype = ShiftType.Morning_Evening; }
-                    assignedShifts.Add(new AssignedShift(a.GetEmployee(Convert.ToInt32(dr[0])), (DateTime)dr[1], shifttype));
+                    assignedShifts.Add(new AssignedShift(employeeStorage.GetEmployee(Convert.ToInt32(dr[0])), (DateTime)dr[1], shifttype));
                 }
                 conn.Close();
                 sql = $"SELECT * FROM `preferedschdule` WHERE year(dateShift)='{date.ToString("yyyy")}' AND month(dateShift)='{date.ToString("MM")}';";
@@ -68,7 +73,7 @@ namespace Proj_Desktop_App.dataAccess
                     else if (dr[2].ToString() == "Morning_Afternoon") { shifttype = ShiftType.Morning_Afternoon; }
                     else if (dr[2].ToString() == "Afternoon_Evening") { shifttype = ShiftType.Afternoon_Evening; }
                     else if (dr[2].ToString() == "Morning_Evening") { shifttype = ShiftType.Morning_Evening; }
-                    availableShifts.Add(new PreferenceShift(a.GetEmployee(Convert.ToInt32(dr[0])), (DateTime)dr[1], shifttype));
+                    availableShifts.Add(new PreferenceShift(employeeStorage.GetEmployee(Convert.ToInt32(dr[0])), (DateTime)dr[1], shifttype));
                 }
                 conn.Close();
                    

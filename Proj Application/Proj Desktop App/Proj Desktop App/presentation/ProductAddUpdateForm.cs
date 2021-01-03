@@ -16,13 +16,14 @@ namespace Proj_Desktop_App
         private ProductStorage prdStorage;
         private ProductCRUDForm crudForm;
         private Product updateProduct;
-        private DepartmentStorage departmentStorage = new DepartmentStorage();
+        private DepartmentStorage departmentStorage;
         
-        public ProductAddUpdateForm(ProductCRUDForm crudForm, ProductStorage prdStorage)
+        public ProductAddUpdateForm(ProductCRUDForm crudForm, ProductStorage prdStorage, DepartmentStorage departments)
         {
             InitializeComponent();
             this.crudForm = crudForm;
             this.prdStorage = prdStorage;
+            this.departmentStorage = departments;
 
             this.Text = "Add product";
             btnConfirm.Text = "Add";
@@ -31,11 +32,12 @@ namespace Proj_Desktop_App
             cbDepartment.SelectedIndex = 0;
         }
 
-        public ProductAddUpdateForm(ProductCRUDForm crudForm, ProductStorage prdStorage, Product editProduct)
+        public ProductAddUpdateForm(ProductCRUDForm crudForm, ProductStorage prdStorage, Product editProduct, DepartmentStorage departments)
         {
             InitializeComponent();
             this.crudForm = crudForm;
             this.prdStorage = prdStorage;
+            this.departmentStorage = departments;
             updateProduct = editProduct;
 
 

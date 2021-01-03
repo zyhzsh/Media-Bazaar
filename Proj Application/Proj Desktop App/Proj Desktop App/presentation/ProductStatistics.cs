@@ -15,10 +15,12 @@ namespace Proj_Desktop_App
 {
     public partial class ProductStatistics : Form
     {
-        public ProductStatistics()
+        private ProductManagement dtbMan;
+
+        public ProductStatistics(DepartmentStorage departments)
         {
             InitializeComponent();
-            ProductManagement dtbMan = new ProductManagement();
+            dtbMan = new ProductManagement(departments);
             lbBestSoldProducts.Items.Clear();
 
             dateTimeSalesFrom.Value = DateTime.Today.AddDays(-30);
@@ -31,7 +33,6 @@ namespace Proj_Desktop_App
 
         private void btnProductStatFilter_Click(object sender, EventArgs e)
         {
-            ProductManagement dtbMan = new ProductManagement();
             Sale[] sales = dtbMan.GetBestSellingProducts(dateTimeSalesFrom.Value, dateTimeSalesTo.Value);
             lbBestSoldProducts.Items.Clear();
             foreach(Sale s in sales)
@@ -42,7 +43,6 @@ namespace Proj_Desktop_App
 
         private void btnReset_Click(object sender, EventArgs e)
         {
-            ProductManagement dtbMan = new ProductManagement();
             dateTimeSalesTo.Value = DateTime.Today;
             dateTimeSalesFrom.Value = DateTime.Today;
             dateTimeSalesFrom.Value.AddDays(-30);

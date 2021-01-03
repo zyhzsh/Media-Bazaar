@@ -26,13 +26,14 @@ namespace Proj_Desktop_App
         private DateTimePicker dtpTerminateDate;
         private ContractAction action;
 
-        public ContractUpdateForm(Employee employee, Contract activeContract, ContractAction action)
+        public ContractUpdateForm(Employee employee, Contract activeContract, ContractAction action, DepartmentStorage departments)
         {
             InitializeComponent();
             this.Visible = true;
             this.activeContract = activeContract;
             this.employee = employee;
             this.action = action;
+            this.departmentStorage = departments;
 
             // Display active contract
             lvActiveContract.Items.Clear();

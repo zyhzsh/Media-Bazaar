@@ -15,12 +15,12 @@ namespace Proj_Desktop_App
 
         EmployeeManagement emplMan;
 
-        public EmployeeStorage()
+        public EmployeeStorage(DepartmentStorage departments)
         {
             this.employees = new List<Employee>();
 
             // Load all employees from DB
-            emplMan = new EmployeeManagement();
+            emplMan = new EmployeeManagement(departments);
             Employee[] employees = emplMan.GetAllEmployees();
             if (employees != null)
             {

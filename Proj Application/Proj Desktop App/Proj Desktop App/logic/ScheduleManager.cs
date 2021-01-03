@@ -15,7 +15,7 @@ namespace Proj_Desktop_App
         public ScheduleManager(EmployeeStorage store)
         {
             this.store = store;
-            ScheduleManagement x = new ScheduleManagement();
+            ScheduleManagement x = new ScheduleManagement(store);
             x.LoadSchduleFormDateBase(DateTime.Now);
             this.allAssignedShifts = x.GetAssignedShifts();
             this.allAvailableShifts = x.GetAvailableShifts();
@@ -195,7 +195,7 @@ namespace Proj_Desktop_App
         /// <param name="date"></param>
         private void ReLoadSchdule(DateTime date)
         {
-            ScheduleManagement a = new ScheduleManagement();
+            ScheduleManagement a = new ScheduleManagement(store);
             a.LoadSchduleFormDateBase(date);
             allAssignedShifts = a.GetAssignedShifts();
             allAvailableShifts=a.GetAvailableShifts();
@@ -205,7 +205,7 @@ namespace Proj_Desktop_App
         /// </summary>
         private void UpDateAssignedShiftToSchdule(List<string> sqls)
         {
-            ScheduleManagement a = new ScheduleManagement();         
+            ScheduleManagement a = new ScheduleManagement(store);         
             a.UpDateSchdule(allAssignedShifts,sqls);
         }
         /// <summary>

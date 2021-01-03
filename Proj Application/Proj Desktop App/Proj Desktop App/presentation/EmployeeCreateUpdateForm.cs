@@ -14,7 +14,7 @@ namespace Proj_Desktop_App
     {
         // Store
         private EmployeeStorage store;
-        private DepartmentStorage departmentStorage = new DepartmentStorage();
+        private DepartmentStorage departmentStorage;
 
         // For updating employee details
         private bool updateEmployee;
@@ -30,9 +30,10 @@ namespace Proj_Desktop_App
         /// <summary>
         /// Adding a new employee
         /// </summary>
-        public EmployeeCreateUpdateForm(EmployeeStorage store)
+        public EmployeeCreateUpdateForm(EmployeeStorage store, DepartmentStorage departments)
         {
             InitializeComponent();
+            this.departmentStorage = departments;
             InitializeElements();
             this.store = store;
             updateEmployee = false;
@@ -46,9 +47,10 @@ namespace Proj_Desktop_App
         /// <summary>
         /// Updating employee details
         /// </summary>
-        public EmployeeCreateUpdateForm(EmployeeStorage store, Employee employee)
+        public EmployeeCreateUpdateForm(EmployeeStorage store, Employee employee, DepartmentStorage departments)
         {
             InitializeComponent();
+            this.departmentStorage = departments;
             InitializeElements();
             this.store = store;
             updateEmployee = true;

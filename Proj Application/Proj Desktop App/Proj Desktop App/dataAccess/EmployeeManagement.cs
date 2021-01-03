@@ -12,7 +12,14 @@ namespace Proj_Desktop_App.dataAccess
 {
     class EmployeeManagement : DatabaseConnection
     {
+        private DepartmentStorage departmentStorage;
+
         public EmployeeManagement() : base() { }
+
+        public EmployeeManagement(DepartmentStorage departmentStorage) : base()
+        {
+            this.departmentStorage = departmentStorage;
+        }
 
         public Employee GetEmployee(int bsn)
         {
@@ -299,7 +306,6 @@ namespace Proj_Desktop_App.dataAccess
             try
             {
                 // Get department by id
-                DepartmentStorage departmentStorage = new DepartmentStorage();
                 Department department = departmentStorage.GetDepartment(Convert.ToInt32(contr["department_id"]));
 
                 Contract contract = new Contract(

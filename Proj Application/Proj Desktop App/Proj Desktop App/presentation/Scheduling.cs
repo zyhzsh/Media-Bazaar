@@ -22,10 +22,10 @@ namespace Proj_Desktop_App
         private DateTime previousdate;
         private EmployeeStorage store;
 
-        public Scheduling(DepartmentStorage departments)
+        public Scheduling(Department department, DepartmentStorage departments)
         {
             InitializeComponent();
-            store = new EmployeeStorage();
+            store = new EmployeeStorage(departments);
             schedulemanager = new ScheduleManager(store);
             //1.update combo box
             foreach(Department d in departments.GetDepartments())
@@ -131,7 +131,7 @@ namespace Proj_Desktop_App
             if (previousdate.Month != seleteddate.Month)
             {
                 previousdate = seleteddate;
-                ScheduleManagement a = new ScheduleManagement();
+                ScheduleManagement a = new ScheduleManagement(store);
                 a.LoadSchduleFormDateBase(seleteddate);
             }
             listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate, (Department)cbDepartment.SelectedItem));

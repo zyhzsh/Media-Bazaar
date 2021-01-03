@@ -18,10 +18,13 @@ namespace Proj_Desktop_App
         private ContractUpdateForm contrUForm;
         private EmployeeCreateUpdateForm emplCUForm;
 
-        public AdminForm()
+        private DepartmentStorage departments;
+
+        public AdminForm(DepartmentStorage departments)
         {
             InitializeComponent();
-            this.emplStorage = new EmployeeStorage();
+            this.departments = departments;
+            this.emplStorage = new EmployeeStorage(this.departments);
             cbShowEmployed.Checked = true;
             selectedEmployee = null;
             cbSearchBy.Items.AddRange(new string[] { "Name", "BSN" });
@@ -184,7 +187,7 @@ namespace Proj_Desktop_App
         private void btnAddEmployee_Click(object sender, EventArgs e)
         {
             // Open form for creating a new employee
-            emplCUForm = new EmployeeCreateUpdateForm(emplStorage);
+            emplCUForm = new EmployeeCreateUpdateForm(emplStorage, departments);
             emplCUForm.FormClosed += EmplCUForm_FormClosed;
         }
 
@@ -193,7 +196,7 @@ namespace Proj_Desktop_App
             if (selectedEmployee != null)
             {
                 // Open form for updating an employee's details
-                emplCUForm = new EmployeeCreateUpdateForm(emplStorage, selectedEmployee);
+                emplCUForm = new EmployeeCreateUpdateForm(emplStorage, selectedEmployee, departments);
                 emplCUForm.FormClosed += EmplCUForm_FormClosed;
             }
             else
@@ -210,7 +213,7 @@ namespace Proj_Desktop_App
                 if (activeContract != null)
                 {
                     // Open form for promotiing
-                    contrUForm = new ContractUpdateForm(selectedEmployee, activeContract, ContractAction.Promote);
+                    contrUForm = new ContractUpdateForm(selectedEmployee, activeContract, ContractAction.Promote, departments);
                     contrUForm.FormClosed += ContrUForm_FormClosed;
                 }
                 else
@@ -235,7 +238,7 @@ namespace Proj_Desktop_App
                     if (latestContract != null)
                     {
                         // Open form for extending a contract
-                        contrUForm = new ContractUpdateForm(selectedEmployee, latestContract, ContractAction.Extend);
+                        contrUForm = new ContractUpdateForm(selectedEmployee, latestContract, ContractAction.Extend, departments);
                         contrUForm.FormClosed += ContrUForm_FormClosed;
                     }
                     else
@@ -262,7 +265,7 @@ namespace Proj_Desktop_App
                 if (activeContract != null)
                 {
                     // Open form for terminating a contarct
-                    contrUForm = new ContractUpdateForm(selectedEmployee, activeContract, ContractAction.Terminate);
+                    contrUForm = new ContractUpdateForm(selectedEmployee, activeContract, ContractAction.Terminate,departments);
                     contrUForm.FormClosed += ContrUForm_FormClosed;
                 }
                 else

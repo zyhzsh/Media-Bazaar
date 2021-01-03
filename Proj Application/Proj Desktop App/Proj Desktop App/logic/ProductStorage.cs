@@ -16,10 +16,10 @@ namespace Proj_Desktop_App
         /// gets all products currently stored
         /// </summary>
         public Product[] Products { get { return this.products.ToArray(); } }
-        public ProductStorage()
+        public ProductStorage(DepartmentStorage departments)
         {
             products = new List<Product>();
-            prdMan = new ProductManagement();
+            prdMan = new ProductManagement(departments);
             LoadProducts();
         }
         ///<summary>

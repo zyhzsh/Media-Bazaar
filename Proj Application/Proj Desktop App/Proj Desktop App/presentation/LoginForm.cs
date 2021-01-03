@@ -50,15 +50,18 @@ namespace Proj_Desktop_App
             // Credentials are correct
             if (bsn != -1)
             {
+                // Load departments from DB
+                DepartmentStorage departments = new DepartmentStorage();
+
                 // Open app for particualr employee
-                EmployeeManagement emplMan = new EmployeeManagement();
+                EmployeeManagement emplMan = new EmployeeManagement(departments);
                 Employee currentUser = emplMan.GetEmployee(bsn);
 
                 if (currentUser != null)
                 {
                     if (currentUser.IsEmployed())
                     {
-                        new MainForm(this, currentUser);
+                        new MainForm(this, currentUser, departments);
                         this.Visible = false;
                         tbLogInUsername.Clear();
                         tbLogInPassword.Clear();

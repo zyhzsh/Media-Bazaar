@@ -13,7 +13,12 @@ namespace Proj_Desktop_App.dataAccess
 {
     class RestockRequestManagement : DatabaseConnection
     {
-        public RestockRequestManagement() : base() { }
+        DepartmentStorage departmentStorage;
+
+        public RestockRequestManagement(DepartmentStorage departmentStorage) : base()
+        {
+            this.departmentStorage = departmentStorage;
+        }
 
         private int GetProductStock(int productcode)
         {
@@ -208,7 +213,6 @@ namespace Proj_Desktop_App.dataAccess
             try
             {
                 // Get department by id
-                DepartmentStorage departmentStorage = new DepartmentStorage();
                 Department department = departmentStorage.GetDepartment(Convert.ToInt32(dr["department_id"]));
 
                 bool judged = dr["judge_bsn"] != DBNull.Value;
