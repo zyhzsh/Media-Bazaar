@@ -46,11 +46,13 @@ namespace Proj_Desktop_App.presentation
 
         private void btnAutoSchedule_Click(object sender, EventArgs e)
         {
-            // WORKERS
+            lbEmployeeReports.Items.Clear();
             dtGrdViewManagers.Rows.Clear();
             dtGrdViewWorkers.Rows.Clear();
 
+            // WORKERS
             assignedWorkers = autoSchedule.AssignWorkers();
+
             for (int i = 0; i < 3; i++)
             {
                 DataGridViewRow row = (DataGridViewRow)dtGrdViewWorkers.Rows[0].Clone();
@@ -68,6 +70,7 @@ namespace Proj_Desktop_App.presentation
             {
                 lbEmployeeReports.Items.Add(workerReport);
             }
+
             // MANAGERS
             assignedManagers = autoSchedule.AssignManagers();
             for (int i = 0; i < 3; i++)
@@ -98,28 +101,45 @@ namespace Proj_Desktop_App.presentation
             {
                 if(ckBoxWorkers.Checked && ckBoxManagers.Checked)
                 {
-
+                    List<Employee>[] both = new List<Employee>[15];
+                    scheduleStorage.AssignNextWeekShifts(WorkersAndManagers());
                 }
                 else if (ckBoxManagers.Checked)
                 {
-
+                    scheduleStorage.AssignNextWeekShifts(assignedManagers);
+                }
+                else if(ckBoxWorkers.Checked)
+                {
+                    scheduleStorage.AssignNextWeekShifts(assignedWorkers);
                 }
                 else
                 {
-
+                    MessageBox.Show("No shifts selected");
                 }
+                MessageBox.Show("Employees assigned successfully!");
             }
         }
 
+        private List<Employee>[] WorkersAndManagers()
+        {
+            List<Employee>[] result = new List<Employee>[15];
+            for(int i = 0; i < 15; i++)
+            {
+                result[i] = new List<Employee>();
+                result[i].AddRange(assignedWorkers[i]);
+                result[i].AddRange(assignedManagers[i]);
+            }
+            return result;
+        }
         private void ckBoxWorkers_CheckedChanged(object sender, EventArgs e)
         {
             if(!ckBoxManagers.Checked && !ckBoxWorkers.Checked)
             {
-                gbSubmit.Enabled = false;
+                btnAssign.Enabled = false;
             }
             else
             {
-                gbSubmit.Enabled = true;
+                btnAssign.Enabled = true;
             }
         }
 
@@ -127,11 +147,11 @@ namespace Proj_Desktop_App.presentation
         {
             if (!ckBoxManagers.Checked && !ckBoxWorkers.Checked)
             {
-                gbSubmit.Enabled = false;
+                btnAssign.Enabled = false;
             }
             else
             {
-                gbSubmit.Enabled = true;
+                btnAssign.Enabled = true;
             }
         }
     }
