@@ -185,19 +185,20 @@ namespace Proj_Desktop_App
                     {
 
                         reports.Add(availability.employee + " would be forced to work overtime on " + ShiftIndexToString(mostCrowdedShift) + " to meet the minimum worker requirements. Without this employee the shift would only have " + (assignedEmployeeCount - 1) + " employees");
-                        
+
 
                         // In this situation removing the employee from even the most crowded shift would cause the store to close though to too few employees/managers
 
                         // The algorithm is met with a dilema: keep the store open by assigning the employee extra shifts
                         // or close the store to prevent overworking. 
                         // This would in turn have an impact on other employees pay, as this shift would no longer function
-                        
+
                         // For now the algorithm simply keeps the employee and notes the problem down
                         // At the end the algorithm lists every problem it came across
                         // The manager would have to unassign the employee if they don't wish to work overtime
 
-                        availability.leeway = 0; //could also make leeway 0 here but that's not exactly what happens
+                        this.assignedEmployees[mostCrowdedShift].Remove(availability.employee);
+                        availability.leeway = availability.leeway - 1;
                     }
                 }
             }
@@ -250,6 +251,10 @@ namespace Proj_Desktop_App
                             assignedEmployees[1 + i*3].Add(availability.employee);
                             assignedEmployees[2 + i*3].Add(availability.employee);
                             break;
+                        case ShiftType.None:
+                            break;
+                        default:
+                            throw new ArgumentException("invalid shift type");
                     }
                 }
             }
@@ -305,9 +310,9 @@ namespace Proj_Desktop_App
             else if(overstaffed && !understaffed)
             {
                 if (manager)
-                    reports.Add("Some shifts are overstaffed. There appear to have too many managers");
+                    reports.Add("Some shifts are overstaffed. There appear to be too many managers");
                 else
-                    reports.Add("Some shifts are overstaffed. There appear to have too many workers");
+                    reports.Add("Some shifts are overstaffed. There appear to be too many workers");
             }
             else if(!overstaffed && understaffed)
             {
