@@ -12,16 +12,16 @@ namespace Proj_Desktop_App
         private List<AssignedShift> allAssignedShifts;
         private List<Availability> allAvailableShifts;
         private EmployeeStorage empStorage;
-        private ScheduleManagement schedule;
+        private ScheduleManagement schManagement;
         public ScheduleStorage(EmployeeStorage empStorage)
         {
             this.empStorage = empStorage;
-            schedule = new ScheduleManagement();
+            schManagement = new ScheduleManagement();
             allAssignedShifts = new List<AssignedShift>();
             allAvailableShifts = new List<Availability>();
 
-            allAssignedShifts.AddRange(schedule.LoadAssignedShifts(DateTime.Now, empStorage));
-            allAvailableShifts.AddRange(schedule.LoadAvailability(empStorage));
+            allAssignedShifts.AddRange(schManagement.LoadAssignedShifts(DateTime.Now, empStorage));
+            allAvailableShifts.AddRange(schManagement.LoadAvailability(empStorage));
         }
         /// <summary>
         /// Specify the day and Department then return list of employee's information
@@ -126,7 +126,7 @@ namespace Proj_Desktop_App
                         if (e.Employee.GetBSN() == employee.GetBSN())
                         {
                             e.UpDateShiftType(shiftType);
-                            schedule.ChangeShiftType(shiftType,employee.GetBSN(),date);  
+                            schManagement.ChangeShiftType(shiftType,employee.GetBSN(),date);  
                             haverecords = true;
                             return true;
                         }
@@ -136,7 +136,7 @@ namespace Proj_Desktop_App
                 {
                     AssignedShift x = new AssignedShift(employee, date, shiftType);
                     //allAssignedShifts.Add(x);
-                    schedule.AddNewShift(shiftType, employee.GetBSN(),date);       
+                    schManagement.AddNewShift(shiftType, employee.GetBSN(),date);       
                     return true;
                 }
             }           
@@ -172,7 +172,7 @@ namespace Proj_Desktop_App
                         if (b.Employee.GetBSN() == e.GetBSN())
                         {
                             //allAssignedShifts.Remove(b);
-                            schedule.RemoveAssignedShift(e.GetBSN(),date);
+                            schManagement.RemoveAssignedShift(e.GetBSN(),date);
                             break;
                         }
                     }
@@ -195,15 +195,15 @@ namespace Proj_Desktop_App
         {
             allAssignedShifts.Clear();
             allAvailableShifts.Clear();
-            allAssignedShifts.AddRange(schedule.LoadAssignedShifts(DateTime.Now, empStorage));
-            allAvailableShifts.AddRange(schedule.LoadAvailability(empStorage));
+            allAssignedShifts.AddRange(schManagement.LoadAssignedShifts(DateTime.Now, empStorage));
+            allAvailableShifts.AddRange(schManagement.LoadAvailability(empStorage));
         }
         /// <summary>
         /// Update the shift changes to the Schdule Class 
         /// </summary>
         private void UpDateAssignedShiftToSchdule()
         {
-            string updatefeedback = schedule.UpDateAssignedShift();
+            string updatefeedback = schManagement.UpdateAssignmentShift();
             if (updatefeedback == "") { MessageBox.Show("Nothing to Update"); }
             else if (updatefeedback == "Update completed") { MessageBox.Show("Update completed"); }
             else if (updatefeedback == "Update failed") { MessageBox.Show("Update filed"); }
@@ -256,32 +256,6 @@ namespace Proj_Desktop_App
             }
             return temp;
         }
-        //public List<PreferenceShift> GetEmployee_Preference_Shift_For_The_Week(Employee employee,DateTime date)
-        //{
-        //    List<PreferenceShift> temp = new List<PreferenceShift>();
-        //    //Check Current List
-        //    DateTime startdate = date;
-        //    if (date.DayOfWeek.ToString() == "Monday") { startdate = date; }
-        //    else if (date.DayOfWeek.ToString() == "Tuesday") { startdate = date.AddDays(-1); }
-        //    else if (date.DayOfWeek.ToString() == "Wednesday") { startdate = date.AddDays(-2); }
-        //    else if (date.DayOfWeek.ToString() == "Thursday") { startdate = date.AddDays(-3); }
-        //    else if (date.DayOfWeek.ToString() == "Friday") { startdate = date.AddDays(-4); }
-        //    else if (date.DayOfWeek.ToString() == "Saturday") { startdate = date.AddDays(-5); }
-        //    else if (date.DayOfWeek.ToString() == "Sunday") { startdate = date.AddDays(-6); }
-        //    for (int i = 0; i < 7; i++)
-        //    {   //Get the shift list for this week
-        //        temp.AddRange(Get_Preference_Shifts_By_Date(startdate.AddDays(i)));
-        //    }
-        //    List<PreferenceShift> employee_shift = new List<PreferenceShift>();
-        //    foreach (PreferenceShift e in temp)
-        //    {
-        //        if (e.GetEmployee().GetBSN() == employee.GetBSN())
-        //        {
-        //            employee_shift.Add(e);
-        //        }
-        //    }
-        //    return employee_shift;
-        //}
  
         //private List<PreferenceShift> Get_Preference_Shifts_By_Date(DateTime date)
         //{
@@ -326,14 +300,77 @@ namespace Proj_Desktop_App
             return result;
         }
 
-        private void DeleteAssignedShiftsFromNextWeek()
+        public void AssignNextWeekShifts(List<Employee>[] nextWeekEmployees)
         {
+            //1. Determine next week
             DateTime tomorrow = DateTime.Today.AddDays(1);
             int daysUntilMonday = ((int)DayOfWeek.Monday - (int)tomorrow.DayOfWeek + 7) % 7;
             DateTime nextMonday = tomorrow.AddDays(daysUntilMonday);
             DateTime nextWeekFriday = nextMonday.AddDays(4);
 
-            for(int i = allAssignedShifts.Count; i > -1; i--)
+
+
+            //2. Clear shifts
+            DeleteAssignedShiftsFromNextWeek(nextMonday, nextWeekFriday);
+
+
+
+
+            //3. List of unique employees we need to keep track of this week
+            List<Employee> assignedEmployees = new List<Employee>();
+            for(int i = 0; i < 15; i++)
+            {
+                foreach(Employee emp in nextWeekEmployees[i])
+                {
+                    if (!assignedEmployees.Contains(emp))
+                        assignedEmployees.Add(emp);
+                }
+            }
+
+            //4. Change to AssignedShift format
+            List<AssignedShift> nextWeekShifts = new List<AssignedShift>();
+            foreach(Employee emp in assignedEmployees)
+            {
+                for(int i = 0; i < 13; i += 3)
+                {
+                    ShiftType type;
+                    if (nextWeekEmployees[i].Contains(emp) && (nextWeekEmployees[i + 1].Contains(emp)))
+                        type = ShiftType.Morning_Afternoon;
+                    else if (nextWeekEmployees[i].Contains(emp) && (nextWeekEmployees[i + 2].Contains(emp)))
+                        type = ShiftType.Morning_Evening;
+                    else if (nextWeekEmployees[i + 1].Contains(emp) && (nextWeekEmployees[i + 2].Contains(emp)))
+                        type = ShiftType.Afternoon_Evening;
+                    else if (nextWeekEmployees[i].Contains(emp))
+                        type = ShiftType.Morning;
+                    else if (nextWeekEmployees[i + 1].Contains(emp))
+                        type = ShiftType.Afternoon;
+                    else if (nextWeekEmployees[i + 2].Contains(emp))
+                        type = ShiftType.Evening;
+                    else
+                        type = ShiftType.None;
+
+                    if(type != ShiftType.None)
+                    {
+                        //i == 0 monday, i == 3 tuesday, i == 6 wednesday
+                        DateTime assignmentDate = nextMonday.AddDays(i / 3);
+
+
+                        nextWeekShifts.Add(new AssignedShift(emp, assignmentDate, type));
+                    }
+                }
+            }
+
+            //5. Update storage
+            this.allAssignedShifts.AddRange(nextWeekShifts);
+
+            //6. Update database
+            schManagement.AssignNextWeekShifts(nextWeekShifts);
+
+        }
+        private void DeleteAssignedShiftsFromNextWeek(DateTime nextMonday, DateTime nextWeekFriday)
+        {
+            //Delete from storage
+            for(int i = allAssignedShifts.Count - 1; i > -1; i--)
             {
                 if(allAssignedShifts[i].Date >= nextMonday && allAssignedShifts[i].Date <= nextWeekFriday)
                 {
@@ -341,6 +378,8 @@ namespace Proj_Desktop_App
                 }
             }
 
+            //Delete from database
+            schManagement.DeleteNextWeekShifts(nextMonday, nextWeekFriday);
         }
     }
 }
