@@ -46,14 +46,19 @@ namespace Proj_Desktop_App.dataAccess
                     //2.Formulate ShiftType
                     for (int i = 1; i <= 5; i++)
                     {
-                        if (dr[i].ToString() == "Morning") { weeklyavailbility.Add(ShiftType.Morning); }
-                        else if (dr[i].ToString() == "Afternoon") { weeklyavailbility.Add(ShiftType.Afternoon); }
-                        else if (dr[i].ToString() == "Evening") { weeklyavailbility.Add(ShiftType.Evening); }
-                        else if (dr[i].ToString() == "Morning_Afternoon") { weeklyavailbility.Add(ShiftType.Morning_Afternoon); }
-                        else if (dr[i].ToString() == "Afternoon_Evening") { weeklyavailbility.Add(ShiftType.Afternoon_Evening); }
-                        else if (dr[i].ToString() == "Morning_Evening") { weeklyavailbility.Add(ShiftType.Morning_Evening); }
-                        else if (dr[i].ToString() == "FullDay") { weeklyavailbility.Add(ShiftType.FullDay); }
-                        else { weeklyavailbility.Add(ShiftType.None); }
+                        string shiftString = dr[i].ToString();
+                        if (shiftString == "Morning") { weeklyavailbility.Add(ShiftType.Morning); }
+                        else if (shiftString == "Afternoon") { weeklyavailbility.Add(ShiftType.Afternoon); }
+                        else if (shiftString == "Evening") { weeklyavailbility.Add(ShiftType.Evening); }
+                        else if (shiftString == "Morning_Afternoon") { weeklyavailbility.Add(ShiftType.Morning_Afternoon); }
+                        else if (shiftString == "Afternoon_Evening") { weeklyavailbility.Add(ShiftType.Afternoon_Evening); }
+                        else if (shiftString == "Morning_Evening") { weeklyavailbility.Add(ShiftType.Morning_Evening); }
+                        else if (shiftString == "FullDay") { weeklyavailbility.Add(ShiftType.FullDay); }
+                        else if (shiftString == "None") { weeklyavailbility.Add(ShiftType.None); }
+                        else
+                        {
+                            throw new ArgumentException("Invalid shift type from database");
+                        }
                     }
                     //3.Adding Aailibility
                     availabilities.Add(new Availability(emp, weeklyavailbility.ToArray()));
@@ -73,8 +78,7 @@ namespace Proj_Desktop_App.dataAccess
 
         public List<AssignedShift> LoadAssignedShifts(DateTime date, EmployeeStorage empStorage)
         {
-            DateTime bufferdataforautomaticassignedshift = date.AddDays(40);
-            string sql = $"SELECT * FROM `assignedschdule` WHERE date BETWEEN '{date.ToString("yyyy-MM-01")}' AND '{bufferdataforautomaticassignedshift.ToString("yyyy-MM-dd")}';";
+            string sql = $"SELECT * FROM assignedschdule;";
             List<AssignedShift> assignedShifts = new List<AssignedShift>();
             MySqlConnection conn = base.GetConnection();
             try
@@ -111,7 +115,7 @@ namespace Proj_Desktop_App.dataAccess
         /// Update the shift data to the database
         /// </summary>
         /// <param name="UpdatedShifts">Application Side Assigned Shift Lists after user assign shifts</param>
-        public string UpDateAssignedShift()
+        public string UpdateAssignmentShift()
         {
             string feedback = "";
             if (sqlstatements == "") { feedback = ""; }
@@ -146,10 +150,56 @@ namespace Proj_Desktop_App.dataAccess
             sqlstatements += $"INSERT INTO `assignedschdule` (`BSN`, `date`, `assigned_shift_type`) VALUES('{bsn}', '{date.ToString("yyyy-MM-dd")}', '{shiftype.ToString()}');";
         }
 
-        public void RemoveAssignedShift(int bsn,DateTime date)
+        public void RemoveAssignedShift(int bsn, DateTime date)
         {
             sqlstatements+=$"DELETE FROM `assignedschdule` WHERE date='{date.ToString("yyyy-MM-dd")}' AND BSN='{bsn}';";
         }
 
+        public void DeleteNextWeekShifts(DateTime nextMonday, DateTime nextWeekFriday)
+        {
+            try
+            {
+                using (MySqlConnection conn = base.GetConnection())
+                {
+                    string sql = "DELETE FROM assignedschdule WHERE date >= @nextMonday AND date <= @nextFriday";
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@nextMonday", nextMonday.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@nextFriday", nextWeekFriday.ToString("yyyy-MM-dd"));
+                    conn.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
+
+        public void AssignNextWeekShifts(List<AssignedShift> assignedShifts)
+        {
+            try
+            {
+                using (MySqlConnection conn = base.GetConnection())
+                {
+                    string sql = "INSERT INTO assignedschdule (BSN, date, assigned_shift_type) VALUES ";
+                    foreach(AssignedShift shift in assignedShifts)
+                    {
+                        sql += $"( {shift.Employee.GetBSN()} , '{shift.Date.ToString("yyyy-MM-dd")}' , '{shift.ShiftType.ToString("F")}' ), ";
+                    }
+                    sql = sql.Remove(sql.Length - 2);
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+                    conn.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
     }
 }
