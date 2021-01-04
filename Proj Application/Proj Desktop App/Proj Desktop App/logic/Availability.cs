@@ -9,50 +9,52 @@ namespace Proj_Desktop_App
 {
     public class Availability : IComparable<Availability>
     {
-        public Employee Employee { get; private set; }
+        public decimal leeway;
+
+        /// <summary>
+        /// 5 length array of the employee's shifts for each working day
+        /// </summary>
         public ShiftType[] WeekAvailability { get; private set; }
-        public decimal Leeway { get; set; } 
-        public Availability(Employee employee,ShiftType[] shiftTypes)
+
+        public Employee employee { get; private set; }
+        public Availability(Employee employee, ShiftType[] WeekAvailability)
         {
-            Employee = employee;
-            WeekAvailability = shiftTypes;
-            Leeway = CalculateLeeWay();
+            this.employee = employee;
+            this.WeekAvailability = WeekAvailability;
+            this.leeway = CountAvailableShifts() - this.employee.GetFTE() * 10;
         }
-        public decimal CalculateLeeWay()
+
+        private int CountAvailableShifts()
         {
-            decimal leewaycounter = 0;
-            foreach (ShiftType type in WeekAvailability)
+            int availableShiftCounter = 0;
+            foreach (ShiftType shift in WeekAvailability)
             {
-                switch (type)
-                {
-                    case ShiftType.Morning:
-                    case ShiftType.Afternoon:
-                    case ShiftType.Evening:
-                        leewaycounter += 1;
-                        break;
-                    case ShiftType.Morning_Afternoon:
-                    case ShiftType.Morning_Evening:
-                    case ShiftType.Afternoon_Evening:
-                        leewaycounter += 2;
-                        break;
-                    case ShiftType.FullDay:
-                        leewaycounter += 3;
-                        break;
-                    case ShiftType.None:
-                              break;
-                }
+                availableShiftCounter += ShiftTypeToInt(shift);
             }
-            leewaycounter = leewaycounter-Employee.GetFTE() * 10;
-            return leewaycounter;
+            return availableShiftCounter;
         }
+
+        public static int ShiftTypeToInt(ShiftType shift)
+        {
+            if (shift == ShiftType.Afternoon_Evening || shift == ShiftType.Morning_Afternoon || shift == ShiftType.Morning_Evening)
+            {
+                return 2;
+            }
+            else if (shift == ShiftType.FullDay)
+            {
+                return 3;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+         
         public int CompareTo(Availability other)
         {
-            return Leeway.CompareTo(other.Leeway);
+            return this.leeway.CompareTo(other.leeway);
         }
-        public string test()
-        {
-            return $"{Employee.GetFTE()} leeway:{Leeway}";
-        }
+
 
     }
 }
