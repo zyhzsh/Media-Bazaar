@@ -44,6 +44,10 @@ namespace Proj_Desktop_App
             {
                 return 3;
             }
+            else if (shift == ShiftType.None)
+            {
+                return 0;
+            }
             else
             {
                 return 1;

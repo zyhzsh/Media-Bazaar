@@ -182,6 +182,12 @@
     <Compile Include="presentation\SalesManagerForm.Designer.cs">
       <DependentUpon>SalesManagerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="presentation\WeeklyScheduleGridForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="presentation\WeeklyScheduleGridForm.Designer.cs">
+      <DependentUpon>WeeklyScheduleGridForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="dataAccess\ScheduleManagement.cs" />
@@ -231,6 +237,9 @@
     <EmbeddedResource Include="presentation\SalesManagerForm.resx">
       <DependentUpon>SalesManagerForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="presentation\WeeklyScheduleGridForm.resx">
+      <DependentUpon>WeeklyScheduleGridForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -266,6 +275,7 @@
     <Content Include="bin\Debug\Proj Desktop App.pdb" />
     <None Include="Resources\baseline_change_circle_black_18dp.png" />
     <None Include="Resources\requestIcon3.png" />
+    <None Include="Resources\autoScheduling.png" />
     <None Include="Resources\statistics.png" />
     <None Include="Resources\search.png" />
     <None Include="Resources\schedule.png" />

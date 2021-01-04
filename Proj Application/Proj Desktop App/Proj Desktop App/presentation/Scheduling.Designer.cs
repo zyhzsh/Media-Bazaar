@@ -49,7 +49,6 @@
             this.lbdepartment = new System.Windows.Forms.Label();
             this.listboxEmployeePreferenceShifts = new System.Windows.Forms.ListBox();
             this.labelEmployeePereferenceShifts = new System.Windows.Forms.Label();
-            this.btnDoTheSchedule = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -274,22 +273,11 @@
             this.labelEmployeePereferenceShifts.TabIndex = 40;
             this.labelEmployeePereferenceShifts.Text = "PerferenceShifts";
             // 
-            // btnDoTheSchedule
-            // 
-            this.btnDoTheSchedule.Location = new System.Drawing.Point(886, 12);
-            this.btnDoTheSchedule.Name = "btnDoTheSchedule";
-            this.btnDoTheSchedule.Size = new System.Drawing.Size(235, 32);
-            this.btnDoTheSchedule.TabIndex = 41;
-            this.btnDoTheSchedule.Text = "Run Automatic scheduling";
-            this.btnDoTheSchedule.UseVisualStyleBackColor = true;
-            this.btnDoTheSchedule.Click += new System.EventHandler(this.btnDoTheSchedule_Click);
-            // 
             // Scheduling
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1387, 725);
-            this.Controls.Add(this.btnDoTheSchedule);
             this.Controls.Add(this.labelEmployeePereferenceShifts);
             this.Controls.Add(this.listboxEmployeePreferenceShifts);
             this.Controls.Add(this.lbdepartment);
@@ -340,6 +328,5 @@
         private System.Windows.Forms.Label lbdepartment;
         private System.Windows.Forms.ListBox listboxEmployeePreferenceShifts;
         private System.Windows.Forms.Label labelEmployeePereferenceShifts;
-        private System.Windows.Forms.Button btnDoTheSchedule;
     }
 }

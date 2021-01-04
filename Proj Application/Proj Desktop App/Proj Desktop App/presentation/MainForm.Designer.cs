@@ -36,6 +36,7 @@
             this.tabRestocks = new System.Windows.Forms.ToolStripMenuItem();
             this.tabSchedule = new System.Windows.Forms.ToolStripMenuItem();
             this.tabRequestInfoChange = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabAutoSchedule = new System.Windows.Forms.ToolStripMenuItem();
             this.topbar = new System.Windows.Forms.MenuStrip();
             this.tabLogOut = new System.Windows.Forms.ToolStripMenuItem();
             this.mediaBazaarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,11 +60,12 @@
             this.tabStatistics,
             this.tabRestocks,
             this.tabSchedule,
-            this.tabRequestInfoChange});
-            this.navbar.Location = new System.Drawing.Point(0, 44);
+            this.tabRequestInfoChange,
+            this.tabAutoSchedule});
+            this.navbar.Location = new System.Drawing.Point(0, 54);
             this.navbar.Name = "navbar";
             this.navbar.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.navbar.Size = new System.Drawing.Size(128, 657);
+            this.navbar.Size = new System.Drawing.Size(171, 809);
             this.navbar.TabIndex = 45;
             this.navbar.Text = "menuStrip1";
             // 
@@ -162,7 +164,23 @@
             this.tabRequestInfoChange.Size = new System.Drawing.Size(121, 100);
             this.tabRequestInfoChange.Text = "Request Info";
             this.tabRequestInfoChange.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tabRequestInfoChange.Visible = false;
             this.tabRequestInfoChange.Click += new System.EventHandler(this.requestInfoChangeToolStripMenuItem_Click);
+            // 
+            // tabAutoSchedule
+            // 
+            this.tabAutoSchedule.AutoSize = false;
+            this.tabAutoSchedule.BackColor = System.Drawing.Color.Transparent;
+            this.tabAutoSchedule.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabAutoSchedule.Image = global::Proj_Desktop_App.Properties.Resources.schedule;
+            this.tabAutoSchedule.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tabAutoSchedule.Name = "tabAutoSchedule";
+            this.tabAutoSchedule.Padding = new System.Windows.Forms.Padding(0);
+            this.tabAutoSchedule.Size = new System.Drawing.Size(121, 70);
+            this.tabAutoSchedule.Text = "Automatic";
+            this.tabAutoSchedule.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tabAutoSchedule.Visible = false;
+            this.tabAutoSchedule.Click += new System.EventHandler(this.tabAutoSchedule_Click);
             // 
             // topbar
             // 
@@ -175,7 +193,7 @@
             this.lblUser});
             this.topbar.Location = new System.Drawing.Point(0, 0);
             this.topbar.Name = "topbar";
-            this.topbar.Size = new System.Drawing.Size(1284, 44);
+            this.topbar.Size = new System.Drawing.Size(1712, 54);
             this.topbar.TabIndex = 0;
             this.topbar.Text = "menuStrip2";
             // 
@@ -186,7 +204,7 @@
             this.tabLogOut.Image = global::Proj_Desktop_App.Properties.Resources.logout;
             this.tabLogOut.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tabLogOut.Name = "tabLogOut";
-            this.tabLogOut.Size = new System.Drawing.Size(111, 40);
+            this.tabLogOut.Size = new System.Drawing.Size(130, 50);
             this.tabLogOut.Text = "Log out";
             this.tabLogOut.Click += new System.EventHandler(this.tabLogOut_Click);
             // 
@@ -195,7 +213,7 @@
             this.mediaBazaarToolStripMenuItem.Enabled = false;
             this.mediaBazaarToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mediaBazaarToolStripMenuItem.Name = "mediaBazaarToolStripMenuItem";
-            this.mediaBazaarToolStripMenuItem.Size = new System.Drawing.Size(125, 40);
+            this.mediaBazaarToolStripMenuItem.Size = new System.Drawing.Size(155, 50);
             this.mediaBazaarToolStripMenuItem.Text = "Media Bazaar";
             // 
             // lblUser
@@ -204,27 +222,29 @@
             this.lblUser.Enabled = false;
             this.lblUser.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUser.Name = "lblUser";
-            this.lblUser.Size = new System.Drawing.Size(164, 40);
+            this.lblUser.Size = new System.Drawing.Size(205, 50);
             this.lblUser.Text = "<position> | <user>";
             // 
             // pnlContent
             // 
             this.pnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlContent.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pnlContent.Location = new System.Drawing.Point(128, 44);
+            this.pnlContent.Location = new System.Drawing.Point(171, 54);
+            this.pnlContent.Margin = new System.Windows.Forms.Padding(4);
             this.pnlContent.Name = "pnlContent";
-            this.pnlContent.Size = new System.Drawing.Size(1156, 657);
+            this.pnlContent.Size = new System.Drawing.Size(1541, 809);
             this.pnlContent.TabIndex = 48;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1284, 701);
+            this.ClientSize = new System.Drawing.Size(1712, 863);
             this.Controls.Add(this.pnlContent);
             this.Controls.Add(this.navbar);
             this.Controls.Add(this.topbar);
             this.MainMenuStrip = this.topbar;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";
@@ -252,5 +272,6 @@
         private System.Windows.Forms.ToolStripMenuItem mediaBazaarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lblUser;
         private System.Windows.Forms.ToolStripMenuItem tabRequestInfoChange;
+        private System.Windows.Forms.ToolStripMenuItem tabAutoSchedule;
     }
 }
