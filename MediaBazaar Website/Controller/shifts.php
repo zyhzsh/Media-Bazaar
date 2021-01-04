@@ -41,76 +41,109 @@ class shifts{
     $year=date("Y",strtotime($date)); 
     $week=date("W",strtotime($date)); 
     $temp = new DateTime();
+    //setISoDate will set date =  first day of the week
     $temp->setISODate($year, $week);
     return $temp->format('Y-m-d');   
   }
-  public function GetPerferedShifts($date)
+  public function GetAvailability()
   {
     $session=session:: getInstance();
     $BSN=$session-> __get('BSN'); 
-    $startingdate=$this->GetFirstDayOfTheWeek($date);
     $db=new ShiftsModel();
-    $result=$db->LoadPreferenceShift($BSN,$startingdate);
+    $result=$db->Get_Availabity($BSN);
     return $result;
   }
 
-  public function UpdatePreferenceShift($startingdate)
+  public function UpdateAvailability()
   {
-    $result=FALSE;
+    $Submition_Result=false;
+    //Get Bsn
     $session=session:: getInstance();
     $BSN=$session-> __get('BSN'); 
-    //Formating the structure of the $_POST[] and reset the shifttype
-    $date=date("Y-m-d",strtotime($startingdate));
-    $PreferenceShifts=array();
-    //Only check 5 day in a week
+    //Formating and Check User Input
+    //1.Get User's FTE 
+    //( 1 FTE= 40 hours/week)
+    //( 1 Shift = 4 Hours)
+    //( 1 FTE= 10 Shift/Week)
+    //( Constrain-> User Input Result have to >= FTE*10 )
+    $userController = new UserController();
+    $session = session::getInstance();
+    $user = $session->__get("user");
+    //var_dump($user);
+    //Get user' fte
+    $fte=$user->Get_Fte();
+    //User's Working Shift 
+    $working_shift_conter=$fte*10;
+    $submiton_shift_counter=0;
+    //2.Formulating Data And Calculate Submiton Shift
+    $tempcounter=0;
+    //Preparing variable
+    $Mondayshift="";
+    $Tuesdayshift="";
+    $Wednesdayshift="";
+    $Thursdayshift="";
+    $Fridayshift="";
+    //Formulate Shift date
     for($i=0;$i<5;$i++)
-    {   
-        $shifttype="";
-        if(isset($_POST[$date]))
-        { //If User Submit Preference Shift Over 8 Hourse for a day,then the submition will be cancel 
-          if(count($_POST[$date])>2)
-          {
-            return false;
+    {  
+      $day="";
+      $shifttype="";
+      switch($i)
+      {
+        case 0:$day='Monday'; break;
+        case 1:$day="Tuesday";break;
+        case 2:$day="Wednesday";break;
+        case 3:$day="Thursday";break;
+        case 4:$day="Friday";break;
+      }
+      if(isset($_POST[$day]))
+      {
+        $tempcounter=count($_POST[$day]);
+        $submiton_shift_counter+=$tempcounter;
+        if($tempcounter==3){$shifttype="FullDay";$submiton_shift_counter-=1;}
+        else if($_POST[$day][0]=="Morning"){
+        $shifttype="Morning";
+        if(isset($_POST[$day][1])){
+          if($_POST[$day][1]=="Afternoon")
+          {$shifttype="Morning_Afternoon";}
+          elseif($_POST[$day][1]=="Evening")
+          {$shifttype="Morning_Evening";}
           }
-          //formate the $shifttype
-          if($_POST[$date][0]=="Morning"){
-            $shifttype="Morning";
-            if(isset($_POST[$date][1])){
-            if($_POST[$date][1]=="Afternoon")
-            {$shifttype="Morning_Afternoon";}
-            elseif($_POST[$date][1]=="Evening")
-            {$shifttype="Morning_Evening";}
-            }
-          }
-          else if($_POST[$date][0]=="Afternoon"){
-            $shifttype="Afternoon";
-            if(isset($_POST[$date][1])){
-            if($_POST[$date][1]=="Evening")
-            {$shifttype="Afternoon_Evening";}
-            }
-          }
-          else if($_POST[$date][0]=="Evening"){
-            $shifttype="Evening";
-          }
-          //Create the Object prepare for update to database
-          $preferenceshift=new PreferenceShift($date,$shifttype);
-          $PreferenceShifts[$i]=$preferenceshift;
-        }else //Create the empty shifts
-        {
-          $preferenceshift=new PreferenceShift($date,"");
-          $PreferenceShifts[$i]=$preferenceshift;
         }
-        //Check the day after
-        $date=date('Y-m-d',strtotime($date."+1day"));
+        else if($_POST[$day][0]=="Afternoon"){
+          $shifttype="Afternoon";
+          if(isset($_POST[$day][1])){
+          if($_POST[$day][1]=="Evening")
+          {
+            $shifttype="Afternoon_Evening";}
+          }
+        }
+        else if($_POST[$day][0]=="Evening"){
+          $shifttype="Evening";
+        }
+      }
+      switch($i)
+      {
+        case 0:$Mondayshift=$shifttype; break;
+        case 1:$Tuesdayshift=$shifttype;break;
+        case 2:$Wednesdayshift=$shifttype;break;
+        case 3:$Thursdayshift=$shifttype;break;
+        case 4:$Fridayshift=$shifttype;break;
+      }
     }
-    //1.Check Working time over his/her's FTE
-    //......
-
-    //2.Send List of Object
-    $db=new ShiftsModel();
-    $result=$db->Update_Preference_Shifts($BSN,$PreferenceShifts);
-    return $result;
+    //Checking fte result
+    if($submiton_shift_counter<$working_shift_conter)
+    {
+      $Submition_Result=false; 
+    }
+    else
+    {
+      $availabilitySetting=new Availability($Mondayshift,$Tuesdayshift,$Wednesdayshift,$Thursdayshift,$Fridayshift);
+      //Update Availbility into database
+      $db=new ShiftsModel();
+      $Submition_Result=$db->Update_Availabity($BSN,$availabilitySetting);
+    }
+    return $Submition_Result;
   }
-  
 }
 ?>

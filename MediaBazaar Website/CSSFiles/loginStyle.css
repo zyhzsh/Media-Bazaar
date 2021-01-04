@@ -1,6 +1,6 @@
 
 body {  
-   background-color: #D3DBD9;
+   background-color: #E3F2FB;
    height: 100vh;
 }
 
@@ -68,15 +68,33 @@ h2{
    color: #010505;
 }
 button{
-    position: relative;
-    height: auto;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    background-color: #767de7;;
-    padding: 10px;
-    font-size: 16px;
+   position: relative;
+   height: auto;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+   width: 215px;
+   padding: 10px;
+   font-size: 16px;
+   background-color: #83B4D1;
+   border-radius: 10vh;
 }
 button:hover {
-   background-color: aquamarine;
+   background-color: #CDE6F4;
+ }
+
+ input {
+
+   padding: 12px 20px;
+   margin: 8px 0;
+   box-sizing: border-box;
+   background-color: #83B4D1;
+   border: none;
+   margin-bottom: 1vh;
+ }
+ input::placeholder{
+   background-color: #83B4D1;
+ }
+ :focus::-webkit-input-placeholder {
+   color: #83B4D1;
  }

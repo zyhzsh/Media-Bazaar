@@ -78,7 +78,7 @@ function Grid_Item_In_Calendar($assignedshifts)
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://kit.fontawesome.com/7beb03d50e.js" crossorigin="anonymous"></script>
     <link href="../CSSFiles/CalendarStyle.css" type="text/css" rel="stylesheet" />
     <title>Assigned Schedule</title>

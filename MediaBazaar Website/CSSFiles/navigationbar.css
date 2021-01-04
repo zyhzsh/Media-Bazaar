@@ -1,72 +1,69 @@
 body {
-  box-sizing: border-box;
-  margin: 0px;
-} 
-  /* Fixed sidenav, full height */
-  .sidenav {
-    display: grid;
-    align-items: center;
-    justify-content: center;   
-    height: 100%;
-    width: 200px;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #07634C;
-    overflow-x: hidden;
-  }
-  
-  /* Style the sidenav links and the dropdown button */
-  .sidenav a, .dropdown-btn {
-    display: block;
-    background-color: #889794;
-    text-decoration: none;
-    font-size: 20px;
-    color:#fff;
-    display: block;
-    border: none;
-    background: none;
-    width: 100%;
-    text-align: center;
-    cursor: pointer;
-    outline: none;
-  }
-  
-  /* On mouse-over */
-  .sidenav a:hover, .dropdown-btn:hover {
-    color:#000;
-  }
-  
-  /* Optional: Style the caret down icon */
-  .fa-caret-down {
-    float: right;
-  }
+  font-family: "Lato", sans-serif;
+  background-color: #E3F2FB
 
-
-.btn_logout{
-  height: 40px;
-  background-color: #889794;
-  border: none;
-  color: #fff;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  opacity: 0.5;
-  border: 1px solid #fff;
 }
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #83B4D1;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color:black;;
+  display: block;
+  transition: 0.3s;
+  padding-bottom:50px;
+}
+
+.sidenav a:hover {
+  color: #B5D7EB;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+.main {
+  margin-left: 160px; /* Same as the width of the sidenav */
+  font-size: 28px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
 .btn_logout:hover{
+ 
   opacity: 1;
 }
 
-  
-  /* Some media queries for responsiveness */
-  @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-  }
+button{
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 215px;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #B5D7EB;
+  border-radius: 10vh;
+}
+

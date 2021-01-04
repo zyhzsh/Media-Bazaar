@@ -1,117 +1,117 @@
-.flex-container {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .flex-container > div {
-     height : auto;
-    min-height: 30vh;
-    margin: 10px;
-    padding: 20px;
-    font-size: 30px;
-    align-self: flex-start;
-  }
 
-  .form-changeInfo {
-    width: 30%;
-    padding: 15px;
-    margin: 0 auto;
-    color: #000301;
-    align-self: flex-start;
+body {
+  
+   padding-bottom: 40px;
+   background-color: #E3F2FB;
+}
+
+.form-changeInfo {
+   max-width: 330px;
+   padding: 15px;
+   margin: 0 auto;
+   color: #000000;
+}
+
+.form-changeInfo .form-changeInfo-heading,
+.form-changeInfo .checkbox {
+   margin-bottom: 10px;
+}
+
+
+.form-changeInfo .form-control {
+   position: relative;
+   height: auto;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+   font-size: 16px;
+}
+
+.form-changeInfo .form-control:focus {
+   z-index: 2;
+}
+
+h2{
+   text-align: center;
+   color: #010505;
+   position: relative;
+}
+p{
+ margin-bottom: 0cm;
+   position: relative;
+}
+@media screen and (min-width: 601px) {
+    p {
+     font-size: 30px;
+   }
  }
  
- .form-changeInfo .form-changeInfo-heading,
- .form-changeInfo .checkbox {
-    margin-bottom: 10px;
+ @media screen and (max-width: 600px) {
+    p {
+     font-size: 15px;
+   }
  }
- 
- .form-changeInfo .checkbox {
-    font-weight: normal;
- }
- 
- .form-changeInfo .form-control {
+button{
     position: relative;
     height: auto;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding: 10px;
-    font-size: 16px;
- }
-
- .form-changeInfo input[type="firstName"] {
-    margin-bottom: 10px;
-  
-    border-color:#000000;
- }
-
- .form-changeInfo input[type="lastName"] {
-    margin-bottom: 10px;
-  
-    border-color:#000000;
- }
-
- .form-changeInfo input[type="gender"] {
-    margin-bottom: 10px;
-  
-    border-color:#000000;
- }
-
- .form-changeInfo input[type="phone"] {
-    margin-bottom: 10px;
-  
-    border-color:#000000;
- }
-
- .form-changeInfo input[type="adress"] {
-    margin-bottom: 10px;
-  
-    border-color:#000000;
- }
-
- .form-changeInfo input[type="languages"] {
-    margin-bottom: 10px;
-  
-    border-color:#000000;
- }
-
- .form-changeInfo input[type="certificates"] {
-    margin-bottom: 10px;
-  
-    border-color:#000000;
- }
-
- .form-changeInfo input[type="contactEmail"] {
-    margin-bottom: 10px;
-  
-    border-color:#000000;
- }
- 
- .form-changeInfo .form-control:focus {
-    z-index: 2;
- }
-
-
- button{
-    position: relative;
-    height: auto;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    background-color: #767de7;;
     padding: 10px;
     font-size: 16px;
 }
-button:hover {
-   
-   background-color: aquamarine;
- }
- .main2{
-  
-   align-items: center;  
+button:hover{
+
+   background-color: #CDE6F4;
+}
+.buttonBlue{
    position: relative;
-   float: left;
+   height: auto;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+   width: 215px;
+   padding: 10px;
+   font-size: 16px;
+   background-color: #83B4D1;
+   border-radius: 10vh;
+}
+input {
 
+  padding: 12px 20px;
+  margin: 8px 0;
+  margin-top: 0cm;
+  box-sizing: border-box;
+  background-color:#83B4D1;
+  border: none;
+  margin-bottom: 1vh;
+  position: relative;
+}
+::placeholder {
+   color:#000000;
+   opacity: 1; 
  }
+.main {
 
+   left: auto;
+   right: auto;
+   padding: 0px 25px;
+   text-align: justify;
+   position: relative;
+ }
+ .container {
+   display: grid;
+   grid-column-gap: 50px;
+   grid-template-columns: auto auto ;
+   padding: 10px;
+   position: relative;
+ }
+ }
+ .item {
 
+   border:0%;
+   padding: 20px;
+   font-size: 30px;
+   text-align: center;
+   position: relative;
+ }

@@ -5,7 +5,7 @@ include('../Model/Dbh.php');
 include('../Controller/session.php');
 include('../Controller/UserController.php');
 include('../Controller/shifts.php');
-include('../Controller/AssignedShift.php');
-include('../Controller/PreferenceShift.php');
 include('../DTO/User.php');
+include('../DTO/AssignedShift.php');
+include('../DTO/Availability.php');
 ?>
