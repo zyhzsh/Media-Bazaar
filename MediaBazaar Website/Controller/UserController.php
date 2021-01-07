@@ -87,6 +87,7 @@ class UserController
 if (isset($_POST['logoutBtn']) ) {
    $session = session::getInstance();
    $session->__unset('BSN');
+   $session->__unset('user');
    header("Location:?page=default");
    echo 'session stoped';
    return true;

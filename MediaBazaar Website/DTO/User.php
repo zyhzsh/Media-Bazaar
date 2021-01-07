@@ -33,5 +33,12 @@ class User
     {
         return $this->fte;
     }
-    
+    public function GetLanguages()
+    {
+        return $this->languages;
+    }
+    public function GetAddress()
+    {
+        return $this->adress;
+    }
 }

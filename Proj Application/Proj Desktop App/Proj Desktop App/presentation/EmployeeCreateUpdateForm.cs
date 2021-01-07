@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proj_Desktop_App.presentation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,6 +19,7 @@ namespace Proj_Desktop_App
         // For updating employee details
         private bool updateEmployee;
         private Employee employeeToUpdate;
+        RequestChangeStorage requestChangeStorage;
 
         private void InitializeElements()
         {
@@ -137,6 +139,7 @@ namespace Proj_Desktop_App
                         {
                             store.AddEmployee(bsn, firstName, lastName, gender, birthdate, languages, certificates,
                                                   phone, address, email, startDate, endDate, position, department, fte);
+                          
                             this.Close();
                             
                         }
@@ -157,8 +160,12 @@ namespace Proj_Desktop_App
                     // Update employee
                     try
                     {
+                        int bsn = Convert.ToInt32(tbBSN.Text);
                         employeeToUpdate.UpdateInfo(firstName, lastName, gender, languages, certificates,
                             phone, address, email);
+                        requestChangeStorage = new RequestChangeStorage();
+                         requestChangeStorage.DeleteRequest(bsn);
+                     
                     }
                     catch (Exception ex)
                     {
@@ -166,6 +173,8 @@ namespace Proj_Desktop_App
                         MessageBox.Show(ex.Message);
                     }
                     this.Close();
+                    RequestInfoChangeForm requestInfoChangeForm = new RequestInfoChangeForm();
+                    requestInfoChangeForm.GUI();
                 }
             }
         }

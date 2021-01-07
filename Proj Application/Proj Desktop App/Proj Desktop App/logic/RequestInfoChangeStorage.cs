@@ -20,13 +20,13 @@ namespace Proj_Desktop_App
         {
             requestInfoChanges = new List<RequestInfoChange>();
             empMan = new EmployeeManagement();
-            LoadProducts();
         }
         ///<summary>
         ///Reloads requestes from the database into storage
         ///</summary>
-        private void LoadProducts()
+        private void LoadRequests()
         {
+            requestInfoChanges.Clear();
             RequestInfoChange[] tempRequests = empMan.GetAllEmployeesrequests();
             if (tempRequests != null)
             {
@@ -35,6 +35,7 @@ namespace Proj_Desktop_App
         }
         public RequestInfoChange[] GetRequestInfoChanges()
         {
+            LoadRequests();
             return requestInfoChanges.ToArray();
         }
         public Employee GetEmployeeByBsn(int bsn)
