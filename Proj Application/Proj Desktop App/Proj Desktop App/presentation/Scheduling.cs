@@ -30,7 +30,7 @@ namespace Proj_Desktop_App
             //1.update combo box
             foreach(Department d in departments.GetDepartments())
             {
-                cbDepartment.Items.Add(d.Name);
+                cbDepartment.Items.Add(d);
             }
             //2.set default vale for combo box by department
             cbDepartment.SelectedItem = department;
