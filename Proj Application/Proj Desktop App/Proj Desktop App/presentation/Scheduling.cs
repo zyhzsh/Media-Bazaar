@@ -1,17 +1,8 @@
-﻿using Org.BouncyCastle.Asn1;
+﻿using Proj_Desktop_App.dataAccess;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Proj_Desktop_App.dataAccess;
 namespace Proj_Desktop_App
 {
     public partial class Scheduling : Form
@@ -28,7 +19,7 @@ namespace Proj_Desktop_App
             store = new EmployeeStorage(departments);
             schedulemanager = new ScheduleManager(store);
             //1.update combo box
-            foreach(Department d in departments.GetDepartments())
+            foreach (Department d in departments.GetDepartments())
             {
                 cbDepartment.Items.Add(d);
             }
@@ -54,39 +45,39 @@ namespace Proj_Desktop_App
         }
 
         private void btnAddEmpShift_Click(object sender, EventArgs e)
-        {           
-                if (listboxAvailableEmployees.SelectedItems.Count != 0)
+        {
+            if (listboxAvailableEmployees.SelectedItems.Count != 0)
+            {
+                if (seleteddate.Date < DateTime.Now.Date) { MessageBox.Show($"You can't Assign Shift at {seleteddate.ToString("dd/MM/yyyy")}"); return; }
+                listboxAssignedEmployees.Items.Clear();
+                if (CheckAssignedShiftType())
                 {
-                    if (seleteddate.Date < DateTime.Now.Date) { MessageBox.Show($"You can't Assign Shift at {seleteddate.ToString("dd/MM/yyyy")}"); return; }
-                    listboxAssignedEmployees.Items.Clear();
-                    if (CheckAssignedShiftType())  
-                    {                            
-                        List<int> seletedbsn = new List<int>();
-                        foreach (object m in listboxAvailableEmployees.SelectedItems)
-                        {
-                            string extractbsn = Regex.Match(m.ToString(), @"[0-9]+").ToString();
-                            seletedbsn.Add(Convert.ToInt32(extractbsn.ToString()));
-                        }
-                        //3. Assign sift                      
-                        if (schedulemanager.AssignShift(seletedshifttype, seleteddate, seletedbsn))
-                        {
-                            listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate,(Department)cbDepartment.SelectedItem));
-                        }
-                        else { MessageBox.Show("Assign failed, Please try again~!"); }
+                    List<int> seletedbsn = new List<int>();
+                    foreach (object m in listboxAvailableEmployees.SelectedItems)
+                    {
+                        string extractbsn = Regex.Match(m.ToString(), @"[0-9]+").ToString();
+                        seletedbsn.Add(Convert.ToInt32(extractbsn.ToString()));
                     }
-                    else
-                    { MessageBox.Show("please selete the vaild shift type"); }
+                    //3. Assign sift                      
+                    if (schedulemanager.AssignShift(seletedshifttype, seleteddate, seletedbsn))
+                    {
+                        listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate, (Department)cbDepartment.SelectedItem));
+                    }
+                    else { MessageBox.Show("Assign failed, Please try again~!"); }
                 }
                 else
-                {
-                    MessageBox.Show("Please select Employee then assign shift");
-                }
+                { MessageBox.Show("please selete the vaild shift type"); }
+            }
+            else
+            {
+                MessageBox.Show("Please select Employee then assign shift");
+            }
         }
 
         private void listboxAvailableEmployees_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateEmployeesInfo();
-        }        
+        }
         private void btnRmvEmployeeShift_Click(object sender, EventArgs e)
         {
             List<int> seletedbsn = new List<int>();
@@ -99,7 +90,7 @@ namespace Proj_Desktop_App
             listboxAssignedEmployees.Items.Clear();
             schedulemanager.RemoveShift(seleteddate, seletedbsn);
             seleteddate = monthCalendarScheduling.SelectionStart;
-            listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate,(Department)cbDepartment.SelectedItem));
+            listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate, (Department)cbDepartment.SelectedItem));
         }
 
         private void listboxAssignedEmployees_SelectedIndexChanged(object sender, EventArgs e)
@@ -114,7 +105,7 @@ namespace Proj_Desktop_App
             }
             foreach (int bsn in seletedbsn)
             {
-               tempoemployees.Add(store.GetEmployee(bsn));
+                tempoemployees.Add(store.GetEmployee(bsn));
             }
             foreach (Employee tempo in tempoemployees)
             {
@@ -254,7 +245,7 @@ namespace Proj_Desktop_App
             {
                 if (x.GetDate().DayOfWeek.ToString() == week)
                 {
-                    temp = " "+x.GetDate().ToString("MM-dd")+" "+x.GetShiftTypeToString();
+                    temp = " " + x.GetDate().ToString("MM-dd") + " " + x.GetShiftTypeToString();
                 }
             }
             return temp;

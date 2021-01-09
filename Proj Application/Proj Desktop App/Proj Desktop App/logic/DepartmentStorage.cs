@@ -1,9 +1,6 @@
-﻿using System;
+﻿using Proj_Desktop_App.dataAccess;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Proj_Desktop_App.dataAccess;
 
 namespace Proj_Desktop_App
 {
@@ -27,19 +24,48 @@ namespace Proj_Desktop_App
             }
         }
 
-        public void AddDepartment(string name, bool sellsProducts)
+        public bool AddDepartment(string name, bool sellsProducts)
         {
-            throw new NotImplementedException();
+            Department department = new Department(name, sellsProducts);
+
+            if (departmentMan.AddDepartment(department))
+            {
+
+                this.departments.Add(department);
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        public void UpdateDepartment(int id, string newName, bool sellsProducts)
+        public bool UpdateDepartment(int id, string newName, bool sellsProducts)
         {
-            throw new NotImplementedException();
+            if (departmentMan.UpdateDepartment(id, newName, sellsProducts))
+            {
+                GetDepartment(id).ChangeInfo(newName, sellsProducts);
+
+                return true;
+            }
+            else 
+            {
+                return false;
+            }
         }
 
-        public void RemoveDepartment(int id)
+        public bool RemoveDepartment(int id)
         {
-            throw new NotImplementedException();
+            if (departmentMan.RemoveDepartment(GetDepartment(id)))
+            {
+                departments.Remove(GetDepartment(id));
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public Department GetDepartment(int id)

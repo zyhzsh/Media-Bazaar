@@ -1,9 +1,5 @@
 ﻿using Proj_Desktop_App.dataAccess;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Proj_Desktop_App
 {
@@ -114,14 +110,14 @@ namespace Proj_Desktop_App
             }
 
             string status = "";
-            if (IsCloseToEndDate()) 
-                { status = "ending"; }
+            if (IsCloseToEndDate())
+            { status = "ending"; }
             else if (IsActive())
-                { status = "active"; }
+            { status = "active"; }
             else if (EndDate < DateTime.Today)
-                { status = "ended";}
+            { status = "ended"; }
             else if (StartDate > DateTime.Today)
-                { status = "not started"; }
+            { status = "not started"; }
 
 
             return $"{StartDate:dd/MM/yyyy},{endDateStr},{Position},{Department},{Fte},€{Salary},{status}";

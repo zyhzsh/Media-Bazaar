@@ -1,13 +1,7 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data;
-using MySql.Data.MySqlClient;
-using MySql.Data.Types;
-using Renci.SshNet.Messages;
 
 namespace Proj_Desktop_App.dataAccess
 {
@@ -276,7 +270,7 @@ namespace Proj_Desktop_App.dataAccess
                                                             requester_desc,
                                                             dr["status"].ToString());
                 }
-                
+
                 return request;
             }
             catch (Exception e)

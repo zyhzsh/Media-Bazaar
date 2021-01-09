@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Org.BouncyCastle.X509;
-
-namespace Proj_Desktop_App
+﻿namespace Proj_Desktop_App
 {
     public class RestockRequest
     {
@@ -21,7 +14,7 @@ namespace Proj_Desktop_App
         public string requester_desc { get; private set; }
         public string judge_desc { get; private set; }
         public string worker_desc { get; private set; }
-        
+
         public string status { get; private set; }
         /// <summary>
         /// Used when adding new requests to database

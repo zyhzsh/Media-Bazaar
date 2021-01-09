@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Proj_Desktop_App.presentation
 {
     public partial class DepartmentCreateUpdateFrom : Form
     {
-        private  bool updateDepartment;
+        private bool updateDepartment;
 
         private DepartmentStorage departments;
         private Department departmentToUpdate;

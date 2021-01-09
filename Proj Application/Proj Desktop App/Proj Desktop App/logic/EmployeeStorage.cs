@@ -1,11 +1,6 @@
 ﻿using Proj_Desktop_App.dataAccess;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Proj_Desktop_App
 {
@@ -152,7 +147,7 @@ namespace Proj_Desktop_App
         public Employee[] GetEmployees(Department department)
         {
             List<Employee> temp = new List<Employee>();
-            foreach(Employee e in GetEmployees(true))
+            foreach (Employee e in GetEmployees(true))
             {
                 if (e.IsEmployed() == true && e.GetDepartment().Id == department.Id)
                 {

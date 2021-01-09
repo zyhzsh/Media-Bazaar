@@ -1,10 +1,7 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MySql.Data;
-using MySql.Data.MySqlClient;
+using System.Windows.Forms;
 
 namespace Proj_Desktop_App.dataAccess
 {
@@ -41,5 +38,99 @@ namespace Proj_Desktop_App.dataAccess
                 return null;
             }
         }
+
+        public bool AddDepartment(Department department)
+        {
+            if (department != null)
+            {
+                try
+                {
+                    using (MySqlConnection conn = base.GetConnection())
+                    {
+                        string sql =
+                            "INSERT INTO department (department_name, sells_products) VALUES (@name, @sells)";
+                        MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+                        cmd.Parameters.AddWithValue("@name", department.Name);
+                        cmd.Parameters.AddWithValue("@sells", department.SellsProducts);
+
+                        conn.Open();
+                        int result = cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), ex.Message);
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool UpdateDepartment(int id, string name, bool sells)
+        {
+            try
+            {
+                using (MySqlConnection conn = base.GetConnection())
+                {
+                    string sql =
+                            "UPDATE department SET department_name = @name, sells_product = @sell Where department_id = @id";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+                    cmd.Parameters.AddWithValue("@name", name);
+                    cmd.Parameters.AddWithValue("@sells", sells);
+                    cmd.Parameters.AddWithValue("@id", id);
+                    conn.Open();
+                    if (cmd.ExecuteNonQuery() == 1)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), ex.Message);
+                return false;
+            }
+        }
+
+        public bool RemoveDepartment(Department department)
+        {
+            if (department != null)
+            {
+                try
+                {
+                    using (MySqlConnection conn = base.GetConnection())
+                    {
+                        string sql =
+                            "DELETE FROM department WHERE department_id = @id";
+                        MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+                        cmd.Parameters.AddWithValue("@id", department.Id);
+                        conn.Open();
+                        int result = cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), ex.Message);
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }

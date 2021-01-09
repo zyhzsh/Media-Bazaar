@@ -1,12 +1,7 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data;
-using MySql.Data.MySqlClient;
 
 namespace Proj_Desktop_App.dataAccess
 {
@@ -51,15 +46,15 @@ namespace Proj_Desktop_App.dataAccess
                             {
                                 contracts.Add(contract);
                             }
-                        } 
+                        }
                         while (dr.Read());
                         // Load the contracts
                         employee.LoadContracts(contracts.ToArray());
 
                         return employee;
                     }
-                    else 
-                    { 
+                    else
+                    {
                         return null;
                     }
                 }
@@ -119,7 +114,7 @@ namespace Proj_Desktop_App.dataAccess
                             }
                         }
                         while (!newEmployee);
-                        
+
                         // Load the contracts and add employee
                         employee.LoadContracts(contracts.ToArray());
                         employees.Add(employee);

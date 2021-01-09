@@ -1,12 +1,4 @@
-﻿using Proj_Desktop_App.dataAccess;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 
 namespace Proj_Desktop_App
@@ -17,7 +9,7 @@ namespace Proj_Desktop_App
         private ProductCRUDForm crudForm;
         private Product updateProduct;
         private DepartmentStorage departmentStorage;
-        
+
         public ProductAddUpdateForm(ProductCRUDForm crudForm, ProductStorage prdStorage, DepartmentStorage departments)
         {
             InitializeComponent();
@@ -72,7 +64,7 @@ namespace Proj_Desktop_App
                 double sell = (double)Math.Round(numSellingPrice.Value, 2);
                 if (btnConfirm.Text == "Add")
                 {
-                    
+
                     if (string.IsNullOrEmpty(rtbDescription.Text))
                     {
                         prdStorage.Add(department, tbProductName.Text, tbBrand.Text, buy, sell);

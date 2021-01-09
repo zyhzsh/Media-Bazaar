@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Proj_Desktop_App
+﻿namespace Proj_Desktop_App
 {
     public class Department
     {
@@ -17,6 +11,15 @@ namespace Proj_Desktop_App
             Id = id;
             Name = name;
             SellsProducts = sellsProducts;
+        }
+
+        public void ChangeInfo(string updatedName, bool sells)
+        {
+            if (!string.IsNullOrEmpty(updatedName))
+            {
+                this.Name = updatedName;
+            }
+            SellsProducts = sells;
         }
 
         public override string ToString()

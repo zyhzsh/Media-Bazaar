@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Proj_Desktop_App
@@ -265,7 +259,7 @@ namespace Proj_Desktop_App
                 if (activeContract != null)
                 {
                     // Open form for terminating a contarct
-                    contrUForm = new ContractUpdateForm(selectedEmployee, activeContract, ContractAction.Terminate,departments);
+                    contrUForm = new ContractUpdateForm(selectedEmployee, activeContract, ContractAction.Terminate, departments);
                     contrUForm.FormClosed += ContrUForm_FormClosed;
                 }
                 else

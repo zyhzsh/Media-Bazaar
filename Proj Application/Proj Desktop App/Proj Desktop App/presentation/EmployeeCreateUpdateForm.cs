@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Proj_Desktop_App
@@ -78,7 +71,7 @@ namespace Proj_Desktop_App
                 cbDepartment.SelectedItem = departmentStorage.GetDepartment(employeeToUpdate.GetDepartment().Id);
                 nudFTE.Value = Convert.ToDecimal(employeeToUpdate.GetFTE());
             }
-            catch(Exception)
+            catch (Exception)
             {
                 this.Close();
                 MessageBox.Show("Something went wrong!");
@@ -141,7 +134,7 @@ namespace Proj_Desktop_App
                             store.AddEmployee(bsn, firstName, lastName, gender, birthdate, languages, certificates,
                                                   phone, address, email, startDate, endDate, position, department, fte);
                             this.Close();
-                            
+
                         }
                         catch (Exception ex)
                         {

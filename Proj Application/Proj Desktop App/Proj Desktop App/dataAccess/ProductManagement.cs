@@ -1,13 +1,7 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data;
-using MySql.Data.MySqlClient;
-using MySql.Data.Types;
-using Renci.SshNet.Messages;
 
 namespace Proj_Desktop_App.dataAccess
 {
@@ -22,7 +16,7 @@ namespace Proj_Desktop_App.dataAccess
 
         public void AddProduct(Department belongingDepartment, string productName, string brand, double bought_price, double sold_price)
         {
-            
+
             try
             {
                 using (MySqlConnection conn = base.GetConnection())
@@ -50,7 +44,7 @@ namespace Proj_Desktop_App.dataAccess
         {
             try
             {
-                using(MySqlConnection conn = base.GetConnection())
+                using (MySqlConnection conn = base.GetConnection())
                 {
                     string sql = "INSERT INTO product(department_id, productname, brand, bought_price, sold_price, current_stock, description)" +
                             "VALUES (@department_id, @productname, @brand, @bought_price, @sold_price, @current_stock, @description)";
@@ -78,7 +72,7 @@ namespace Proj_Desktop_App.dataAccess
         {
             try
             {
-                using(MySqlConnection conn = base.GetConnection())
+                using (MySqlConnection conn = base.GetConnection())
                 {
                     string sql = "UPDATE product SET department_id = @department_id, productname = @productname, brand = @brand, " +
                          "bought_price = @bought_price, sold_price = @sold_price, description = @description " +
@@ -108,7 +102,7 @@ namespace Proj_Desktop_App.dataAccess
         {
             try
             {
-                using(MySqlConnection conn = base.GetConnection())
+                using (MySqlConnection conn = base.GetConnection())
                 {
                     string sql = "UPDATE product SET department_id = @department_id, productname = @productname, brand = @brand, " +
                          "bought_price = @bought_price, sold_price = @sold_price " +
@@ -133,7 +127,7 @@ namespace Proj_Desktop_App.dataAccess
                 MessageBox.Show(e.ToString());
             }
         }
-        
+
         public void RemoveProduct(int productcode)
         {
             try
@@ -168,7 +162,7 @@ namespace Proj_Desktop_App.dataAccess
                     while (dr.Read())
                     {
                         Product product = InitializeProduct(dr);
-                        if(product != null)
+                        if (product != null)
                         {
                             products.Add(product);
                         }
@@ -202,7 +196,7 @@ namespace Proj_Desktop_App.dataAccess
                     while (dr.Read())
                     {
                         Sale soldProduct = InitializeSale(dr);
-                        if(soldProduct != null)
+                        if (soldProduct != null)
                         {
                             sales.Add(soldProduct);
                         }
@@ -210,7 +204,7 @@ namespace Proj_Desktop_App.dataAccess
                     return sales.ToArray();
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 MessageBox.Show(e.Message);
                 return null;
@@ -219,7 +213,7 @@ namespace Proj_Desktop_App.dataAccess
 
         public Sale[] GetBestSellingProducts(DateTime startPeriod)
         {
-            
+
             try
             {
                 using (MySqlConnection conn = base.GetConnection())
@@ -242,7 +236,7 @@ namespace Proj_Desktop_App.dataAccess
                     }
                     return sales.ToArray();
                 }
-                    
+
             }
             catch (Exception e)
             {
@@ -295,7 +289,7 @@ namespace Proj_Desktop_App.dataAccess
                 Department department = departmentStorage.GetDepartment(Convert.ToInt32(dr["department_id"]));
 
                 string description = "no description";
-                if(dr["description"] != DBNull.Value)
+                if (dr["description"] != DBNull.Value)
                 {
                     description = dr["description"].ToString();
                 }
@@ -327,12 +321,12 @@ namespace Proj_Desktop_App.dataAccess
                                 Convert.ToInt32(dr["sales"]));
                 return sale;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 MessageBox.Show(e.Message);
                 return null;
             }
-            
+
         }
     }
 }

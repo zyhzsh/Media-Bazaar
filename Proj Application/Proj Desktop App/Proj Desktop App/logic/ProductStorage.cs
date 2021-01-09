@@ -1,9 +1,5 @@
-﻿using System;
+﻿using Proj_Desktop_App.dataAccess;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Proj_Desktop_App.dataAccess;
 
 namespace Proj_Desktop_App
 {
@@ -36,9 +32,9 @@ namespace Proj_Desktop_App
 
         public Product GetProductById(int id)
         {
-            foreach(Product p in products)
+            foreach (Product p in products)
             {
-                if(p.id == id)
+                if (p.id == id)
                 {
                     return p;
                 }
@@ -48,9 +44,9 @@ namespace Proj_Desktop_App
         public Product[] ProductsByFloor(Department dep)
         {
             List<Product> flooredProducts = new List<Product>();
-            foreach(Product p in products)
+            foreach (Product p in products)
             {
-                if(p.Department.Id == dep.Id)
+                if (p.Department.Id == dep.Id)
                 {
                     flooredProducts.Add(p);
                 }

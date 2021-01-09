@@ -1,8 +1,4 @@
-﻿﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace Proj_Desktop_App
 {
@@ -17,7 +13,7 @@ namespace Proj_Desktop_App
             this.date = date;
             this.shiftType = shiftType;
         }
-        public Employee GetEmployee() {return this.employee;}
+        public Employee GetEmployee() { return this.employee; }
         public DateTime GetDate() { return this.date; }
         public ShiftType GetShiftType() { return this.shiftType; }
         public string GetShiftTypeToString()

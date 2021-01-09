@@ -1,13 +1,4 @@
-﻿using Proj_Desktop_App.dataAccess;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 
 namespace Proj_Desktop_App
@@ -50,9 +41,9 @@ namespace Proj_Desktop_App
                 lvProducts.Items.Add(item);
             }
 
-            foreach(ColumnHeader column in lvProducts.Columns)
+            foreach (ColumnHeader column in lvProducts.Columns)
             {
-                if(column.Text == "Name" || column.Text == "Brand")
+                if (column.Text == "Name" || column.Text == "Brand")
                 {
                     column.Width = -1;
                 }
@@ -91,7 +82,7 @@ namespace Proj_Desktop_App
                 ReloadRestockRequests();
                 foreach (ListViewItem item in lvProducts.SelectedItems)
                 {
-                    RestockRequest req = new RestockRequest(Convert.ToInt32(item.Text), item.SubItems[0].Text, salesManagerDepartment , this.salesManagerBsn, (int)numStockRequest.Value, tbRestockDescription.Text, "PENDING");
+                    RestockRequest req = new RestockRequest(Convert.ToInt32(item.Text), item.SubItems[0].Text, salesManagerDepartment, this.salesManagerBsn, (int)numStockRequest.Value, tbRestockDescription.Text, "PENDING");
                     reqStorage.Add(req);
                     ReloadRestockRequests();
                 }
@@ -128,7 +119,7 @@ namespace Proj_Desktop_App
                     //ReloadProductsByFloors();
                     if (tbProductSearchAttribute.Text.Length > 0)
                     {
-                        for(int i = lvProducts.Items.Count - 1; i >= 0; i--)
+                        for (int i = lvProducts.Items.Count - 1; i >= 0; i--)
                         {
                             if (!lvProducts.Items[i].SubItems[1].ToString().Contains(tbProductSearchAttribute.Text))
                             {

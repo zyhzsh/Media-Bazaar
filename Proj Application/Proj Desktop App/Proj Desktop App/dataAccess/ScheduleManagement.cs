@@ -1,15 +1,11 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data;
-using MySql.Data.MySqlClient;
 
 namespace Proj_Desktop_App.dataAccess
 {
-    class ScheduleManagement: DatabaseConnection
+    class ScheduleManagement : DatabaseConnection
     {
 
         private static List<AssignedShift> assignedShifts;
@@ -35,7 +31,7 @@ namespace Proj_Desktop_App.dataAccess
         ///Load this month of schdule data from database
         /// </summary>
         public void LoadSchduleFormDateBase(DateTime date)
-        {   
+        {
             if (assignedShifts is null) { assignedShifts = new List<AssignedShift>(); }
             else { assignedShifts.Clear(); }
 
@@ -76,20 +72,20 @@ namespace Proj_Desktop_App.dataAccess
                     availableShifts.Add(new PreferenceShift(employeeStorage.GetEmployee(Convert.ToInt32(dr[0])), (DateTime)dr[1], shifttype));
                 }
                 conn.Close();
-                   
+
             }
             catch (Exception ex)
             {
                 assignedShifts = new List<AssignedShift>();
                 availableShifts = new List<PreferenceShift>();
                 MessageBox.Show(ex.Message);
-            }          
+            }
         }
         /// <summary>
         /// Update the shift data to the database
         /// </summary>
         /// <param name="UpdatedShifts"></param>
-        public void UpDateSchdule(List<AssignedShift> shifts,List<string> sql)
+        public void UpDateSchdule(List<AssignedShift> shifts, List<string> sql)
         {
 
             string sqlstatement = "";
@@ -99,16 +95,16 @@ namespace Proj_Desktop_App.dataAccess
             }
             if (sqlstatement == "") { return; }
             MySqlConnection conn = base.GetConnection();
-            try 
+            try
             {
                 MySqlCommand cmd = new MySqlCommand(sqlstatement, conn);
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                assignedShifts = shifts;    
+                assignedShifts = shifts;
             }
             catch (Exception ex)
             { MessageBox.Show(ex.Message); }
-            finally { conn.Close(); }        
+            finally { conn.Close(); }
         }
     }
 }

@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using Proj_Desktop_App.presentation;
+using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Proj_Desktop_App.presentation;
 
 namespace Proj_Desktop_App
 {
@@ -60,7 +54,7 @@ namespace Proj_Desktop_App
             else if (position == PositionType.Depot_Manager)
             {
                 prdStorage = new ProductStorage(deptStorage);
-                reqStorage = new RestockRequestStorage(deptStorage); 
+                reqStorage = new RestockRequestStorage(deptStorage);
                 // Schedule
 
                 tabProducts.Visible = true;
