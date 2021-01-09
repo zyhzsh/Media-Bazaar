@@ -20,11 +20,11 @@ namespace Proj_Desktop_App
 
         private DepartmentStorage departments;
 
-        public AdminForm(DepartmentStorage departments)
+        public AdminForm(EmployeeStorage emplStorage, DepartmentStorage departments)
         {
             InitializeComponent();
             this.departments = departments;
-            this.emplStorage = new EmployeeStorage(this.departments);
+            this.emplStorage = emplStorage;
             cbShowEmployed.Checked = true;
             selectedEmployee = null;
             cbSearchBy.Items.AddRange(new string[] { "Name", "BSN" });

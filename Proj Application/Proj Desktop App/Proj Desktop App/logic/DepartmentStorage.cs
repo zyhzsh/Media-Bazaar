@@ -27,7 +27,17 @@ namespace Proj_Desktop_App
             }
         }
 
-        public void AddDepartment()
+        public void AddDepartment(string name, bool sellsProducts)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateDepartment(int id, string newName, bool sellsProducts)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveDepartment(int id)
         {
             throw new NotImplementedException();
         }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Proj_Desktop_App.presentation;
 
 namespace Proj_Desktop_App
 {
@@ -17,6 +18,7 @@ namespace Proj_Desktop_App
 
         // Forms to include in tabs
         private AdminForm employeesForm;
+        private DepartmentsForm departmentsForm;
         private ProductCRUDForm productCRUD;
         private ProductStatistics productStatistics;
         private Form restocks;
@@ -27,6 +29,7 @@ namespace Proj_Desktop_App
 
         // Logic layer
         //ScheduleStorage?
+        private EmployeeStorage emplStorage;
         private ProductStorage prdStorage;
         private RestockRequestStorage reqStorage;
 
@@ -42,11 +45,15 @@ namespace Proj_Desktop_App
             deptStorage = departments;
             if (position == PositionType.Administrator)
             {
+                emplStorage = new EmployeeStorage(deptStorage);
+
                 tabEmployees.Visible = true;
-                employeesForm = new AdminForm(deptStorage);
+                employeesForm = new AdminForm(emplStorage, deptStorage);
                 InitializeForm(employeesForm);
 
                 tabDepartments.Visible = true;
+                departmentsForm = new DepartmentsForm(emplStorage, prdStorage, deptStorage);
+                InitializeForm(departmentsForm);
 
                 tabEmployees.PerformClick();
             }
