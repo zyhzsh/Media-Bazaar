@@ -31,16 +31,35 @@ namespace Proj_Desktop_App.presentation
 
         private void UpdateGUI()
         {
-            // TO DO:
             // Load all employees into list view
             Employee[] employees = emplStorage.GetEmployees(selectedDepartment);
             this.nrOfEmployees = employees.Length;
             lblNrOfEmployees.Text = nrOfEmployees.ToString();
+            lvEmployees.Items.Clear();
+            if (employees.Length == 0) { lvEmployees.Enabled = false; }
+            else { lvEmployees.Enabled = true; }
+            foreach (Employee employee in employees)
+            {
+                ListViewItem item = new ListViewItem(employee.GetBSN().ToString());
+                string[] subitems = new string[] { employee.firstName, employee.lastName, employee.GetPosition().ToString() };
+                item.SubItems.AddRange(subitems);
+                lvEmployees.Items.Add(item);
+            }
 
             // Load all products into list view
             Product[] products = prdStorage.ProductsByFloor(selectedDepartment);
             this.nrOfProducts = products.Length;
             lblNrOfProducts.Text = nrOfProducts.ToString();
+            lvProducts.Items.Clear();
+            if (products.Length == 0) { lvProducts.Enabled = false; }
+            else { lvProducts.Enabled = true; }
+            foreach (Product product in products)
+            {
+                ListViewItem item = new ListViewItem(product.id.ToString());
+                string[] subitems = new string[] { product.Name, product.Brand };
+                item.SubItems.AddRange(subitems);
+                lvProducts.Items.Add(item);
+            }
         }
 
         private void cbDepartment_SelectedIndexChanged(object sender, EventArgs e)
@@ -52,8 +71,16 @@ namespace Proj_Desktop_App.presentation
         private void DepartmentCUForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             UpdateGUI();
+            cbDepartment.Items.Clear();
             cbDepartment.Items.AddRange(this.departments.GetDepartments());
-            cbDepartment.SelectedIndex = 0;
+            try
+            {
+                cbDepartment.SelectedItem = selectedDepartment;
+            }
+            catch (Exception)
+            {
+                cbDepartment.SelectedIndex = 0;
+            }
             departmentCUForm = null;
         }
 
@@ -100,7 +127,8 @@ namespace Proj_Desktop_App.presentation
                 }
                 else
                 {
-                    MessageBox.Show("You can't remove this department because it contains employees/products.");
+                    string message = "You can't remove this department because it contains employees/products.";
+                    MessageBox.Show(message, "Action not possible", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else

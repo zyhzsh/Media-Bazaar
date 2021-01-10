@@ -13,6 +13,20 @@
             SellsProducts = sellsProducts;
         }
 
+        public bool SetId(int id)
+        {
+            // Only when setting the auto-incremented id from DB
+            if (Id == -1)
+            {
+                Id = id;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public void ChangeInfo(string updatedName, bool sells)
         {
             if (!string.IsNullOrEmpty(updatedName))

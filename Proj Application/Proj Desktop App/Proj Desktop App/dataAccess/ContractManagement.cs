@@ -14,7 +14,7 @@ namespace Proj_Desktop_App.dataAccess
                 using (MySqlConnection conn = base.GetConnection())
                 {
                     string sql =
-                        "SELECT contract_id" +
+                        "SELECT contract_id " +
                         "FROM contract " +
                         "WHERE BSN = @bsn " +
                         "ORDER BY start_date DESC " +

@@ -40,6 +40,13 @@ namespace Proj_Desktop_App.presentation
             this.btnRemoveDepartment = new System.Windows.Forms.Button();
             this.lblNrOfEmployees = new System.Windows.Forms.Label();
             this.lblNrOfProducts = new System.Windows.Forms.Label();
+            this.chBSN = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chFName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chLName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chPosition = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chCode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chBrand = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // cbDepartment
@@ -65,21 +72,32 @@ namespace Proj_Desktop_App.presentation
             // 
             // lvEmployees
             // 
+            this.lvEmployees.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.chBSN,
+            this.chFName,
+            this.chLName,
+            this.chPosition});
             this.lvEmployees.HideSelection = false;
             this.lvEmployees.Location = new System.Drawing.Point(21, 113);
             this.lvEmployees.Name = "lvEmployees";
             this.lvEmployees.Size = new System.Drawing.Size(426, 314);
             this.lvEmployees.TabIndex = 2;
             this.lvEmployees.UseCompatibleStateImageBehavior = false;
+            this.lvEmployees.View = System.Windows.Forms.View.Details;
             // 
             // lvProducts
             // 
+            this.lvProducts.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.chCode,
+            this.chName,
+            this.chBrand});
             this.lvProducts.HideSelection = false;
             this.lvProducts.Location = new System.Drawing.Point(463, 113);
             this.lvProducts.Name = "lvProducts";
             this.lvProducts.Size = new System.Drawing.Size(426, 314);
             this.lvProducts.TabIndex = 3;
             this.lvProducts.UseCompatibleStateImageBehavior = false;
+            this.lvProducts.View = System.Windows.Forms.View.Details;
             // 
             // btnAddDepartment
             // 
@@ -168,6 +186,41 @@ namespace Proj_Desktop_App.presentation
             this.lblNrOfProducts.TabIndex = 10;
             this.lblNrOfProducts.Text = "00";
             // 
+            // chBSN
+            // 
+            this.chBSN.Text = "123456789";
+            this.chBSN.Width = 90;
+            // 
+            // chFName
+            // 
+            this.chFName.Text = "First name";
+            this.chFName.Width = 100;
+            // 
+            // chLName
+            // 
+            this.chLName.Text = "Last name";
+            this.chLName.Width = 100;
+            // 
+            // chPosition
+            // 
+            this.chPosition.Text = "Position";
+            this.chPosition.Width = 100;
+            // 
+            // chCode
+            // 
+            this.chCode.Text = "Code";
+            this.chCode.Width = 120;
+            // 
+            // chName
+            // 
+            this.chName.Text = "Name";
+            this.chName.Width = 120;
+            // 
+            // chBrand
+            // 
+            this.chBrand.Text = "Brand";
+            this.chBrand.Width = 120;
+            // 
             // DepartmentsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -206,5 +259,12 @@ namespace Proj_Desktop_App.presentation
         private System.Windows.Forms.Button btnRemoveDepartment;
         private System.Windows.Forms.Label lblNrOfEmployees;
         private System.Windows.Forms.Label lblNrOfProducts;
+        private System.Windows.Forms.ColumnHeader chBSN;
+        private System.Windows.Forms.ColumnHeader chFName;
+        private System.Windows.Forms.ColumnHeader chLName;
+        private System.Windows.Forms.ColumnHeader chPosition;
+        private System.Windows.Forms.ColumnHeader chCode;
+        private System.Windows.Forms.ColumnHeader chName;
+        private System.Windows.Forms.ColumnHeader chBrand;
     }
 }

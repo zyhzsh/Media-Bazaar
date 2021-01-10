@@ -43,6 +43,7 @@ namespace Proj_Desktop_App.presentation
             // 
             // tbName
             // 
+            this.tbName.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbName.Location = new System.Drawing.Point(123, 56);
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(229, 27);

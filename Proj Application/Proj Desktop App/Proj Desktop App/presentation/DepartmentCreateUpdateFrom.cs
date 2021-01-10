@@ -74,6 +74,7 @@ namespace Proj_Desktop_App.presentation
                     try
                     {
                         departments.UpdateDepartment(departmentToUpdate.Id, name, sellsProducts);
+                        this.Close();
                     }
                     catch (Exception ex)
                     {

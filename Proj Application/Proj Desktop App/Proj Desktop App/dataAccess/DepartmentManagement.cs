@@ -39,6 +39,34 @@ namespace Proj_Desktop_App.dataAccess
             }
         }
 
+        public int GetLatestDepartmentId()
+        {
+            try
+            {
+                using (MySqlConnection conn = base.GetConnection())
+                {
+                    string sql =
+                        "SELECT department_id " +
+                        "FROM department " +
+                        "ORDER BY department_id DESC " +
+                        "LIMIT 1;";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    conn.Open();
+                    MySqlDataReader dr = cmd.ExecuteReader();
+
+                    if (dr.Read())
+                    {
+                        return Convert.ToInt32(dr["department_id"]);
+                    }
+                    else { return -1; }
+                }
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+        }
+
         public bool AddDepartment(Department department)
         {
             if (department != null)
@@ -48,7 +76,7 @@ namespace Proj_Desktop_App.dataAccess
                     using (MySqlConnection conn = base.GetConnection())
                     {
                         string sql =
-                            "INSERT INTO department (department_name, sells_products) VALUES (@name, @sells)";
+                            "INSERT INTO department (department_name, sells_products) VALUES (@name, @sells);";
                         MySqlCommand cmd = new MySqlCommand(sql, conn);
 
                         cmd.Parameters.AddWithValue("@name", department.Name);
@@ -78,7 +106,7 @@ namespace Proj_Desktop_App.dataAccess
                 using (MySqlConnection conn = base.GetConnection())
                 {
                     string sql =
-                            "UPDATE department SET department_name = @name, sells_product = @sell Where department_id = @id";
+                            "UPDATE department SET department_name = @name, sells_products = @sells WHERE department_id = @id;";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
 
                     cmd.Parameters.AddWithValue("@name", name);
@@ -111,7 +139,7 @@ namespace Proj_Desktop_App.dataAccess
                     using (MySqlConnection conn = base.GetConnection())
                     {
                         string sql =
-                            "DELETE FROM department WHERE department_id = @id";
+                            "DELETE FROM department WHERE department_id = @id;";
                         MySqlCommand cmd = new MySqlCommand(sql, conn);
 
                         cmd.Parameters.AddWithValue("@id", department.Id);

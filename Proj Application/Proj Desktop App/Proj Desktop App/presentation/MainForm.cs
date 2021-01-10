@@ -45,6 +45,7 @@ namespace Proj_Desktop_App
                 employeesForm = new AdminForm(emplStorage, deptStorage);
                 InitializeForm(employeesForm);
 
+                prdStorage = new ProductStorage(deptStorage);
                 tabDepartments.Visible = true;
                 departmentsForm = new DepartmentsForm(emplStorage, prdStorage, deptStorage);
                 InitializeForm(departmentsForm);
@@ -136,7 +137,7 @@ namespace Proj_Desktop_App
         {
             if (selectedTab != tabDepartments)
             {
-                //ShowForm(scheduling, tabDepartments);
+                ShowForm(departmentsForm, tabDepartments);
             }
         }
 

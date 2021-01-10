@@ -26,11 +26,12 @@ namespace Proj_Desktop_App
 
         public bool AddDepartment(string name, bool sellsProducts)
         {
-            Department department = new Department(name, sellsProducts);
+            Department department = new Department(-1, name, sellsProducts);
 
             if (departmentMan.AddDepartment(department))
             {
-
+                int id = departmentMan.GetLatestDepartmentId();
+                department.SetId(id);
                 this.departments.Add(department);
 
                 return true;
