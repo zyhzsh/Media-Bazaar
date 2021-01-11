@@ -1,19 +1,18 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data;
-using MySql.Data.MySqlClient;
-using MySql.Data.Types;
-using Renci.SshNet.Messages;
 
 namespace Proj_Desktop_App.dataAccess
 {
     class RestockRequestManagement : DatabaseConnection
     {
-        public RestockRequestManagement() : base() { }
+        DepartmentStorage departmentStorage;
+
+        public RestockRequestManagement(DepartmentStorage departmentStorage) : base()
+        {
+            this.departmentStorage = departmentStorage;
+        }
 
         private int GetProductStock(int productcode)
         {
@@ -207,6 +206,9 @@ namespace Proj_Desktop_App.dataAccess
         {
             try
             {
+                // Get department by id
+                Department department = departmentStorage.GetDepartment(Convert.ToInt32(dr["department_id"]));
+
                 bool judged = dr["judge_bsn"] != DBNull.Value;
                 bool completed = judged && dr["restocker_bsn"] != DBNull.Value;
 
@@ -234,7 +236,7 @@ namespace Proj_Desktop_App.dataAccess
                     request = new RestockRequest(Convert.ToInt32(dr["ID"]),
                                                             Convert.ToInt32(dr["productcode"]),
                                                             dr["productname"].ToString(),
-                                                            (Departments)dr["department_id"],
+                                                            department,
                                                             Convert.ToInt32(dr["requester_bsn"]),
                                                             Convert.ToInt32(dr["judge_bsn"]),
                                                             Convert.ToInt32(dr["restocker_bsn"]),
@@ -249,7 +251,7 @@ namespace Proj_Desktop_App.dataAccess
                     request = new RestockRequest(Convert.ToInt32(dr["ID"]),
                                                             Convert.ToInt32(dr["productcode"]),
                                                             dr["productname"].ToString(),
-                                                            (Departments)(dr["department_id"]),
+                                                            department,
                                                             Convert.ToInt32(dr["requester_bsn"]),
                                                             Convert.ToInt32(dr["judge_bsn"]),
                                                             Convert.ToInt32(dr["restock_amount"]),
@@ -262,13 +264,13 @@ namespace Proj_Desktop_App.dataAccess
                     request = new RestockRequest(Convert.ToInt32(dr["ID"]),
                                                             Convert.ToInt32(dr["productcode"]),
                                                             dr["productname"].ToString(),
-                                                            (Departments)(dr["department_id"]),
+                                                            department,
                                                             Convert.ToInt32(dr["requester_bsn"]),
                                                             Convert.ToInt32(dr["restock_amount"]),
                                                             requester_desc,
                                                             dr["status"].ToString());
                 }
-                
+
                 return request;
             }
             catch (Exception e)

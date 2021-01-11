@@ -1,12 +1,5 @@
 ﻿using Proj_Desktop_App.dataAccess;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Proj_Desktop_App
@@ -54,15 +47,18 @@ namespace Proj_Desktop_App
             // Credentials are correct
             if (bsn != -1)
             {
+                // Load departments from DB
+                DepartmentStorage departments = new DepartmentStorage();
+
                 // Open app for particualr employee
-                EmployeeManagement emplMan = new EmployeeManagement();
+                EmployeeManagement emplMan = new EmployeeManagement(departments);
                 Employee currentUser = emplMan.GetEmployee(bsn);
 
                 if (currentUser != null)
                 {
                     if (currentUser.IsEmployed())
                     {
-                        new MainForm(this, currentUser);
+                        new MainForm(this, currentUser, departments);
                         this.Visible = false;
                         tbLogInUsername.Clear();
                         tbLogInPassword.Clear();

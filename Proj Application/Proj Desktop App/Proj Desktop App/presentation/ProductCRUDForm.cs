@@ -1,12 +1,4 @@
-﻿using Proj_Desktop_App.dataAccess;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 
 namespace Proj_Desktop_App
@@ -14,10 +6,12 @@ namespace Proj_Desktop_App
     public partial class ProductCRUDForm : Form
     {
         private ProductStorage prdStorage;
-        public ProductCRUDForm(ProductStorage prdStorage)
+        private DepartmentStorage departments;
+        public ProductCRUDForm(ProductStorage prdStorage, DepartmentStorage departments)
         {
             InitializeComponent();
             this.prdStorage = prdStorage;
+            this.departments = departments;
             ReloadProducts();
         }
 
@@ -60,7 +54,7 @@ namespace Proj_Desktop_App
             }
             else
             {
-                ProductAddUpdateForm addProd = new ProductAddUpdateForm(this, prdStorage, InitializeProduct(lvProducts.SelectedItems[0]));
+                ProductAddUpdateForm addProd = new ProductAddUpdateForm(this, prdStorage, InitializeProduct(lvProducts.SelectedItems[0]), departments);
                 addProd.Show(this);
             }
         }
@@ -83,7 +77,7 @@ namespace Proj_Desktop_App
 
         private void btnAddProduct_Click(object sender, EventArgs e)
         {
-            ProductAddUpdateForm addProd = new ProductAddUpdateForm(this, prdStorage);
+            ProductAddUpdateForm addProd = new ProductAddUpdateForm(this, prdStorage, departments);
             addProd.Show(this);
         }
 
@@ -96,27 +90,6 @@ namespace Proj_Desktop_App
         {
             Product prod = prdStorage.GetProductById(Convert.ToInt32(item.Text));
             return prod;
-        }
-
-        private Departments GetDepartment(string dep)
-        {
-            Departments depart = Departments.floorOne;
-            switch (dep)
-            {
-                case "floorOne":
-                    depart = Departments.floorOne;
-                    break;
-                case "floorTwo":
-                    depart = Departments.floorTwo;
-                    break;
-                case "floorThree":
-                    depart = Departments.floorThree;
-                    break;
-                case "floorFour":
-                    depart = Departments.floorFour;
-                    break;
-            }
-            return depart;
         }
     }
 }

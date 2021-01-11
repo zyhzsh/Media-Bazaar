@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Proj_Desktop_App.presentation;
 
@@ -19,6 +16,7 @@ namespace Proj_Desktop_App
 
         // Forms to include in tabs
         private AdminForm employeesForm;
+        private DepartmentsForm departmentsForm;
         private ProductCRUDForm productCRUD;
         private ProductStatistics productStatistics;
         private Form restocks;
@@ -31,21 +29,34 @@ namespace Proj_Desktop_App
         private ToolStripMenuItem selectedTab;
 
         // Logic layer
+        //ScheduleStorage?
+        private EmployeeStorage emplStorage;
         private ProductStorage prdStorage;
         private RestockRequestStorage reqStorage;
 
-        public MainForm(LoginForm loginForm, Employee currentUser)
+        // Departments
+        private DepartmentStorage deptStorage;
+
+        public MainForm(LoginForm loginForm, Employee currentUser, DepartmentStorage departments)
         {
             InitializeComponent();
             this.Visible = true;
             selectedTab = null;
             PositionType position = currentUser.GetPosition();
+            deptStorage = departments;
             if (position == PositionType.Administrator)
             {
+                emplStorage = new EmployeeStorage(deptStorage);
+
                 tabEmployees.Visible = true;
-                employeesForm = new AdminForm();
+                employeesForm = new AdminForm(emplStorage, deptStorage);
                 InitializeForm(employeesForm);
+
+                prdStorage = new ProductStorage(deptStorage);
                 tabDepartments.Visible = true;
+                departmentsForm = new DepartmentsForm(emplStorage, prdStorage, deptStorage);
+                InitializeForm(departmentsForm);
+
                 tabEmployees.PerformClick();
 
                 tabRequestInfoChange.Visible = true;
@@ -54,16 +65,16 @@ namespace Proj_Desktop_App
             }
             else if (position == PositionType.Depot_Manager)
             {
-                prdStorage = new ProductStorage();
-                reqStorage = new RestockRequestStorage(); 
+                prdStorage = new ProductStorage(deptStorage);
+                reqStorage = new RestockRequestStorage(deptStorage);
                 // Schedule
 
                 tabProducts.Visible = true;
-                productCRUD = new ProductCRUDForm(prdStorage);
+                productCRUD = new ProductCRUDForm(prdStorage, deptStorage);
                 InitializeForm(productCRUD);
 
                 tabStatistics.Visible = true;
-                productStatistics = new ProductStatistics();
+                productStatistics = new ProductStatistics(deptStorage);
                 InitializeForm(productStatistics);
 
                 tabRestocks.Visible = true;
@@ -71,7 +82,7 @@ namespace Proj_Desktop_App
                 InitializeForm(restocks);
 
                 tabSchedule.Visible = true;
-                scheduling = new Scheduling(currentUser.GetDepartment());
+                scheduling = new Scheduling(currentUser.GetDepartment(), deptStorage);
                 InitializeForm(scheduling);
 
                 tabAutoSchedule.Visible = true;
@@ -83,7 +94,7 @@ namespace Proj_Desktop_App
             }
             else if (position == PositionType.Depot_Worker)
             {
-                reqStorage = new RestockRequestStorage();
+                reqStorage = new RestockRequestStorage(deptStorage);
 
                 tabRestocks.Visible = true;
                 restocks = new WorkerStockRequestsForm(currentUser.GetBSN(), reqStorage);
@@ -93,15 +104,15 @@ namespace Proj_Desktop_App
             }
             else if (position == PositionType.Sales_Manager)
             {
-                prdStorage = new ProductStorage();
-                reqStorage = new RestockRequestStorage();
+                prdStorage = new ProductStorage(deptStorage);
+                reqStorage = new RestockRequestStorage(deptStorage);
 
                 tabRestocks.Visible = true;
                 restocks = new SalesManagerForm(currentUser.GetBSN(), currentUser.GetDepartment(), prdStorage, reqStorage);
                 InitializeForm(restocks);
 
                 tabSchedule.Visible = true;
-                scheduling = new Scheduling(currentUser.GetDepartment());
+                scheduling = new Scheduling(currentUser.GetDepartment(), deptStorage);
                 InitializeForm(scheduling);
 
                 tabAutoSchedule.Visible = true;
@@ -146,7 +157,7 @@ namespace Proj_Desktop_App
         {
             if (selectedTab != tabDepartments)
             {
-                //ShowForm(scheduling, tabDepartments);
+                ShowForm(departmentsForm, tabDepartments);
             }
         }
 

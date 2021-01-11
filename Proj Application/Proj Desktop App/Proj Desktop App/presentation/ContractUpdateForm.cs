@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Proj_Desktop_App
@@ -19,18 +13,20 @@ namespace Proj_Desktop_App
     {
         private Contract activeContract;
         private Employee employee;
+        private DepartmentStorage departmentStorage;
 
         private NumericUpDown nudPromotion;
         private DateTimePicker dtpTerminateDate;
         private ContractAction action;
 
-        public ContractUpdateForm(Employee employee, Contract activeContract, ContractAction action)
+        public ContractUpdateForm(Employee employee, Contract activeContract, ContractAction action, DepartmentStorage departments)
         {
             InitializeComponent();
             this.Visible = true;
             this.activeContract = activeContract;
             this.employee = employee;
             this.action = action;
+            this.departmentStorage = departments;
 
             // Display active contract
             lvActiveContract.Items.Clear();
@@ -46,10 +42,10 @@ namespace Proj_Desktop_App
                 nudPromotion = null;
                 dtpTerminateDate = null;
                 cbPosition.DataSource = Enum.GetValues(typeof(PositionType));
-                cbDepartment.DataSource = Enum.GetValues(typeof(Departments));
+                cbDepartment.Items.AddRange(departmentStorage.GetDepartments());
 
                 cbPosition.SelectedItem = activeContract.Position;
-                cbDepartment.SelectedItem = activeContract.Department;
+                cbDepartment.SelectedItem = departmentStorage.GetDepartment(activeContract.Department.Id);
                 nudFTE.Value = activeContract.Fte;
 
                 rbEndOfPrevious.Checked = true;
@@ -161,14 +157,14 @@ namespace Proj_Desktop_App
                         iteration = 1;
                     }
                     PositionType position;
-                    Departments department;
+                    Department department;
                     decimal salary;
                     decimal fte;
 
                     if (rbChangeDetails.Checked)
                     {
                         position = (PositionType)cbPosition.SelectedItem;
-                        department = (Departments)cbDepartment.SelectedItem;
+                        department = (Department)cbDepartment.SelectedItem;
                         // TO DO: Add an input for a new salary
                         salary = activeContract.Salary;
                         fte = nudFTE.Value;
@@ -237,19 +233,19 @@ namespace Proj_Desktop_App
                 switch (selectedPosition)
                 {
                     case PositionType.Administrator:
-                        cbDepartment.SelectedItem = Departments.office;
+                        cbDepartment.SelectedItem = departmentStorage.GetDepartment(6); // HR
                         cbDepartment.Enabled = false;
                         break;
 
                     case PositionType.Depot_Manager:
                     case PositionType.Depot_Worker:
-                        cbDepartment.SelectedItem = Departments.warehouse;
+                        cbDepartment.SelectedItem = departmentStorage.GetDepartment(5); // Warehouse
                         cbDepartment.Enabled = false;
                         break;
 
                     case PositionType.Sales_Manager:
                     case PositionType.Sales_Worker:
-                        cbDepartment.SelectedItem = Departments.floorOne;
+                        cbDepartment.SelectedItem = departmentStorage.GetDepartment(1); // Floor one
                         cbDepartment.Enabled = true;
                         break;
 
@@ -272,13 +268,13 @@ namespace Proj_Desktop_App
                 if (position != null)
                 {
                     PositionType selectedPosition = (PositionType)position;
-                    Departments selectedDepartment = (Departments)cbDepartment.SelectedItem;
+                    Department selectedDepartment = (Department)cbDepartment.SelectedItem;
                     if ((selectedPosition == PositionType.Sales_Manager ||
                         selectedPosition == PositionType.Sales_Worker) &&
-                        (selectedDepartment == Departments.office ||
-                        selectedDepartment == Departments.warehouse))
+                        (selectedDepartment == departmentStorage.GetDepartment(6) || // HR
+                        selectedDepartment == departmentStorage.GetDepartment(5))) // Warehouse
                     {
-                        cbDepartment.SelectedItem = Departments.floorOne;
+                        cbDepartment.SelectedItem = departmentStorage.GetDepartment(1); // Floor one
                     }
                 }
             }

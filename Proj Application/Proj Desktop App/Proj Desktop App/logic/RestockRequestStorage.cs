@@ -1,9 +1,6 @@
 ﻿using Proj_Desktop_App.dataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Proj_Desktop_App
@@ -14,10 +11,10 @@ namespace Proj_Desktop_App
         private RestockRequestManagement reqMan;
 
         public RestockRequest[] Requests { get { return this.requests.ToArray(); } }
-        public RestockRequestStorage()
+        public RestockRequestStorage(DepartmentStorage departments)
         {
             requests = new List<RestockRequest>();
-            reqMan = new RestockRequestManagement();
+            reqMan = new RestockRequestManagement(departments);
             LoadRestockRequests();
         }
 
@@ -35,7 +32,7 @@ namespace Proj_Desktop_App
 
         public bool Add(RestockRequest req)
         {
-            if(req != null)
+            if (req != null)
             {
                 this.requests.Add(req);
                 reqMan.CreateRestockRequest(req);
@@ -66,15 +63,15 @@ namespace Proj_Desktop_App
             try
             {
                 List<RestockRequest> acceptedRequests = new List<RestockRequest>();
-                foreach(RestockRequest req in this.requests)
+                foreach (RestockRequest req in this.requests)
                 {
-                    if(req != null) 
+                    if (req != null)
                         if (req.status == "ACCEPTED")
                             acceptedRequests.Add(req);
                 }
                 return acceptedRequests.ToArray();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 MessageBox.Show(e.Message);
                 return null;
@@ -105,7 +102,7 @@ namespace Proj_Desktop_App
             }
         }
 
-        public RestockRequest[] GetPending(Departments department)
+        public RestockRequest[] GetPending(Department department)
         {
             LoadRestockRequests();
             try

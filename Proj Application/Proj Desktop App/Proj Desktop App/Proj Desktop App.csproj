@@ -94,9 +94,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="dataAccess\DepartmentManagement.cs" />
     <Compile Include="logic\AssignedShift.cs" />
     <Compile Include="logic\AutomaticScheduling.cs" />
     <Compile Include="logic\Availability.cs" />
+    <Compile Include="logic\Department.cs" />
+    <Compile Include="logic\DepartmentStorage.cs" />
     <Compile Include="logic\Contract.cs" />
     <Compile Include="logic\Departments.cs" />
     <Compile Include="logic\Employee.cs" />
@@ -127,6 +130,18 @@
     <Compile Include="dataAccess\EmployeeManagement.cs" />
     <Compile Include="dataAccess\ProductManagement.cs" />
     <Compile Include="dataAccess\RestockRequestManagement.cs" />
+    <Compile Include="presentation\DepartmentCreateUpdateFrom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="presentation\DepartmentCreateUpdateFrom.Designer.cs">
+      <DependentUpon>DepartmentCreateUpdateFrom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="presentation\DepartmentsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="presentation\DepartmentsForm.Designer.cs">
+      <DependentUpon>DepartmentsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="presentation\PendingRestocksForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -209,6 +224,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="presentation\ContractUpdateForm.resx">
       <DependentUpon>ContractUpdateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="presentation\DepartmentCreateUpdateFrom.resx">
+      <DependentUpon>DepartmentCreateUpdateFrom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="presentation\DepartmentsForm.resx">
+      <DependentUpon>DepartmentsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="presentation\PendingRestocksForm.resx">
       <DependentUpon>PendingRestocksForm.cs</DependentUpon>

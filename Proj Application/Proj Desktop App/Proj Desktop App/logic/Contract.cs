@@ -1,9 +1,5 @@
 ﻿using Proj_Desktop_App.dataAccess;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Proj_Desktop_App
 {
@@ -13,12 +9,12 @@ namespace Proj_Desktop_App
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
         public int Iteration { get; private set; }
-        public Departments Department { get; private set; }
+        public Department Department { get; private set; }
         public PositionType Position { get; private set; }
         public decimal Salary { get; private set; }
         public decimal Fte { get; private set; }
 
-        public Contract(int id, DateTime startDate, DateTime endDate, int iteration, Departments department,
+        public Contract(int id, DateTime startDate, DateTime endDate, int iteration, Department department,
                                 PositionType position, decimal salary, decimal fte)
         {
             this.Id = id;
@@ -114,14 +110,14 @@ namespace Proj_Desktop_App
             }
 
             string status = "";
-            if (IsCloseToEndDate()) 
-                { status = "ending"; }
+            if (IsCloseToEndDate())
+            { status = "ending"; }
             else if (IsActive())
-                { status = "active"; }
+            { status = "active"; }
             else if (EndDate < DateTime.Today)
-                { status = "ended";}
+            { status = "ended"; }
             else if (StartDate > DateTime.Today)
-                { status = "not started"; }
+            { status = "not started"; }
 
 
             return $"{StartDate:dd/MM/yyyy},{endDateStr},{Position},{Department},{Fte},€{Salary},{status}";

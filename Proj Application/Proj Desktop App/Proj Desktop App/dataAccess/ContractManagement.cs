@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using MySql.Data;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
+using System;
 
 namespace Proj_Desktop_App.dataAccess
 {
@@ -20,7 +14,7 @@ namespace Proj_Desktop_App.dataAccess
                 using (MySqlConnection conn = base.GetConnection())
                 {
                     string sql =
-                        "SELECT contract_id" +
+                        "SELECT contract_id " +
                         "FROM contract " +
                         "WHERE BSN = @bsn " +
                         "ORDER BY start_date DESC " +
@@ -91,7 +85,7 @@ namespace Proj_Desktop_App.dataAccess
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@bsn", bsn);
                     cmd.Parameters.AddWithValue("@position_id", (int)contract.Position);
-                    cmd.Parameters.AddWithValue("@department_id", (int)contract.Department);
+                    cmd.Parameters.AddWithValue("@department_id", contract.Department.Id);
                     cmd.Parameters.AddWithValue("@start_date", contract.StartDate.ToString("yyyy-MM-dd"));
                     cmd.Parameters.AddWithValue("@end_date", contract.EndDate.ToString("yyyy-MM-dd"));
                     cmd.Parameters.AddWithValue("@iteration", contract.Iteration);
@@ -172,28 +166,6 @@ namespace Proj_Desktop_App.dataAccess
             catch (Exception)
             {
                 return false;
-            }
-        }
-
-        private Contract InitializeContract(MySqlDataReader contr)
-        {
-            try
-            {
-                Contract contract = new Contract(
-                    Convert.ToInt32(contr["contract_id"]),
-                    Convert.ToDateTime(contr["start_date"]),
-                    Convert.ToDateTime(contr["end_date"]),
-                    Convert.ToInt32(contr["iteration"]),
-                    (Departments)contr["department_id"],
-                    (PositionType)contr["position_id"],
-                    Convert.ToDecimal(contr["salary"]),
-                    Convert.ToDecimal(contr["fte"]));
-                return contract;
-
-            }
-            catch (Exception)
-            {
-                return null;
             }
         }
     }

@@ -1,12 +1,4 @@
-﻿using Proj_Desktop_App.dataAccess;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 
 namespace Proj_Desktop_App
@@ -29,7 +21,7 @@ namespace Proj_Desktop_App
             lvRestocks.Items.Clear();
             foreach (RestockRequest request in RequestStorage.GetAccepted())
             {
-                if(request != null)
+                if (request != null)
                 {
                     ListViewItem item = new ListViewItem(request.restockID.ToString());
                     item.SubItems.Add(request.productCode.ToString());

@@ -1,12 +1,4 @@
-﻿using Proj_Desktop_App.dataAccess;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 
 namespace Proj_Desktop_App
@@ -67,7 +59,7 @@ namespace Proj_Desktop_App
 
         private void btnRejectRestock_Click(object sender, EventArgs e)
         {
-            if(lvRestocks.SelectedItems.Count <= 0)
+            if (lvRestocks.SelectedItems.Count <= 0)
             {
                 MessageBox.Show("No restocks selected");
             }

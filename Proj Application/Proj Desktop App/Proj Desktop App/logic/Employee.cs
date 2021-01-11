@@ -1,9 +1,6 @@
 ﻿using Proj_Desktop_App.dataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Proj_Desktop_App
 {
@@ -158,7 +155,7 @@ namespace Proj_Desktop_App
             }
         }
 
-        public Departments GetDepartment()
+        public Department GetDepartment()
         {
             Contract activeCon = GetActiveContract();
             if (activeCon != null)
