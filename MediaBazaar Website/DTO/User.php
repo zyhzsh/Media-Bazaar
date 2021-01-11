@@ -7,7 +7,7 @@ class User
     public $gender;
     public $phone;
     public $dateOfBirth;
-    public $adress;
+    public $adress; 
     public $languages;
     public $certificates;
     public $contactEmail;

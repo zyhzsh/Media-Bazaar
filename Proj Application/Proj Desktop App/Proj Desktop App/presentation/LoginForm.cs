@@ -43,8 +43,8 @@ namespace Proj_Desktop_App
             loginHandler = new LoginHandler();
 
             // For testing purposes:
-            tbLogInUsername.Text = "jguttridge4";
-            tbLogInPassword.Text = "uYFLTrkmOqVq";
+            tbLogInUsername.Text = "gdambrogi6";
+            tbLogInPassword.Text = "LbZAsgys63h";
         }
 
         private void btLogin_Click(object sender, EventArgs e)

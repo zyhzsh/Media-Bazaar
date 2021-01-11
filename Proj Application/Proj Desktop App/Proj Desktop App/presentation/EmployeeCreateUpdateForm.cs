@@ -20,7 +20,6 @@ namespace Proj_Desktop_App
         private bool updateEmployee;
         private Employee employeeToUpdate;
         RequestChangeStorage requestChangeStorage;
-
         private void InitializeElements()
         {
             this.Visible = true;
