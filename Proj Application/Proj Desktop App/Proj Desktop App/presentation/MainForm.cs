@@ -60,7 +60,7 @@ namespace Proj_Desktop_App
                 tabEmployees.PerformClick();
 
                 tabRequestInfoChange.Visible = true;
-                requestInfoChange = new RequestInfoChangeForm();
+                requestInfoChange = new RequestInfoChangeForm(emplStorage, deptStorage);
                 InitializeForm(requestInfoChange);
             }
             else if (position == PositionType.Depot_Manager)
@@ -85,8 +85,10 @@ namespace Proj_Desktop_App
                 scheduling = new Scheduling(currentUser.GetDepartment(), deptStorage);
                 InitializeForm(scheduling);
 
+                emplStorage = new EmployeeStorage(deptStorage);
+
                 tabAutoSchedule.Visible = true;
-                autoSchedule = new WeeklyScheduleGridForm(currentUser.GetDepartment());
+                autoSchedule = new WeeklyScheduleGridForm(currentUser.GetDepartment(), emplStorage);
                 InitializeForm(autoSchedule);
 
 
@@ -115,8 +117,10 @@ namespace Proj_Desktop_App
                 scheduling = new Scheduling(currentUser.GetDepartment(), deptStorage);
                 InitializeForm(scheduling);
 
+                emplStorage = new EmployeeStorage(deptStorage);
+
                 tabAutoSchedule.Visible = true;
-                autoSchedule = new WeeklyScheduleGridForm(currentUser.GetDepartment());
+                autoSchedule = new WeeklyScheduleGridForm(currentUser.GetDepartment(), emplStorage);
                 InitializeForm(autoSchedule);
 
                 tabRestocks.PerformClick();

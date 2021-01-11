@@ -28,12 +28,12 @@ namespace Proj_Desktop_App
         /// </summary>
         /// <param name="time"> DateTime</param>
         /// <returns></returns>
-        public string[] GetEmployeesInfoByDateAndDepartment(DateTime time,Departments departments)
+        public string[] GetEmployeesInfoByDateAndDepartment(DateTime time, Department department)
         {
             List<string> temp = new List<string>();
             foreach (AssignedShift e in allAssignedShifts)
             {               
-                if (e.Date.ToString("yyyy-MM-dd") == time.ToString("yyyy-MM-dd") &&e.Employee.GetDepartment()== departments)
+                if (e.Date.ToString("yyyy-MM-dd") == time.ToString("yyyy-MM-dd") &&e.Employee.GetDepartment().Id == department.Id)
                 {
                     temp.Add($"{e.Employee.ToString()} Shift:{e.GetShiftTypeToString()} {e.Date.ToString("dddd, dd MMMM")}");
                 }
@@ -285,16 +285,16 @@ namespace Proj_Desktop_App
         {
             return allAvailableShifts;
         }
-        public List<Availability> GetAvailabilitiesByDepartment(Departments department){
+        public List<Availability> GetAvailabilitiesByDepartment(Department department){
             throw new NotImplementedException();
         }
 
-        public List<Availability> GetWorkerAvailabilitiesByDepartment (Departments department)
+        public List<Availability> GetWorkerAvailabilitiesByDepartment (Department department)
         {
             List<Availability> result = new List<Availability>();
             foreach(Availability availability in allAvailableShifts)
             {
-                if(availability.employee.GetDepartment() == department && (availability.employee.GetPosition() == PositionType.Depot_Worker || availability.employee.GetPosition() == PositionType.Sales_Worker))
+                if(availability.employee.GetDepartment().Id == department.Id && (availability.employee.GetPosition() == PositionType.Depot_Worker || availability.employee.GetPosition() == PositionType.Sales_Worker))
                 {
                     result.Add(availability);
                 }
@@ -302,12 +302,12 @@ namespace Proj_Desktop_App
             return result;
         }
 
-        public List<Availability> GetManagerAvailabilitiesByDepartment(Departments department)
+        public List<Availability> GetManagerAvailabilitiesByDepartment(Department department)
         {
             List<Availability> result = new List<Availability>();
             foreach (Availability availability in allAvailableShifts)
             {
-                if (availability.employee.GetDepartment() == department && (availability.employee.GetPosition() == PositionType.Depot_Manager || availability.employee.GetPosition() == PositionType.Sales_Manager))
+                if (availability.employee.GetDepartment().Id == department.Id && (availability.employee.GetPosition() == PositionType.Depot_Manager || availability.employee.GetPosition() == PositionType.Sales_Manager))
                 {
                     result.Add(availability);
                 }

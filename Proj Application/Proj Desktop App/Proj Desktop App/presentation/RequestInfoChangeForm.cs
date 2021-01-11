@@ -19,15 +19,17 @@ namespace Proj_Desktop_App.presentation
         private EmployeeStorage emplStorage;
         Employee selectedEmployee;
         Employee newEmployee;
-        public RequestInfoChangeForm()
+        private DepartmentStorage departments;
+        public RequestInfoChangeForm(EmployeeStorage employeeStorage, DepartmentStorage departments)
         {
             InitializeComponent();
             RequestChangeStorage = new RequestChangeStorage();
-            this.emplStorage = new EmployeeStorage();
+            this.emplStorage = employeeStorage;
             newEmployee = null;
             lvrequests.MultiSelect = true;
             lvrequests.FullRowSelect = true;
             GUI();
+            this.departments = departments;
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
@@ -39,7 +41,7 @@ namespace Proj_Desktop_App.presentation
                 int BSN = Convert.ToInt32(item.SubItems[0].Text);
                 Employee employee = RequestChangeStorage.GetEmployeeByBsn(BSN);
                 // Open form for updating an employee's details
-                emplCUForm = new EmployeeCreateUpdateForm(emplStorage, employee);
+                emplCUForm = new EmployeeCreateUpdateForm(emplStorage, employee, departments);
                 //creat an event to detect when form closed to ubdate the info
                 this.emplCUForm.FormClosed += new FormClosedEventHandler(EmployeeCreateUpdateForm_FormClosed);
                 //Delet the request from database after ubdating

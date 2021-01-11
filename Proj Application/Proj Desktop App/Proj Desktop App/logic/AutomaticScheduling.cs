@@ -30,7 +30,7 @@ namespace Proj_Desktop_App
         private List<string> managerReports;
         private List<string> workerReports;
 
-        public AutomaticScheduling(Departments managerDepartment, ScheduleStorage schStorage)
+        public AutomaticScheduling(Department managerDepartment, ScheduleStorage schStorage)
         {
             assignedEmployees = new List<Employee>[15];
             for(int i = 0; i < 15; i++)

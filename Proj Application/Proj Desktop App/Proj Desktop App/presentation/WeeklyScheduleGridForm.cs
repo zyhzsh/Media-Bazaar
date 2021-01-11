@@ -18,10 +18,10 @@ namespace Proj_Desktop_App.presentation
 
         private List<Employee>[] assignedWorkers;
         private List<Employee>[] assignedManagers;
-        public WeeklyScheduleGridForm(Departments currentDepartment)
+        public WeeklyScheduleGridForm(Department currentDepartment, EmployeeStorage empStorage)
         {
             InitializeComponent();
-            empStorage = new EmployeeStorage();
+            this.empStorage = empStorage;
             this.scheduleStorage = new ScheduleStorage(empStorage);
 
             autoSchedule = new AutomaticScheduling(currentDepartment, scheduleStorage);

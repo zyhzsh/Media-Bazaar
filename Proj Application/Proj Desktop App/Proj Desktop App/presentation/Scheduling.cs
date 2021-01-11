@@ -23,7 +23,7 @@ namespace Proj_Desktop_App
         public Scheduling(Department department, DepartmentStorage departments)
         {
             InitializeComponent();
-            empStorage = new EmployeeStorage();
+            empStorage = new EmployeeStorage(departments);
             this.scheduleStorage = new ScheduleStorage(empStorage);
 
             automaticScheduling = new AutomaticScheduling(department, scheduleStorage);
@@ -51,7 +51,7 @@ namespace Proj_Desktop_App
             }
             //6.Update AssigngedShift list by department
             listboxAssignedEmployees.Items.Clear();
-            listboxAssignedEmployees.Items.AddRange(schedulemanager.GetEmployeesInfoByDateAndDepartment(seleteddate, (Department)cbDepartment.SelectedItem));
+            listboxAssignedEmployees.Items.AddRange(scheduleStorage.GetEmployeesInfoByDateAndDepartment(seleteddate, (Department)cbDepartment.SelectedItem));
         }
 
         private void btnAddEmpShift_Click(object sender, EventArgs e)
