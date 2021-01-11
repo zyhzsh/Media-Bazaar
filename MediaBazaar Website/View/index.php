@@ -8,8 +8,8 @@
 </head>
 <body>
  <?php 
-require_once('classes.php');
-include('navigation.php');
+require_once('Classes.php');
+include('Navigation.php');
  if(isset($_GET['page'])){
  switch($_GET['page']) 
  {

@@ -11,7 +11,7 @@ class UserController
          $_dbh = new UserModel();
          if ($_dbh->CheckUsers($username, $password) == true) {
             header("Location:?page=pageAssignedShift");
-            $session = session::getInstance();
+            $session = SessionController::getInstance();
             return 'welcome';
          } else {
             return 'Check your Email and password please';
@@ -21,7 +21,7 @@ class UserController
    function logout()
    {
       if (isset($_POST['logoutBtn']) && preg_match("/\b(logout)\b/", $_POST['logoutBtn'])) {
-         $session = session::getInstance();
+         $session = SessionController::getInstance();
          $session->__unset('BSN');
          header("Location:?page=default");
          echo 'session stoped';
@@ -31,7 +31,7 @@ class UserController
    function ChangeUserInfoRequest()
    {
       $userModel = new UserModel();
-      $session = session::getInstance();
+      $session = SessionController::getInstance();
 
       $BSN = $session->__get("BSN");
       $firstName = null;
@@ -55,12 +55,10 @@ class UserController
 
          $userModel->RequestChangeUserInformation($BSN, $firstName, $lastName, $gender, $phone, $adress, $languages, $certificates, $contactEmail);
       }
-
-         
    }
    function ChangePassword()
    {
-      $session = session::getInstance();
+      $session = SessionController::getInstance();
 
       $BSN = $session->__get("BSN");
       if (isset($_POST['oldPassword']) && isset($_POST['newPassword']) && isset($_POST['newPasswordCheck'])) {
@@ -71,23 +69,21 @@ class UserController
          if ($newpassword == $newPasswordCheck) {
             $_dbh = new UserModel();
             if ($_dbh->CheckPassword($BSN, $oldpassword) == true) {
-               $_dbh->ChangePassword($BSN,$newpassword);
+               $_dbh->ChangePassword($BSN, $newpassword);
                return 'Your password is changed';
             } else {
                return 'Check your old password';
             }
-         }
-         else{
+         } else {
             return 'New passwords dont match';
          }
       }
    }
 }
 //if it's inside the class can not accsse the $_post 
-if (isset($_POST['logoutBtn']) ) {
-   $session = session::getInstance();
+if (isset($_POST['logoutBtn'])) {
+   $session = SessionController::getInstance();
    $session->__unset('BSN');
-   $session->__unset('user');
    header("Location:?page=default");
    echo 'session stoped';
    return true;

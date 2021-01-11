@@ -7,7 +7,7 @@ class User
     public $gender;
     public $phone;
     public $dateOfBirth;
-    public $adress; 
+    public $adress;
     public $languages;
     public $certificates;
     public $contactEmail;
@@ -33,12 +33,5 @@ class User
     {
         return $this->fte;
     }
-    public function GetLanguages()
-    {
-        return $this->languages;
-    }
-    public function GetAddress()
-    {
-        return $this->adress;
-    }
+    
 }

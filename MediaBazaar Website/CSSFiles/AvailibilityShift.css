@@ -146,26 +146,14 @@
 }
 .SideNote{
   box-sizing: border-box;
-
   height: 680px;
-
   width: 320px;
-
   background-color:#83B4D1;
-
   margin-right: 15px;
-
-  margin-left: 200px;
-
   border: 1px solid;
-
-
   display: grid;
-
   grid-template-columns: repeat(1,1fr);
-
   grid-template-rows: 1fr,6fr.6fr;
-
   text-align: center;
 }
 .lightGreen_Container{

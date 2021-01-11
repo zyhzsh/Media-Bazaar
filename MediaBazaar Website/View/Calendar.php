@@ -1,5 +1,5 @@
 <?php
-require_once('classes.php');
+require_once('Classes.php');
 //When the user click the button to check next month
 //Change the "SeletedDate" to first day of the next month.
 if(isset($_POST['CheckLastMonth'])){
@@ -11,7 +11,7 @@ if(isset($_POST['CheckLastMonth'])){
     $_SESSION['SeletedDate']=date('Y-m-1',strtotime($temp."+1months"));
     //unset($_POST['CheckNextMonth']);
 }
-$shifts=new shifts();
+$shifts=new ShiftController();
 $assignedshifts=$shifts->GetShifts($_SESSION['SeletedDate']);
 function Grid_Item_In_Calendar($assignedshifts)
 {   
@@ -73,6 +73,7 @@ function Grid_Item_In_Calendar($assignedshifts)
             echo'</div></div>';   
     }  
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

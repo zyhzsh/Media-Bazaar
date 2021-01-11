@@ -3,9 +3,9 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link href="../CSSFiles/loginStyle.css" type="text/css" rel="stylesheet" />
+   <link href="../CSSFiles/Login.css" type="text/css" rel="stylesheet" />
    <title>Home</title>
-   <?php   require_once('classes.php');?>
+   <?php   require_once('Classes.php');?>
 </head>
 <body>
    

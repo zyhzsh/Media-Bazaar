@@ -3,9 +3,9 @@ require_once('classes.php');
 class UserModel
 {
 
-    private  function session()
+    private  function Session()
     {
-        return session::getInstance();
+        return SessionController::getInstance();
     }
 
 
@@ -23,7 +23,7 @@ class UserModel
 
             $BSN = $result['BSN'];
             $sessionName = 'BSN';
-            $session = $this->session();
+            $session = $this->Session();
             $session->startSession();
             $session->__set($sessionName, $BSN);
             $this->FetchUsers($BSN);
@@ -61,7 +61,7 @@ class UserModel
             $result = $stmt->fetch();
             $fte = $result['fte'];
             $user = new User($BSN, $firstName, $lastName, $gender, $phone, $dateBirth, $address, $languages, $certificates, $contactEmail, $fte);
-            $session = $this->session();
+            $session = $this->Session();
             $session->__set("user", $user);
         }
     }
@@ -74,7 +74,7 @@ class UserModel
         $stmt = $conn->prepare($sql);
         $stmt->execute([':uBSN' => $BSN, 'pwd' => $password]);
         $result = $stmt->fetch();
-        $conn=null;
+        $conn = null;
         if (empty($result)) {
             return false;
         } else {
@@ -82,15 +82,15 @@ class UserModel
         }
     }
 
-    public function ChangePassword($BSN,$newPassword)
+    public function ChangePassword($BSN, $newPassword)
     {
-       // UPDATE `employee` SET `password` = '123' WHERE `employee`.`BSN` = 100000002
+        // UPDATE `employee` SET `password` = '123' WHERE `employee`.`BSN` = 100000002
         $dbh = new Dbh();
         $sql = "UPDATE `employee` SET `password`=(:nPassword) WHERE BSN=(:b) ";
         $conn = $dbh->connection();
         $stmt = $conn->prepare($sql);
-        $stmt->execute([':nPassword' => $newPassword,':b' => $BSN]);
-       // $conn=null;
+        $stmt->execute([':nPassword' => $newPassword, ':b' => $BSN]);
+        // $conn=null;
     }
 
     public function RequestChangeUserInformation($BSN, $firstName, $lastName, $gender, $phone, $address, $languages, $certificates, $email)
