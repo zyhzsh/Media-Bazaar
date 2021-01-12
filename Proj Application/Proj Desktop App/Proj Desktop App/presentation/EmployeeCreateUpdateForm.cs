@@ -85,7 +85,7 @@ namespace Proj_Desktop_App
                 MessageBox.Show("Something went wrong!");
             }
 
-            // Can"t be changed
+            // Can't be changed
             tbBSN.Enabled = false;
             dtpBirthdate.Enabled = false;
             dtpStartDate.Enabled = false;
@@ -94,6 +94,79 @@ namespace Proj_Desktop_App
             cbDepartment.Enabled = false;
             nudFTE.Enabled = false;
             btnConfirm.Text = "Save changes";
+        }
+
+        public EmployeeCreateUpdateForm(EmployeeStorage store, Employee employee, RequestInfoChange request, DepartmentStorage departments)
+        {
+            InitializeComponent();
+            this.departmentStorage = departments;
+            InitializeElements();
+            this.store = store;
+            updateEmployee = true;
+
+            // Fill in with current employee data with overwritten changes
+            employeeToUpdate = employee;
+
+            tbBSN.Text = employeeToUpdate.GetBSN().ToString();
+
+            InputRequestedChanges(employeeToUpdate.firstName, request.firstName, tbFirstName);
+            InputRequestedChanges(employeeToUpdate.lastName, request.lastName, tbLastName);
+
+            if (employeeToUpdate.gender != request.gender)
+            {
+                if (request.gender == 'M') { rbMale.Checked = true; rbMale.ForeColor = Color.Red; }
+                else if (request.gender == 'F') { rbFemale.Checked = true; rbFemale.ForeColor = Color.Red; }
+                else { rbOther.Checked = true; rbOther.ForeColor = Color.Red; }
+            }
+            else
+            {
+                if (employeeToUpdate.gender == 'M') { rbMale.Checked = true; }
+                else if (employeeToUpdate.gender == 'F') { rbFemale.Checked = true; }
+                else { rbOther.Checked = true; }
+            }
+
+            dtpBirthdate.Value = employeeToUpdate.birthDate;
+            InputRequestedChanges(employeeToUpdate.languages, request.languages, tbLanguages);
+            InputRequestedChanges(employeeToUpdate.certificates, request.certificates, tbCertificates);
+
+            InputRequestedChanges(employeeToUpdate.phoneNumber, request.phoneNumber, tbPhone);
+            InputRequestedChanges(employeeToUpdate.address, request.address, tbAddress);
+            InputRequestedChanges(employeeToUpdate.contactEmail, request.contactEmail, tbEmail);
+
+            try
+            {
+                cbPosition.SelectedItem = employeeToUpdate.GetPosition();
+                cbDepartment.SelectedItem = departmentStorage.GetDepartment(employeeToUpdate.GetDepartment().Id);
+                nudFTE.Value = Convert.ToDecimal(employeeToUpdate.GetFTE());
+            }
+            catch (Exception)
+            {
+                this.Close();
+                MessageBox.Show("Something went wrong!");
+            }
+
+            // Can't be changed
+            tbBSN.Enabled = false;
+            dtpBirthdate.Enabled = false;
+            dtpStartDate.Enabled = false;
+            nudDuration.Enabled = false;
+            cbPosition.Enabled = false;
+            cbDepartment.Enabled = false;
+            nudFTE.Enabled = false;
+            btnConfirm.Text = "Save changes";
+        }
+
+        public void InputRequestedChanges(string oldData, string newData, TextBox textBox)
+        {
+            if (oldData.Trim() != newData.Trim())
+            {
+                textBox.Text = newData;
+                textBox.ForeColor = Color.Red;
+            }
+            else
+            {
+                textBox.Text = oldData;
+            }
         }
 
         private void btnConfirm_Click(object sender, EventArgs e)

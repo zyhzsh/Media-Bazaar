@@ -7,7 +7,7 @@ using Proj_Desktop_App.dataAccess;
 
 namespace Proj_Desktop_App
 {
-    class RequestInfoChange
+    public class RequestInfoChange
     {
         // Personal details:
         public int BSN { get; private set; }

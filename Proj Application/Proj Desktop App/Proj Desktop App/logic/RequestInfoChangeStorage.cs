@@ -46,5 +46,16 @@ namespace Proj_Desktop_App
         {
             empMan.DeleteRequest(bsn);
         }
+        public RequestInfoChange GetRequest(int bsn)
+        {
+            foreach (RequestInfoChange request in requestInfoChanges)
+            {
+                if (request.BSN == bsn)
+                {
+                    return request;
+                }
+            }
+            return null;
+        }
     }
 }
