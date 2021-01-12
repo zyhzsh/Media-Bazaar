@@ -16,10 +16,10 @@ namespace Proj_Desktop_App
         /// gets all request currently stored
         /// </summary>
        // public RequestInfoChange[] requests { get { return this.requestInfoChanges.ToArray(); } }
-        public RequestChangeStorage()
+        public RequestChangeStorage(DepartmentStorage departmentStorage)
         {
             requestInfoChanges = new List<RequestInfoChange>();
-            empMan = new EmployeeManagement();
+            empMan = new EmployeeManagement(departmentStorage);
         }
         ///<summary>
         ///Reloads requestes from the database into storage

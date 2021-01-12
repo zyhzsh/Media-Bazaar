@@ -23,8 +23,6 @@ namespace Proj_Desktop_App
         public string address { get; private set; }
         public string contactEmail { get; private set; }
 
-        private EmployeeManagement management=new EmployeeManagement();
-
         public RequestInfoChange(int BSN, string firstName, string lastName, char gender,
             string languages, string certificates, string phoneNumber, string address, string contactEmail,string dateOfRequest)
         {

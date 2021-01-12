@@ -165,7 +165,7 @@ namespace Proj_Desktop_App
                         int bsn = Convert.ToInt32(tbBSN.Text);
                         employeeToUpdate.UpdateInfo(firstName, lastName, gender, languages, certificates,
                             phone, address, email);
-                        requestChangeStorage = new RequestChangeStorage();
+                        requestChangeStorage = new RequestChangeStorage(departmentStorage);
                          requestChangeStorage.DeleteRequest(bsn);
                      
                     }
