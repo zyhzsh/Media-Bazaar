@@ -39,9 +39,5 @@ namespace Proj_Desktop_App
             this.dateOfRequest = dateOfRequest;
             
         }
-        public RequestInfoChange()
-        {
-
-        }
     }
 }

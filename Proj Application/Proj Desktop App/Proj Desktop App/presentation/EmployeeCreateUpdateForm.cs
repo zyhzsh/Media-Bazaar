@@ -175,8 +175,6 @@ namespace Proj_Desktop_App
                         MessageBox.Show(ex.Message);
                     }
                     this.Close();
-                    RequestInfoChangeForm requestInfoChangeForm = new RequestInfoChangeForm(store, departmentStorage);
-                    requestInfoChangeForm.GUI();
                 }
             }
         }

@@ -79,16 +79,17 @@ namespace Proj_Desktop_App.presentation
             try
             {
                 ListViewItem item = lvrequests.SelectedItems[0];
-                int BSN = Convert.ToInt32(item.SubItems[1].Text);
-                string firstName = Convert.ToString(item.SubItems[2].Text);
-                string lastName = Convert.ToString(item.SubItems[3].Text);
-                char gender = Convert.ToChar(item.SubItems[4].Text);
-                string phoneNumber = Convert.ToString(item.SubItems[4].Text);
+                int BSN = Convert.ToInt32(item.Text);
+                string firstName = Convert.ToString(item.SubItems[1].Text);
+                string lastName = Convert.ToString(item.SubItems[2].Text);
+                char gender = Convert.ToChar(item.SubItems[3].Text);
+                string phoneNumber = item.SubItems[4].Text;
                 // DateTime birthDate = Convert.ToDateTime(item.SubItems[0].Text)
-                string address = Convert.ToString(item.SubItems[5].Text);
-                string certificates = Convert.ToString(item.SubItems[6].Text);
-                string Email = Convert.ToString(item.SubItems[7].Text);
-                string languages = Convert.ToString(item.SubItems[8].Text);
+                string address = item.SubItems[5].Text;
+                string languages =item.SubItems[6].Text;
+                string certificates = item.SubItems[7].Text;
+                string Email = item.SubItems[8].Text;
+           
                 Employee oldEmployee = null;
                 oldEmployee = RequestChangeStorage.GetEmployeeByBsn(BSN);
 
@@ -104,6 +105,7 @@ namespace Proj_Desktop_App.presentation
 
                 //ubdate old info employee
                 newEmployee = new Employee(oldEmployee.GetBSN(), firstName, lastName, gender, oldEmployee.birthDate, languages, certificates, phoneNumber, address, Email);
+                newEmployee.LoadContracts(oldEmployee.GetContracts());
                 return newEmployee;
             }
             catch (Exception ex)
@@ -123,7 +125,6 @@ namespace Proj_Desktop_App.presentation
                 string lastName = Convert.ToString(item.SubItems[2].Text);
                 char gender = Convert.ToChar(item.SubItems[3].Text);
                 string phoneNumber = Convert.ToString(item.SubItems[4].Text);
-                // DateTime birthDate = Convert.ToDateTime(item.SubItems[0].Text)
                 string address = Convert.ToString(item.SubItems[4].Text);
                 string certificates = Convert.ToString(item.SubItems[5].Text);
                 string Email = Convert.ToString(item.SubItems[6].Text);
@@ -158,9 +159,7 @@ namespace Proj_Desktop_App.presentation
                 item.SubItems.Add(request.languages);
                 item.SubItems.Add(request.certificates);
                 item.SubItems.Add(request.contactEmail);
-             //   item.it.SubItems[0].ForeColor = System.Drawing.Color.Red;
                 lvrequests.Items.Add(item);
-            //    lvrequests.Items[0].SubItems[0].ForeColor = System.Drawing.Color.Red;
             }
         }
 
@@ -183,7 +182,7 @@ namespace Proj_Desktop_App.presentation
                     if (newEmployee.languages.Trim() != selectedEmployee.languages.Trim()) { lblLanguages.ForeColor = Color.Red; }
                     if (newEmployee.phoneNumber != selectedEmployee.phoneNumber) { lblPhone.ForeColor = Color.Red; }
                     if (newEmployee.address.Trim() != selectedEmployee.address.Trim()) { lblAddress.ForeColor = Color.Red; }
-                    if (string.Compare(newEmployee.contactEmail ,selectedEmployee.contactEmail)==null) { lblEmail.ForeColor = Color.Red; }
+                    if (newEmployee.contactEmail.Trim()==selectedEmployee.contactEmail.Trim()) { lblEmail.ForeColor = Color.Red; }
                     // Show employee details:
                     lblNames.Text = $"{selectedEmployee.firstName} {selectedEmployee.lastName}";
                     lblBSN.Text = selectedEmployee.GetBSN().ToString();
