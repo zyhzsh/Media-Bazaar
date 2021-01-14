@@ -135,36 +135,37 @@
             this.lvRestocks.TabIndex = 52;
             this.lvRestocks.UseCompatibleStateImageBehavior = false;
             this.lvRestocks.View = System.Windows.Forms.View.Details;
+            this.lvRestocks.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvRestocks_ColumnClick);
             // 
             // RestockId
             // 
-            this.RestockId.Text = "Restock ID";
-            this.RestockId.Width = 78;
+            this.RestockId.Text = "Restock ID ";
+            this.RestockId.Width = 100;
             // 
             // ProductId
             // 
-            this.ProductId.Text = "Product code";
-            this.ProductId.Width = 92;
+            this.ProductId.Text = "Prod. Code ";
+            this.ProductId.Width = 100;
             // 
             // ProdName
             // 
-            this.ProdName.Text = "Product Name";
-            this.ProdName.Width = 98;
+            this.ProdName.Text = "Product Name ";
+            this.ProdName.Width = 140;
             // 
             // RequesterDesc
             // 
-            this.RequesterDesc.Text = "Request Message";
-            this.RequesterDesc.Width = 207;
+            this.RequesterDesc.Text = "Request Message ";
+            this.RequesterDesc.Width = 220;
             // 
             // JudgeDesc
             // 
-            this.JudgeDesc.Text = "Reponse Message";
-            this.JudgeDesc.Width = 241;
+            this.JudgeDesc.Text = "Reponse Message ";
+            this.JudgeDesc.Width = 220;
             // 
             // RequestedAmount
             // 
-            this.RequestedAmount.Text = "Requested Amount";
-            this.RequestedAmount.Width = 244;
+            this.RequestedAmount.Text = "Requested Amount ";
+            this.RequestedAmount.Width = 160;
             // 
             // WorkerStockRequestsForm
             // 

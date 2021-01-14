@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Proj_Desktop_App.logic;
 
 namespace Proj_Desktop_App.presentation
 {
@@ -16,6 +17,8 @@ namespace Proj_Desktop_App.presentation
 
         private DepartmentCreateUpdateFrom departmentCUForm;
 
+        private ListViewColumnSorter lvwColumnSorterEmpl, lvwColumnSorterProd;
+
         public DepartmentsForm(EmployeeStorage emplStorage, ProductStorage prdStorage, DepartmentStorage departments)
         {
             InitializeComponent();
@@ -23,8 +26,20 @@ namespace Proj_Desktop_App.presentation
             this.prdStorage = prdStorage;
             this.departments = departments;
 
+            lvwColumnSorterEmpl = new ListViewColumnSorter();
+            this.lvEmployees.ListViewItemSorter = lvwColumnSorterEmpl;
+            lvwColumnSorterProd = new ListViewColumnSorter();
+            this.lvProducts.ListViewItemSorter = lvwColumnSorterProd;
+
             cbDepartment.Items.AddRange(this.departments.GetDepartments());
             cbDepartment.SelectedIndex = 0;
+
+            this.lvwColumnSorterEmpl.SortType = typeof(int);
+            this.lvEmployees.Columns[0].Text += "▲";
+            this.lvEmployees.Sort();
+            this.lvwColumnSorterProd.SortType = typeof(int);
+            this.lvProducts.Columns[0].Text += "▲";
+            this.lvProducts.Sort();
 
             departmentCUForm = null;
         }
@@ -137,5 +152,100 @@ namespace Proj_Desktop_App.presentation
             }
         }
 
+        private void lvEmployees_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            ColumnHeader columnToSort = lvEmployees.Columns[e.Column];
+
+            // Determine if clicked column is already the column that is being sorted.
+            if (columnToSort.Index == lvwColumnSorterEmpl.SortColumn)
+            {
+                // Reverse the current sort direction for this column.
+                columnToSort.Text = columnToSort.Text.Trim(new char[] { '▲', '▼' });
+                if (lvwColumnSorterEmpl.Order == SortOrder.Ascending)
+                {
+                    lvwColumnSorterEmpl.Order = SortOrder.Descending;
+                    columnToSort.Text += "▼";
+                }
+                else
+                {
+                    lvwColumnSorterEmpl.Order = SortOrder.Ascending;
+                    columnToSort.Text += "▲";
+                }
+            }
+            else
+            {
+                // Set the column number that is to be sorted
+                lvwColumnSorterEmpl.SortColumn = columnToSort.Index;
+                foreach (ColumnHeader ch in lvEmployees.Columns)
+                {
+                    ch.Text = ch.Text.Trim(new char[] { '▲', '▼' });
+                }
+                // Default sort order is ascending
+                lvwColumnSorterEmpl.Order = SortOrder.Ascending;
+                columnToSort.Text += "▲";
+            }
+
+            // Set the type of the column
+            switch (e.Column)
+            {
+                case 0:
+                    lvwColumnSorterEmpl.SortType = typeof(int);
+                    break;
+                default:
+                    lvwColumnSorterEmpl.SortType = typeof(string);
+                    break;
+            }
+
+            // Perform the sort with these new sort options.
+            this.lvEmployees.Sort();
+        }
+
+        private void lvProducts_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            ColumnHeader columnToSort = lvProducts.Columns[e.Column];
+
+            // Determine if clicked column is already the column that is being sorted.
+            if (columnToSort.Index == lvwColumnSorterProd.SortColumn)
+            {
+                // Reverse the current sort direction for this column.
+                columnToSort.Text = columnToSort.Text.Trim(new char[] { '▲', '▼' });
+                if (lvwColumnSorterProd.Order == SortOrder.Ascending)
+                {
+                    lvwColumnSorterProd.Order = SortOrder.Descending;
+                    columnToSort.Text += "▼";
+                }
+                else
+                {
+                    lvwColumnSorterProd.Order = SortOrder.Ascending;
+                    columnToSort.Text += "▲";
+                }
+            }
+            else
+            {
+                // Set the column number that is to be sorted
+                lvwColumnSorterProd.SortColumn = columnToSort.Index;
+                foreach (ColumnHeader ch in lvProducts.Columns)
+                {
+                    ch.Text = ch.Text.Trim(new char[] { '▲', '▼' });
+                }
+                // Default sort order is ascending
+                lvwColumnSorterProd.Order = SortOrder.Ascending;
+                columnToSort.Text += "▲";
+            }
+
+            // Set the type of the column
+            switch (e.Column)
+            {
+                case 0:
+                    lvwColumnSorterProd.SortType = typeof(int);
+                    break;
+                default:
+                    lvwColumnSorterProd.SortType = typeof(string);
+                    break;
+            }
+
+            // Perform the sort with these new sort options.
+            this.lvProducts.Sort();
+        }
     }
 }

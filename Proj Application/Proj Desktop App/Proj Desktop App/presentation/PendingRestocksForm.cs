@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Proj_Desktop_App.logic;
 
 namespace Proj_Desktop_App
 {
@@ -7,12 +8,23 @@ namespace Proj_Desktop_App
     {
         private RestockRequestStorage reqStorage;
         private int currentUserBsn;
+
+        private ListViewColumnSorter lvwColumnSorter;
+
         public PendingRestocksForm(int BSN, RestockRequestStorage requestStorage)
         {
             InitializeComponent();
             reqStorage = requestStorage;
             currentUserBsn = BSN;
+
+            lvwColumnSorter = new ListViewColumnSorter();
+            this.lvRestocks.ListViewItemSorter = lvwColumnSorter;
+
             ReloadRequests();
+
+            this.lvwColumnSorter.SortType = typeof(int);
+            this.lvRestocks.Columns[0].Text += "▲";
+            this.lvRestocks.Sort();
         }
 
         private void ReloadRequests()
@@ -76,6 +88,56 @@ namespace Proj_Desktop_App
         private void btnDepotRefresh_Click(object sender, EventArgs e)
         {
             ReloadRequests();
+        }
+
+        private void lvRestocks_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            ColumnHeader columnToSort = lvRestocks.Columns[e.Column];
+
+            // Determine if clicked column is already the column that is being sorted.
+            if (columnToSort.Index == lvwColumnSorter.SortColumn)
+            {
+                // Reverse the current sort direction for this column.
+                columnToSort.Text = columnToSort.Text.Trim(new char[] { '▲', '▼' });
+                if (lvwColumnSorter.Order == SortOrder.Ascending)
+                {
+                    lvwColumnSorter.Order = SortOrder.Descending;
+                    columnToSort.Text += "▼";
+                }
+                else
+                {
+                    lvwColumnSorter.Order = SortOrder.Ascending;
+                    columnToSort.Text += "▲";
+                }
+            }
+            else
+            {
+                // Set the column number that is to be sorted
+                lvwColumnSorter.SortColumn = columnToSort.Index;
+                foreach (ColumnHeader ch in lvRestocks.Columns)
+                {
+                    ch.Text = ch.Text.Trim(new char[] { '▲', '▼' });
+                }
+                // Default sort order is ascending
+                lvwColumnSorter.Order = SortOrder.Ascending;
+                columnToSort.Text += "▲";
+            }
+
+            // Set the type of the column
+            switch (e.Column)
+            {
+                case 0:
+                case 1:
+                case 4:
+                    lvwColumnSorter.SortType = typeof(int);
+                    break;
+                default:
+                    lvwColumnSorter.SortType = typeof(string);
+                    break;
+            }
+
+            // Perform the sort with these new sort options.
+            this.lvRestocks.Sort();
         }
     }
 }
