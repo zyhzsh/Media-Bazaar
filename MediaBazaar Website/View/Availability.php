@@ -147,11 +147,11 @@ function Generate_Checkbox()
     <div class="Container">
         <div class="SideNote">
             <h3>Note: For Checking Your Preference Submition</h3>
-            <div class="lightGreen_Container">
-                <div class="lightGreen">Unset</div>
+            <div class="Unset_Container">
+                <div class="Unset_box">Unset</div>
             </div>
-            <div class="darkGreen_Container">
-                <div class="darkGreen">Setted</div>
+            <div class="Setted_Container">
+                <div class="Setted_box">Setted</div>
             </div>
         </div>
         <div class="Container">

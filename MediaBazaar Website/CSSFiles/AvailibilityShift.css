@@ -1,187 +1,184 @@
 .Container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #E3F2FB;
-    height: 100vh;
-    position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #E3F2FB;
+  height: 100vh;
+  position: relative;
 }
 .Preference_Shift_Form_Container{
-    width: 1200px;
-    height: 800px;
-    position: relative;
+  width: 1200px;
+  height: 800px;
+  position: relative;
 }
 /*Form Title*/
 .Form_Title{
-    display: grid;
-    align-items: center;
-    justify-content: center;
-    grid-template-columns: 1fr;
-    text-align: center;
-    width: inherit;
-    height: 40px;
-    background-color: #83B4D1;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  grid-template-columns: 1fr;
+  text-align: center;
+  width: inherit;
+  height: 40px;
+  background-color: #83B4D1;
 }
 
 /*Form Title---->Title Text->Date*/
-  .Date_On_Calendar_Title{
-    font-size: 34px;
-  }
+.Date_On_Calendar_Title{
+  font-size: 34px;
+}
 /*Form Title---->Title Text->Weekdays*/
-  .Week_Days{
-    width: inherit;
-    height: 100px;
-    background-color:#000;
-    display: grid;
-    grid-template-columns: repeat(6,1fr);
-    text-align: center;
-  }
- .Week_Day_Empty{
-    background-color:#889794;
-  }
-  .Week_Day{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid white;
-    color: white;
-  }
+.Week_Days{
+  width: inherit;
+  height: 100px;
+  background-color:#000;
+  display: grid;
+  grid-template-columns: repeat(6,1fr);
+  text-align: center;
+}
+.Week_Day_Empty{
+  background-color:#889794;
+}
+.Week_Day{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid white;
+  color: white;
+}
 
 /*Form*/
 .Form_Container{
-    display: grid;
-    width: inherit;
-    height: 650px;
-    grid-template-columns: 1fr 5fr;
+  display: grid;
+  width: inherit;
+  height: 650px;
+  grid-template-columns: 1fr 5fr;
 }
 .Sift_Types{
-    display: grid;
-    height: 600px;
-    background-color: #9CC6DF;
-    grid-template-rows: 1fr 1fr 1fr;
+  display: grid;
+  height: 600px;
+  background-color: #9CC6DF;
+  grid-template-rows: 1fr 1fr 1fr;
 }
 .Shit_Type{
-    display: flex;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #fff;
-    color: rgb(0, 0, 0);
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #fff;
+  color: rgb(0, 0, 0);
 }
 
 .Shift_Form_Container{
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 .CheckBox_Shift_Type_Container{
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-auto-flow: column;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-auto-flow: column;
 }
 
 .CheckBox_Container{
-    box-sizing: border-box;
-    width:200px;
-    height: 200px;
-    border: 1px solid #fff;
-    color: #fff;    
+  box-sizing: border-box;
+  width:200px;
+  height: 200px;
+  border: 1px solid #fff;
+  color: #fff;    
 }
 
 /* Hide the browser's default checkbox */
 .default_checkbox{
-  display:none;
+display:none;
 }
-  
+
 /*customer*/
-  .customer_checkbox {
-    box-sizing: border-box;
-    position: absolute;
-    height: 199px;
-    width: 199px;
-    background-color: #035a08;
-    border: 1px solid #fff;
-  }
-  
-  /* On mouse-over, add a background color */
-  .customer_checkbox_container:hover input ~ .customer_checkbox {
-    background-color: #ccc;
-  }
-  /* When the checkbox is checked, add a blue background */
-  .customer_checkbox_container input:checked ~ .customer_checkbox {
-    background-color: #CDE6F4;
-  }
-  
+.customer_checkbox {
+  box-sizing: border-box;
+  position: absolute;
+  height: 199px;
+  width: 199px;
+  background-color: #CDE6F4;
+  border: 1px solid #fff;
+}
+
+/* On mouse-over, add a background color */
+.customer_checkbox_container:hover input ~ .customer_checkbox {
+  background-color: #ccc;
+}
+/* When the checkbox is checked, add a blue background */
+.customer_checkbox_container input:checked ~ .customer_checkbox {
+  background-color:rgb(0, 134, 22);
+}
+
 
 /*****/
 
 
 /*Submit_Button*/
 .btn_submit_form{
-  height: 60px;
-  background-color: #83B4D1;
-  border: black;
-  color: rgb(3, 3, 3);
-  padding: 15px 32px;
-  text-decoration: none;
-  font-size: 16px;
-  opacity: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  float: right;
-  font-weight: bold;
-  border-radius: 0%;
+height: 60px;
+background-color: #83B4D1;
+border: black;
+color: rgb(3, 3, 3);
+padding: 15px 32px;
+text-decoration: none;
+font-size: 16px;
+opacity: 1;
+display: flex;
+align-items: center;
+justify-content: center;
+float: right;
+font-weight: bold;
+border-radius: 0%;
 }
 .btn_submit_form:hover{
-  background-color: #9CC6DF;
+background-color: #9CC6DF;
 }
 
 
-  /*Notice*/
+/*Notice*/
 .Notice
 {
-  text-align: center;
-  color: #ff0800;
+text-align: center;
+color: #ff0800;
 }
 .SideNote{
-  box-sizing: border-box;
-  height: 680px;
-  width: 320px;
-  background-color:#83B4D1;
-  margin-right: 15px;
-  border: 1px solid;
-  display: grid;
-  grid-template-columns: repeat(1,1fr);
-  grid-template-rows: 1fr,6fr.6fr;
-  text-align: center;
+box-sizing: border-box;
+height: 680px;
+width: 320px;
+background-color:#83B4D1;
+margin-right: 15px;
+border: 1px solid;
+display: grid;
+grid-template-columns: repeat(1,1fr);
+grid-template-rows: 1fr,6fr.6fr;
+text-align: center;
 }
-.lightGreen_Container{
-  display: flex;
-  align-self: center;
-  justify-items: center;
+
+.Unset_box {
+background-color: #CDE6F4;
+width: 200px;
+height:200px ;
+margin-left: auto;
+margin-right: auto;
+display: flex;
+align-self: center;
+justify-items: center;
+color: #000000;
+font-size: 30px;
 }
-.lightGreen {
-  background-color: #CDE6F4;
-  width: 200px;
-  height:200px ;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  align-self: center;
-  justify-items: center;
-  color: #000000;
-  font-size: 30px;
+.Setted_box {
+background-color: rgb(0, 134, 22);
+width: 200px;
+height:200px ;
+margin-left: auto;
+margin-right: auto;
+display: flex;
+align-self: center;
+justify-items: center;
+color: rgb(0, 0, 0);
+font-size: 30px;
 }
-.darkGreen {
-  background-color:  #035a08;
-  width: 200px;
-  height:200px ;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  align-self: center;
-  justify-items: center;
-  color: rgb(0, 0, 0);
-  font-size: 30px;
-}
+

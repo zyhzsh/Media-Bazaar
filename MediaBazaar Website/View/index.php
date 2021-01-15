@@ -22,14 +22,10 @@ include('Navigation.php');
      case 'pageProfile':
         echo '<div class="main">'; include 'Profile.php'; echo '</div>';
         break;
-        case 'PasswordChange':
-            echo '<div class="main">'; include 'PasswordChange.php'; echo '</div>';
-            break;
      default:
          echo '<div class="main">'; include 'login.php';echo '</div>';
  }
  }
- 
  ?>  
 </body>
 </html>
