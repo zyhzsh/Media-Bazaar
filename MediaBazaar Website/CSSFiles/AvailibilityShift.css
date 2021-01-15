@@ -99,7 +99,7 @@
     position: absolute;
     height: 199px;
     width: 199px;
-    background-color: #CDE6F4;
+    background-color: #035a08;
     border: 1px solid #fff;
   }
   
@@ -109,7 +109,7 @@
   }
   /* When the checkbox is checked, add a blue background */
   .customer_checkbox_container input:checked ~ .customer_checkbox {
-    background-color: #83B4D1;
+    background-color: #CDE6F4;
   }
   
 
@@ -174,7 +174,7 @@
   font-size: 30px;
 }
 .darkGreen {
-  background-color:  #9CC6DF;
+  background-color:  #035a08;
   width: 200px;
   height:200px ;
   margin-left: auto;
