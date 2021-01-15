@@ -84,6 +84,27 @@ namespace Proj_Desktop_App.presentation
             this.lvEmployees.TabIndex = 2;
             this.lvEmployees.UseCompatibleStateImageBehavior = false;
             this.lvEmployees.View = System.Windows.Forms.View.Details;
+            this.lvEmployees.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvEmployees_ColumnClick);
+            // 
+            // chBSN
+            // 
+            this.chBSN.Text = "BSN ";
+            this.chBSN.Width = 100;
+            // 
+            // chFName
+            // 
+            this.chFName.Text = "First name ";
+            this.chFName.Width = 100;
+            // 
+            // chLName
+            // 
+            this.chLName.Text = "Last name ";
+            this.chLName.Width = 100;
+            // 
+            // chPosition
+            // 
+            this.chPosition.Text = "Position ";
+            this.chPosition.Width = 120;
             // 
             // lvProducts
             // 
@@ -98,6 +119,22 @@ namespace Proj_Desktop_App.presentation
             this.lvProducts.TabIndex = 3;
             this.lvProducts.UseCompatibleStateImageBehavior = false;
             this.lvProducts.View = System.Windows.Forms.View.Details;
+            this.lvProducts.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvProducts_ColumnClick);
+            // 
+            // chCode
+            // 
+            this.chCode.Text = "Code ";
+            this.chCode.Width = 80;
+            // 
+            // chName
+            // 
+            this.chName.Text = "Name ";
+            this.chName.Width = 200;
+            // 
+            // chBrand
+            // 
+            this.chBrand.Text = "Brand ";
+            this.chBrand.Width = 120;
             // 
             // btnAddDepartment
             // 
@@ -185,41 +222,6 @@ namespace Proj_Desktop_App.presentation
             this.lblNrOfProducts.Size = new System.Drawing.Size(27, 20);
             this.lblNrOfProducts.TabIndex = 10;
             this.lblNrOfProducts.Text = "00";
-            // 
-            // chBSN
-            // 
-            this.chBSN.Text = "123456789";
-            this.chBSN.Width = 90;
-            // 
-            // chFName
-            // 
-            this.chFName.Text = "First name";
-            this.chFName.Width = 100;
-            // 
-            // chLName
-            // 
-            this.chLName.Text = "Last name";
-            this.chLName.Width = 100;
-            // 
-            // chPosition
-            // 
-            this.chPosition.Text = "Position";
-            this.chPosition.Width = 100;
-            // 
-            // chCode
-            // 
-            this.chCode.Text = "Code";
-            this.chCode.Width = 120;
-            // 
-            // chName
-            // 
-            this.chName.Text = "Name";
-            this.chName.Width = 120;
-            // 
-            // chBrand
-            // 
-            this.chBrand.Text = "Brand";
-            this.chBrand.Width = 120;
             // 
             // DepartmentsForm
             // 

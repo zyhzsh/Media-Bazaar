@@ -103,44 +103,46 @@
             this.lvProducts.TabIndex = 51;
             this.lvProducts.UseCompatibleStateImageBehavior = false;
             this.lvProducts.View = System.Windows.Forms.View.Details;
+            this.lvProducts.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvProducts_ColumnClick);
             // 
             // ProductCode
             // 
-            this.ProductCode.Text = "Product code";
-            this.ProductCode.Width = 92;
+            this.ProductCode.Text = "Prod. Code ";
+            this.ProductCode.Width = 100;
             // 
             // ProductName
             // 
-            this.ProductName.Text = "Name";
+            this.ProductName.Text = "Name ";
+            this.ProductName.Width = 200;
             // 
             // ProductBrand
             // 
-            this.ProductBrand.Text = "Brand";
-            this.ProductBrand.Width = 66;
+            this.ProductBrand.Text = "Brand ";
+            this.ProductBrand.Width = 100;
             // 
             // ProductSold
             // 
-            this.ProductSold.Text = "Selling Price";
-            this.ProductSold.Width = 87;
+            this.ProductSold.Text = "Selling Price ";
+            this.ProductSold.Width = 100;
             // 
             // ProductBought
             // 
-            this.ProductBought.Text = "Bought for";
-            this.ProductBought.Width = 72;
+            this.ProductBought.Text = "Buying Price ";
+            this.ProductBought.Width = 100;
             // 
             // ProductDepartment
             // 
-            this.ProductDepartment.Text = "Department";
-            this.ProductDepartment.Width = 82;
+            this.ProductDepartment.Text = "Department ";
+            this.ProductDepartment.Width = 100;
             // 
             // ProductStock
             // 
-            this.ProductStock.Text = "In Stock";
-            this.ProductStock.Width = 95;
+            this.ProductStock.Text = "In Stock ";
+            this.ProductStock.Width = 80;
             // 
             // ProductDescription
             // 
-            this.ProductDescription.Text = "Description";
+            this.ProductDescription.Text = "Description ";
             this.ProductDescription.Width = 300;
             // 
             // ProductCRUDForm
