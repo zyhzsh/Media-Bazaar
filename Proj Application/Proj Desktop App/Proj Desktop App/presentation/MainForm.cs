@@ -18,7 +18,8 @@ namespace Proj_Desktop_App
         private AdminForm employeesForm;
         private DepartmentsForm departmentsForm;
         private ProductCRUDForm productCRUD;
-        private ProductStatistics productStatistics;
+
+        private StatisticForm statistic;
         private Form restocks;
         private Scheduling scheduling;
         
@@ -74,8 +75,8 @@ namespace Proj_Desktop_App
                 InitializeForm(productCRUD);
 
                 tabStatistics.Visible = true;
-                productStatistics = new ProductStatistics(deptStorage);
-                InitializeForm(productStatistics);
+                statistic = new StatisticForm(deptStorage);
+                InitializeForm(statistic);
 
                 tabRestocks.Visible = true;
                 restocks = new PendingRestocksForm(currentUser.GetBSN(), reqStorage);
@@ -91,7 +92,7 @@ namespace Proj_Desktop_App
                 autoSchedule = new WeeklyScheduleGridForm(currentUser.GetDepartment(), emplStorage);
                 InitializeForm(autoSchedule);
 
-
+                
                 tabProducts.PerformClick();
             }
             else if (position == PositionType.Depot_Worker)
@@ -177,8 +178,10 @@ namespace Proj_Desktop_App
         {
             if (selectedTab != tabStatistics)
             {
-                ShowForm(productStatistics, tabStatistics);
+                //ShowForm(productStatistics, tabStatistics);
+                ShowForm(statistic, tabStatistics);
             }
+            
         }
 
         private void tabRestocks_Click(object sender, EventArgs e)
@@ -224,5 +227,7 @@ namespace Proj_Desktop_App
                 ShowForm(autoSchedule, tabAutoSchedule);
             }
         }
+
+
     }
 }
