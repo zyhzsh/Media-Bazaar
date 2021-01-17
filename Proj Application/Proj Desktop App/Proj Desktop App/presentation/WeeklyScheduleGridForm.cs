@@ -14,14 +14,12 @@ namespace Proj_Desktop_App.presentation
     {
         private AutomaticScheduling autoSchedule;
         private ScheduleStorage scheduleStorage;
-        private EmployeeStorage empStorage;
 
         private List<Employee>[] assignedWorkers;
         private List<Employee>[] assignedManagers;
         public WeeklyScheduleGridForm(Department currentDepartment, EmployeeStorage empStorage)
         {
             InitializeComponent();
-            this.empStorage = empStorage;
             this.scheduleStorage = new ScheduleStorage(empStorage);
 
             autoSchedule = new AutomaticScheduling(currentDepartment, scheduleStorage);
@@ -40,6 +38,10 @@ namespace Proj_Desktop_App.presentation
             {
                 DataGridViewRow row = (DataGridViewRow)dtGrdViewWorkers.Rows[0].Clone();
 
+                if (i == 0) row.HeaderCell.Value = "Morning";
+                else if (i == 1) row.HeaderCell.Value = "Afternoon";
+                else if (i == 2) row.HeaderCell.Value = "Evening";
+
                 for(int j = 0; j < 5; j++)
                 {
                     row.Cells[j].Value = assignedWorkers[i + j*3].Count;
@@ -51,10 +53,22 @@ namespace Proj_Desktop_App.presentation
                 dtGrdViewWorkers.Rows.Add(row);
             }
             lbEmployeeReports.Items.Add("WORKERS");
-            foreach(string workerReport in autoSchedule.GetReports())
+            foreach(string workerReport in autoSchedule.GetOvertimeReports())
             {
                 lbEmployeeReports.Items.Add(workerReport);
             }
+
+            if(autoSchedule.GetWorkerReport() == "You have enough workers")
+            {
+                this.lblWorkerStaff.Text = "You have enough workers";
+                this.lblWorkerStaff.BackColor = Color.Green;
+            }
+            else
+            {
+                this.lblWorkerStaff.Text = autoSchedule.GetWorkerReport();
+                this.lblWorkerStaff.BackColor = Color.Red;
+            }
+            this.lblWorkerStaff.Visible = true;
 
             // MANAGERS
             assignedManagers = autoSchedule.AssignManagers();
@@ -62,7 +76,11 @@ namespace Proj_Desktop_App.presentation
             {
                 DataGridViewRow row = (DataGridViewRow)dtGrdViewManagers.Rows[0].Clone();
 
-                for(int j = 0; j < 5; j++)
+                if (i == 0) row.HeaderCell.Value = "Morning";
+                else if (i == 1) row.HeaderCell.Value = "Afternoon";
+                else if (i == 2) row.HeaderCell.Value = "Evening";
+
+                for (int j = 0; j < 5; j++)
                 {
                     row.Cells[j].Value = assignedManagers[i + j*3].Count;
                     if (Convert.ToInt32(row.Cells[j].Value) < 1) row.Cells[j].Style.BackColor = Color.Red;
@@ -73,10 +91,22 @@ namespace Proj_Desktop_App.presentation
                 dtGrdViewManagers.Rows.Add(row);
             }
             lbEmployeeReports.Items.Add("MANAGERS");
-            foreach (string managerReport in autoSchedule.GetReports())
+            foreach (string managerReport in autoSchedule.GetOvertimeReports())
             {
                 lbEmployeeReports.Items.Add(managerReport);
             }
+
+            if (autoSchedule.GetManagerReport() == "You have enough managers")
+            {
+                this.lblManagerStaff.Text = autoSchedule.GetManagerReport();
+                this.lblManagerStaff.BackColor = Color.Green;
+            }
+            else
+            {
+                this.lblManagerStaff.Text = autoSchedule.GetManagerReport();
+                this.lblManagerStaff.BackColor = Color.Red;
+            }
+            this.lblManagerStaff.Visible = true;
 
             gbSubmit.Enabled = true;
             btnAssign.Enabled = false;
@@ -140,6 +170,16 @@ namespace Proj_Desktop_App.presentation
             {
                 btnAssign.Enabled = true;
             }
+        }
+
+        private void dtGrdViewWorkers_SelectionChanged(object sender, EventArgs e)
+        {
+            this.dtGrdViewWorkers.ClearSelection();
+        }
+
+        private void dtGrdViewManagers_SelectionChanged(object sender, EventArgs e)
+        {
+            this.dtGrdViewManagers.ClearSelection();
         }
     }
 }

@@ -26,9 +26,9 @@ namespace Proj_Desktop_App
         /// <summary>
         /// Contains all problems the algorithm encountered
         /// </summary>
-        private List<string> reports;
-        private List<string> managerReports;
-        private List<string> workerReports;
+        private List<string> overtimeReports;
+        private string managerStaff;
+        private string workerStaff;
 
         public AutomaticScheduling(Department managerDepartment, ScheduleStorage schStorage)
         {
@@ -37,7 +37,7 @@ namespace Proj_Desktop_App
             {
                 assignedEmployees[i] = new List<Employee>();
             }
-            reports = managerReports = workerReports = new List<string>();
+            overtimeReports = new List<string>();
 
             availableWorkers = schStorage.GetWorkerAvailabilitiesByDepartment(managerDepartment);
             availableManagers = schStorage.GetManagerAvailabilitiesByDepartment(managerDepartment);
@@ -52,7 +52,7 @@ namespace Proj_Desktop_App
             List<Employee>[] workers = AssignAvailabilities(availableWorkers);
             List<Employee>[] managers = AssignAvailabilities(availableManagers);
             List<Employee>[] allEmployees = new List<Employee>[15];
-            reports = managerReports = workerReports = new List<string>();
+            overtimeReports = new List<string>();
 
             for(int i = 0; i < 15; i++)
             {
@@ -71,7 +71,7 @@ namespace Proj_Desktop_App
         /// <returns></returns>
         public List<Employee>[] AssignWorkers()
         {
-            reports = managerReports = workerReports = new List<string>();
+            overtimeReports = new List<string>();
             List<Employee>[] workers = AssignAvailabilities(availableWorkers);
             CheckOverstaffing();
             return workers;
@@ -83,7 +83,7 @@ namespace Proj_Desktop_App
         /// <returns></returns>
         public List<Employee>[] AssignManagers()
         {
-            reports = managerReports = workerReports = new List<string>();
+            overtimeReports = new List<string>();
             List<Employee>[] managers = AssignAvailabilities(availableManagers);
             CheckOverstaffing();
             return managers;
@@ -169,25 +169,21 @@ namespace Proj_Desktop_App
                     else if (tripleShiftDay)
                     {
                         //Removing the employee would result in too few workers/managers but they can't work the entire day
-                        if(availability.employee.GetPosition() == PositionType.Sales_Manager || availability.employee.GetPosition() == PositionType.Depot_Manager)
-                        {
-                            reports.Add(availability.employee + " would be forced to work the whole day on " + ShiftIndexToString(mostCrowdedShift) + " to meet the minimum manager requirements. Without this employee the shift would have no manager.");
-                        }
-                        else
-                        {
-                            reports.Add(availability.employee + " would be forced to work the whole day on " + ShiftIndexToString(mostCrowdedShift) + " to meet the minimum worker requirements. Without this employee the shift would only have " + (assignedEmployeeCount - 1) + " workers.");
-                        }
+                        //Previously this created a report but the client said the information was not needed since a manager
+                        //can't do anything with it, so now it functions identically to above situations
                         
                         this.assignedEmployees[mostCrowdedShift].Remove(availability.employee);
                         availability.leeway = availability.leeway - 1;
                     }
                     else
                     {
+                        if((assignedEmployeeCount == 3 && (availability.employee.GetPosition() == PositionType.Depot_Worker || availability.employee.GetPosition() == PositionType.Sales_Worker)) || (assignedEmployeeCount == 1 && (availability.employee.GetPosition() == PositionType.Depot_Manager || availability.employee.GetPosition() == PositionType.Sales_Manager)))
+                        {
+                            overtimeReports.Add(availability.employee + " could work overtime on " + ShiftIndexToString(mostCrowdedShift) + " to keep the store open.");
+                        }
 
-                        reports.Add(availability.employee + " would be forced to work overtime on " + ShiftIndexToString(mostCrowdedShift) + " to meet the minimum worker requirements. Without this employee the shift would only have " + (assignedEmployeeCount - 1) + " employees");
-
-
-                        // In this situation removing the employee from even the most crowded shift would cause the store to close though to too few employees/managers
+                        // In this situation removing the employee from even the most crowded shift
+                        // would cause the store to close due to too few employees/managers
 
                         // The algorithm is met with a dilema: keep the store open by assigning the employee extra shifts
                         // or close the store to prevent overworking. 
@@ -267,9 +263,19 @@ namespace Proj_Desktop_App
                 this.assignedEmployees[i].Clear();
             }
         }
-        public List<string> GetReports()
+        public string[] GetOvertimeReports()
         {
-            return this.reports;
+            return this.overtimeReports.ToArray();
+        }
+
+        public string GetManagerReport()
+        {
+            return this.managerStaff;
+        }
+
+        public string GetWorkerReport()
+        {
+            return this.workerStaff;
         }
 
         private void CheckOverstaffing()
@@ -303,23 +309,30 @@ namespace Proj_Desktop_App
             if(overstaffed && understaffed)
             {
                 if (manager)
-                    reports.Add("Some shifts are overstaffed and others are understaffed. Managers don't submit enough availability or don't have enough FTE.");
+                    managerStaff = "Try to move managers around.";
                 else
-                    reports.Add("Some shifts are overstaffed and others are understaffed.  Workers don't submit enough availability or don't have enough FTE.");
+                    workerStaff = "Try to move workers around.";
             }
             else if(overstaffed && !understaffed)
             {
                 if (manager)
-                    reports.Add("Some shifts are overstaffed. There appear to be too many managers");
+                    managerStaff = ("Too many managers");
                 else
-                    reports.Add("Some shifts are overstaffed. There appear to be too many workers");
+                    workerStaff = ("Too many workers");
             }
             else if(!overstaffed && understaffed)
             {
                 if (manager)
-                    reports.Add("Some shifts are understaffed. Not enough managers");
+                    managerStaff = ("Not enough managers");
                 else
-                    reports.Add("Some shifts are understaffed. Not enough workers");
+                    workerStaff = ("Not enough workers");
+            }
+            else if(!overstaffed && !understaffed)
+            {
+                if (manager)
+                    managerStaff = "You have enough managers";
+                else
+                    workerStaff = "You have enough workers";
             }
         }
         private string ShiftIndexToString(int i)
