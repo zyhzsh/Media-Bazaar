@@ -30,7 +30,17 @@ namespace Proj_Desktop_App.presentation
         private void InitializeComponent()
         {
             this.dtGrdViewWorkers = new System.Windows.Forms.DataGridView();
+            this.colMonday = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTuesday = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colWednesday = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colThursday = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFriday = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dtGrdViewManagers = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.ckBoxWorkers = new System.Windows.Forms.CheckBox();
             this.ckBoxManagers = new System.Windows.Forms.CheckBox();
@@ -40,16 +50,6 @@ namespace Proj_Desktop_App.presentation
             this.btnAutoSchedule = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.lbEmployeeReports = new System.Windows.Forms.ListBox();
-            this.colMonday = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTuesday = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colWednesday = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colThursday = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFriday = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dtGrdViewWorkers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtGrdViewManagers)).BeginInit();
             this.gbSubmit.SuspendLayout();
@@ -71,6 +71,41 @@ namespace Proj_Desktop_App.presentation
             this.dtGrdViewWorkers.Size = new System.Drawing.Size(625, 190);
             this.dtGrdViewWorkers.TabIndex = 0;
             // 
+            // colMonday
+            // 
+            this.colMonday.HeaderText = "Monday";
+            this.colMonday.MinimumWidth = 4;
+            this.colMonday.Name = "colMonday";
+            this.colMonday.Width = 110;
+            // 
+            // colTuesday
+            // 
+            this.colTuesday.HeaderText = "Tuesday";
+            this.colTuesday.MinimumWidth = 6;
+            this.colTuesday.Name = "colTuesday";
+            this.colTuesday.Width = 110;
+            // 
+            // colWednesday
+            // 
+            this.colWednesday.HeaderText = "Wednesday";
+            this.colWednesday.MinimumWidth = 6;
+            this.colWednesday.Name = "colWednesday";
+            this.colWednesday.Width = 110;
+            // 
+            // colThursday
+            // 
+            this.colThursday.HeaderText = "Thursday";
+            this.colThursday.MinimumWidth = 6;
+            this.colThursday.Name = "colThursday";
+            this.colThursday.Width = 110;
+            // 
+            // colFriday
+            // 
+            this.colFriday.HeaderText = "Friday";
+            this.colFriday.MinimumWidth = 6;
+            this.colFriday.Name = "colFriday";
+            this.colFriday.Width = 110;
+            // 
             // dtGrdViewManagers
             // 
             this.dtGrdViewManagers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -86,6 +121,41 @@ namespace Proj_Desktop_App.presentation
             this.dtGrdViewManagers.RowTemplate.Height = 24;
             this.dtGrdViewManagers.Size = new System.Drawing.Size(625, 190);
             this.dtGrdViewManagers.TabIndex = 1;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Monday";
+            this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Width = 110;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "Tuesday";
+            this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.Width = 110;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Wednesday";
+            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.Width = 110;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "Thursday";
+            this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.Width = 110;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "Friday";
+            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.Width = 110;
             // 
             // label1
             // 
@@ -183,76 +253,6 @@ namespace Proj_Desktop_App.presentation
             this.lbEmployeeReports.Name = "lbEmployeeReports";
             this.lbEmployeeReports.Size = new System.Drawing.Size(1334, 180);
             this.lbEmployeeReports.TabIndex = 14;
-            // 
-            // colMonday
-            // 
-            this.colMonday.HeaderText = "Monday";
-            this.colMonday.MinimumWidth = 4;
-            this.colMonday.Name = "colMonday";
-            this.colMonday.Width = 110;
-            // 
-            // colTuesday
-            // 
-            this.colTuesday.HeaderText = "Tuesday";
-            this.colTuesday.MinimumWidth = 6;
-            this.colTuesday.Name = "colTuesday";
-            this.colTuesday.Width = 110;
-            // 
-            // colWednesday
-            // 
-            this.colWednesday.HeaderText = "Wednesday";
-            this.colWednesday.MinimumWidth = 6;
-            this.colWednesday.Name = "colWednesday";
-            this.colWednesday.Width = 110;
-            // 
-            // colThursday
-            // 
-            this.colThursday.HeaderText = "Thursday";
-            this.colThursday.MinimumWidth = 6;
-            this.colThursday.Name = "colThursday";
-            this.colThursday.Width = 110;
-            // 
-            // colFriday
-            // 
-            this.colFriday.HeaderText = "Friday";
-            this.colFriday.MinimumWidth = 6;
-            this.colFriday.Name = "colFriday";
-            this.colFriday.Width = 110;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "Monday";
-            this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Width = 110;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.HeaderText = "Tuesday";
-            this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.Width = 110;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Wednesday";
-            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.Width = 110;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.HeaderText = "Thursday";
-            this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.Width = 110;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.HeaderText = "Friday";
-            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.Width = 110;
             // 
             // WeeklyScheduleGridForm
             // 

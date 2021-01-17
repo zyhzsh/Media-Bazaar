@@ -25,23 +25,6 @@ namespace Proj_Desktop_App.presentation
             this.scheduleStorage = new ScheduleStorage(empStorage);
 
             autoSchedule = new AutomaticScheduling(currentDepartment, scheduleStorage);
-            
-
-
-        /*
-            for(int i = 0; i < 3; i++)
-            {
-                DataGridViewRow row = (DataGridViewRow)dtGrdViewWorkers.Rows[0].Clone();
-
-                row.Cells[0].Value = assignedEmployees[i].Count;
-                row.Cells[1].Value = assignedEmployees[i+3].Count;
-                row.Cells[2].Value = assignedEmployees[i+6].Count;
-                row.Cells[3].Value = assignedEmployees[i+9].Count;
-                row.Cells[4].Value = assignedEmployees[i+12].Count;
-
-                dtGrdViewWorkers.Rows.Add(row);
-            }
-        */
         }
 
         private void btnAutoSchedule_Click(object sender, EventArgs e)
@@ -57,11 +40,13 @@ namespace Proj_Desktop_App.presentation
             {
                 DataGridViewRow row = (DataGridViewRow)dtGrdViewWorkers.Rows[0].Clone();
 
-                row.Cells[0].Value = assignedWorkers[i].Count;
-                row.Cells[1].Value = assignedWorkers[i + 3].Count;
-                row.Cells[2].Value = assignedWorkers[i + 6].Count;
-                row.Cells[3].Value = assignedWorkers[i + 9].Count;
-                row.Cells[4].Value = assignedWorkers[i + 12].Count;
+                for(int j = 0; j < 5; j++)
+                {
+                    row.Cells[j].Value = assignedWorkers[i + j*3].Count;
+                    if (Convert.ToInt32(row.Cells[j].Value) < 3) row.Cells[j].Style.BackColor = Color.Red;
+                    else if (Convert.ToInt32(row.Cells[j].Value) > 5) row.Cells[j].Style.BackColor = Color.DarkOrange;
+                    else row.Cells[j].Style.BackColor = Color.White;
+                }
 
                 dtGrdViewWorkers.Rows.Add(row);
             }
@@ -77,11 +62,13 @@ namespace Proj_Desktop_App.presentation
             {
                 DataGridViewRow row = (DataGridViewRow)dtGrdViewManagers.Rows[0].Clone();
 
-                row.Cells[0].Value = assignedManagers[i].Count;
-                row.Cells[1].Value = assignedManagers[i + 3].Count;
-                row.Cells[2].Value = assignedManagers[i + 6].Count;
-                row.Cells[3].Value = assignedManagers[i + 9].Count;
-                row.Cells[4].Value = assignedManagers[i + 12].Count;
+                for(int j = 0; j < 5; j++)
+                {
+                    row.Cells[j].Value = assignedManagers[i + j*3].Count;
+                    if (Convert.ToInt32(row.Cells[j].Value) < 1) row.Cells[j].Style.BackColor = Color.Red;
+                    else if (Convert.ToInt32(row.Cells[j].Value) > 1) row.Cells[j].Style.BackColor = Color.DarkOrange;
+                    else row.Cells[j].Style.BackColor = Color.White;
+                }
 
                 dtGrdViewManagers.Rows.Add(row);
             }
