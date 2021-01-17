@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Proj_Desktop_App.logic;
 
 namespace Proj_Desktop_App
 {
@@ -9,6 +10,9 @@ namespace Proj_Desktop_App
         private RestockRequestStorage reqStorage;
         private int salesManagerBsn;
         private Department salesManagerDepartment;
+
+        private ListViewColumnSorter lvwColumnSorterProducts, lvwColumnSorterRestocks;
+
         public SalesManagerForm(int BSN, Department dep, ProductStorage prdStorage, RestockRequestStorage reqStorage)
         {
             InitializeComponent();
@@ -18,9 +22,24 @@ namespace Proj_Desktop_App
             this.salesManagerDepartment = dep;
             cbProductSearchMethod.SelectedIndex = 0;
 
+            lvwColumnSorterProducts = new ListViewColumnSorter();
+            this.lvwColumnSorterProducts.SortColumn = 4;
+            this.lvProducts.ListViewItemSorter = lvwColumnSorterProducts;
+
             ReloadProducts();
 
+            this.lvwColumnSorterProducts.SortType = typeof(int);
+            this.lvProducts.Columns[4].Text += "▲";
+            this.lvProducts.Sort();
+
+            lvwColumnSorterRestocks = new ListViewColumnSorter();
+            this.lvRestocks.ListViewItemSorter = lvwColumnSorterRestocks;
+
             ReloadRestockRequests();
+
+            this.lvwColumnSorterRestocks.SortType = typeof(int);
+            this.lvRestocks.Columns[0].Text += "▲";
+            this.lvRestocks.Sort();
         }
 
         private void ReloadProducts()
@@ -32,9 +51,6 @@ namespace Proj_Desktop_App
                 ListViewItem item = new ListViewItem(p.id.ToString());
                 item.SubItems.Add(p.Name);
                 item.SubItems.Add(p.Brand);
-                item.SubItems.Add(p.Description);
-                item.SubItems.Add(p.SoldPrice.ToString());
-                item.SubItems.Add(p.BoughtPrice.ToString());
                 item.SubItems.Add(p.Department.ToString());
                 item.SubItems.Add(p.Stock.ToString());
 
@@ -141,6 +157,105 @@ namespace Proj_Desktop_App
         {
             ReloadProducts();
             ReloadRestockRequests();
+        }
+
+        private void lvProducts_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            ColumnHeader columnToSort = lvProducts.Columns[e.Column];
+
+            // Determine if clicked column is already the column that is being sorted.
+            if (columnToSort.Index == lvwColumnSorterProducts.SortColumn)
+            {
+                // Reverse the current sort direction for this column.
+                columnToSort.Text = columnToSort.Text.Trim(new char[] { '▲', '▼' });
+                if (lvwColumnSorterProducts.Order == SortOrder.Ascending)
+                {
+                    lvwColumnSorterProducts.Order = SortOrder.Descending;
+                    columnToSort.Text += "▼";
+                }
+                else
+                {
+                    lvwColumnSorterProducts.Order = SortOrder.Ascending;
+                    columnToSort.Text += "▲";
+                }
+            }
+            else
+            {
+                // Set the column number that is to be sorted
+                lvwColumnSorterProducts.SortColumn = columnToSort.Index;
+                foreach (ColumnHeader ch in lvProducts.Columns)
+                {
+                    ch.Text = ch.Text.Trim(new char[] { '▲', '▼' });
+                }
+                // Default sort order is ascending
+                lvwColumnSorterProducts.Order = SortOrder.Ascending;
+                columnToSort.Text += "▲";
+            }
+
+            // Set the type of the column
+            switch (e.Column)
+            {
+                case 0:
+                case 4:
+                    lvwColumnSorterProducts.SortType = typeof(double);
+                    break;
+                default:
+                    lvwColumnSorterProducts.SortType = typeof(string);
+                    break;
+            }
+
+            // Perform the sort with these new sort options.
+            this.lvProducts.Sort();
+        }
+
+        private void lvRestocks_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            ColumnHeader columnToSort = lvRestocks.Columns[e.Column];
+
+            // Determine if clicked column is already the column that is being sorted.
+            if (columnToSort.Index == lvwColumnSorterRestocks.SortColumn)
+            {
+                // Reverse the current sort direction for this column.
+                columnToSort.Text = columnToSort.Text.Trim(new char[] { '▲', '▼' });
+                if (lvwColumnSorterRestocks.Order == SortOrder.Ascending)
+                {
+                    lvwColumnSorterRestocks.Order = SortOrder.Descending;
+                    columnToSort.Text += "▼";
+                }
+                else
+                {
+                    lvwColumnSorterRestocks.Order = SortOrder.Ascending;
+                    columnToSort.Text += "▲";
+                }
+            }
+            else
+            {
+                // Set the column number that is to be sorted
+                lvwColumnSorterRestocks.SortColumn = columnToSort.Index;
+                foreach (ColumnHeader ch in lvRestocks.Columns)
+                {
+                    ch.Text = ch.Text.Trim(new char[] { '▲', '▼' });
+                }
+                // Default sort order is ascending
+                lvwColumnSorterRestocks.Order = SortOrder.Ascending;
+                columnToSort.Text += "▲";
+            }
+
+            // Set the type of the column
+            switch (e.Column)
+            {
+                case 0:
+                case 1:
+                case 4:
+                    lvwColumnSorterRestocks.SortType = typeof(int);
+                    break;
+                default:
+                    lvwColumnSorterRestocks.SortType = typeof(string);
+                    break;
+            }
+
+            // Perform the sort with these new sort options.
+            this.lvRestocks.Sort();
         }
     }
 }

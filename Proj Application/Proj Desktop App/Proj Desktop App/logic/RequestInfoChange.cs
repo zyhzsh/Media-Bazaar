@@ -7,7 +7,7 @@ using Proj_Desktop_App.dataAccess;
 
 namespace Proj_Desktop_App
 {
-    class RequestInfoChange
+    public class RequestInfoChange
     {
         // Personal details:
         public int BSN { get; private set; }
@@ -22,8 +22,6 @@ namespace Proj_Desktop_App
         public string phoneNumber { get; private set; }
         public string address { get; private set; }
         public string contactEmail { get; private set; }
-
-        private EmployeeManagement management=new EmployeeManagement();
 
         public RequestInfoChange(int BSN, string firstName, string lastName, char gender,
             string languages, string certificates, string phoneNumber, string address, string contactEmail,string dateOfRequest)
@@ -40,10 +38,6 @@ namespace Proj_Desktop_App
             this.contactEmail = contactEmail;
             this.dateOfRequest = dateOfRequest;
             
-        }
-        public RequestInfoChange()
-        {
-
         }
     }
 }

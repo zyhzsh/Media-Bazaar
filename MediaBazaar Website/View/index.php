@@ -26,7 +26,6 @@ include('Navigation.php');
          echo '<div class="main">'; include 'login.php';echo '</div>';
  }
  }
- 
  ?>  
 </body>
 </html>

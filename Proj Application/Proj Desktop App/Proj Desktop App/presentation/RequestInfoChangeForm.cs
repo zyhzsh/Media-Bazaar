@@ -14,16 +14,17 @@ namespace Proj_Desktop_App.presentation
 {
     public partial class RequestInfoChangeForm : Form
     {
-        private RequestChangeStorage RequestChangeStorage;
+        private RequestChangeStorage requestChangeStorage;
         private EmployeeCreateUpdateForm emplCUForm;
         private EmployeeStorage emplStorage;
-        Employee selectedEmployee;
-        Employee newEmployee;
+        private Employee selectedEmployee;
+        private Employee newEmployee;
         private DepartmentStorage departments;
+
         public RequestInfoChangeForm(EmployeeStorage employeeStorage, DepartmentStorage departments)
         {
             InitializeComponent();
-            RequestChangeStorage = new RequestChangeStorage();
+            requestChangeStorage = new RequestChangeStorage(departments);
             this.emplStorage = employeeStorage;
             newEmployee = null;
             lvrequests.MultiSelect = true;
@@ -39,9 +40,10 @@ namespace Proj_Desktop_App.presentation
             {
                 ListViewItem item = lvrequests.SelectedItems[0];
                 int BSN = Convert.ToInt32(item.SubItems[0].Text);
-                Employee employee = RequestChangeStorage.GetEmployeeByBsn(BSN);
+                Employee employee = emplStorage.GetEmployee(BSN);
+                RequestInfoChange request = requestChangeStorage.GetRequest(BSN);
                 // Open form for updating an employee's details
-                emplCUForm = new EmployeeCreateUpdateForm(emplStorage, employee, departments);
+                emplCUForm = new EmployeeCreateUpdateForm(emplStorage, employee, request, departments);
                 //creat an event to detect when form closed to ubdate the info
                 this.emplCUForm.FormClosed += new FormClosedEventHandler(EmployeeCreateUpdateForm_FormClosed);
                 //Delet the request from database after ubdating
@@ -65,7 +67,7 @@ namespace Proj_Desktop_App.presentation
                 ListViewItem item = lvrequests.SelectedItems[0];
                 int BSN = Convert.ToInt32(item.SubItems[0].Text);
                 //Delet the request from database 
-                RequestChangeStorage.DeleteRequest(BSN);
+                requestChangeStorage.DeleteRequest(BSN);
                 GUI();
             }
             catch (Exception ex)
@@ -74,62 +76,23 @@ namespace Proj_Desktop_App.presentation
                 MessageBox.Show(ex.ToString());
             }
         }
-        //public Employee GetEmployeeToUbdate()
-        //{
-        //    try
-        //    {
-        //        ListViewItem item = lvrequests.SelectedItems[0];
-        //        int BSN = Convert.ToInt32(item.SubItems[1].Text);
-        //        string firstName = Convert.ToString(item.SubItems[2].Text);
-        //        string lastName = Convert.ToString(item.SubItems[3].Text);
-        //        char gender = Convert.ToChar(item.SubItems[4].Text);
-        //        string phoneNumber = Convert.ToString(item.SubItems[4].Text);
-        //        // DateTime birthDate = Convert.ToDateTime(item.SubItems[0].Text)
-        //        string address = Convert.ToString(item.SubItems[5].Text);
-        //        string certificates = Convert.ToString(item.SubItems[6].Text);
-        //        string Email = Convert.ToString(item.SubItems[7].Text);
-        //        string languages = Convert.ToString(item.SubItems[8].Text);
-        //        Employee oldEmployee = null;
-        //        oldEmployee = RequestChangeStorage.GetEmployeeByBsn(BSN);
 
-        //        // Set information to update
-        //        if (firstName == null) { firstName = oldEmployee.firstName; }
-        //        if (lastName == null) { lastName = oldEmployee.lastName; }
-        //        if (gender.ToString() == null) { gender = oldEmployee.gender; }
-        //        if (certificates == null) { certificates = oldEmployee.certificates; }
-        //        if (languages == null) { languages = oldEmployee.languages; }
-        //        if (phoneNumber == null) { phoneNumber = oldEmployee.phoneNumber; }
-        //        if (address == null) { address = oldEmployee.address; }
-        //        if (Email == null) { address = oldEmployee.contactEmail; }
-
-        //        //ubdate old info employee
-        //        newEmployee = new Employee(oldEmployee.GetBSN(), firstName, lastName, gender, oldEmployee.birthDate, languages, certificates, phoneNumber, address, Email);
-        //        return newEmployee;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //    }
-        //    return null;
-
-        //}
         public Employee GetNewEmployee()
         {
             try
             {
                 ListViewItem item = lvrequests.SelectedItems[0];
-                int BSN = Convert.ToInt32(item.SubItems[0].Text);
+                int BSN = Convert.ToInt32(item.Text);
                 string firstName = Convert.ToString(item.SubItems[1].Text);
                 string lastName = Convert.ToString(item.SubItems[2].Text);
                 char gender = Convert.ToChar(item.SubItems[3].Text);
                 string phoneNumber = Convert.ToString(item.SubItems[4].Text);
-                // DateTime birthDate = Convert.ToDateTime(item.SubItems[0].Text)
-                string address = Convert.ToString(item.SubItems[4].Text);
-                string certificates = Convert.ToString(item.SubItems[5].Text);
-                string Email = Convert.ToString(item.SubItems[6].Text);
-                string languages = Convert.ToString(item.SubItems[7].Text);
+                string address = Convert.ToString(item.SubItems[5].Text);
+                string languages = Convert.ToString(item.SubItems[6].Text);
+                string certificates = Convert.ToString(item.SubItems[7].Text);
+                string Email = Convert.ToString(item.SubItems[8].Text);
                 Employee oldEmployee = null;
-                oldEmployee = RequestChangeStorage.GetEmployeeByBsn(BSN);
+                oldEmployee = requestChangeStorage.GetEmployeeByBsn(BSN);
 
 
                 //ubdate old info employee
@@ -146,7 +109,7 @@ namespace Proj_Desktop_App.presentation
         public void GUI()
         {
             lvrequests.Items.Clear();
-            RequestInfoChange[] temp = RequestChangeStorage.GetRequestInfoChanges();
+            RequestInfoChange[] temp = requestChangeStorage.GetRequestInfoChanges();
             foreach (RequestInfoChange request in temp)
             {
                 ListViewItem item = new ListViewItem(request.BSN.ToString());
@@ -158,32 +121,30 @@ namespace Proj_Desktop_App.presentation
                 item.SubItems.Add(request.languages);
                 item.SubItems.Add(request.certificates);
                 item.SubItems.Add(request.contactEmail);
-             //   item.it.SubItems[0].ForeColor = System.Drawing.Color.Red;
                 lvrequests.Items.Add(item);
-            //    lvrequests.Items[0].SubItems[0].ForeColor = System.Drawing.Color.Red;
             }
         }
 
         private void lvrequests_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ListView.SelectedIndexCollection indices = lvrequests.SelectedIndices;
-            if (indices.Count >0)
+            if (indices.Count > 0)
             {
                 GetNewEmployee();
                 string item = lvrequests.SelectedItems[0].SubItems[0].Text;
                 int BSN = Convert.ToInt32(item);
-                selectedEmployee = RequestChangeStorage.GetEmployeeByBsn(BSN);
+                selectedEmployee = requestChangeStorage.GetEmployeeByBsn(BSN);
                 if (selectedEmployee != null)
                 {
-             
+
                     //Compare new info with old info
-                    if (newEmployee.firstName != selectedEmployee.firstName|| newEmployee.lastName != selectedEmployee.lastName) { lblNames.ForeColor=Color.Red; }
+                    if (newEmployee.firstName != selectedEmployee.firstName || newEmployee.lastName != selectedEmployee.lastName) { lblNames.ForeColor = Color.Red; }
                     if (newEmployee.gender.ToString() != selectedEmployee.gender.ToString()) { lblGender.ForeColor = Color.Red; }
                     if (newEmployee.certificates != selectedEmployee.certificates) { lblCertificates.ForeColor = Color.Red; }
                     if (newEmployee.languages.Trim() != selectedEmployee.languages.Trim()) { lblLanguages.ForeColor = Color.Red; }
                     if (newEmployee.phoneNumber != selectedEmployee.phoneNumber) { lblPhone.ForeColor = Color.Red; }
                     if (newEmployee.address.Trim() != selectedEmployee.address.Trim()) { lblAddress.ForeColor = Color.Red; }
-                    if (string.Compare(newEmployee.contactEmail ,selectedEmployee.contactEmail)==null) { lblEmail.ForeColor = Color.Red; }
+                    if (newEmployee.contactEmail.Trim() != selectedEmployee.contactEmail.Trim()) { lblEmail.ForeColor = Color.Red; }
                     // Show employee details:
                     lblNames.Text = $"{selectedEmployee.firstName} {selectedEmployee.lastName}";
                     lblBSN.Text = selectedEmployee.GetBSN().ToString();
