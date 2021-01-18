@@ -38,23 +38,24 @@
             this.lvProducts = new System.Windows.Forms.ListView();
             this.ProductCode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ProductName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ProductBrand = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ProductDepartment = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ProductStock = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ProductBrand = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvRestocks = new System.Windows.Forms.ListView();
+            this.RestockId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ProductId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ProdName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.RequesterDesc = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.RequestedAmount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ProdName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.RestockId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.numStockRequest)).BeginInit();
             this.SuspendLayout();
             // 
             // btnProductSearch
             // 
-            this.btnProductSearch.Location = new System.Drawing.Point(332, 8);
+            this.btnProductSearch.Location = new System.Drawing.Point(249, 6);
+            this.btnProductSearch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnProductSearch.Name = "btnProductSearch";
-            this.btnProductSearch.Size = new System.Drawing.Size(73, 29);
+            this.btnProductSearch.Size = new System.Drawing.Size(55, 24);
             this.btnProductSearch.TabIndex = 40;
             this.btnProductSearch.Text = "Search";
             this.btnProductSearch.UseVisualStyleBackColor = true;
@@ -67,24 +68,27 @@
             this.cbProductSearchMethod.Items.AddRange(new object[] {
             "Product code",
             "Product name"});
-            this.cbProductSearchMethod.Location = new System.Drawing.Point(12, 12);
+            this.cbProductSearchMethod.Location = new System.Drawing.Point(9, 10);
+            this.cbProductSearchMethod.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cbProductSearchMethod.Name = "cbProductSearchMethod";
-            this.cbProductSearchMethod.Size = new System.Drawing.Size(110, 24);
+            this.cbProductSearchMethod.Size = new System.Drawing.Size(84, 21);
             this.cbProductSearchMethod.TabIndex = 39;
             // 
             // tbProductSearchAttribute
             // 
-            this.tbProductSearchAttribute.Location = new System.Drawing.Point(128, 12);
+            this.tbProductSearchAttribute.Location = new System.Drawing.Point(96, 10);
+            this.tbProductSearchAttribute.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tbProductSearchAttribute.Name = "tbProductSearchAttribute";
-            this.tbProductSearchAttribute.Size = new System.Drawing.Size(198, 22);
+            this.tbProductSearchAttribute.Size = new System.Drawing.Size(150, 20);
             this.tbProductSearchAttribute.TabIndex = 38;
             this.tbProductSearchAttribute.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // btnRequestRestock
             // 
-            this.btnRequestRestock.Location = new System.Drawing.Point(1132, 9);
+            this.btnRequestRestock.Location = new System.Drawing.Point(849, 7);
+            this.btnRequestRestock.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnRequestRestock.Name = "btnRequestRestock";
-            this.btnRequestRestock.Size = new System.Drawing.Size(172, 25);
+            this.btnRequestRestock.Size = new System.Drawing.Size(129, 20);
             this.btnRequestRestock.TabIndex = 44;
             this.btnRequestRestock.Text = "Request Restock";
             this.btnRequestRestock.UseVisualStyleBackColor = true;
@@ -92,21 +96,23 @@
             // 
             // numStockRequest
             // 
-            this.numStockRequest.Location = new System.Drawing.Point(1026, 12);
+            this.numStockRequest.Location = new System.Drawing.Point(770, 10);
+            this.numStockRequest.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.numStockRequest.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
             this.numStockRequest.Name = "numStockRequest";
-            this.numStockRequest.Size = new System.Drawing.Size(100, 22);
+            this.numStockRequest.Size = new System.Drawing.Size(75, 20);
             this.numStockRequest.TabIndex = 46;
             // 
             // btnProductRefresh
             // 
-            this.btnProductRefresh.Location = new System.Drawing.Point(672, 9);
+            this.btnProductRefresh.Location = new System.Drawing.Point(491, 7);
+            this.btnProductRefresh.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnProductRefresh.Name = "btnProductRefresh";
-            this.btnProductRefresh.Size = new System.Drawing.Size(97, 25);
+            this.btnProductRefresh.Size = new System.Drawing.Size(73, 20);
             this.btnProductRefresh.TabIndex = 48;
             this.btnProductRefresh.Text = "Refresh";
             this.btnProductRefresh.UseVisualStyleBackColor = true;
@@ -114,9 +120,10 @@
             // 
             // tbRestockDescription
             // 
-            this.tbRestockDescription.Location = new System.Drawing.Point(775, 12);
+            this.tbRestockDescription.Location = new System.Drawing.Point(581, 10);
+            this.tbRestockDescription.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tbRestockDescription.Name = "tbRestockDescription";
-            this.tbRestockDescription.Size = new System.Drawing.Size(245, 22);
+            this.tbRestockDescription.Size = new System.Drawing.Size(185, 20);
             this.tbRestockDescription.TabIndex = 49;
             this.tbRestockDescription.Text = "Request message....";
             // 
@@ -130,9 +137,10 @@
             this.ProductStock});
             this.lvProducts.FullRowSelect = true;
             this.lvProducts.HideSelection = false;
-            this.lvProducts.Location = new System.Drawing.Point(12, 41);
+            this.lvProducts.Location = new System.Drawing.Point(9, 33);
+            this.lvProducts.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.lvProducts.Name = "lvProducts";
-            this.lvProducts.Size = new System.Drawing.Size(719, 637);
+            this.lvProducts.Size = new System.Drawing.Size(478, 518);
             this.lvProducts.TabIndex = 50;
             this.lvProducts.UseCompatibleStateImageBehavior = false;
             this.lvProducts.View = System.Windows.Forms.View.Details;
@@ -172,9 +180,10 @@
             this.RequesterDesc,
             this.RequestedAmount});
             this.lvRestocks.HideSelection = false;
-            this.lvRestocks.Location = new System.Drawing.Point(737, 40);
+            this.lvRestocks.Location = new System.Drawing.Point(491, 32);
+            this.lvRestocks.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.lvRestocks.Name = "lvRestocks";
-            this.lvRestocks.Size = new System.Drawing.Size(639, 638);
+            this.lvRestocks.Size = new System.Drawing.Size(542, 519);
             this.lvRestocks.TabIndex = 51;
             this.lvRestocks.UseCompatibleStateImageBehavior = false;
             this.lvRestocks.View = System.Windows.Forms.View.Details;
@@ -193,7 +202,7 @@
             // ProdName
             // 
             this.ProdName.Text = "Product Name ";
-            this.ProdName.Width = 100;
+            this.ProdName.Width = 180;
             // 
             // RequesterDesc
             // 
@@ -203,13 +212,13 @@
             // RequestedAmount
             // 
             this.RequestedAmount.Text = "Requested Amount ";
-            this.RequestedAmount.Width = 100;
+            this.RequestedAmount.Width = 120;
             // 
             // SalesManagerForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1388, 690);
+            this.ClientSize = new System.Drawing.Size(1041, 561);
             this.Controls.Add(this.lvRestocks);
             this.Controls.Add(this.lvProducts);
             this.Controls.Add(this.tbRestockDescription);
@@ -219,6 +228,7 @@
             this.Controls.Add(this.btnProductSearch);
             this.Controls.Add(this.cbProductSearchMethod);
             this.Controls.Add(this.tbProductSearchAttribute);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "SalesManagerForm";
             this.Text = "ProductStatistics";
             ((System.ComponentModel.ISupportInitialize)(this.numStockRequest)).EndInit();

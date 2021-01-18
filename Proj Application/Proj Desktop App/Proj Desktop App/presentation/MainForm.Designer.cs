@@ -62,10 +62,10 @@
             this.tabSchedule,
             this.tabRequestInfoChange,
             this.tabAutoSchedule});
-            this.navbar.Location = new System.Drawing.Point(0, 54);
+            this.navbar.Location = new System.Drawing.Point(0, 44);
             this.navbar.Name = "navbar";
             this.navbar.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.navbar.Size = new System.Drawing.Size(171, 809);
+            this.navbar.Size = new System.Drawing.Size(128, 643);
             this.navbar.TabIndex = 45;
             this.navbar.Text = "menuStrip1";
             // 
@@ -193,7 +193,8 @@
             this.lblUser});
             this.topbar.Location = new System.Drawing.Point(0, 0);
             this.topbar.Name = "topbar";
-            this.topbar.Size = new System.Drawing.Size(1712, 54);
+            this.topbar.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.topbar.Size = new System.Drawing.Size(1155, 44);
             this.topbar.TabIndex = 0;
             this.topbar.Text = "menuStrip2";
             // 
@@ -204,7 +205,7 @@
             this.tabLogOut.Image = global::Proj_Desktop_App.Properties.Resources.logout;
             this.tabLogOut.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tabLogOut.Name = "tabLogOut";
-            this.tabLogOut.Size = new System.Drawing.Size(130, 50);
+            this.tabLogOut.Size = new System.Drawing.Size(111, 40);
             this.tabLogOut.Text = "Log out";
             this.tabLogOut.Click += new System.EventHandler(this.tabLogOut_Click);
             // 
@@ -213,7 +214,7 @@
             this.mediaBazaarToolStripMenuItem.Enabled = false;
             this.mediaBazaarToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mediaBazaarToolStripMenuItem.Name = "mediaBazaarToolStripMenuItem";
-            this.mediaBazaarToolStripMenuItem.Size = new System.Drawing.Size(155, 50);
+            this.mediaBazaarToolStripMenuItem.Size = new System.Drawing.Size(125, 40);
             this.mediaBazaarToolStripMenuItem.Text = "Media Bazaar";
             // 
             // lblUser
@@ -222,32 +223,31 @@
             this.lblUser.Enabled = false;
             this.lblUser.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUser.Name = "lblUser";
-            this.lblUser.Size = new System.Drawing.Size(205, 50);
+            this.lblUser.Size = new System.Drawing.Size(164, 40);
             this.lblUser.Text = "<position> | <user>";
             // 
             // pnlContent
             // 
             this.pnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlContent.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pnlContent.Location = new System.Drawing.Point(171, 54);
-            this.pnlContent.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlContent.Location = new System.Drawing.Point(128, 44);
             this.pnlContent.Name = "pnlContent";
-            this.pnlContent.Size = new System.Drawing.Size(1541, 809);
+            this.pnlContent.Size = new System.Drawing.Size(1027, 643);
             this.pnlContent.TabIndex = 48;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1712, 863);
+            this.ClientSize = new System.Drawing.Size(1155, 687);
             this.Controls.Add(this.pnlContent);
             this.Controls.Add(this.navbar);
             this.Controls.Add(this.topbar);
             this.MainMenuStrip = this.topbar;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.navbar.ResumeLayout(false);
             this.navbar.PerformLayout();
