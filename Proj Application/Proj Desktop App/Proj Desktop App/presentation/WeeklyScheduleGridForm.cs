@@ -58,17 +58,20 @@ namespace Proj_Desktop_App.presentation
                 lbEmployeeReports.Items.Add(workerReport);
             }
 
-            if(autoSchedule.GetWorkerReport() == "You have enough workers")
+
+            this.lblWorkerStaff.Text = autoSchedule.GetWorkerReport();
+            this.lblWorkerStaff.Visible = true;
+            if (lblWorkerStaff.Text == "You have enough workers")
             {
-                this.lblWorkerStaff.Text = "You have enough workers";
                 this.lblWorkerStaff.BackColor = Color.Green;
             }
-            else
+            else if (lblWorkerStaff.Text == "Too many workers")
             {
-                this.lblWorkerStaff.Text = autoSchedule.GetWorkerReport();
-                this.lblWorkerStaff.BackColor = Color.Red;
+                this.lblWorkerStaff.BackColor = Color.Orange;
             }
-            this.lblWorkerStaff.Visible = true;
+            else
+                this.lblWorkerStaff.BackColor = Color.Red;
+            
 
             // MANAGERS
             assignedManagers = autoSchedule.AssignManagers();
@@ -96,17 +99,19 @@ namespace Proj_Desktop_App.presentation
                 lbEmployeeReports.Items.Add(managerReport);
             }
 
-            if (autoSchedule.GetManagerReport() == "You have enough managers")
+            this.lblManagerStaff.Text = autoSchedule.GetManagerReport();
+            this.lblManagerStaff.Visible = true;
+            if (this.lblManagerStaff.Text == "You have enough managers")
             {
-                this.lblManagerStaff.Text = autoSchedule.GetManagerReport();
                 this.lblManagerStaff.BackColor = Color.Green;
             }
-            else
+            else if (this.lblManagerStaff.Text == "Too many managers")
             {
-                this.lblManagerStaff.Text = autoSchedule.GetManagerReport();
-                this.lblManagerStaff.BackColor = Color.Red;
+                this.lblManagerStaff.BackColor = Color.Orange;
             }
-            this.lblManagerStaff.Visible = true;
+            else
+                this.lblManagerStaff.BackColor = Color.Red;
+            
 
             gbSubmit.Enabled = true;
             btnAssign.Enabled = false;
