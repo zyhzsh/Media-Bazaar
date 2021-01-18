@@ -57,6 +57,7 @@
             this.rbSameAsPrevious = new System.Windows.Forms.RadioButton();
             this.gbEndDate = new System.Windows.Forms.GroupBox();
             this.pnlExtendContract = new System.Windows.Forms.Panel();
+            this.btnCancel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudDuration)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudFTE)).BeginInit();
             this.gbStartDate.SuspendLayout();
@@ -71,7 +72,7 @@
             this.lblActiveContract.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblActiveContract.Location = new System.Drawing.Point(8, 9);
             this.lblActiveContract.Name = "lblActiveContract";
-            this.lblActiveContract.Size = new System.Drawing.Size(182, 29);
+            this.lblActiveContract.Size = new System.Drawing.Size(129, 20);
             this.lblActiveContract.TabIndex = 0;
             this.lblActiveContract.Text = "Active contract";
             // 
@@ -89,15 +90,15 @@
             this.lvActiveContract.Location = new System.Drawing.Point(12, 32);
             this.lvActiveContract.MultiSelect = false;
             this.lvActiveContract.Name = "lvActiveContract";
-            this.lvActiveContract.Size = new System.Drawing.Size(575, 52);
+            this.lvActiveContract.Size = new System.Drawing.Size(626, 52);
             this.lvActiveContract.TabIndex = 1;
             this.lvActiveContract.UseCompatibleStateImageBehavior = false;
             this.lvActiveContract.View = System.Windows.Forms.View.Details;
             // 
             // chId
             // 
-            this.chId.Text = "Id";
-            this.chId.Width = 26;
+            this.chId.Text = "Iteration";
+            this.chId.Width = 74;
             // 
             // chStartDate
             // 
@@ -135,7 +136,7 @@
             this.lblAction.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAction.Location = new System.Drawing.Point(8, 101);
             this.lblAction.Name = "lblAction";
-            this.lblAction.Size = new System.Drawing.Size(115, 29);
+            this.lblAction.Size = new System.Drawing.Size(80, 20);
             this.lblAction.TabIndex = 2;
             this.lblAction.Text = "<Action>";
             // 
@@ -143,9 +144,9 @@
             // 
             this.btnConfirm.BackColor = System.Drawing.Color.LightSteelBlue;
             this.btnConfirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnConfirm.Location = new System.Drawing.Point(444, 339);
+            this.btnConfirm.Location = new System.Drawing.Point(460, 339);
             this.btnConfirm.Name = "btnConfirm";
-            this.btnConfirm.Size = new System.Drawing.Size(143, 32);
+            this.btnConfirm.Size = new System.Drawing.Size(178, 41);
             this.btnConfirm.TabIndex = 13;
             this.btnConfirm.Text = "Confirm";
             this.btnConfirm.UseVisualStyleBackColor = false;
@@ -155,16 +156,16 @@
             // 
             this.lblMonths.AutoSize = true;
             this.lblMonths.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMonths.Location = new System.Drawing.Point(118, 55);
+            this.lblMonths.Location = new System.Drawing.Point(91, 50);
             this.lblMonths.Name = "lblMonths";
-            this.lblMonths.Size = new System.Drawing.Size(99, 29);
+            this.lblMonths.Size = new System.Drawing.Size(67, 19);
             this.lblMonths.TabIndex = 26;
             this.lblMonths.Text = "(months)";
             // 
             // nudDuration
             // 
             this.nudDuration.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nudDuration.Location = new System.Drawing.Point(41, 53);
+            this.nudDuration.Location = new System.Drawing.Point(89, 20);
             this.nudDuration.Maximum = new decimal(new int[] {
             12,
             0,
@@ -176,7 +177,7 @@
             0,
             0});
             this.nudDuration.Name = "nudDuration";
-            this.nudDuration.Size = new System.Drawing.Size(71, 37);
+            this.nudDuration.Size = new System.Drawing.Size(71, 27);
             this.nudDuration.TabIndex = 7;
             this.nudDuration.Value = new decimal(new int[] {
             6,
@@ -188,9 +189,9 @@
             // 
             this.lblDuration.AutoSize = true;
             this.lblDuration.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDuration.Location = new System.Drawing.Point(20, 23);
+            this.lblDuration.Location = new System.Drawing.Point(14, 23);
             this.lblDuration.Name = "lblDuration";
-            this.lblDuration.Size = new System.Drawing.Size(106, 29);
+            this.lblDuration.Size = new System.Drawing.Size(69, 19);
             this.lblDuration.TabIndex = 25;
             this.lblDuration.Text = "Duration:";
             // 
@@ -200,7 +201,7 @@
             this.dtpOtherStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpOtherStartDate.Location = new System.Drawing.Point(38, 56);
             this.dtpOtherStartDate.Name = "dtpOtherStartDate";
-            this.dtpOtherStartDate.Size = new System.Drawing.Size(147, 37);
+            this.dtpOtherStartDate.Size = new System.Drawing.Size(147, 27);
             this.dtpOtherStartDate.TabIndex = 6;
             // 
             // cbPosition
@@ -209,7 +210,7 @@
             this.cbPosition.FormattingEnabled = true;
             this.cbPosition.Location = new System.Drawing.Point(130, 93);
             this.cbPosition.Name = "cbPosition";
-            this.cbPosition.Size = new System.Drawing.Size(195, 37);
+            this.cbPosition.Size = new System.Drawing.Size(195, 27);
             this.cbPosition.TabIndex = 10;
             this.cbPosition.SelectedIndexChanged += new System.EventHandler(this.cbPosition_SelectedIndexChanged);
             // 
@@ -220,7 +221,7 @@
             this.cbDepartment.FormattingEnabled = true;
             this.cbDepartment.Location = new System.Drawing.Point(130, 126);
             this.cbDepartment.Name = "cbDepartment";
-            this.cbDepartment.Size = new System.Drawing.Size(195, 37);
+            this.cbDepartment.Size = new System.Drawing.Size(195, 27);
             this.cbDepartment.TabIndex = 11;
             this.cbDepartment.SelectedIndexChanged += new System.EventHandler(this.cbDepartment_SelectedIndexChanged);
             // 
@@ -245,7 +246,7 @@
             0,
             65536});
             this.nudFTE.Name = "nudFTE";
-            this.nudFTE.Size = new System.Drawing.Size(195, 37);
+            this.nudFTE.Size = new System.Drawing.Size(195, 27);
             this.nudFTE.TabIndex = 12;
             this.nudFTE.Value = new decimal(new int[] {
             1,
@@ -259,7 +260,7 @@
             this.lblDepartment.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDepartment.Location = new System.Drawing.Point(34, 129);
             this.lblDepartment.Name = "lblDepartment";
-            this.lblDepartment.Size = new System.Drawing.Size(139, 29);
+            this.lblDepartment.Size = new System.Drawing.Size(90, 19);
             this.lblDepartment.TabIndex = 19;
             this.lblDepartment.Text = "Department:";
             // 
@@ -269,7 +270,7 @@
             this.lblPosition.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPosition.Location = new System.Drawing.Point(34, 96);
             this.lblPosition.Name = "lblPosition";
-            this.lblPosition.Size = new System.Drawing.Size(98, 29);
+            this.lblPosition.Size = new System.Drawing.Size(65, 19);
             this.lblPosition.TabIndex = 21;
             this.lblPosition.Text = "Position:";
             // 
@@ -279,16 +280,17 @@
             this.lblFTE.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFTE.Location = new System.Drawing.Point(34, 161);
             this.lblFTE.Name = "lblFTE";
-            this.lblFTE.Size = new System.Drawing.Size(54, 29);
+            this.lblFTE.Size = new System.Drawing.Size(36, 19);
             this.lblFTE.TabIndex = 23;
             this.lblFTE.Text = "FTE:";
             // 
             // rbEndOfPrevious
             // 
             this.rbEndOfPrevious.AutoSize = true;
+            this.rbEndOfPrevious.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rbEndOfPrevious.Location = new System.Drawing.Point(18, 28);
             this.rbEndOfPrevious.Name = "rbEndOfPrevious";
-            this.rbEndOfPrevious.Size = new System.Drawing.Size(205, 33);
+            this.rbEndOfPrevious.Size = new System.Drawing.Size(129, 22);
             this.rbEndOfPrevious.TabIndex = 4;
             this.rbEndOfPrevious.TabStop = true;
             this.rbEndOfPrevious.Text = "End of previous";
@@ -298,9 +300,10 @@
             // rbOtherStartDate
             // 
             this.rbOtherStartDate.AutoSize = true;
+            this.rbOtherStartDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rbOtherStartDate.Location = new System.Drawing.Point(18, 65);
             this.rbOtherStartDate.Name = "rbOtherStartDate";
-            this.rbOtherStartDate.Size = new System.Drawing.Size(21, 20);
+            this.rbOtherStartDate.Size = new System.Drawing.Size(14, 13);
             this.rbOtherStartDate.TabIndex = 5;
             this.rbOtherStartDate.TabStop = true;
             this.rbOtherStartDate.UseVisualStyleBackColor = true;
@@ -310,9 +313,10 @@
             this.gbStartDate.Controls.Add(this.rbEndOfPrevious);
             this.gbStartDate.Controls.Add(this.dtpOtherStartDate);
             this.gbStartDate.Controls.Add(this.rbOtherStartDate);
+            this.gbStartDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbStartDate.Location = new System.Drawing.Point(0, 0);
             this.gbStartDate.Name = "gbStartDate";
-            this.gbStartDate.Size = new System.Drawing.Size(204, 100);
+            this.gbStartDate.Size = new System.Drawing.Size(244, 100);
             this.gbStartDate.TabIndex = 35;
             this.gbStartDate.TabStop = false;
             this.gbStartDate.Text = "Start date";
@@ -327,9 +331,10 @@
             this.gbContractDetails.Controls.Add(this.nudFTE);
             this.gbContractDetails.Controls.Add(this.lblFTE);
             this.gbContractDetails.Controls.Add(this.cbPosition);
-            this.gbContractDetails.Location = new System.Drawing.Point(219, 0);
+            this.gbContractDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbContractDetails.Location = new System.Drawing.Point(264, 0);
             this.gbContractDetails.Name = "gbContractDetails";
-            this.gbContractDetails.Size = new System.Drawing.Size(356, 200);
+            this.gbContractDetails.Size = new System.Drawing.Size(362, 200);
             this.gbContractDetails.TabIndex = 36;
             this.gbContractDetails.TabStop = false;
             this.gbContractDetails.Text = "Contract details";
@@ -337,9 +342,10 @@
             // rbChangeDetails
             // 
             this.rbChangeDetails.AutoSize = true;
+            this.rbChangeDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rbChangeDetails.Location = new System.Drawing.Point(18, 60);
             this.rbChangeDetails.Name = "rbChangeDetails";
-            this.rbChangeDetails.Size = new System.Drawing.Size(128, 33);
+            this.rbChangeDetails.Size = new System.Drawing.Size(81, 22);
             this.rbChangeDetails.TabIndex = 9;
             this.rbChangeDetails.TabStop = true;
             this.rbChangeDetails.Text = "Change:";
@@ -348,9 +354,10 @@
             // rbSameAsPrevious
             // 
             this.rbSameAsPrevious.AutoSize = true;
+            this.rbSameAsPrevious.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rbSameAsPrevious.Location = new System.Drawing.Point(18, 28);
             this.rbSameAsPrevious.Name = "rbSameAsPrevious";
-            this.rbSameAsPrevious.Size = new System.Drawing.Size(329, 33);
+            this.rbSameAsPrevious.Size = new System.Drawing.Size(205, 22);
             this.rbSameAsPrevious.TabIndex = 8;
             this.rbSameAsPrevious.Text = "Keep the same as previous";
             this.rbSameAsPrevious.UseVisualStyleBackColor = true;
@@ -361,9 +368,10 @@
             this.gbEndDate.Controls.Add(this.lblDuration);
             this.gbEndDate.Controls.Add(this.nudDuration);
             this.gbEndDate.Controls.Add(this.lblMonths);
+            this.gbEndDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbEndDate.Location = new System.Drawing.Point(0, 106);
             this.gbEndDate.Name = "gbEndDate";
-            this.gbEndDate.Size = new System.Drawing.Size(204, 94);
+            this.gbEndDate.Size = new System.Drawing.Size(244, 94);
             this.gbEndDate.TabIndex = 36;
             this.gbEndDate.TabStop = false;
             this.gbEndDate.Text = "End date";
@@ -376,15 +384,28 @@
             this.pnlExtendContract.Enabled = false;
             this.pnlExtendContract.Location = new System.Drawing.Point(12, 133);
             this.pnlExtendContract.Name = "pnlExtendContract";
-            this.pnlExtendContract.Size = new System.Drawing.Size(575, 200);
+            this.pnlExtendContract.Size = new System.Drawing.Size(626, 200);
             this.pnlExtendContract.TabIndex = 37;
             this.pnlExtendContract.Visible = false;
             // 
+            // btnCancel
+            // 
+            this.btnCancel.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancel.Location = new System.Drawing.Point(276, 339);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(178, 41);
+            this.btnCancel.TabIndex = 38;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
             // ContractUpdateForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(605, 384);
+            this.ClientSize = new System.Drawing.Size(651, 393);
+            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.pnlExtendContract);
             this.Controls.Add(this.btnConfirm);
             this.Controls.Add(this.lblAction);
@@ -440,5 +461,6 @@
         private System.Windows.Forms.RadioButton rbSameAsPrevious;
         private System.Windows.Forms.GroupBox gbEndDate;
         private System.Windows.Forms.Panel pnlExtendContract;
+        private System.Windows.Forms.Button btnCancel;
     }
 }

@@ -59,31 +59,33 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(105, 51);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(77, 18);
+            this.label1.Size = new System.Drawing.Size(81, 18);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Username";
+            this.label1.Text = "Username:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(105, 108);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(75, 18);
+            this.label2.Size = new System.Drawing.Size(79, 18);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Password";
+            this.label2.Text = "Password:";
             // 
             // btLogin
             // 
+            this.btLogin.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.btLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btLogin.Location = new System.Drawing.Point(108, 175);
             this.btLogin.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.btLogin.Name = "btLogin";
             this.btLogin.Size = new System.Drawing.Size(238, 53);
             this.btLogin.TabIndex = 2;
-            this.btLogin.Text = "Log In";
-            this.btLogin.UseVisualStyleBackColor = true;
+            this.btLogin.Text = "Log in";
+            this.btLogin.UseVisualStyleBackColor = false;
             this.btLogin.Click += new System.EventHandler(this.btLogin_Click);
             // 
-            // Form1
+            // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -95,7 +97,7 @@
             this.Controls.Add(this.tbLogInUsername);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
-            this.Name = "Form1";
+            this.Name = "LoginForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
             this.ResumeLayout(false);

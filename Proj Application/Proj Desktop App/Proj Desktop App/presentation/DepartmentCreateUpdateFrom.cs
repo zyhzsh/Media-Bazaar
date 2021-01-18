@@ -21,7 +21,14 @@ namespace Proj_Desktop_App.presentation
 
             this.departments = departments;
 
-            tbId.Text = "auto";
+            lblId.Visible = false;
+            tbId.Visible = false;
+
+            lblName.Location = new System.Drawing.Point(9, 43);
+            tbName.Location = new System.Drawing.Point(123, 40);
+            lblSellsProducts.Location = new System.Drawing.Point(9, 74);
+            cbSellsProducts.Location = new System.Drawing.Point(123, 77);
+            lblProductsMessage.Location = new System.Drawing.Point(144, 74);
         }
 
         // Editing a department
@@ -39,7 +46,11 @@ namespace Proj_Desktop_App.presentation
             tbId.Text = departmentToUpdate.Id.ToString();
             tbName.Text = departmentToUpdate.Name.ToString();
             cbSellsProducts.Checked = departmentToUpdate.SellsProducts;
-            if (hasProducts) { cbSellsProducts.Enabled = false; }
+            if (hasProducts)
+            {
+                cbSellsProducts.Enabled = false;
+                lblProductsMessage.Visible = true;
+            }
         }
 
         private void btnConfirm_Click(object sender, EventArgs e)

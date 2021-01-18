@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Proj_Desktop_App.logic;
 
 namespace Proj_Desktop_App
 {
@@ -14,17 +15,26 @@ namespace Proj_Desktop_App
 
         private DepartmentStorage departments;
 
+        private ListViewColumnSorter lvwColumnSorter;
+
         public AdminForm(EmployeeStorage emplStorage, DepartmentStorage departments)
         {
             InitializeComponent();
             this.departments = departments;
             this.emplStorage = emplStorage;
+            lvwColumnSorter = new ListViewColumnSorter();
+            this.lvwEmployees.ListViewItemSorter = lvwColumnSorter;
+
             cbShowEmployed.Checked = true;
             selectedEmployee = null;
             cbSearchBy.Items.AddRange(new string[] { "Name", "BSN" });
             cbSearchBy.SelectedIndex = 0;
             emplCUForm = null;
             contrUForm = null;
+
+            this.lvwColumnSorter.SortType = typeof(int);
+            this.lvwEmployees.Columns[0].Text += "▲";
+            this.lvwEmployees.Sort();
         }
 
         private void EmplCUForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -56,44 +66,6 @@ namespace Proj_Desktop_App
         private void btnShowAll_Click(object sender, EventArgs e)
         {
             UpdateEmployees(false);
-        }
-
-        private void lbEmployees_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (lbEmployees.Items.Count > 0)
-            {
-                selectedEmployee = (Employee)lbEmployees.SelectedItem;
-                if (selectedEmployee != null)
-                {
-                    // Show employee details:
-                    lblNames.Text = $"{selectedEmployee.firstName} {selectedEmployee.lastName}";
-                    lblBSN.Text = selectedEmployee.GetBSN().ToString();
-                    lblGender.Text = selectedEmployee.gender.ToString();
-                    lblBirthdate.Text = selectedEmployee.birthDate.ToString("dd/MM/yyyy");
-                    lblLanguages.Text = selectedEmployee.languages;
-                    lblCertificates.Text = selectedEmployee.certificates;
-                    lblPhone.Text = selectedEmployee.phoneNumber;
-                    lblEmail.Text = selectedEmployee.contactEmail;
-                    lblAddress.Text = selectedEmployee.address;
-
-                    // Show employee status:
-                    bool employed = selectedEmployee.IsEmployed();
-                    if (employed)
-                    {
-                        lblEmployed.Text = "employed";
-                    }
-                    else
-                    {
-                        lblEmployed.Text = "unemployed";
-                    }
-
-                    // Show employee contracts:
-                    LoadContracts();
-
-                    // If employee isn't employed you can't update their details
-                    btnUpdateDetails.Enabled = selectedEmployee.IsEmployed();
-                }
-            }
         }
 
         /// <summary>
@@ -129,17 +101,45 @@ namespace Proj_Desktop_App
             }
 
             // Load employees into listbox
-            lbEmployees.Items.Clear();
-            lbEmployees.Items.AddRange(employees);
+            //lbEmployees.Items.Clear();
+
+            ListViewItem selectedItem;
+            if (lvwEmployees.SelectedItems.Count > 0)
+            {
+                selectedItem = lvwEmployees.SelectedItems[0];
+            }
+            else
+            {
+                selectedItem = null;
+            }
+
+            lvwEmployees.Items.Clear();
+            //lbEmployees.Items.AddRange(employees);
+            foreach (Employee employee in employees)
+            {
+                ListViewItem item = new ListViewItem(employee.GetBSN().ToString());
+                item.SubItems.Add(employee.firstName);
+                item.SubItems.Add(employee.lastName);
+                item.SubItems.Add(employee.contactEmail);
+
+                lvwEmployees.Items.Add(item);
+            }
+            
             lblTotal.Text = employees.Length.ToString();
 
-            if (selectedEmployee != null && lbEmployees.Items.Contains(selectedEmployee))
+            //if (selectedEmployee != null && lbEmployees.Items.Contains(selectedEmployee))
+            if (selectedItem != null && lvwEmployees.Items.Contains(selectedItem))
             {
-                lbEmployees.SelectedIndex = lbEmployees.Items.IndexOf(selectedEmployee);
+                //lbEmployees.SelectedIndex = lbEmployees.Items.IndexOf(selectedEmployee);
+                int index = lvwEmployees.Items.IndexOf(selectedItem);
+                lvwEmployees.Items[index].Selected = true;
             }
             else if (employees.Length > 0)
             {
-                lbEmployees.SelectedIndex = 0;
+                //lbEmployees.SelectedIndex = 0;
+                lvwEmployees.Items[0].Selected = true;
+                lvwEmployees.Items.Contains(selectedItem);
+
             }
             //else
             //{
@@ -270,6 +270,98 @@ namespace Proj_Desktop_App
             else
             {
                 MessageBox.Show("Please select an employee form the list.");
+            }
+        }
+
+        private void lvwEmployees_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            ColumnHeader columnToSort = lvwEmployees.Columns[e.Column];
+
+            // Determine if clicked column is already the column that is being sorted.
+            if (columnToSort.Index == lvwColumnSorter.SortColumn)
+            {
+                // Reverse the current sort direction for this column.
+                columnToSort.Text = columnToSort.Text.Trim(new char[] { '▲', '▼' });
+                if (lvwColumnSorter.Order == SortOrder.Ascending)
+                {
+                    lvwColumnSorter.Order = SortOrder.Descending;
+                    columnToSort.Text += "▼";
+                }
+                else
+                {
+                    lvwColumnSorter.Order = SortOrder.Ascending;
+                    columnToSort.Text += "▲";
+                }
+            }
+            else
+            {
+                // Set the column number that is to be sorted
+                lvwColumnSorter.SortColumn = columnToSort.Index;
+                foreach (ColumnHeader ch in lvwEmployees.Columns)
+                {
+                    ch.Text = ch.Text.Trim(new char[] { '▲', '▼' });
+                }
+                // Default sort order is ascending
+                lvwColumnSorter.Order = SortOrder.Ascending;
+                columnToSort.Text += "▲";
+            }
+
+            // Set the type of the column
+            switch (e.Column)
+            {
+                case 0:
+                    lvwColumnSorter.SortType = typeof(int);
+                    break;
+                default:
+                    lvwColumnSorter.SortType = typeof(string);
+                    break;
+            }
+
+            // Perform the sort with these new sort options.
+            this.lvwEmployees.Sort();
+        }
+
+        private void lvwEmployees_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //if (lbEmployees.Items.Count > 0)
+            if (lvwEmployees.Items.Count > 0)
+            {
+                //selectedEmployee = (Employee)lbEmployees.SelectedItem;
+                if (lvwEmployees.SelectedItems.Count > 0)
+                {
+                    int selectedBSN = Convert.ToInt32(lvwEmployees.SelectedItems[0].Text);
+                    selectedEmployee = emplStorage.GetEmployee(selectedBSN);
+                    if (selectedEmployee != null)
+                    {
+                        // Show employee details:
+                        lblNames.Text = $"{selectedEmployee.firstName} {selectedEmployee.lastName}";
+                        lblBSN.Text = selectedEmployee.GetBSN().ToString();
+                        lblGender.Text = selectedEmployee.gender.ToString();
+                        lblBirthdate.Text = selectedEmployee.birthDate.ToString("dd/MM/yyyy");
+                        lblLanguages.Text = selectedEmployee.languages;
+                        lblCertificates.Text = selectedEmployee.certificates;
+                        lblPhone.Text = selectedEmployee.phoneNumber;
+                        lblEmail.Text = selectedEmployee.contactEmail;
+                        lblAddress.Text = selectedEmployee.address;
+
+                        // Show employee status:
+                        bool employed = selectedEmployee.IsEmployed();
+                        if (employed)
+                        {
+                            lblEmployed.Text = "employed";
+                        }
+                        else
+                        {
+                            lblEmployed.Text = "unemployed";
+                        }
+
+                        // Show employee contracts:
+                        LoadContracts();
+
+                        // If employee isn't employed you can't update their details
+                        btnUpdateDetails.Enabled = selectedEmployee.IsEmployed();
+                    }
+                }
             }
         }
     }

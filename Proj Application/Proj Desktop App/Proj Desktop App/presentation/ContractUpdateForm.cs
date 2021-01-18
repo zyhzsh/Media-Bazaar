@@ -284,5 +284,9 @@ namespace Proj_Desktop_App
             }
         }
 
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
