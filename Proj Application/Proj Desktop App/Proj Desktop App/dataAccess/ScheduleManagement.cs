@@ -83,8 +83,7 @@ namespace Proj_Desktop_App.dataAccess
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 conn.Open();
                 MySqlDataReader dr = cmd.ExecuteReader();
-                ShiftType shifttype = ShiftType.Morning;
-                
+                ShiftType shifttype = ShiftType.Morning;             
                 while (dr.Read())
                 {
                     if (dr[2].ToString() == "Morning") { shifttype = ShiftType.Morning; }

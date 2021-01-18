@@ -223,7 +223,6 @@ namespace Proj_Desktop_App.dataAccess
                          "WHERE s.sales_date > @salesPeriod " +
                          "GROUP BY p.productcode " +
                          "ORDER BY sales DESC, p.productname ASC;";
-
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@salesPeriod", startPeriod.ToString("yyyy-MM-dd"));
                     conn.Open();
@@ -251,18 +250,54 @@ namespace Proj_Desktop_App.dataAccess
             {
                 using (MySqlConnection conn = base.GetConnection())
                 {
-                    string sql = "SELECT p.productcode, p.productname, p.brand, p.bought_price, p.sold_price, p.department_id, SUM(s.amount) AS sales " +
-                                 "FROM product p INNER JOIN productsales s ON p.productcode = s.product_code " +
-                                 "WHERE s.sales_date > @startPeriod and s.sales_date < @endPeriod " +
-                                 "GROUP BY p.productcode " +
-                                 "ORDER BY sales DESC, p.productname ASC;";
-
+                    string sql = "SELECT S.product_code AS ProductCode,P.department_id AS Department_ID,P.brand AS Brand,P.productname AS ProductName,SUM(S.amount) AS Amount,D.department_name AS Department " +
+                                  "FROM (productsales AS S INNER JOIN product AS P ON S.product_code=P.productcode) " +
+                                  "INNER JOIN department AS D ON P.department_id = D.department_id " +
+                                  "WHERE S.sales_date > @startPeriod and S.sales_date < @endPeriod " +
+                                  "GROUP BY S.product_code " +
+                                  "ORDER BY Amount DESC ";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     string from = startPeriod.ToString("yyyy-MM-dd");
                     string to = endPeriod.ToString("yyyy-MM-dd");
-
                     cmd.Parameters.AddWithValue("@startPeriod", from);
                     cmd.Parameters.AddWithValue("@endPeriod", to);
+                    conn.Open();
+                    MySqlDataReader dr = cmd.ExecuteReader();
+                    List<Sale> sales = new List<Sale>();
+                    while (dr.Read())
+                    {
+                        Sale soldProduct = InitializeSale(dr);
+                        sales.Add(soldProduct);
+                    }
+                    return sales.ToArray();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return null;
+            }
+        }
+
+
+        public Sale[] GetBestSellingProductsByDepartment(DateTime startPeriod, DateTime endPeriod,string Department)
+        {
+            try
+            {
+                using (MySqlConnection conn = base.GetConnection())
+                {
+                    string sql = "SELECT S.product_code AS ProductCode,P.department_id AS Department_ID,P.brand AS Brand,P.productname AS ProductName,SUM(S.amount) AS Amount,D.department_name AS Department " +
+                                  "FROM (productsales AS S INNER JOIN product AS P ON S.product_code=P.productcode) " +
+                                  "INNER JOIN department AS D ON P.department_id = D.department_id " +
+                                  "WHERE S.sales_date > @startPeriod and S.sales_date < @endPeriod and D.department_name = @department " +
+                                  "GROUP BY S.product_code " +
+                                  "ORDER BY Amount DESC ";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    string from = startPeriod.ToString("yyyy-MM-dd");
+                    string to = endPeriod.ToString("yyyy-MM-dd");
+                    cmd.Parameters.AddWithValue("@startPeriod", from);
+                    cmd.Parameters.AddWithValue("@endPeriod", to);
+                    cmd.Parameters.AddWithValue("@department", Department);
                     conn.Open();
                     MySqlDataReader dr = cmd.ExecuteReader();
                     List<Sale> sales = new List<Sale>();
@@ -316,9 +351,13 @@ namespace Proj_Desktop_App.dataAccess
         {
             try
             {
-                Sale sale = new Sale(Convert.ToInt32(dr["productcode"]),
-                                Convert.ToString(dr["productname"]),
-                                Convert.ToInt32(dr["sales"]));
+                Sale sale = new Sale(
+                                Convert.ToInt32(dr["ProductCode"]),
+                                Convert.ToString(dr["ProductName"]),
+                                Convert.ToInt32(dr["Amount"]),
+                                Convert.ToString(dr["Department"]),                                
+                                Convert.ToString(dr["Brand"])
+                                );                                
                 return sale;
             }
             catch (Exception e)

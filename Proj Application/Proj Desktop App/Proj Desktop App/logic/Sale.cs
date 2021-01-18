@@ -1,20 +1,31 @@
-﻿namespace Proj_Desktop_App
+﻿using System;
+
+namespace Proj_Desktop_App
 {
-    public class Sale
+    public class Sale:IComparable<Sale>
     {
-        public int productCode { get; private set; }
-        public string productName { get; private set; }
-        public int soldAmount { get; private set; }
-        public Sale(int productCode, string productName, int soldAmount)
+        public int ProductCode { get; private set; }
+        public string ProductName { get; private set; }
+        public int SoldAmount { get; private set; }
+        public string Departmentname { get; private set; }
+        public string Brand { get;private set; }
+        public Sale(int productCode, string productName, int soldAmount,string departmentname,string brand)
         {
-            this.productCode = productCode;
-            this.productName = productName;
-            this.soldAmount = soldAmount;
+            ProductCode = productCode;
+            ProductName = productName;
+            SoldAmount = soldAmount;
+            Departmentname = departmentname;
+            Brand = brand;
         }
 
         public override string ToString()
         {
-            return $"{productName} with product code: {productCode} sold {soldAmount}";
+            return $"{ProductName} with product code: {ProductCode} sold {SoldAmount} From {Departmentname}";
+        }
+
+        public int CompareTo(Sale other)
+        {
+            return this.SoldAmount.CompareTo(other.SoldAmount);
         }
     }
 }
