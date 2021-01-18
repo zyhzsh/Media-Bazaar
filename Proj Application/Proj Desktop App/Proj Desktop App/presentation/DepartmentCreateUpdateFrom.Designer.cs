@@ -38,6 +38,7 @@ namespace Proj_Desktop_App.presentation
             this.lblId = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
             this.lblSellsProducts = new System.Windows.Forms.Label();
+            this.lblProductsMessage = new System.Windows.Forms.Label();
             this.gbDepartment.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,7 +48,7 @@ namespace Proj_Desktop_App.presentation
             this.tbName.Location = new System.Drawing.Point(123, 56);
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(229, 27);
-            this.tbName.TabIndex = 0;
+            this.tbName.TabIndex = 2;
             // 
             // cbSellsProducts
             // 
@@ -57,7 +58,7 @@ namespace Proj_Desktop_App.presentation
             this.cbSellsProducts.Location = new System.Drawing.Point(123, 93);
             this.cbSellsProducts.Name = "cbSellsProducts";
             this.cbSellsProducts.Size = new System.Drawing.Size(15, 14);
-            this.cbSellsProducts.TabIndex = 1;
+            this.cbSellsProducts.TabIndex = 3;
             this.cbSellsProducts.UseVisualStyleBackColor = true;
             // 
             // btnCancel
@@ -67,7 +68,7 @@ namespace Proj_Desktop_App.presentation
             this.btnCancel.Location = new System.Drawing.Point(55, 168);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(178, 40);
-            this.btnCancel.TabIndex = 20;
+            this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -79,7 +80,7 @@ namespace Proj_Desktop_App.presentation
             this.btnConfirm.Location = new System.Drawing.Point(242, 168);
             this.btnConfirm.Name = "btnConfirm";
             this.btnConfirm.Size = new System.Drawing.Size(178, 40);
-            this.btnConfirm.TabIndex = 19;
+            this.btnConfirm.TabIndex = 5;
             this.btnConfirm.Text = "Confirm";
             this.btnConfirm.UseVisualStyleBackColor = false;
             this.btnConfirm.Click += new System.EventHandler(this.btnConfirm_Click);
@@ -90,10 +91,11 @@ namespace Proj_Desktop_App.presentation
             this.tbId.Location = new System.Drawing.Point(123, 24);
             this.tbId.Name = "tbId";
             this.tbId.Size = new System.Drawing.Size(71, 27);
-            this.tbId.TabIndex = 21;
+            this.tbId.TabIndex = 1;
             // 
             // gbDepartment
             // 
+            this.gbDepartment.Controls.Add(this.lblProductsMessage);
             this.gbDepartment.Controls.Add(this.lblId);
             this.gbDepartment.Controls.Add(this.lblName);
             this.gbDepartment.Controls.Add(this.tbId);
@@ -104,7 +106,7 @@ namespace Proj_Desktop_App.presentation
             this.gbDepartment.Location = new System.Drawing.Point(55, 25);
             this.gbDepartment.Name = "gbDepartment";
             this.gbDepartment.Size = new System.Drawing.Size(365, 126);
-            this.gbDepartment.TabIndex = 30;
+            this.gbDepartment.TabIndex = 0;
             this.gbDepartment.TabStop = false;
             this.gbDepartment.Text = "Add Departement";
             // 
@@ -115,7 +117,7 @@ namespace Proj_Desktop_App.presentation
             this.lblId.Location = new System.Drawing.Point(9, 27);
             this.lblId.Name = "lblId";
             this.lblId.Size = new System.Drawing.Size(25, 19);
-            this.lblId.TabIndex = 5;
+            this.lblId.TabIndex = 0;
             this.lblId.Text = "Id:";
             // 
             // lblName
@@ -125,7 +127,7 @@ namespace Proj_Desktop_App.presentation
             this.lblName.Location = new System.Drawing.Point(9, 59);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(51, 19);
-            this.lblName.TabIndex = 7;
+            this.lblName.TabIndex = 0;
             this.lblName.Text = "Name:";
             // 
             // lblSellsProducts
@@ -135,8 +137,19 @@ namespace Proj_Desktop_App.presentation
             this.lblSellsProducts.Location = new System.Drawing.Point(9, 90);
             this.lblSellsProducts.Name = "lblSellsProducts";
             this.lblSellsProducts.Size = new System.Drawing.Size(103, 19);
-            this.lblSellsProducts.TabIndex = 16;
+            this.lblSellsProducts.TabIndex = 0;
             this.lblSellsProducts.Text = "Sells products:";
+            // 
+            // lblProductsMessage
+            // 
+            this.lblProductsMessage.AutoSize = true;
+            this.lblProductsMessage.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblProductsMessage.Location = new System.Drawing.Point(144, 90);
+            this.lblProductsMessage.Name = "lblProductsMessage";
+            this.lblProductsMessage.Size = new System.Drawing.Size(200, 19);
+            this.lblProductsMessage.TabIndex = 0;
+            this.lblProductsMessage.Text = "This department has products";
+            this.lblProductsMessage.Visible = false;
             // 
             // DepartmentCreateUpdateFrom
             // 
@@ -147,7 +160,8 @@ namespace Proj_Desktop_App.presentation
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnConfirm);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "DepartmentCreateUpdateFrom";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -169,5 +183,6 @@ namespace Proj_Desktop_App.presentation
         private System.Windows.Forms.Label lblId;
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.Label lblSellsProducts;
+        private System.Windows.Forms.Label lblProductsMessage;
     }
 }
