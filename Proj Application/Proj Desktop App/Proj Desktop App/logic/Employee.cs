@@ -99,7 +99,7 @@ namespace Proj_Desktop_App
         /// <summary>
         /// Adds a new contract to the employee and to the DB
         /// </summary>
-        public void AddContract(Contract newContract)
+        public void ExtendContract(Contract newContract)
         {
             if (newContract != null)
             {
@@ -134,6 +134,14 @@ namespace Proj_Desktop_App
             else
             {
                 throw new Exception("The provided contract is invalid.");
+            }
+        }
+
+        public void AddFirstContract(Contract contract)
+        {
+            if (GetLatestContract() == null)
+            {
+                contracts.Add(contract);
             }
         }
 

@@ -75,7 +75,7 @@ namespace Proj_Desktop_App.dataAccess
                 {
                     string sql =
                         "INSERT INTO contract (BSN, position_id, department_id, " +
-                        "start_date, end_date,iteration, salary, fte) " +
+                        "start_date, end_date, iteration, salary, fte) " +
                         "VALUES (@bsn, @position_id, @department_id, " +
                         "@start_date, @end_date, @iteration, @salary, @fte); " +
                         "SELECT contract_id FROM contract " +

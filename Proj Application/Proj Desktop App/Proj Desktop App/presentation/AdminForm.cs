@@ -40,10 +40,6 @@ namespace Proj_Desktop_App
         private void EmplCUForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             UpdateEmployees(false);
-            //if (lbEmployees.Items.Count > 0 && lbEmployees.Items.Contains(employee))
-            //{
-            //    lbEmployees.SelectedItem = employee;
-            //}
             emplCUForm = null;
         }
 
@@ -90,7 +86,7 @@ namespace Proj_Desktop_App
                     }
                     catch (Exception)
                     {
-                        MessageBox.Show("Please input only numbers to search by BSN to");
+                        MessageBox.Show("Please input only numbers to search by BSN");
                         return;
                     }
                 }
@@ -101,7 +97,6 @@ namespace Proj_Desktop_App
             }
 
             // Load employees into listbox
-            //lbEmployees.Items.Clear();
 
             ListViewItem selectedItem;
             if (lvwEmployees.SelectedItems.Count > 0)
@@ -114,7 +109,7 @@ namespace Proj_Desktop_App
             }
 
             lvwEmployees.Items.Clear();
-            //lbEmployees.Items.AddRange(employees);
+            
             foreach (Employee employee in employees)
             {
                 ListViewItem item = new ListViewItem(employee.GetBSN().ToString());
@@ -127,24 +122,17 @@ namespace Proj_Desktop_App
             
             lblTotal.Text = employees.Length.ToString();
 
-            //if (selectedEmployee != null && lbEmployees.Items.Contains(selectedEmployee))
             if (selectedItem != null && lvwEmployees.Items.Contains(selectedItem))
             {
-                //lbEmployees.SelectedIndex = lbEmployees.Items.IndexOf(selectedEmployee);
                 int index = lvwEmployees.Items.IndexOf(selectedItem);
                 lvwEmployees.Items[index].Selected = true;
             }
             else if (employees.Length > 0)
             {
-                //lbEmployees.SelectedIndex = 0;
                 lvwEmployees.Items[0].Selected = true;
                 lvwEmployees.Items.Contains(selectedItem);
 
             }
-            //else
-            //{
-            //    lbEmployees.Items.Add("No employees to show");
-            //}
         }
 
         /// <summary>

@@ -57,8 +57,8 @@ namespace Proj_Desktop_App
             }
             else
             {
-                btnConfirm.Location = new Point(444, 95);
-                this.Size = new Size(621, 177);
+                btnConfirm.Location = new Point(460, 95);
+                this.Height = 190;
 
                 if (this.action == ContractAction.Promote)
                 {
@@ -181,7 +181,7 @@ namespace Proj_Desktop_App
                     try
                     {
                         Contract contract = new Contract(-1, startDate, endDate, iteration, department, position, salary, fte);
-                        employee.AddContract(contract);
+                        employee.ExtendContract(contract);
                         this.Close();
                     }
                     catch (Exception ex)

@@ -145,10 +145,10 @@ namespace Proj_Desktop_App.dataAccess
                             "contact_email, username, password) " +
                             "VALUES(@bsn, @first_name, @last_name, " +
                             "@gender, @phone, @date_birth, @address, @languages, @certificates, " +
-                            "@email, @username, @password) " +
+                            "@email, @username, @password); " +
                             // Add contract
-                            "INSERT INTO contract(BSN, position_id, department_id, " +
-                            "start_date, end_date,iteration, salary, fte) " +
+                            "INSERT INTO contract (BSN, position_id, department_id, " +
+                            "start_date, end_date, iteration, salary, fte) " +
                             "VALUES (@bsn, @position_id, @department_id, " +
                             "@start_date, @end_date, @iteration, @salary, @fte);";
                         MySqlCommand cmd = new MySqlCommand(sql, conn);
@@ -177,7 +177,7 @@ namespace Proj_Desktop_App.dataAccess
                         cmd.Parameters.AddWithValue("@salary", contract.Salary);
                         cmd.Parameters.AddWithValue("@fte", contract.Fte);
                         conn.Open();
-                        int result = cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
                         return true;
                     }
                 }

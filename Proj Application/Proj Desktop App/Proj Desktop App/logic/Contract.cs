@@ -79,7 +79,7 @@ namespace Proj_Desktop_App
 
         public bool IsActive()
         {
-            if (DateTime.Today >= StartDate && DateTime.Today <= EndDate)
+            if (DateTime.Today.Date >= StartDate.Date && DateTime.Today.Date <= EndDate.Date)
             {
                 return true;
             }
@@ -91,7 +91,7 @@ namespace Proj_Desktop_App
 
         public bool IsCloseToEndDate()
         {
-            if (IsActive() && DateTime.Today.AddMonths(1) >= EndDate)
+            if (IsActive() && DateTime.Today.AddMonths(1).Date >= EndDate.Date)
             {
                 return true;
             }

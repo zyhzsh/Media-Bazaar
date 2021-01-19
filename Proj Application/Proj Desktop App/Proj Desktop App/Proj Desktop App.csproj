@@ -102,7 +102,6 @@
     <Compile Include="logic\Department.cs" />
     <Compile Include="logic\DepartmentStorage.cs" />
     <Compile Include="logic\Contract.cs" />
-    <Compile Include="logic\Departments.cs" />
     <Compile Include="logic\Employee.cs" />
     <Compile Include="logic\ListViewColumnSorter.cs" />
     <Compile Include="logic\PostionType.cs" />
