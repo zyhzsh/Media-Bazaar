@@ -17,10 +17,13 @@ namespace Proj_Desktop_App.presentation
 
         private List<Employee>[] assignedWorkers;
         private List<Employee>[] assignedManagers;
+        private Department currentDepartment;
         public WeeklyScheduleGridForm(Department currentDepartment, EmployeeStorage empStorage)
         {
             InitializeComponent();
             this.scheduleStorage = new ScheduleStorage(empStorage);
+            this.currentDepartment = currentDepartment;
+
 
             autoSchedule = new AutomaticScheduling(currentDepartment, scheduleStorage);
         }
@@ -124,15 +127,15 @@ namespace Proj_Desktop_App.presentation
                 if(ckBoxWorkers.Checked && ckBoxManagers.Checked)
                 {
                     List<Employee>[] both = new List<Employee>[15];
-                    scheduleStorage.AssignNextWeekShifts(WorkersAndManagers());
+                    scheduleStorage.AssignNextWeekShifts(WorkersAndManagers(), currentDepartment);
                 }
                 else if (ckBoxManagers.Checked)
                 {
-                    scheduleStorage.AssignNextWeekShifts(assignedManagers);
+                    scheduleStorage.AssignNextWeekShifts(assignedManagers, currentDepartment);
                 }
                 else if(ckBoxWorkers.Checked)
                 {
-                    scheduleStorage.AssignNextWeekShifts(assignedWorkers);
+                    scheduleStorage.AssignNextWeekShifts(assignedWorkers, currentDepartment);
                 }
                 else
                 {
