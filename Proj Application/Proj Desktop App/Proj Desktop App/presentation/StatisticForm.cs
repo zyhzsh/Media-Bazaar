@@ -18,11 +18,10 @@ namespace Proj_Desktop_App.presentation
             statistic = new StatisticStorage(deptStorage);
             Initialize_Department_ComboBox(deptStorage);
             DateTime date = DateTime.Today;
-            DateTimePickerStartingDate.Value = new DateTime(date.Year, 1, 1);
+            DateTimePickerStartingDate.Value = new DateTime(2015, 1, 1);
             DateTimePickerEndingDate.Value = date;
             ShowTopTenSellingOfThePeriod(DateTimePickerStartingDate.Value, DateTimePickerEndingDate.Value,true);
         }
-
         private void Initialize_Department_ComboBox(DepartmentStorage deptStorage)
         {
             cbDepartment.Items.Add("ALL");
@@ -77,33 +76,6 @@ namespace Proj_Desktop_App.presentation
                     TopTenProductStatisticChart.Series["Sale"].Points.AddXY(SaleHistory[i].ProductName +"("+ SaleHistory[i].Departmentname+")", SaleHistory[i].SoldAmount);
                     TopTenProductStatisticChart.Series["Sale"].Points[i].IsValueShownAsLabel = true;
                 }
-                //TopTenProductStatisticChart.Series.Clear();
-                //TopTenProductStatisticChart.Series.Add("Floor One");
-                //TopTenProductStatisticChart.Series["Floor One"].ChartType = SeriesChartType.Bar;
-                //TopTenProductStatisticChart.Titles.Clear();
-                //if (Sorted == true) { SaleHistory.Sort(); }
-                //for (int i = 0; i < SaleHistory.Count; i++)
-                //{
-                //    TopTenProductStatisticChart.Series["Floor One"].Points.AddXY("Floor One", SaleHistory[i].SoldAmount);
-                //    TopTenProductStatisticChart.Series["Floor One"].Points[i].Label = SaleHistory[i].ProductName + " -- "+SaleHistory[i].SoldAmount;
-                //    TopTenProductStatisticChart.Series["Floor One"].Points[i].IsValueShownAsLabel = true;
-                //}
-
-                //TopTenProductStatisticChart.Series.Add("Floor Two");
-                //TopTenProductStatisticChart.Series["Floor Two"].ChartType = SeriesChartType.Bar;
-                //TopTenProductStatisticChart.Series["Floor Two"].Points.AddXY("Test Product A",80);
-
-
-                //TopTenProductStatisticChart.Series.Add("Floor Three");
-                //TopTenProductStatisticChart.Series["Floor Three"].ChartType = SeriesChartType.Bar;
-                //TopTenProductStatisticChart.Series["Floor Three"].Points.AddXY("Text Product B", 99);
-
-
-
-                //TopTenProductStatisticChart.Series.Add("Floor Four");
-                //TopTenProductStatisticChart.Series["Floor Four"].ChartType = SeriesChartType.Bar;
-                //TopTenProductStatisticChart.Series["Floor Four"].Points.AddXY("Test Product C", 87);
-
             }
             catch
             {
