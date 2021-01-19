@@ -8,7 +8,7 @@ namespace Proj_Desktop_App.dataAccess
     class ScheduleManagement : DatabaseConnection
     {
         private string sqlstatements;
-        public ScheduleManagement() 
+        public ScheduleManagement()
         {
             sqlstatements = "";
         }
@@ -27,13 +27,13 @@ namespace Proj_Desktop_App.dataAccess
             List<Availability> availabilities = new List<Availability>();
             try
             {
-                
+
                 conn.Open();
                 MySqlDataReader dr = cmd.ExecuteReader();
 
                 List<ShiftType> weeklyavailbility = new List<ShiftType>();
                 Employee emp;
-                
+
                 while (dr.Read())
                 {
                     //1.Get emloyee
@@ -79,11 +79,11 @@ namespace Proj_Desktop_App.dataAccess
             MySqlConnection conn = base.GetConnection();
             try
             {
-                
+
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 conn.Open();
                 MySqlDataReader dr = cmd.ExecuteReader();
-                ShiftType shifttype = ShiftType.Morning;             
+                ShiftType shifttype = ShiftType.Morning;
                 while (dr.Read())
                 {
                     if (dr[2].ToString() == "Morning") { shifttype = ShiftType.Morning; }
@@ -114,7 +114,8 @@ namespace Proj_Desktop_App.dataAccess
         {
             string feedback = "";
             if (sqlstatements == "") { feedback = ""; }
-            else {
+            else
+            {
                 MySqlConnection conn = base.GetConnection();
                 try
                 {
@@ -147,20 +148,25 @@ namespace Proj_Desktop_App.dataAccess
 
         public void RemoveAssignedShift(int bsn, DateTime date)
         {
-            sqlstatements+=$"DELETE FROM `assignedschdule` WHERE date='{date.ToString("yyyy-MM-dd")}' AND BSN='{bsn}';";
+            sqlstatements += $"DELETE FROM `assignedschdule` WHERE date='{date.ToString("yyyy-MM-dd")}' AND BSN='{bsn}';";
         }
 
-        public void DeleteNextWeekShifts(DateTime nextMonday, DateTime nextWeekFriday)
+        public void DeleteNextWeekShifts(DateTime nextMonday, DateTime nextWeekFriday, Department managerDepartment)
         {
             try
             {
                 using (MySqlConnection conn = base.GetConnection())
                 {
-                    string sql = "DELETE FROM assignedschdule WHERE date >= @nextMonday AND date <= @nextFriday";
+                    string sql = "delete a " +
+                                "FROM assignedschdule a " +
+                                "INNER JOIN contract c " +
+                                "ON a.BSN = c.BSN " +
+                                "WHERE a.date >= @nextMonday AND a.date <= @nextFriday AND c.department_id = @managerDepartment;";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@nextMonday", nextMonday.ToString("yyyy-MM-dd"));
                     cmd.Parameters.AddWithValue("@nextFriday", nextWeekFriday.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@managerDepartment", managerDepartment.Id);
                     conn.Open();
 
                     cmd.ExecuteNonQuery();
@@ -179,7 +185,7 @@ namespace Proj_Desktop_App.dataAccess
                 using (MySqlConnection conn = base.GetConnection())
                 {
                     string sql = "INSERT INTO assignedschdule (BSN, date, assigned_shift_type) VALUES ";
-                    foreach(AssignedShift shift in assignedShifts)
+                    foreach (AssignedShift shift in assignedShifts)
                     {
                         sql += $"( {shift.Employee.GetBSN()} , '{shift.Date.ToString("yyyy-MM-dd")}' , '{shift.ShiftType.ToString("F")}' ), ";
                     }

@@ -315,7 +315,7 @@ namespace Proj_Desktop_App
             return result;
         }
 
-        public void AssignNextWeekShifts(List<Employee>[] nextWeekEmployees)
+        public void AssignNextWeekShifts(List<Employee>[] nextWeekEmployees, Department managerDepartment)
         {
             //1. Determine next week
             DateTime tomorrow = DateTime.Today.AddDays(1);
@@ -326,7 +326,7 @@ namespace Proj_Desktop_App
 
 
             //2. Clear shifts
-            DeleteAssignedShiftsFromNextWeek(nextMonday, nextWeekFriday);
+            DeleteAssignedShiftsFromNextWeek(nextMonday, nextWeekFriday, managerDepartment);
 
 
 
@@ -382,7 +382,7 @@ namespace Proj_Desktop_App
             schManagement.AssignNextWeekShifts(nextWeekShifts);
 
         }
-        private void DeleteAssignedShiftsFromNextWeek(DateTime nextMonday, DateTime nextWeekFriday)
+        private void DeleteAssignedShiftsFromNextWeek(DateTime nextMonday, DateTime nextWeekFriday, Department managerDepartment)
         {
             //Delete from storage
             for(int i = allAssignedShifts.Count - 1; i > -1; i--)
@@ -394,7 +394,7 @@ namespace Proj_Desktop_App
             }
 
             //Delete from database
-            schManagement.DeleteNextWeekShifts(nextMonday, nextWeekFriday);
+            schManagement.DeleteNextWeekShifts(nextMonday, nextWeekFriday, managerDepartment);
         }
     }
 }
