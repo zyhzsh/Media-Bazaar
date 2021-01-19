@@ -42,28 +42,6 @@ namespace Proj_Desktop_App
             availableWorkers = schStorage.GetWorkerAvailabilitiesByDepartment(managerDepartment);
             availableManagers = schStorage.GetManagerAvailabilitiesByDepartment(managerDepartment);
         }
-        /// <summary>
-        /// Runs the algorithm and returns all employees
-        /// </summary>
-        /// <returns></returns>
-        public List<Employee>[] DoTheSchedule()
-        {
-            //automatic schedule is done separately for workers and managers to prevent conflicts
-            List<Employee>[] workers = AssignAvailabilities(availableWorkers);
-            List<Employee>[] managers = AssignAvailabilities(availableManagers);
-            List<Employee>[] allEmployees = new List<Employee>[15];
-            overtimeReports = new List<string>();
-
-            for(int i = 0; i < 15; i++)
-            {
-                allEmployees[i] = new List<Employee>();
-                allEmployees[i].AddRange(workers[i]);
-                allEmployees[i].AddRange(managers[i]);
-            }
-
-            //All assigned shifts are returned
-            return allEmployees;
-        }
 
         /// <summary>
         /// Runs the algorithm and returns workers
@@ -100,7 +78,7 @@ namespace Proj_Desktop_App
                 //The algorithm will iterate through each employee in order of descending flexibility
                 //Employees here are represented as an Availability object for convenience
                 //Flexibility is represented by the leeway variable in Availability objects
-
+                int x = 5;
                 //Then the algorithm will begin removing the employee from the most crowded shift of the week
                 //until the number of shifts they are assigned to matches their FTE
 
@@ -122,7 +100,7 @@ namespace Proj_Desktop_App
                         {
                             //This employee is assigned to an entire day, one of these three shifts must be unassigned
                             //This takes priority above regular crowded shifts
-                            
+                            tripleShiftDay = true;
                             for (int j = i; j < i + 3; j++)
                             {
                                 if (assignedEmployeeCount < assignedEmployees[j].Count)
@@ -131,7 +109,7 @@ namespace Proj_Desktop_App
                                     assignedEmployeeCount = assignedEmployees[j].Count;
                                 }
                             }
-                            tripleShiftDay = true;
+                            break;
                             //Here the most crowded shift of the day has been found
                             //The employee will be unassigned from it below
                         }
@@ -158,13 +136,13 @@ namespace Proj_Desktop_App
                     {
                         //More than one manager in this shift, don't assign employee, no issue
                         this.assignedEmployees[mostCrowdedShift].Remove(availability.employee);
-                        availability.leeway = availability.leeway - 1;
+                        availability.leeway--;
                     }
                     else if(assignedEmployeeCount > 3 && (availability.employee.GetPosition() == PositionType.Depot_Worker || availability.employee.GetPosition() == PositionType.Sales_Worker))
                     {
                         //More than 3 workers in this shift, don't assign employee, no issue
                         this.assignedEmployees[mostCrowdedShift].Remove(availability.employee);
-                        availability.leeway = availability.leeway - 1;
+                        availability.leeway--;
                     }
                     else if (tripleShiftDay)
                     {
@@ -173,7 +151,7 @@ namespace Proj_Desktop_App
                         //can't do anything with it, so now it functions identically to above situations
                         
                         this.assignedEmployees[mostCrowdedShift].Remove(availability.employee);
-                        availability.leeway = availability.leeway - 1;
+                        availability.leeway--;
                     }
                     else
                     {
@@ -194,11 +172,17 @@ namespace Proj_Desktop_App
                         // The manager would have to unassign the employee if they don't wish to work overtime
 
                         this.assignedEmployees[mostCrowdedShift].Remove(availability.employee);
-                        availability.leeway = availability.leeway - 1;
+                        availability.leeway--;
                     }
                 }
             }
-            return assignedEmployees;
+            List<Employee>[] resultEmployees = new List<Employee>[15];
+            for(int i = 0; i <15; i++)
+            {
+                resultEmployees[i] = new List<Employee>();
+                resultEmployees[i].AddRange(assignedEmployees[i]);
+            }
+            return resultEmployees;
         }
 
         /// <summary>
@@ -304,6 +288,7 @@ namespace Proj_Desktop_App
                 {
                     understaffed = true;
                 }
+                if (understaffed && overstaffed) break;
             }
 
             if(overstaffed && understaffed)
